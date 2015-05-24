@@ -1,0 +1,93 @@
+.contact-form-loader {
+  font-family: 'museo',"Helvetica Neue",Helvetica,Arial,sans-serif;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  margin-top: -40px;
+  visibility: hidden;
+  text-shadow: 2px 2px 2px black; }
+  .contact-form-loader.active {
+    visibility: visible; }
+  .contact-form-loader div {
+    display: inline-block;
+    margin: 0 2px; }
+
+.contact-form-loader.active .s {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 0s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 0s; }
+
+.contact-form-loader.active .e {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 0.21875s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.21875s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 0.21875s; }
+
+.contact-form-loader.active .n-one {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 0.4375s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.4375s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 0.4375s; }
+
+.contact-form-loader.active .d {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 0.65625s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.65625s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 0.65625s; }
+
+.contact-form-loader.active .i {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 0.875s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 0.875s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 0.875s; }
+
+.contact-form-loader.active .n {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 1.09375s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 1.09375s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 1.09375s; }
+
+.contact-form-loader.active .g {
+  animation: shrinkgrow 1.75s ease-in-out infinite;
+  animation-delay: 1.3125s;
+  -webkit-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -webkit-animation-delay: 1.3125s;
+  -moz-animation: shrinkgrow 1.75s ease-in-out infinite;
+  -moz-animation-delay: 1.3125s; }
+
+@keyframes shrinkgrow {
+  0% {
+    transform: scale(0); }
+  12.5% {
+    transform: scale(1); }
+  25% {
+    transform: scale(1); }
+  33% {
+    transform: scale(0); }
+  100% {
+    transform: scale(0); } }
+@-webkit-keyframes shrinkgrow {
+  0% {
+    transform: scale(0); }
+  12.5% {
+    transform: scale(1); }
+  25% {
+    transform: scale(1); }
+  33% {
+    transform: scale(0); }
+  100% {
+    transform: scale(0); } }
+

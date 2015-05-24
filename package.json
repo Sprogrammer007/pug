@@ -1,6 +1,6 @@
 {
   "name": "dfr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -10,8 +10,20 @@
     "cookie-parser": "~1.3.4",
     "debug": "~2.1.1",
     "express": "~4.12.2",
+    "express-mailer": "^0.2.4",
     "jade": "~1.9.2",
+    "mailchimp-api": "^2.0.7",
     "morgan": "~1.5.1",
+    "pg": "^4.3.0",
+    "pg-native": "^1.8.1",
+    "serve-favicon": "~2.2.0",
+    "stripe": "^3.3.4",
     "serve-favicon": "~2.2.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Steve Yang"
 }

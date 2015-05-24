@@ -1,0 +1,25 @@
+header
+
+  nav.navbar(class= (!isMobile) ? '' : '')
+
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
+        span.sr-only Toggle navigation      
+        span.icon-bar    
+        span.icon-bar 
+        span.icon-bar   
+      a.logo(href="/")
+        img(src="/images/logo-long.png")
+    #top-nav.collapse.navbar-collapse
+
+      ul.nav.navbar-nav.navbar-right
+         
+        li(class= (path === '/') ? 'active' : '')
+          a(href='/') Home 
+            span.sr-only (current) 
+        li(class= (path === '/about') ? 'active' : '')
+          a(href='/about') About               
+        li(class= (path === '/blog') ? 'active' : '')
+          a(href='/blog') Blog               
+        li(class= (path === '/contact') ? 'active' : '')
+          a(href='/contact') Contact         
