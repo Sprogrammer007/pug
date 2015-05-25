@@ -4,7 +4,7 @@ var testkey = "sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh"
 var stripe = require("stripe")(process.env.STRIPE_KEY);
 var MCID = process.env.MC_ID || '9f81cf88cc';
 var config = {};
-// var Client = require('pg-native');
+var Client = require('pg-native');
 
 // database setup
 // var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';

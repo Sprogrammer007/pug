@@ -1,6 +1,14 @@
-var pg = require('pg');
 
-var conString = "postgres://steve007:qwerty@localhost:5432/dev_clash";
+var Client = require('pg-native');
+var conString = 'postgres://' +
+                process.env.RDS_USERNAME + 
+                ':' + 
+                process.env.RDS_PASSWORD +
+                '@' +
+                process.env.RDS_HOSTNAME +
+                '/dfr';
+
+var client = new Client();
 var queryString = "CREATE TABLE IF NOT EXISTS users \
   ( \
     ID             SERIAL PRIMARY KEY     NOT NULL, \
@@ -43,8 +51,7 @@ var queryString = "CREATE TABLE IF NOT EXISTS users \
 "
 
 
-var client = new pg.Client(conString);
-client.connect(function(err) {
+client.connect(conString, function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
   }
