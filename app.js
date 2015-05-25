@@ -8,7 +8,7 @@ var mailer = require('express-mailer');
 var mcapi = require('./node_modules/mailchimp-api/mailchimp');
 var routes = require('./routes/route');
 var users = require('./routes/users');
-
+console.log(process.env);
 var app = express();
 var fs = require('fs');
 var MCKEY = process.env.MC_KEY || '8b8bff773968e11ac3881a74bb8bef66-us10'
