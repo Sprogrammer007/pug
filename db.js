@@ -1,5 +1,6 @@
 
 var Client = require('pg-native');
+console.log(process.env);
 var conString = 'postgres://' +
                 process.env.RDS_USERNAME + 
                 ':' + 
