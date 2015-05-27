@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var testkey = "sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh"
 var stripe = require("stripe")(process.env.STRIPE_KEY);
 var MCID = process.env.MC_ID;
 var config = {};
@@ -42,9 +41,20 @@ function getUserByEmail(req) {
   return user[0];
 }
 
+function updateUser(req, id) {
+  var params = req.body;
+  var query = 'UPDATE users SET postal=$1, phone=$2, address=$3, city=$4 WHERE id=$5';
+  var postal = params.postal;
+  var phone = params.phone;
+  var address = params.address;
+  var city = params.city;
+  client.querySync(query, [postal, phone, address, city, id])
+}
+
 function getOrderByToken(token) {
   var query = 'SELECT * FROM orders WHERE token=$1 LIMIT 1';
   var order = client.querySync(query, [token])
+  console.log(order)
   return order[0];
 }
 
@@ -113,6 +123,8 @@ router.post('/checkout', function (req, res, next) {
   var order = null;
   if (user === undefined ) {
     user = createUser(req);
+  } else {
+    updateUser(req, user.id)
   }
 
 
@@ -123,9 +135,9 @@ router.post('/checkout', function (req, res, next) {
   }).then(function(customer) {
     console.log(customer);
     order = createOrder(req, user.id, customer.id, token);
+    res.redirect('/wireframe/thank-you/' + order.id );
   });
-
-  res.redirect('/wireframe/thank-you/' + order.id );
+ 
 });
 
 /* GET home page. */
