@@ -18,7 +18,7 @@ block content
       .questionnaire
         .failure
           | Uh oh, something unexpected happen. Please submit this application again.
-        form#thankyouform(action="/wireframe/#{id}/done", method="post").clearfix
+        form#thankyouform(action="/wireframe/thank-you/#{id}/done", method="post").clearfix
           p The company name is
             input.require-field(type="text" name="company_name" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter a company name.")
             |.       

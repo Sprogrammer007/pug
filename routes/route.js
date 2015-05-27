@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 var testkey = "sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh"
 var stripe = require("stripe")(process.env.STRIPE_KEY);
-var MCID = process.env.MC_ID || '9f81cf88cc';
+var MCID = process.env.MC_ID;
 var config = {};
 var https = require('https');
 
 
 var Client = require('pg-native');
-var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';
+var conString = process.env.DATABASE_URL // || 'postgres://steve007:@localhost/dev_clash';
 var client = new Client();
 client.connectSync(conString);
 
@@ -74,11 +74,12 @@ function dollarToCent(dollar) {
 
 function createOrder(req, user_id, customer_id, token) {
   var params = req.body;
-  var prodname = params.product_name
-  var mail = params.shipping
-  var subtotal = dollarToCent(params.sub_total);
+  var prodname = params.product_name;
+  var mail = params.shipping;
+  console.log(parseInt(params.sub_total) + 5)
+  var subtotal = 
+  var subtotal_cent = dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
   var status = "Pending"
-
   var query = 'INSERT INTO orders (user_id, stripe_cid, token, product_name, \
     mail, subtotal, status) VALUES ($1, $2, $3, $4, $5, $6, $7)';
   client.querySync(query, [user_id, customer_id, token, prodname, mail, subtotal, status]);
@@ -109,7 +110,7 @@ function createOrderDetail(req, id) {
 router.post('/checkout', function (req, res, next) {
   console.log(req.body)
   var token = req.body.stripeToken;
-  // var user = getUserByEmail(req);
+  var user = getUserByEmail(req);
   var order = null;
   if (user === undefined ) {
     user = createUser(req);
@@ -122,10 +123,10 @@ router.post('/checkout', function (req, res, next) {
     description: 'waiting for approvel for product '
   }).then(function(customer) {
     console.log(customer);
-    order = createOrder(req, user.id, customer.id, token)
+    order = createOrder(req, user.id, customer.id, token);
   });
 
-  res.redirect('/wireframe/thank-you/' + order.id );
+  res.redirect('/wireframe/thank-you/' + 1 );
 });
 
 /* GET home page. */
@@ -134,12 +135,12 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET Landing page. */
-router.get('/free-checklist', function(req, res, next) {
+router.get('/checklist', function(req, res, next) {
   res.render('landing/landing-part2', { title: 'Checklist | Designed For Result',  path: req.path, isMobile: is_mobile(req) });
 });
 
 router.get('/free-tips', function(req, res, next) {
-  res.render('landing/landing-part1', { title: 'Free Tips | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('landing/landing-part1', { title: 'Free Checklist | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
 });
 
 router.get('/wireframe-discount', function(req, res) {
@@ -191,7 +192,7 @@ router.post('/subscribe', function (req, res, next) {
   mc.lists.subscribe(mcReq, function(data) {
       console.log('User subscribed successfully! Look for the confirmation email.');
       createUser(req);
-      res.redirect('/free-checklist');
+      res.redirect('/checklist');
     },
     function(error) {
       if (error.error) {

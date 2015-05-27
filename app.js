@@ -11,18 +11,9 @@ var users = require('./routes/users');
 var app = express();
 var fs = require('fs');
 var MCKEY = process.env.MC_KEY
-// try {
-//   var configJSON = fs.readFileSync(__dirname + "/config.json");
-//   var config = JSON.parse(configJSON.toString());
-// } catch (e) {
-//   console.error("File config.json not found or is invalid: " + e.message);
-//   process.exit(1);
-// }
-
-
 
 var Client = require('pg-native');
-var conString = process.env.DATABASE_URL;
+var conString = process.env.DATABASE_URL // || 'postgres://steve007:@localhost/dev_clash';
 
 
 var client = new Client();
