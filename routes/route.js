@@ -125,7 +125,7 @@ router.post('/checkout', function (req, res, next) {
     order = createOrder(req, user.id, customer.id, token);
   });
 
-  res.redirect('/wireframe/thank-you/' + 1 );
+  res.redirect('/wireframe/thank-you/' + order.id );
 });
 
 /* GET home page. */
