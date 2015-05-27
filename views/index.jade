@@ -2,3 +2,10 @@ extends ./layout
 
 block content
   #home
+    .content.container
+      h1 Is your Website Fully Optimized for Ranking?
+      span.subtitle 
+        | You may have the best contents. But slow and under Optimized websites can really hurt you. Find out if you site needs help, enter your URL and Analyze with Google.
+      form(method="post" action="/speedtest/report")
+        input(name="url" placeholder="Enter your website URL" autofocus)
+        button Analyze with Google

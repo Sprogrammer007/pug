@@ -4,12 +4,16 @@ var testkey = "sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh"
 var stripe = require("stripe")(process.env.STRIPE_KEY);
 var MCID = process.env.MC_ID || '9f81cf88cc';
 var config = {};
+var https = require('https');
+
+
 var Client = require('pg-native');
-
 var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';
-
 var client = new Client();
 client.connectSync(conString);
+
+// Insight API
+var Insight_API_KEY = 'AIzaSyBnI_N9K8Rhdn9ostrrh18aJXuDHM2SUbI';
 
 function is_mobile(req) {
   var ua = req.header('user-agent');
@@ -121,7 +125,7 @@ router.post('/checkout', function (req, res, next) {
     order = createOrder(req, user.id, customer.id, token)
   });
 
-  res.redirect('/wireframe/thank-you/' + 1 );
+  res.redirect('/wireframe/thank-you/' + order.id );
 });
 
 /* GET home page. */
@@ -201,6 +205,46 @@ router.post('/subscribe', function (req, res, next) {
   
 });
 
+// SpeedTest
+
+router.post('/speedtest/report', function(req, res, next ){
+  var url = req.body.url;
+  var report = '';
+  https.get({
+    host: 'www.googleapis.com', 
+    path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
+          '&key='+Insight_API_KEY+'&strategy=desktop'
+    }, function(r) {
+      console.log("statusCode: ", res.statusCode);
+      r.on('data', function(chunk) {
+         report += chunk;
+      });
+      r.on('end', function(){
+        report = JSON.parse(report);
+        res.render('report', { title: 'Designed for Result || Speedtest Report',  path: req.path, report: report, isMobile: is_mobile(req) });
+      });
+   
+  }).on('error', function(e) {
+    var errors = e.errors;
+    for (var i = 0, len = errors.length; i < len; ++i) {
+      if (errors[i].reason == 'badRequest' && API_KEY == Insight_API_KEY ) {
+        console.log('Please specify your Google API key in the API_KEY variable.');
+      } else {
+        // NOTE: your real production app should use a better
+        // mechanism than alert() to communicate the error to the user.
+        console.log(errors[i].message);
+      }
+    }
+    res.setHeader('Content-Type', 'application/json');
+    if (order) {
+      res.send(JSON.stringify({ 'success': 1 }));
+    } else {
+      res.send(JSON.stringify({ 'success': 0 }));
+    }
+
+  });
+ 
+});
 
 /* Post Sent Mail */
 router.post('/contact_mailer', function (req, res, next) {
