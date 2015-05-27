@@ -77,7 +77,7 @@ function createOrder(req, user_id, customer_id, token) {
   var params = req.body;
   var prodname = params.product_name;
   var mail = params.shipping;
-  var subtotal_cent = dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
+  var subtotal = dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
   var status = "Pending"
   var query = 'INSERT INTO orders (user_id, stripe_cid, token, product_name, \
     mail, subtotal, status) VALUES ($1, $2, $3, $4, $5, $6, $7)';
