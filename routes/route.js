@@ -208,7 +208,7 @@ router.post('/subscribe', function (req, res, next) {
 // SpeedTest
 
 router.post('/speedtest/report', function(req, res, next ){
-  var url = req.body.url;
+  var url = req.body.protocal + req.body.url;
   var report = '';
   https.get({
     host: 'www.googleapis.com', 
@@ -221,6 +221,7 @@ router.post('/speedtest/report', function(req, res, next ){
       });
       r.on('end', function(){
         report = JSON.parse(report);
+        console.log(report)
         res.render('report', { title: 'Designed for Result || Speedtest Report',  path: req.path, report: report, isMobile: is_mobile(req) });
       });
    
