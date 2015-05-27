@@ -10,7 +10,7 @@ var routes = require('./routes/route');
 var users = require('./routes/users');
 var app = express();
 var fs = require('fs');
-var MCKEY = process.env.MC_KEY
+var MCKEY = process.env.MC_KEY;
 
 var Client = require('pg-native');
 var conString = process.env.DATABASE_URL; 

@@ -8,7 +8,8 @@ var https = require('https');
 
 
 var Client = require('pg-native');
-var conString = process.env.DATABASE_URL // || 'postgres://steve007:@localhost/dev_clash';
+var conString = process.env.DATABASE_URL;
+// || 'postgres://steve007:@localhost/dev_clash';
 var client = new Client();
 client.connectSync(conString);
 
@@ -76,8 +77,6 @@ function createOrder(req, user_id, customer_id, token) {
   var params = req.body;
   var prodname = params.product_name;
   var mail = params.shipping;
-  console.log(parseInt(params.sub_total) + 5)
-  var subtotal = 
   var subtotal_cent = dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
   var status = "Pending"
   var query = 'INSERT INTO orders (user_id, stripe_cid, token, product_name, \
