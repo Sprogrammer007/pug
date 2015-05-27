@@ -13,7 +13,8 @@ var fs = require('fs');
 var MCKEY = process.env.MC_KEY
 
 var Client = require('pg-native');
-var conString = process.env.DATABASE_URL // || 'postgres://steve007:@localhost/dev_clash';
+var conString = process.env.DATABASE_URL; 
+// || 'postgres://steve007:@localhost/dev_clash'
 
 
 var client = new Client();
