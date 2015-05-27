@@ -10,7 +10,7 @@ var routes = require('./routes/route');
 var users = require('./routes/users');
 var app = express();
 var fs = require('fs');
-var MCKEY = process.env.MC_KEY || '8b8bff773968e11ac3881a74bb8bef66-us10'
+var MCKEY = process.env.MC_KEY
 // try {
 //   var configJSON = fs.readFileSync(__dirname + "/config.json");
 //   var config = JSON.parse(configJSON.toString());

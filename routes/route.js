@@ -213,7 +213,7 @@ router.post('/speedtest/report', function(req, res, next ){
   https.get({
     host: 'www.googleapis.com', 
     path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
-          '&key='+Insight_API_KEY+'&strategy=desktop'
+          '&screenshot=true&key='+Insight_API_KEY+'&strategy=desktop'
     }, function(r) {
       console.log("statusCode: ", res.statusCode);
       r.on('data', function(chunk) {
