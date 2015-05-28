@@ -150,7 +150,7 @@ router.get('/checklist', function(req, res, next) {
   res.render('landing/landing-part2', { title: 'Checklist | Designed For Result',  path: req.path, isMobile: is_mobile(req) });
 });
 
-router.get('/free-tips', function(req, res, next) {
+router.get('/free-checklist', function(req, res, next) {
   res.render('landing/landing-part1', { title: 'Free Checklist | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
 });
 
