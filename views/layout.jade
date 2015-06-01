@@ -4,6 +4,7 @@ head
   meta(name='viewport', content='width=device-width')
   title= title
   link(rel='profile', href='http://gmpg.org/xfn/11')
+  link(href='//fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css')
   link(href='http://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
   link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
@@ -17,9 +18,10 @@ head
   link(rel='stylesheet', href='/css/hover.min.css')
   link(rel='stylesheet', href='/css/ie.css')
   link(rel='stylesheet', href='/css/ie7.css')
-  link(rel='stylesheet', href='/css/loader.css')
   link(rel='stylesheet', href='/css/style.css')
 
+  if path === "/speedtest/report"
+     link(rel='stylesheet', href='/css/score.css')
   //js
   script(src='/js/bootstrap.min.js')
   script(src='/js/wow.min.js')

@@ -35,6 +35,22 @@ function is_mobile(req) {
   }
 }
 
+function extractFormats(formats, type) {
+  var a = [];
+  for(var i in formats) {
+
+
+    if (type === 'errors' && formats[i].ruleImpact >= 10) {
+      a.push(formats[i]);
+    } else if (type === 'passed' && formats[i].ruleImpact === 0 ) {
+      a.push(formats[i]);
+    } else if (type === 'warnings' && formats[i].ruleImpact < 10 && formats[i].ruleImpact > 0 ) {
+      a.push(formats[i]);
+    }
+  }
+  return a;
+}
+
 function getUserByEmail(req) {
   var query = 'SELECT * FROM users WHERE email=$1 LIMIT 1';
   var user = client.querySync(query, [req.body.email])
@@ -221,7 +237,14 @@ router.post('/subscribe', function (req, res, next) {
 
 router.post('/speedtest/report', function(req, res, next ){
   var url = req.body.protocal + req.body.url;
-  var report = '';
+  var result = '',
+      score = 0,
+      screenshot = ''
+      mime = '',
+      errors = [],
+      warnings = [],
+      passed = [];
+
   https.get({
     host: 'www.googleapis.com', 
     path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
@@ -229,12 +252,37 @@ router.post('/speedtest/report', function(req, res, next ){
     }, function(r) {
       console.log("statusCode: ", res.statusCode);
       r.on('data', function(chunk) {
-         report += chunk;
+         result += chunk;
       });
       r.on('end', function(){
-        report = JSON.parse(report);
-        console.log(report)
-        res.render('report', { title: 'Designed for Result || Speedtest Report',  path: req.path, report: report, isMobile: is_mobile(req) });
+        result = JSON.parse(result);
+        console.log(result)
+
+        if (result.ruleGroups != undefined ) {
+          score = result.ruleGroups.SPEED.score;
+        }
+
+        if (result.screenshot != undefined) {
+          screenshot = result.screenshot.data.replace(/_/g, '/');
+          screenshot = screenshot.replace(/-/g, '+');
+          mime = result.screenshot.mime_type
+        }
+
+        if (result.formattedResults != undefined) {
+          errors = extractFormats(result.formattedResults.ruleResults, 'errors');
+          warnings = extractFormats(result.formattedResults.ruleResults, 'warnings');
+          passed = extractFormats(result.formattedResults.ruleResults, 'passed');
+        }
+
+        res.render('report', { 
+          title: 'Designed for Result | Speed Test Report', 
+          path: req.path,
+          url: url,
+          score: score,
+          mime_type: mime,
+          screenshot: screenshot,
+          isMobile: is_mobile(req) 
+        });
       });
    
   }).on('error', function(e) {
@@ -256,7 +304,7 @@ router.post('/speedtest/report', function(req, res, next ){
     }
 
   });
- 
+  
 });
 
 /* Post Sent Mail */

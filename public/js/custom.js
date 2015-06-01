@@ -246,7 +246,7 @@
 
           if ( percent >= 100 ) {
             clearInterval(progress);
-            $('.analyzer p:first-child').html('Preparing your report please be patient...')
+            $('.analyzer .warning-title').html('Preparing your report please be patient...')
             form.submit();
           }
 
@@ -269,7 +269,7 @@
       
       if(error) return false;
       form.hide();
-      form.parent('.analyzer').append('<p>Analyzing your website&hellip;</p><div id="analyzer-wrap"><div id="progressbar"></div></div><p id="analyzer-errors"><span>1 error</span> found&hellip;</p>');
+      form.parent('.analyzer').append('<p class="warning-title">Analyzing your website&hellip;</p><div id="analyzer-wrap"><div id="progressbar"></div></div><p id="analyzer-errors"><span>1 error</span> found&hellip;</p>');
       analize(form, 9.5);  
 
 

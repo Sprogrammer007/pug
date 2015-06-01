@@ -2,4 +2,114 @@ extends ./layout
 
 block content
   #report
-    p= report.ruleGroups.SPEED.score
+  
+    section.report-wrapper
+      .container
+        if (score != undefined && score > 75)
+          h1 Wow! Your site looks great. There is not much we can do to help!
+        else
+          h1 Yikes! It looks like your site can use some work!
+        span.a-url
+          i.fa.fa-tachometer
+          |  Anaylized URL: 
+          if (url != undefined) 
+          | #{url}
+        .row.report
+          .col-lg-7
+            h2.report-title
+              | SPEED SCORE
+            .score.clearfix
+              .score-radial(class="score-#{score}")
+                .overlay 
+                  if (score != undefined)
+                    | #{score}
+                  span /100
+            div(role='tabpanel')
+
+              ul.nav.nav-tabs(role='tablist')
+                li.speed-box.errors(role='presentation')
+                  a.speed-box-title(href='#errors', aria-controls='errors', role='tab', data-toggle='tab') Important
+                    span.speed-box-number
+                      if (errors.length != 0 )
+                        | #{errors.length}
+                      else
+                        0
+                    span.speed-box-detail
+                      i(class="glyphicon glyphicon-triangle-bottom") 
+                      |  View Details 
+                li.speed-box.warnings(role='presentation')
+                  a.speed-box-title(href='#warnings', aria-controls='warnings', role='tab', data-toggle='tab') Warnings
+                    span.speed-box-number
+                      if (warnings.length != 0 )
+                        | #{warnings.length}
+                      else
+                        0
+                    span.speed-box-detail
+                      i(class="glyphicon glyphicon-triangle-bottom") 
+                      |  View Details 
+                li.speed-box.passed(role='presentation')
+                  a.speed-box-title(href='#passed', aria-controls='passed', role='tab', data-toggle='tab') Passed
+                    span.speed-box-number
+                      if (passed.length != 0 )
+                        | #{passed.length}
+                      else
+                        0
+                    span.speed-box-detail
+                      i(class="glyphicon glyphicon-triangle-bottom") 
+                      |  View Details 
+              .tab-content
+                #errors.tab-pane(role='tabpanel') 
+                  ul
+                    if (errors.length != 0 )
+                      each error in errors
+                        li= error.localizedRuleName
+                #warnings.tab-pane(role='tabpanel')
+                  ul
+                    if (warnings.length != 0 )
+                      each warning in warnings
+                        li= warning.localizedRuleName
+                #passed.tab-pane(role='tabpanel')
+                  ul
+                    if (passed.length != 0 )
+                      each pass in passed
+                        li= pass.localizedRuleName
+                    
+          .col-lg-5
+            .site-image-wrapper
+              if (screenshot != undefined)
+                img(src="data:#{mime_type};base64,#{screenshot}")
+
+    section.report-contact
+      .container
+        h2 We Can Improve Your Site!
+
+        .row
+          .col-lg-5
+
+            .profile-image
+              img(src="../images/profile.png")
+            span.subtitle "We have helped many companies to improve their site. Fill out the form to the right and get some free advice from us. Who knows, maybe you're our next ideal client."
+          .col-lg-7
+            form
+              .form-group
+                input(placeholder="First Name")
+                i.fa.fa-user
+              .form-group
+                input(placeholder="Best Email")
+                i.fa.fa-envelope-o
+              .form-group
+                input(placeholder="Phone")
+                i.fa.fa-phone
+              .form-group
+                label Budget
+                select
+                  option 500
+                  option 1000
+                  option 5000
+                  option 10000
+                  option 25000
+                  option 50000+
+                i.glyphicon.glyphicon-menu-down
+
+              button.btn.btn-reserve Reserve Your Spot
+            

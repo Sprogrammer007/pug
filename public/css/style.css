@@ -1,6 +1,5 @@
 @charset "utf-8";
 
-
 /**
  * Table of Contents
  *
@@ -225,7 +224,333 @@ header .navbar-nav li a.logo {
   margin: 20px 0 0 0;
 }
 
+/*Report*/
 
+#report h1 {
+ font-family: 'Oswald';
+ font-weight: 900;
+ font-size: 55px;
+ text-align: center;
+ margin-bottom: 50px;
+}
+
+#report .a-url {
+  font-size: 19px;
+  color: #727272;
+}
+
+.a-url i {
+  color: #f16334;
+}
+
+#report .report-wrapper {
+  position: relative;
+  background: #FFF;
+  border: 4px solid #FFF;
+  padding-bottom: 80px;
+  background-image: url('../images/landingbg.png');
+}
+
+#report .report-wrapper:after, #report .report-wrapper:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#report .report-wrapper:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #FFF;
+  border-width: 30px;
+  margin-left: -30px;
+}
+
+#report .report-wrapper:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-top-color: #FFF;
+  border-width: 36px;
+  margin-left: -36px;
+}
+
+#report .report-title {
+  border-top: 8px solid #555;
+  border-bottom: 3px solid #555;
+  color: #555;
+  padding: 15px 0;
+  font-family: 'Helvetica';
+  font-weight: 600;
+}
+
+#report .score {
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  font-size: 120px;
+}
+
+#report .nav-tabs > li {
+  float: none;
+  display: inline-block;
+  margin-right: 26px;
+  margin-bottom: 0;
+}
+
+#report .nav-tabs > li:last-child {
+  margin-right: 0
+}
+
+#report .nav-tabs {
+  border-bottom: 0;
+}
+
+#report .nav-tabs > li > a {
+  margin-right: 0;
+  line-height: inherit;
+  border: 0;
+  color: #FFF;
+  border-radius: 0;
+}
+
+#report .nav-tabs > li > a:hover {
+  background-color: transparent;
+  color: #FFF;
+}
+
+#report .nav-tabs>li.active>a, #report .nav-tabs>li.active>a:hover, #report .nav-tabs>li.active>a:focus {
+  color: #FFF;
+  background-color: transparent;
+  border: 0;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+
+#report .tab-content>.active {
+  display: block;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  padding: 20px
+}
+
+#report .tab-content ul {
+  padding: 0;
+}
+
+#report .tab-content ul li {
+  list-style: none;
+  font-size: 20px;
+  font-family: 'Oswald';
+  font-weight: 400;
+}
+
+#report .tab-content ul li:before {
+  content: '!';
+  font-family: 'Helvetica';
+  font-size: 28px;
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+#errors ul li:before {
+  color: #CC0000;
+}
+
+#warnings ul li:before {
+  color: #FDAE01;
+}
+
+#passed ul li:before {
+  font-family: 'Glyphicons Halflings' !important;
+  content: "\e013" !important;
+  font-size: 23px !important;
+  color: #5B8C04;
+}
+
+.speed-box {
+  font-family: 'Oswald';
+  color: #FFF;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+}
+
+.speed-box.errors {
+  background-color: #CC0000;
+}
+
+.speed-box.warnings {
+  background-color: #FDAE01;
+}
+
+.speed-box.passed {
+  background-color: #5B8C04;
+}
+
+.speed-box-title {
+  display: block;
+  font-size: 29px;
+  padding: 10px 0;
+  font-weight: 500;
+  color: #FFF;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.speed-box-number {
+  display: block;
+  font-size: 70px;
+  font-weight: 900;
+}
+
+.speed-box-detail {
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.site-image-wrapper {
+  display: block;
+  width: 100%;
+  margin-top: 19px;
+  height: 300px;
+  background: url('../images/mac-laptop2.png') no-repeat;
+  background-size: contain;
+}
+
+.site-image-wrapper img {
+  position: relative;
+  top: 15px;
+  left: 53px;
+  width: 353px;
+  height: 225px;
+}
+
+#report .report-contact {
+  background-color: #f16334;
+  min-height: 500px;
+  padding: 80px 0;
+}
+
+.report-contact .profile-image{
+  width: block;
+  width: 200px;
+  margin: auto;
+}
+
+.report-contact .profile-image img {
+  width: 100%;
+}
+
+#report .report-contact h2,
+#report .subtitle  {
+  color: #FFF;
+  font-family: 'Oswald';
+  text-align: center;
+  display: block;
+  margin-bottom: 60px;
+}
+
+#report .report-contact h2 {
+  font-size: 50px;
+}
+
+#report .subtitle {
+  font-size: 25px;
+  text-align: left;
+  font-weight: 300;
+}
+
+#report .report-contact form input {
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #Fff;
+}
+
+#report form {
+  border: 5px dashed #FFF;
+  padding: 50px 20px;
+  position: relative;
+  border-radius: 2px
+}
+
+#report input:focus,
+#report select:focus,
+#report button:focus {
+  outline: none;
+}
+
+#report ::-webkit-input-placeholder {
+   color: #FFF;
+}
+
+#report :-moz-placeholder { /* Firefox 18- */
+  color: #FFF; 
+}
+
+#report ::-moz-placeholder {  /* Firefox 19+ */
+  color: #FFF; 
+}
+
+#report :-ms-input-placeholder {  
+  color: #FFF;
+}
+
+#report form input,
+#report form label, 
+#report form select {
+  color: #FFF;
+  font-size: 22px;
+  width: 50%;
+  font-weight: normal;
+  padding: 15px 10px;
+  font-family: 'Oswald';
+  margin-bottom: 15px;
+}
+
+#report form label {
+  border-bottom: 1px solid #FFF;
+}
+
+#report form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #FFF;
+  border-radius: 0;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+}
+
+#report .btn-reserve {
+  background-color: transparent;
+  color: #FFF;
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  border: 2px solid #FFF;
+  border-radius: 50px;
+}
+
+#report .btn-reserve:hover { 
+  background-color: #FFF;
+  color: #f16334;
+}
+
+#report .form-group {
+  position: relative;
+}
+
+#report .form-group i {
+  position: absolute;
+  right: 10px;
+  top: 23px;
+  font-size: 25px;
+  color: #FFF;
+}
 /*Footer*/
 
 footer {
