@@ -235,7 +235,7 @@ router.post('/subscribe', function (req, res, next) {
 
 // SpeedTest
 
-router.post('/speedtest/report', function(req, res, next ){
+router.get('/speedtest/report', function(req, res, next ){
   var url = req.body.protocal + req.body.url;
   var result = '',
       score = 0,
@@ -245,34 +245,59 @@ router.post('/speedtest/report', function(req, res, next ){
       warnings = [],
       passed = [];
 
-  https.get({
-    host: 'www.googleapis.com', 
-    path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
-          '&screenshot=true&key='+Insight_API_KEY+'&strategy=desktop'
-    }, function(r) {
-      console.log("statusCode: ", res.statusCode);
-      r.on('data', function(chunk) {
-         result += chunk;
-      });
-      r.on('end', function(){
-        result = JSON.parse(result);
-        console.log(result)
+  // https.get({
+  //   host: 'www.googleapis.com', 
+  //   path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
+  //         '&screenshot=true&key='+Insight_API_KEY+'&strategy=desktop'
+  //   }, function(r) {
+  //     console.log("statusCode: ", res.statusCode);
+  //     r.on('data', function(chunk) {
+  //        result += chunk;
+  //     });
+  //     r.on('end', function(){
+  //       result = JSON.parse(result);
+  //       console.log(result)
 
-        if (result.ruleGroups != undefined ) {
-          score = result.ruleGroups.SPEED.score;
-        }
+  //       if (result.ruleGroups != undefined ) {
+  //         score = result.ruleGroups.SPEED.score;
+  //       }
 
-        if (result.screenshot != undefined) {
-          screenshot = result.screenshot.data.replace(/_/g, '/');
-          screenshot = screenshot.replace(/-/g, '+');
-          mime = result.screenshot.mime_type
-        }
+  //       if (result.screenshot != undefined) {
+  //         screenshot = result.screenshot.data.replace(/_/g, '/');
+  //         screenshot = screenshot.replace(/-/g, '+');
+  //         mime = result.screenshot.mime_type
+  //       }
 
-        if (result.formattedResults != undefined) {
-          errors = extractFormats(result.formattedResults.ruleResults, 'errors');
-          warnings = extractFormats(result.formattedResults.ruleResults, 'warnings');
-          passed = extractFormats(result.formattedResults.ruleResults, 'passed');
-        }
+  //       if (result.formattedResults != undefined) {
+  //         errors = extractFormats(result.formattedResults.ruleResults, 'errors');
+  //         warnings = extractFormats(result.formattedResults.ruleResults, 'warnings');
+  //         passed = extractFormats(result.formattedResults.ruleResults, 'passed');
+  //       }
+
+  //       res.render('report', { 
+  //         title: 'Designed for Result | Speed Test Report', 
+  //         path: req.path,
+  //         url: url,
+  //         score: score,
+  //         mime_type: mime,
+  //         screenshot: screenshot,
+  //         isMobile: is_mobile(req) 
+  //       });
+  //     });
+   
+  // }).on('error', function(e) {
+  //   var errors = e.errors;
+  //   for (var i = 0, len = errors.length; i < len; ++i) {
+  //     if (errors[i].reason == 'badRequest' && API_KEY == Insight_API_KEY ) {
+  //       console.log('Please specify your Google API key in the API_KEY variable.');
+  //     } else {
+  //       // NOTE: your real production app should use a better
+  //       // mechanism than alert() to communicate the error to the user.
+  //       console.log(errors[i].message);
+  //     }
+  //   }
+  // });
+
 
         res.render('report', { 
           title: 'Designed for Result | Speed Test Report', 
@@ -283,27 +308,6 @@ router.post('/speedtest/report', function(req, res, next ){
           screenshot: screenshot,
           isMobile: is_mobile(req) 
         });
-      });
-   
-  }).on('error', function(e) {
-    var errors = e.errors;
-    for (var i = 0, len = errors.length; i < len; ++i) {
-      if (errors[i].reason == 'badRequest' && API_KEY == Insight_API_KEY ) {
-        console.log('Please specify your Google API key in the API_KEY variable.');
-      } else {
-        // NOTE: your real production app should use a better
-        // mechanism than alert() to communicate the error to the user.
-        console.log(errors[i].message);
-      }
-    }
-    res.setHeader('Content-Type', 'application/json');
-    if (order) {
-      res.send(JSON.stringify({ 'success': 1 }));
-    } else {
-      res.send(JSON.stringify({ 'success': 0 }));
-    }
-
-  });
   
 });
 
@@ -323,4 +327,14 @@ router.post('/contact_mailer', function (req, res, next) {
   });
 });
 
+
+/* Legal Pages */
+
+router.get('/terms', function(req, res) {
+  res.render('terms', { title: 'Terms & Conditions | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+});
+
+router.get('/privacy', function(req, res) {
+  res.render('privacy', { title: 'Privacy Policy | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+});
 module.exports = router;

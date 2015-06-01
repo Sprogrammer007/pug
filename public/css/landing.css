@@ -244,6 +244,15 @@ footer .landing-logo img {
 footer .copy-right {
   text-align: center;
 }
+
+
+footer .bottom-footer {
+  margin-top: 20px;
+}
+footer .bottom-footer a {
+  color: #7E7E7E;
+  margin-right: 10px;
+}
 /* Checklist page */
 
 body.checklist-page {

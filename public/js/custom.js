@@ -58,96 +58,46 @@
     wow.init();
 
     // Submit Form
-    var MyAjax = {"ajaxurl":"http:\/\/localhost:3000\/contact_mailer"};
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-    var issuccess = function(f) {
-      jQuery(f).parent('div').removeClass('has-error').addClass('has-success');
-      jQuery(f).next('span').removeClass('glyphicon-remove hidden').addClass('glyphicon-ok').show();
-    }; 
-
-    var isfail = function(f) {
-      jQuery(f).parent('div').removeClass('has-success').addClass('has-error');
-      jQuery(f).next('span').removeClass('glyphicon-ok hidden').addClass('glyphicon-remove').show();
-    };
-
-    var afterSend = function(that, status) {
-      var message = (status === 'success') ? "your info has been sent, thank you!" : "something went wrong, please try again!"
-      setTimeout(function() {
-        jQuery('.contact-form-loader').removeClass('active');
-        that.append("<span class='after-send " + status + "''>" + message + "</span>")
-      }, 2000);
-      setTimeout(function() {
-        jQuery('.after-send').remove();
-        that.find('fieldset').fadeIn(500);
-      }, 4000);
-    }
-
-    var realtimecheck = function() {  
-      if(jQuery(this).hasClass('name')) {
-        if (jQuery.trim(jQuery(this).val()).length > 1) {
-          issuccess(this);
-        }else{
-          isfail(this);
-        }
-      } else if(jQuery(this).hasClass('email')) {
-        if(!emailReg.test(jQuery.trim(jQuery(this).val()))) {
-          isfail(this);
-        }else{
-          issuccess(this);
-        }
-      } else if(jQuery(this).hasClass('phone')) {
-        if(!phoneReg.test(jQuery.trim(jQuery(this).val()))) {
-          isfail(this);
-        }else{
-          issuccess(this);
-        }
-      }
-    }
-    
-   
-    jQuery(this).find('.require-field').each(function() {
-      jQuery(this).keyup(realtimecheck).change(realtimecheck);
-    });
-
     jQuery("form#contact-form").submit(function(){
+      console.log(window.location.origin);
       var error = false;
       var that = jQuery(this)
       jQuery(this).find('.require-field').each(function(){
         if(jQuery.trim(jQuery(this).val()) == '') {
           error = true;
-          isfail(this);
-        }else if(jQuery(this).hasClass('email')) {
+          $(this).tooltip('show');
+        } else if(jQuery(this).hasClass('email')) {
           if(!emailReg.test(jQuery.trim(jQuery(this).val()))) {
             error = true;
-            isfail(this);
-          }else{
-            issuccess(this);
+            $(this).tooltip('show');
           }
-        }else if(jQuery(this).hasClass('phone')) {
+        } else if(jQuery(this).hasClass('phone')) {
           if(!phoneReg.test(jQuery.trim(jQuery(this).val()))) {
             error = true;
-            isfail(this);
-          }else{
-            issuccess(this);
+            $(this).tooltip('show');
           }
-        }else{
-          issuccess(this);
         }
       });
       
       if(error) return false;
 
       var send_data = jQuery(this).serialize();
-      that.find('fieldset').fadeOut(300);
-      jQuery('.contact-form-loader').addClass('active');
-     
-      jQuery.post(MyAjax.ajaxurl, send_data, function(data){
+      $(this).find('.btn-reserve').append("<div class='loader8'></div>")
+  
+      jQuery.post(window.location.origin + '/contact_mailer', send_data, function(data){
         if( data.success == '1' ){
-          afterSend(that, "success");
+          that.hide();
+          $('.success').show();
+          dataLayer.push({
+            'event':'VirtualPageview',
+            'virtualPageURL':'/speedtest/done',
+            'virtualPageTitle' : 'Order Complete'
+          });
         }else{
-          afterSend(that, "fail");
+          $('.failure').show();
         }
       }, 'json');
       
@@ -257,7 +207,7 @@
       e.preventDefault();
       var form = $('#speedtest');
       var error = false;
-
+      console.log('test');
       form.find('.require-field').each(function(){
         if($.trim($(this).val()) == '') {
           error = true;

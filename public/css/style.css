@@ -1,11 +1,7 @@
 @charset "utf-8";
 
 /**
- * Table of Contents
- *
- * 1.0 - Reset
- * 2.0 - Header 
- * 2.1 - Header Banner
+ * Author Designed For Result All Rights Reserved 
  *
  *
  */
@@ -87,7 +83,7 @@ header .navbar-nav li a.logo {
 #home {
   width: 100%;
   background-color: #f16334;
-  height: calc(100vh - 180px);
+  padding-bottom: 290px;
 }
 
 #home .content {
@@ -114,6 +110,7 @@ header .navbar-nav li a.logo {
   color: #fff;
   display: block;
 }
+
 #home .analyzer {
   width: 700px;
   margin: 50px auto;
@@ -178,12 +175,17 @@ header .navbar-nav li a.logo {
   color: #D4D4D4;
   background-color: #016A53;
 }
-#home .tooltip {
+
+#home .tooltip,
+#report .tooltip {
   font-size: 20px;
+
 }
 
-#home .tooltip .tooltip-inner {
+#home .tooltip .tooltip-inner,
+#report .tooltip .tooltip-inner {
   background-color: #2E2E33;
+  max-width: 400px;
 }
 
 #home .tooltip .tooltip-arrow {
@@ -527,7 +529,7 @@ header .navbar-nav li a.logo {
 #report .btn-reserve {
   background-color: transparent;
   color: #FFF;
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
   width: 100%;
   padding: 10px 0;
@@ -551,6 +553,64 @@ header .navbar-nav li a.logo {
   font-size: 25px;
   color: #FFF;
 }
+
+#report .success,
+#report .failure {
+  font-family: 'Oswald';
+  text-align: center;
+  color: #FFF;
+  font-size: 25px;
+  padding: 20px;
+  display: none;
+  border: 5px dashed #FFF;
+}
+
+/*Legals*/
+
+#legal {
+  font-family: 'Helvetica';
+  color: #555;
+  margin-bottom: 30px;
+}
+
+#legal h1 {
+  padding: 20px 10px;
+  font-size: 45px;
+  border-top: 12px solid #2B2B2B;
+  border-bottom: 4px solid #2B2B2B;
+  color: #2B2B2B;
+  font-weight: 900;
+  font-family: 'Oswald';
+  margin-bottom: 30px;
+}
+
+#legal section {
+  padding: 0 10px;
+}
+
+#legal h2 {
+  font-size: 25px;
+  color: #2B2B2B;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+#legal p { 
+  line-height: 22px;
+  font-size: 16px;
+}
+
+#legal ul,
+#legal ol {
+  padding: 0 20px;
+}
+
+#legal ul li,
+#legal ol li  {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
 /*Footer*/
 
 footer {
