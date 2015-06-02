@@ -60,6 +60,12 @@ header .navbar {
 
 header .logo {
   margin-left: 20px;
+  display: block;
+  height: 50px;
+  max-height:  50px;
+}
+header .logo img { 
+  height: 100%;
 }
 
 header .navbar-nav li a {
