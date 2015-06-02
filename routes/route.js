@@ -131,9 +131,6 @@ function createOrderDetail(req, id) {
 
 }
 //Routes
-router.get('*',function(req,res){  
-  res.redirect('https://designedforresult.com'+req.url)
-});
 
 router.post('/checkout', function (req, res, next) {
   console.log(req.body)
