@@ -93,14 +93,6 @@ mailer.extend(app, {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-function requireHTTPS(req, res, next) {
-  if (!req.secure) { 
-    return res.redirect('https://' + req.get('host') + req.url);
-  }
-  next();
-}
-
-app.use(requireHTTPS);
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
