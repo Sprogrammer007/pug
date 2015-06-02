@@ -17,6 +17,7 @@ var conString = process.env.DATABASE_URL;
 // || 'postgres://steve007:@localhost/dev_clash'
 
 
+
 var client = new Client();
 var queryString = "CREATE TABLE IF NOT EXISTS users \
   ( \
@@ -92,8 +93,17 @@ mailer.extend(app, {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+function requireHTTPS(req, res, next) {
+  if (!req.secure) {
+      //FYI this should work for local development as well
+      return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+}
+
+app.use(requireHTTPS);
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
