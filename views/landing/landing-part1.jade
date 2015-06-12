@@ -21,10 +21,9 @@ head
   link(rel='stylesheet', href='/css/landing.css')
 
   //js
-  script(src='js/bootstrap.min.js')
-  script(src='js/wow.min.js')
-  script(src='js/trackpad-scroll.min.js')
-  script(src='js/landing.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/wow.min.js')
+  script(src='/js/trackpad-scroll.min.js')
 
   //Google Analytics
   script.
@@ -59,6 +58,35 @@ body.landing-page
     p.bottom-footer(style="text-align: center;")
       a(href='/terms') Terms & Condition
       a(href='/privacy') Privacy Policy
+
+  #optinup.modal.fade
+    .modal-dialog
+      .modal-content
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          .progress-bar
+            span.bar-text 50% Completed
+            .bar 
+
+          span.notice
+            | (enter your email address below and click the “Get Instant Access!” button)
+          .optin-title
+            | YES, I Want to Figure Out Whither My Business Need a Website!
+
+          form.optins.form-horizonta(action='/subscribe' method='post') 
+            .form-group.clearfix
+              input#inputEmail3.form-control(type='text', name="name", placeholder='Name*')      
+            .form-group
+              input#inputPassword3.form-control(type='email', name="email", placeholder='Email*')  
+            .form-group
+              button.btn.btn-optin(type='submit') Get Instant Access!
+          p.privacy 
+            i.fa.fa-lock
+            |  We value your privacy and would never spam you
+          p(style="font-size:12px;") By signing up you'll also receive access to the "Designed for Result" bi-weekly newsletter, exclusive offers, event information and helpful tips. View Designed for Result's 
+            a(href="/privacy-policy") Privacy Policy 
+            | .
   #privacy.modal.fade
     .modal-dialog
       .modal-content

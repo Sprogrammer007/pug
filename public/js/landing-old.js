@@ -1,5 +1,3 @@
-$(document).ready(function() {
-
   var tip6Showned = false;
   var modalOpen = false;
   // table of content scrolling
@@ -20,33 +18,33 @@ $(document).ready(function() {
   var tip6 = $('#6').position();
   var downloadListPos = downloadList.position();
 
-  $(window).on('scroll', function() {
-    if ( $(window).scrollTop() > downloadListPos.top - 10) {
-      downloadList.css('position', 'fixed').css('top', '30px');
-    } else {
-      downloadList.css('position', '').css('top', '');
-    };
+  // $(window).on('scroll', function() {
+  //   if ( $(window).scrollTop() > downloadListPos.top - 10) {
+  //     downloadList.css('position', 'fixed').css('top', '30px');
+  //   } else {
+  //     downloadList.css('position', '').css('top', '');
+  //   };
 
-    if ( $(window).scrollTop() > tip6.top  && !modalOpen && !tip6Showned) {
-      $('#wireframe').modal({
-        show: true,
-        keyboard: false,
-        backdrop: false
-      });
+  //   if ( $(window).scrollTop() > tip6.top  && !modalOpen && !tip6Showned) {
+  //     $('#wireframe').modal({
+  //       show: true,
+  //       keyboard: false,
+  //       backdrop: false
+  //     });
 
-      tip6Showned = true;
-      modalOpen = true;
-    }
+  //     tip6Showned = true;
+  //     modalOpen = true;
+  //   }
 
-    if ( $(window).scrollTop() > tip19.top ) {
-      $('footer').find('.close').hide()
-      $('footer').css('position', 'relative').css('bottom', '-80px');
-    }
-  });
+  //   if ( $(window).scrollTop() > tip19.top ) {
+  //     $('footer').find('.close').hide()
+  //     $('footer').css('position', 'relative').css('bottom', '-80px');
+  //   }
+  // });
 
-  $('#wireframe').on('hidden.bs.modla', function() {
-    modalOpen = false;
-  });
+  // $('#wireframe').on('hidden.bs.modla', function() {
+  //   modalOpen = false;
+  // });
 
   /* center modal */
   function centerModals(){
@@ -98,5 +96,3 @@ $(document).ready(function() {
 
       return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
   }
-
-});

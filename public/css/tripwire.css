@@ -1,0 +1,606 @@
+#tripwire {
+  font-family: "Oswald";
+}
+
+#tripwire span.orange {
+  color: #f16334;
+}
+
+#tripwire .container {
+  width: 800px;
+}
+
+#tripwire .tooltip-inner {
+  font-size: 18px;
+  background-color: #F11F31;
+}
+
+#tripwire .tooltip-arrow {
+  border-bottom-color: #F11F31;
+}
+
+#tripwire .download-section {
+  position: relative;
+  background: #f16334;
+  padding-bottom: 80px;
+}
+
+#tripwire .download-section:after, #report .report-wrapper:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#tripwire .download-section:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #f16334;
+  border-width: 30px;
+  margin-left: -30px;
+}
+
+#tripwire .download-section:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-top-color: #f16334;
+  border-width: 36px;
+  margin-left: -36px;
+}
+
+#tripwire h1 {
+  text-align: center;
+  color: #FFF;
+  font-size: 50px;
+  line-height: 60px;
+  font-weight: bold;
+}
+
+.download-section a {
+  display: block;
+  border: 3px dashed #555;
+  width: 40%;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.download-section i {
+  font-size: 90px;
+  color: #555;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.download-section a span {
+  text-align: center;
+  display: block;
+  color: #555;
+}
+
+.download-section a:hover {
+  background-color: transparent;
+  color: transparent;
+  border-color: #FFF;
+}
+
+.download-section a:hover i,
+.download-section a:hover span {
+  color: #FFF;
+} 
+
+.download-section p {
+  text-align: center;
+  color: #FFF;
+  font-size: 35px;
+  line-height: 45px;
+}
+
+
+
+#tripwire section {
+  background-image: url('../images/landingbg.png');
+}
+
+#tripwire .sp {
+  padding-top: 50px;
+}
+
+.sp h2 {
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 60px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.sp .subtitle {
+  font-size: 40px;
+  line-height: 55px;
+  text-align: center;
+  font-weight: bold;
+}
+
+section .has-bottom-border { 
+  padding-bottom: 50px;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.sp p {
+  font-weight: 300;
+  font-size: 25px;
+  line-height: 35px;
+}
+
+.sp .steps .step {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  color: #FFF;
+  line-height: 80px;
+  text-align: center;
+  border-radius: 50px;
+  background-color: #f16334;
+  margin-right: 15px;
+}
+
+.sp .steps .step-text {
+  display: inline-block;
+  width: 80%;
+  position: relative;
+  top: 20px;
+}
+
+.sp ul {
+  padding: 0;
+  font-size: 25px;
+  line-height: 35px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.sp ul ol {
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.sp .profile-pic img {
+  width: 100%;
+}
+
+.sp .testimonial {
+  margin-bottom: 20px;
+}
+
+.testimonial blockquote {
+  display: inline-block;
+  width: 78%;
+}
+.testimonial .bio {
+  margin-top: 15px;
+  font: 400 14px/16px 'Oswald';
+}
+
+.testimonial .bio img {
+  position: relative;
+  left: 3px;
+  top: -2px;
+}
+
+.company-logo {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+.company-logo img {
+  width: 100%;
+}
+
+/* CTA */
+.cta {
+  margin-bottom: 50px;
+}
+
+.cta .buy-now-group {
+  margin-top: 20px;
+}
+.cta .buy-now-group a:last-child { 
+  margin-right: 0;
+  padding: 22px 10px;
+  width: 36.2%;
+}    
+
+.cta .btn-buy {
+  width: 62.5%;
+  background-color: #ff3f00;
+  color: #FFF;
+  font-weight: 300;
+  margin-right: 10px;
+  font: 21px/28px 'Oswald';
+  padding: 20px 15px;
+  box-shadow: 0px -6px rgba(0, 0, 0, 0.3) inset, 0px 1px 1px rgba(0, 0, 0, 0.2);
+  border: 0px none;
+  border-radius: 2px;
+  text-shadow: 2px 1px 0 #CC3300;
+}
+
+.cta .btn-buy:hover {
+  background-color: #97001C;
+  text-shadow: 2px 1px 0 #942301;
+}
+
+.cta .btn span.regprice {
+  text-decoration: line-through;
+  text-shadow: none;
+  color: #FFD8CA;
+  font-size:  15px;
+}
+
+.cta .returndays {
+  display: block;
+  text-align: center;
+}
+
+/*Calendar*/
+
+#calendar td,
+#calendar th {
+  text-align: center;
+}
+
+
+#calendar td.open {
+  cursor: pointer;
+  background-color: #8EC12F;
+  color: #FFF;
+}
+
+#calendar td.booked {
+  cursor: no-drop;
+  background-color: #5F5F5F;
+  color: #FFF;
+}
+
+#calendar td.open:hover {
+  background-color: #538BC1;
+}
+
+#calendar td.yourspot {
+  cursor: no-drop;
+  background-color: #538BC1;
+  color: #FFF;
+}
+
+/* PAY */
+
+.lets-shake {
+ animation-name: shake;
+ -webkit-animation-name: shake;
+ -moz-animation-name: shake;
+ animation-duration: 2s;
+ -webkit-animation-duration: 2s;
+ -moz-animation-duration: 2s;
+ animation-iteration-count: 1;
+ -webkit-animation-iteration-count: 1;
+ -moz-animation-iteration-count: 1;
+}
+
+#pay .modal-content {
+  border-radius:  2px;
+}
+
+#pay .modal-header {
+  margin: 1px 1px 0 1px;
+  min-height: 47px;
+  background: #f0f0f2;
+  background-image: -webkit-linear-gradient(#f5f5f7,#e9e9ea);
+  background-image: -moz-linear-gradient(#f5f5f7,#e9e9ea);
+  background-image: -ms-linear-gradient(#f5f5f7,#e9e9ea);
+  background-image: -o-linear-gradient(#f5f5f7,#e9e9ea);
+  background-image: linear-gradient(#f5f5f7,#e9e9ea);
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #d3d3d4;
+}
+
+#pay .modal-header h4 {
+  text-align: center;
+  font-family: 'Oswald'
+}
+
+#pay .modal-body {
+  padding: 0;
+  height: 306px;
+}
+
+
+#pay .step-one,
+#pay .step-two {
+  margin: 15px;
+  top: 0;
+  left: 0;
+}
+
+#pay .step-two { 
+  width: 318px;
+}
+
+
+
+#pay .modal-content input {
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: 35px;
+}
+
+#pay .modal-content input:focus {
+  box-shadow: 0 0 5px #66afe9 inset !important;
+  border: 0;
+}
+
+#pay .is-success input {
+  outline: #09F300 solid 1px;
+}
+
+#pay .is-error input {
+  outline: #FF0D00 solid 1px;
+}
+
+#pay .inputs-group {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+#pay .inputs-group .fa {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+}
+
+
+#pay .modal-header button {
+  position: absolute;
+  width: 22px;
+  height: 23px;
+  border: 0;
+  box-shadow: none;
+  background-size: 100% 100%;
+  cursor: pointer;
+  opacity: 1;
+}
+
+#pay .modal-header .close {
+  right: 11px;
+  background: url("../images/sales/closebutton.png") no-repeat;
+}
+
+#pay .modal-header .back {
+  display: none;
+  left: 15px;
+  background: url("../images/sales/backarrow.png") no-repeat;
+}
+
+#pay .modal-header .back:focus {
+  border: 0;
+  outline: none;
+}
+
+.inputs-group span.card {
+  background-repeat: no-repeat;
+  background-size: 32px 20px;
+  position: absolute;
+  top: 6px;
+  right: 9px;
+  display: block;
+  width: 32px;
+  height: 20px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.inputs-group span.card.visa{
+  background: url("../images/cards/visa.png");
+}
+
+.inputs-group span.card.master{
+  background: url("../images/cards/master.png");
+}
+
+.inputs-group span.card.discovery{
+  background: url("../images/cards/discovery.png");
+}
+
+.inputs-group span.card.amex{
+  background: url("../images/cards/amex.png");
+}
+
+.form-group.address input {
+  border-bottom: 0;
+}
+
+#pay .form-set .inputs-group input {
+  width: 50%;
+  float: left;
+  border-bottom: 1px solid #CCC;
+}
+
+#pay .form-set .inputs-group:first-of-type input {
+  border-right: 0;
+}
+
+#pay .form-set .inputs-group:last-child .fa {
+  left: 165px;
+}
+
+
+#pay .modal-content .input-group-addon {
+  border-radius: 0;
+  border-right: none;
+  background-color: #FFF;
+  color: #000;
+}
+
+#pay .btn-info,
+#pay .btn-payment {
+  position: relative;
+  font-family: 'Oswald';
+  width: 100%;
+  background: #45b1e8;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 20px;
+  background-image: -webkit-linear-gradient(#45b1e8,#3097de);
+  background-image: -moz-linear-gradient(#45b1e8,#3097de);
+  background-image: -ms-linear-gradient(#45b1e8,#3097de);
+  background-image: -o-linear-gradient(#45b1e8,#3097de);
+  background-image: -webkit-linear-gradient(#45b1e8,#3097de);
+  background-image: -moz-linear-gradient(#45b1e8,#3097de);
+  background-image: -ms-linear-gradient(#45b1e8,#3097de);
+  background-image: -o-linear-gradient(#45b1e8,#3097de);
+  background-image: linear-gradient(#45b1e8,#3097de);
+}
+
+#pay .btn-info:before,
+#pay button.btn-payment:before {
+  content: " ";
+  display: block;
+  width: 99.4%;
+  height: 38px;
+  background-color: transparent;
+  border: 2px solid #FFF;
+  position: absolute;
+  left: 1px;
+  top: 1px;
+}
+#pay .btn-info .arrow-right,
+#pay .btn-payment .arrow-right {
+  background: url("../images/sales/arrowright.png");
+  background-repeat: no-repeat;
+  background-size: 19px 20px;
+  width: 19px;
+  height: 20px;
+  position: absolute;
+  right: 15px;
+  top: 12px;
+}
+
+
+@media(max-width:767px){
+  #tripwire .container {
+    width: 100%;
+  }
+  #tripwire .sp {
+    padding-top: 20px;
+  }
+
+  #tripwire h1 {
+    font-size: 25px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+
+  #tripwire .download-section {
+    padding-bottom: 30px;
+  }
+  
+  section .has-bottom-border {
+    padding-bottom: 20px;
+  }
+
+  .download-section a {
+    width: 50%;
+  }
+
+  .download-section i {
+    font-size: 50px;
+  }
+  .download-section p {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 300;
+  }
+  .sp h2 {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 32px;
+    margin-bottom: 20px;
+  }
+
+  .sp ul {
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  .sp p {
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+
+  .sp .steps .step {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .sp .steps .step-text {
+    width: 75%;
+  }
+
+  .cta img {
+    width: 80%;
+ 
+  }
+
+  .cta .btn-buy {
+    width: 48%;
+    font-size: 20px;
+    height: 130px;
+  }
+
+  .cta .btn-buy:first-child span:first-child {
+    font-size: 16px !important;
+  }
+
+  .cta .buy-now-group a:last-child {
+    width: 48%;
+  }
+
+  .testimonial .bio {
+    line-height: 23px;
+  }
+  .testimonial .bio img {
+    position: relative;
+    left: 3px;
+    top: 0;
+  }
+
+  .testimonial blockquote {
+    width: 100%;
+  }
+
+  .company-logo {
+    width: 80%;
+    margin-right: 0;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media(min-width:768px){
+ 
+}
+
+@media(min-width:992px){
+
+}
+
+@media(min-width:1200px){
+
+}

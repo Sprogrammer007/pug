@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var stripe = require("stripe")(process.env.STRIPE_KEY);
+// var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
 var MCID = process.env.MC_ID;
 var config = {};
 var https = require('https');
@@ -13,7 +14,7 @@ var client = new Client();
 client.connectSync(conString);
 
 // Insight API
-var Insight_API_KEY = 'AIzaSyBnI_N9K8Rhdn9ostrrh18aJXuDHM2SUbI';
+var Insight_API_KEY = process.env.INSIGHT_KEY;
 
 function is_mobile(req) {
   var ua = req.header('user-agent');
@@ -102,8 +103,9 @@ function dollarToCent(dollar) {
 function createOrder(req, user_id, customer_id, token) {
   var params = req.body;
   var prodname = params.product_name;
-  var mail = params.shipping;
-  var subtotal = dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
+  var mail = false;
+  var subtotal = dollarToCent(parseInt(params.sub_total));
+  // dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
   var status = "Pending"
   var query = 'INSERT INTO orders (user_id, stripe_cid, token, product_name, \
     mail, subtotal, status) VALUES ($1, $2, $3, $4, $5, $6, $7)';
@@ -151,7 +153,61 @@ router.post('/checkout', function (req, res, next) {
   }).then(function(customer) {
     console.log(customer);
     order = createOrder(req, user.id, customer.id, token);
-    res.redirect('/wireframe/thank-you/' + order.id );
+    res.redirect('/wireframe/thank-you/' + order.id);
+  });
+ 
+});
+
+router.post('/ckc', function (req, res, next) {
+  console.log(req.body)
+  var token = req.body.stripeToken;
+  var user = getUserByEmail(req);
+  var order = null;
+  if (user === undefined ) {
+    user = createUser(req);
+  } else {
+    updateUser(req, user.id)
+  }
+
+  // create stripe character
+  stripe.customers.create({
+    source: token,
+    email: req.body.email,
+    description: 'waiting for approvel for product '
+  }).then(function(customer) {
+    console.log(customer);
+    //create order in db
+    order = createOrder(req, user.id, customer.id, token);
+    
+    // charge amount
+    stripe.charges.create({ 
+      amount: order.subtotal,
+      currency: 'cad',
+      customer: customer.id,
+      description: "Charges for " + order.product_name
+    }, function(err, charge) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("payment charged");
+      }
+    });
+
+    req.app.mailer.send('trip_email', {
+      to: 'stevey@bigtalkconsulting.com', 
+      subject: 'New sale Consultation', 
+      body: req.body,
+      id: order.id,
+      pname: order.product_name
+    }, function (err) {
+      if (err) {
+        // handle error
+        console.log(err);
+        return;
+      }
+    });
+
+    res.redirect('/cc/thank-you/' + req.body.dt );
   });
  
 });
@@ -163,7 +219,7 @@ router.get('/', function(req, res, next) {
 
 /* GET Landing page. */
 router.get('/guide', function(req, res, next) {
-  res.render('landing/landing-part2', { title: 'Step Guide | Designed For Result',  path: req.path, isMobile: is_mobile(req) });
+  res.render('tripwire', { title: 'Step Guide | Designed For Result',  path: req.path, isMobile: is_mobile(req) });
 });
 
 router.get('/lp/guide', function(req, res, next) {
@@ -182,6 +238,14 @@ router.get('/wireframe/thank-you/:id', function(req, res) {
     console.log('error')
     res.render('sales/error', { title: 'No Order | Designed for Result',  path: req.path, isMobile: is_mobile(req)});
   }
+});
+
+router.get('/cc/thank-you/:dt', function(req, res) {
+  var s = req.params.dt.split(" ");
+  var date = s[0];
+  var time = s[1];
+  res.render('tripthankyou', { title: 'Thank You | Designed for Result', date: date, time: time,  path: req.path, isMobile: is_mobile(req)});
+
 });
 
 router.post('/wireframe/thank-you/done/:id', function(req, res) {
@@ -334,6 +398,8 @@ router.get('/robots.txt', function (req, res) {
   res.send("User-agent: *\n\
 Disallow: /lp/guide\n\
 Disallow: /guide\n\
+Disallow: /cc/thank-you\n\
+Disallow: /wireframe/thank-you\n\
 Disallow: /wireframe-discount");
 });
 

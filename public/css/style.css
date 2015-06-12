@@ -659,6 +659,7 @@ footer .footer-logo {
 footer .footer-legal {
   padding-left: 20px;
 }
+
 footer ul {
   text-align: right;
 }
@@ -843,6 +844,32 @@ footer ul li {
 
 @media(max-width:767px){
 
+
+  footer .footer-logo {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  footer .footer-legal {
+    font-size: 8px;
+  }
+
+  footer ul {
+    text-align: right;
+  }
+
+  footer ul li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  footer .menu {
+    font-size: 12px;
+    padding: 0;
+    text-align: center;
+    margin-top: 10px;
+  }
 }
 
 @media(min-width:768px){
