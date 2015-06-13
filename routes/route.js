@@ -271,6 +271,10 @@ router.post('/wireframe/thank-you/done/:id', function(req, res) {
   }
 });
 
+router.get('/getanswers', function (req, res, next) {
+  res.render('Contact', { title: 'Get Answers | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+});
+
 
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
@@ -311,7 +315,7 @@ router.post('/subscribe', function (req, res, next) {
 
 // SpeedTest
 
-router.get('/speedtest/report', function(req, res, next ){
+router.post('/speedtest/report', function(req, res, next ){
   var url = req.body.protocal + req.body.url;
   var result = '',
       score = 0,

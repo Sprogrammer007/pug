@@ -3,7 +3,7 @@ extends ./layout
 block content
   #report
   
-    section.report-wrapper
+    section.wrapper_orange.wrapper_arrow
       .container
         if (score != undefined && score > 75)
           h1 Wow! Your site looks great. There is not much we can do to help!
@@ -79,7 +79,7 @@ block content
               if (screenshot != undefined)
                 img(src="data:#{mime_type};base64,#{screenshot}")
 
-    section.report-contact
+    section.wrapper.contact_wrapper
       .container
         h2 We Can Improve Your Site!
 
@@ -88,7 +88,7 @@ block content
 
             .profile-image
               img(src="../images/profile.png")
-            span.subtitle "We have helped many companies to improve their site. Fill out the form to the right and get some free advice from us. Who knows, maybe you're our next ideal client."
+            span.profile_caption "We have helped many companies to improve their site. Fill out the form to the right and get some free advice from us. Who knows, maybe you're our next ideal client."
           .col-lg-7
             .failure Sorry, but we couldn't sent Reserve your spot please try again.
             .success Thanks we have recieved your request, someone will be in touch with you soon.

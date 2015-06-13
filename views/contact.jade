@@ -1,4 +1,65 @@
 extends ./layout
 
 block content
-  #home
+  #contact
+  
+    section.wrapper_orange.wrapper_arrow
+      .container
+        h1 Most Web Design Agencies Have It Wrong!
+          br
+          span.lessstrong They only care about aesthetics, and not objectives.
+
+        p.subtitle(style="color: #FFF; font-weight: 300;") We love beautiful designs too, but beauty alone doesn't always deliver result for your business. 
+          | Designed for Result will help you get clear on the objectives and benefits of operating your own business website in a simple 3 step process...
+        ul
+          ol 
+            span.circle_steps 1
+            p We will have a candid discussion on where your business currently stand, and where you would like it to be. 
+              | During this discussion we will find out whither a website is right for your business and what results will the website bring for your business. 
+          ol
+            span.circle_steps 2
+            p If and only if step #1 make sense for your business, we'll then begin to put together an action steps plan on how the website can be design to meet those objectives discussed in step #1.
+          ol
+            span.circle_steps 3
+            p In the final step we will begin to execute and iterate the actions we establish in step #2.
+
+    section.wrapper.contact_wrapper
+      .container
+        h2 You Got Questions? We Got Answers!
+
+        p.subtitle Fill out the form below, and we will arrange a time for us to answer any questions you may have about your business website, and 
+          span.stronger how to use it to grow your business. 
+          | We'll have a honest discussion about where you want to get to and see if we'll be able to help you get there.
+
+        .row
+          .col-lg-5
+
+            .profile-image
+              img(src="../images/profile.png")
+            span.profile_caption "We have helped many companies to improve their site. Fill out the form to the right and get some free advice from us. Who knows, maybe you're our next ideal client."
+          .col-lg-7
+            .failure Sorry, but we couldn't sent Reserve your spot please try again.
+            .success Thanks we have recieved your request, someone will be in touch with you soon.
+            form#contact-form(action="/contact_mailer" method="post")
+              input(type="hidden" name='position' val="speedreport")
+              .form-group
+                input.require-field.name(name="name" placeholder="First Name" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your name.")
+                i.fa.fa-user
+              .form-group
+                input.require-field.email(name="email" placeholder="Best Email" data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Incorrect Email.")
+                i.fa.fa-envelope-o
+              .form-group
+                input(name="url" placeholder="Website URL")
+                i.fa.fa-globe
+              .form-group
+                label Budget
+                select(name="budget")
+                  option 500
+                  option 1000
+                  option 5000
+                  option 10000
+                  option 25000
+                  option 50000+
+                i.glyphicon.glyphicon-menu-down
+
+              button.btn.btn-reserve Reserve Your Spot

@@ -51,6 +51,45 @@ header .nav li.active > a,
   margin-bottom: 2.5em;
 }
 
+
+.wrapper {
+  background: #FFF;
+  background-image: url('../images/landingbg.png');
+}
+
+.wrapper_orange {
+  position: relative;
+  background-color: #f16334;
+  min-height: 500px;
+  padding: 80px 0;
+}
+
+.wrapper_arrow:after, .wrapper_arrow:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.wrapper_arrow:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #FFF;
+  border-width: 30px;
+  margin-left: -30px;
+}
+
+.wrapper_arrow:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-top-color: #FFF;
+  border-width: 36px;
+  margin-left: -36px;
+}
+
+
 /** 2.0 - Header **/
 header .navbar {
   margin-bottom: 0;
@@ -76,9 +115,16 @@ header .navbar-nav li a {
   font-weight: 500;
 }
 
+header .navbar-nav li.active a {
+  color: #1FF5BF;
+}
+
 header .navbar-nav li a:hover {
-  background-color: rgba(0,0,0, 0.2);
-  color: #FFF;
+  background-color: transparent;
+}
+
+header .hvr-underline-from-center:before {
+  background-color: #FFF;
 }
 
 header .navbar-nav li a.logo {
@@ -232,62 +278,34 @@ header .navbar-nav li a.logo {
   margin: 20px 0 0 0;
 }
 
-/*Report*/
 
-#report h1 {
+
+/* Report Contact */
+
+#report h1,
+#contact h1 {
  font-family: 'Oswald';
  font-weight: 900;
  font-size: 55px;
  text-align: center;
  margin-bottom: 50px;
+ color: #FFF;
 }
 
 #report .a-url {
   font-size: 19px;
-  color: #727272;
+  color: #454545;
 }
 
 .a-url i {
-  color: #f16334;
+  color: #FFFFFF;
 }
 
-#report .report-wrapper {
-  position: relative;
-  background: #FFF;
-  border: 4px solid #FFF;
-  padding-bottom: 80px;
-  background-image: url('../images/landingbg.png');
-}
-
-#report .report-wrapper:after, #report .report-wrapper:before {
-  top: 100%;
-  left: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-#report .report-wrapper:after {
-  border-color: rgba(136, 183, 213, 0);
-  border-top-color: #FFF;
-  border-width: 30px;
-  margin-left: -30px;
-}
-
-#report .report-wrapper:before {
-  border-color: rgba(194, 225, 245, 0);
-  border-top-color: #FFF;
-  border-width: 36px;
-  margin-left: -36px;
-}
 
 #report .report-title {
-  border-top: 8px solid #555;
-  border-bottom: 3px solid #555;
-  color: #555;
+  border-top: 8px solid #FFFFFF;
+  border-bottom: 3px solid #FFFFFF;
+  color: #FFFFFF;
   padding: 15px 0;
   font-family: 'Helvetica';
   font-weight: 600;
@@ -339,7 +357,9 @@ header .navbar-nav li a.logo {
   display: block;
   border: 1px solid #ddd;
   margin-top: 5px;
-  padding: 20px
+  padding: 20px;
+  background-color: #FFF;
+
 }
 
 #report .tab-content ul {
@@ -434,97 +454,199 @@ header .navbar-nav li a.logo {
   height: 225px;
 }
 
-#report .report-contact {
-  background-color: #f16334;
-  min-height: 500px;
-  padding: 80px 0;
-}
 
-.report-contact .profile-image{
+#report .profile-image{
   width: block;
   width: 200px;
   margin: auto;
 }
 
-.report-contact .profile-image img {
+#report .profile-image img {
   width: 100%;
 }
 
-#report .report-contact h2,
-#report .subtitle  {
-  color: #FFF;
+#report .contact_wrapper h2,
+#report .profile_caption  {
+  color: #555;
   font-family: 'Oswald';
   text-align: center;
   display: block;
   margin-bottom: 60px;
 }
 
-#report .report-contact h2 {
+#report .contact_wrapper h2 {
   font-size: 50px;
 }
 
-#report .subtitle {
+#report .profile_caption {
   font-size: 25px;
   text-align: left;
   font-weight: 300;
 }
 
-#report .report-contact form input {
+#report .success,
+#report .failure, 
+#contact .success,
+#contact .failure {
+  font-family: 'Oswald';
+  text-align: center;
+  font-size: 25px;
+  display: none;
+  background-color: rgba(245, 245, 245, 0.68);
+  padding: 20px;
+  border-radius: 3px;
+}
+
+.failure {
+  color: #F80009;
+
+}
+/*Contact*/
+
+#contact h2 {
+  text-align: center;
+  font-family: 'Oswald';
+  font-size: 55px;
+  font-weight: 900;
+  margin-bottom: 30px;
+  color: #f16334;
+}
+
+#contact h1 .lessstrong {
+  font-weight: 300;
+  color: #000;
+  margin-top: 10px;
+  display: block;
+}
+
+#contact p.subtitle {
+  text-align: center;
+  font-family: 'Oswald';
+  font-weight: 400;
+  font-size: 29px;
+  line-height: 35px;
+  width: 900px;
+  margin: 20px auto; 
+  
+}
+
+#contact .wrapper {
+  padding-top: 80px;
+}
+
+#contact .wrapper_arrow:after,
+#contact .wrapper_arrow:before { 
+  border-top-color: #f16334;
+}
+
+#contact ul ol {
+  width: 1000px;
+  margin: 30px auto;
+}
+
+#contact ul ol p {
+  display: inline-block;
+  color: #FFF;
+  font-family: 'Oswald';
+  font-size: 23px;
+  font-weight: 300;
+  vertical-align: top;
+  width: 90%;
+}
+
+#contact ul ol span.circle_steps {
+  display: inline-block;
+  margin-right: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 23px;
+  color: #FFF;
+  border: 2px solid #FFF;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50px;
+  font-family: sans-serif;
+}
+
+
+#contact .profile-image{
+  width: block;
+  width: 200px;
+  margin: auto;
+}
+
+#contact .profile-image img {
   width: 100%;
-  background-color: transparent;
-  border: 0;
-  border-bottom: 1px solid #Fff;
 }
 
-#report form {
-  border: 5px dashed #FFF;
-  padding: 50px 20px;
-  position: relative;
-  border-radius: 2px
+#contact .profile_caption  {
+  color: #555;
+  font-family: 'Oswald';
+  text-align: center;
+  display: block;
+  font-size: 23px;
+  margin-top: 30px;
 }
 
-#report input:focus,
-#report select:focus,
-#report button:focus {
+#contact-form {
+  background-color: rgba(245, 245, 245, 0.68);
+  padding: 20px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+#contact-form input:focus,
+#contact-form select:focus,
+#contact-form button:focus {
   outline: none;
 }
 
-#report ::-webkit-input-placeholder {
-   color: #FFF;
+#contact-form input {
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #313131;
 }
 
-#report :-moz-placeholder { /* Firefox 18- */
-  color: #FFF; 
+#contact-form ::-webkit-input-placeholder {
+  color: #313131;
 }
 
-#report ::-moz-placeholder {  /* Firefox 19+ */
-  color: #FFF; 
+#contact-form :-moz-placeholder { /* Firefox 18- */
+  color: #313131; 
 }
 
-#report :-ms-input-placeholder {  
-  color: #FFF;
+#contact-form ::-moz-placeholder {  /* Firefox 19+ */
+  color: #313131; 
 }
 
-#report form input,
-#report form label, 
-#report form select {
-  color: #FFF;
+#contact-form :-ms-input-placeholder {  
+  color: #313131;
+}
+
+#contact-form input,
+#contact-form label, 
+#contact-form select {
+  color: #313131;
   font-size: 22px;
-  width: 50%;
   font-weight: normal;
   padding: 15px 10px;
   font-family: 'Oswald';
   margin-bottom: 15px;
 }
 
-#report form label {
-  border-bottom: 1px solid #FFF;
+#contact-form label, 
+#contact-form select  {
+  width: 50%;
 }
 
-#report form select {
+#contact-form label {
+  border-bottom: 1px solid #313131;
+}
+
+#contact-form select {
   -webkit-appearance: none;
   -moz-appearance: none;
-  border: 1px solid #FFF;
+  border: 1px solid #313131;
   border-radius: 0;
   margin: 0;
   overflow: hidden;
@@ -532,43 +654,34 @@ header .navbar-nav li a.logo {
   background: transparent;
 }
 
-#report .btn-reserve {
+#contact-form .btn-reserve {
   background-color: transparent;
-  color: #FFF;
+  color: #313131;
   font-size: 30px;
   text-align: center;
   width: 100%;
   padding: 10px 0;
-  border: 2px solid #FFF;
+  border: 2px solid #313131;
   border-radius: 50px;
 }
 
-#report .btn-reserve:hover { 
-  background-color: #FFF;
+#contact-form .btn-reserve:hover { 
+  background-color: #313131;
   color: #f16334;
 }
 
-#report .form-group {
+#contact-form .form-group {
   position: relative;
 }
 
-#report .form-group i {
+#contact-form .form-group i {
   position: absolute;
   right: 10px;
   top: 23px;
   font-size: 25px;
-  color: #FFF;
-}
-
-#report .success,
-#report .failure {
-  font-family: 'Oswald';
-  text-align: center;
-  color: #FFF;
-  font-size: 25px;
-  padding: 20px;
-  display: none;
-  border: 5px dashed #FFF;
+  color: #313131;
+  cursor: pointer;
+  pointer-events: none;
 }
 
 /*Legals*/

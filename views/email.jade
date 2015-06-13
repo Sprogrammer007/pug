@@ -5,5 +5,8 @@ html
     body
       p= "email: " + otherProperty.email
       p= "name: " +  otherProperty.name
-      p= "phone: " +  otherProperty.phone
+      if (otherProperty.phone)
+        p= "phone: " +  otherProperty.phone
+      if (otherProperty.url)
+        p= "url: " +  otherProperty.url
       p= "budget: " + otherProperty.budget

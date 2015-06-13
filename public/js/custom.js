@@ -45,7 +45,9 @@
         };
       });
     }
-   
+    
+
+
     $('[data-toggle="tooltip"]').tooltip();
 
     wow = new WOW({
