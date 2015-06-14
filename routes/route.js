@@ -272,7 +272,7 @@ router.post('/wireframe/thank-you/done/:id', function(req, res) {
 });
 
 router.get('/getanswers', function (req, res, next) {
-  res.render('Contact', { title: 'Get Answers | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('contact', { title: 'Get Answers | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
 });
 
 
