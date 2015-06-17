@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  #blog
+    .container
+      h1 Designed For Result Blog
+      p.subtitle We share some of the best of tips, tricks, secrets, ideas, data, and other fun stuff on Website Design, Marketing, and Optimization.
+      -if (posts.length > 0)
+        - each post in posts
+          .post-item-wrapper.col-lg-6.col-xs-12
+           
+            .post-item-image
+              a(href="/blog/#{post.url}")
+                img(src="#{post.display_image}")
+            .post-meta
+              span By: 
+                span.arthur #{post.arthur}
+              span.date.pull-right
+                | #{post.create_date}
+            a.post-item-title(href="/blog/#{post.url}")
+              h2 #{post.title}
+            .post-category
+              p #{post.category}
+            .post-item-excerpt
+              p
+                !{post.excerpt}
+
+            a.btn.btn-more(href="/blog/#{post.url}") Read this post

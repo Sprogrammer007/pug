@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+  #single
+    .container
+      .single-header
+        -if (post)
+          img.post-di(src="#{post.display_image}")
+      -if (post)
+
+        #social.share-wrapper(data-url='https://designedforresult.com/blog/#{post.url}' style='')
+          ul.post-share
+            li.facebook.share()
+              i.social-icon.fa.fa-facebook
+              .count 0
+            li.twitter.share(data-handle='designedforresult')
+              i.social-icon.fa.fa-twitter
+              .count 0
+            li.linkedin.share()
+              i.social-icon.fa.fa-linkedin
+              .count 0
+            li.gplus.share()
+              i.social-icon.fa.fa-google-plus
+              .count 0
+
+      .main-content-wrapper.col-lg-8.col-lg-offset-2
+        - if (post)
+          .post-title
+            h1 #{post.title}
+            .post-meta
+              .pull-left
+                .post-category
+                  | #{post.category}
+              .pull-right
+                span By: 
+                  span.arthur #{post.arthur} 
+                  | on  
+                span.date
+                  | #{post.create_date}
+            .clearfix
+          .post-content
+            | !{post.content}
+
+    .post-optin-wrapper
+      .container
+        .optin-box.col-lg-8.col-lg-offset-2
+        
+          p.optin-title
+            | How To Tell If A Website Is Right For Your Small Business
+          p.optin-description
+            | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
+          a.btn.btn-optin(href="/lp/guide")
+            | Download This Guide

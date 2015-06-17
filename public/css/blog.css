@@ -1,0 +1,44 @@
+#main-content {
+  display: block;
+  margin-left: 240px;
+  height: 100%;
+  width: calc(100% - 240px);
+  position: absolute;
+}
+
+#menu {
+  width: 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #383838;
+  height: 100%;
+}
+
+#menu ul {
+  padding: 0;
+}
+#menu ul ol{
+  cursor: pointer;
+  padding: 0;
+}
+
+#menu ul ol:hover{
+  background-color: #191919;
+}
+
+#menu ul ol a { 
+  color: #FFF;
+  display: block;
+  padding: 10px 30px;
+  width: 100%;
+}
+
+#menu ul ol a:hover {
+  text-decoration: none;
+}
+
+#newpost,
+#posts {
+  padding: 50px;
+}

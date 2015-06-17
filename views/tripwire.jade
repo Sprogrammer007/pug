@@ -159,18 +159,18 @@ head
              
               tbody
                 tr
-                th 11AM - 12AM
-                td.col-md-2.booked
-                  span(class="t1" data-time="11AM") Booked                  
-                td.col-md-2.open
-                    span(class="timepicker t2" data-time="11AM") Opened                      
+                  th 11AM - 12AM
                   td.col-md-2.booked
-                    span(class="t3" data-time="11AM") Booked
-                   - if (!isMobile)  
+                    span(class="t1" data-time="11AM") Booked                  
+                  td.col-md-2.open
+                      span(class="timepicker t2" data-time="11AM") Opened                      
                     td.col-md-2.booked
-                      span(class="t4" data-time="11AM") Booked                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="11AM") Booked  
+                      span(class="t3" data-time="11AM") Booked
+                     - if (!isMobile)  
+                      td.col-md-2.booked
+                        span(class="t4" data-time="11AM") Booked                      
+                      td.col-md-2.booked
+                        span(class="t5" data-time="11AM") Booked  
                 tr
                   th 1PM - 2PM
                   td.col-md-2.open
@@ -292,7 +292,7 @@ head
             .modal-body
               form#payment-form(action="/ckc" method="post")
                 input(type="hidden" name="product_name" value="")
-                input(type="hidden" name="sub_total" value="")
+                input(type="hidden" name="subtotal" value="")
                 input(type="hidden" name="dt" value="")
                 .step-one 
                   .form-group.email

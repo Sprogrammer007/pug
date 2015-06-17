@@ -1,0 +1,34 @@
+extends ./layout
+
+block content
+  #newpost
+    form(action='create' method='post')
+      .form-group
+        label Title
+        input.form-control(type='text', name='title') 
+      .form-group
+        label Arthur
+        input.form-control(type='text', name='arthur' value="Steve")      
+      .form-group
+        label Category
+        select.form-control(name='category')
+          option Beginners          
+          option Optimization          
+          option Marketing          
+      .form-group
+        label Content
+        textarea.form-control(name='content' rows="10")   
+      .form-group
+        label Excerpt
+        textarea.form-control(name='excerpt' rows="4")
+      .form-group
+        label Display Image
+        input.form-control(type='text', name='display_image')
+      .form-group    
+        label Status
+        select.form-control(name="status")
+          option(value="true") Live
+          option(value="false") Draft
+      .form-group
+        input.form-control(type='submit', value='Create Post' style="margin-left: 50%; width: 50%; background-color: #555; color: #FFF;")
+

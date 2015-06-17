@@ -3,15 +3,8 @@ var router = express.Router();
 var stripe = require("stripe")(process.env.STRIPE_KEY);
 // var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
 var MCID = process.env.MC_ID;
-var config = {};
 var https = require('https');
-
-
-var Client = require('pg-native');
-var conString = process.env.DATABASE_URL;
-// || 'postgres://steve007:@localhost/dev_clash';
-var client = new Client();
-client.connectSync(conString);
+var dbManager = require('../modules/database-manager');
 
 // Insight API
 var Insight_API_KEY = process.env.INSIGHT_KEY;
@@ -52,97 +45,16 @@ function extractFormats(formats, type) {
   return a;
 }
 
-function getUserByEmail(req) {
-  var query = 'SELECT * FROM users WHERE email=$1 LIMIT 1';
-  var user = client.querySync(query, [req.body.email])
-  return user[0];
-}
-
-function updateUser(req, id) {
-  var params = req.body;
-  var query = 'UPDATE users SET postal=$1, phone=$2, address=$3, city=$4 WHERE id=$5';
-  var postal = params.postal;
-  var phone = params.phone;
-  var address = params.address;
-  var city = params.city;
-  client.querySync(query, [postal, phone, address, city, id])
-}
-
-function getOrderByToken(token) {
-  var query = 'SELECT * FROM orders WHERE token=$1 LIMIT 1';
-  var order = client.querySync(query, [token])
-  console.log(order)
-  return order[0];
-}
-
-function getDetailsByOrderID(order_id) {
-  var query = 'SELECT * FROM order_details WHERE order_id=$1 LIMIT 1';
-  var details = client.querySync(query, [order_id])
-  return details[0];
-}
-
-function createUser(req) { 
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  var params = req.body;
-  var email = params.email;
-  var name = params.name;
-  var postal = params.postal;
-  var phone = params.phone;
-  var address = params.address;
-  var city = params.city;
-  var query = 'INSERT INTO users (name, email, phone, ip, address, postal, city) VALUES ($1, $2, $3, $4, $5, $6, $7)';
-  client.querySync(query, [name, email, phone, ip, address, postal, city]);
-  var user = getUserByEmail(req)
-  return user;
-}
-
-function dollarToCent(dollar) {
-  return (dollar * 100)
-}
-
-function createOrder(req, user_id, customer_id, token) {
-  var params = req.body;
-  var prodname = params.product_name;
-  var mail = false;
-  var subtotal = dollarToCent(parseInt(params.sub_total));
-  // dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
-  var status = "Pending"
-  var query = 'INSERT INTO orders (user_id, stripe_cid, token, product_name, \
-    mail, subtotal, status) VALUES ($1, $2, $3, $4, $5, $6, $7)';
-  client.querySync(query, [user_id, customer_id, token, prodname, mail, subtotal, status]);
-  var order = getOrderByToken(token)
-  return order;
-}
-
-function createOrderDetail(req, id) {
-  var params = req.body;
-  var company = params.company_name;
-  var position = params.position;
-  var industry = params.industry;
-  var years = params.year_business;
-  var website = params.website;
-  var important = params.website_importance;
-  var purpose = params.website_for;
-  var customer = params.customer;
-
-  var query = 'INSERT INTO order_details (order_id, company_name, position, industry, \
-    years, website, important, purpose, customer) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
-  client.querySync(query, [id, company, position, industry, years, website, important, purpose, customer]);
-  var detail = getDetailsByOrderID(id)
-  return detail;
-
-}
-//Routes
 
 router.post('/checkout', function (req, res, next) {
   console.log(req.body)
   var token = req.body.stripeToken;
-  var user = getUserByEmail(req);
+  var user = dbManager.getUserByEmail(req.body.email);
   var order = null;
   if (user === undefined ) {
-    user = createUser(req);
+    user = dbManager.createUser(req);
   } else {
-    updateUser(req, user.id)
+    dbManager.updateUser(req, user.id)
   }
 
 
@@ -152,21 +64,34 @@ router.post('/checkout', function (req, res, next) {
     description: 'waiting for approvel for product '
   }).then(function(customer) {
     console.log(customer);
-    order = createOrder(req, user.id, customer.id, token);
+    order = dbManager.createOrder(req, user.id, customer.id, token);
     res.redirect('/wireframe/thank-you/' + order.id);
   });
  
 });
 
 router.post('/ckc', function (req, res, next) {
-  console.log(req.body)
+  var userParams = {};
+  userParams.body = {};
+  userParams.body.email = req.body.email;
+  userParams.body.name = req.body.name;
+  userParams.body.address = req.body.address;
+  userParams.body.city = req.body.city;
+  userParams.body.postal = req.body.postal;
+  userParams.body.phone = req.body.phone;
+  userParams.body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var orderParams = {};
+  orderParams.body = {};
+  orderParams.body.product_name = req.body.product_name;
+  orderParams.body.subtotal = req.body.subtotal;
+
   var token = req.body.stripeToken;
-  var user = getUserByEmail(req);
+  var user = dbManager.getUserByEmail(req.body.email);
   var order = null;
   if (user === undefined ) {
-    user = createUser(req);
+    user = dbManager.createUser(userParams);
   } else {
-    updateUser(req, user.id)
+    dbManager.updateUser(userParams, user.id)
   }
 
   // create stripe character
@@ -176,8 +101,8 @@ router.post('/ckc', function (req, res, next) {
     description: 'waiting for approvel for product '
   }).then(function(customer) {
     console.log(customer);
-    //create order in db
-    order = createOrder(req, user.id, customer.id, token);
+    // create order in db
+    order = dbManager.createOrder(orderParams, user.id, customer.id, token);
     
     // charge amount
     stripe.charges.create({ 
@@ -250,7 +175,7 @@ router.get('/cc/thank-you/:dt', function(req, res) {
 
 router.post('/wireframe/thank-you/done/:id', function(req, res) {
   var id = req.params.id;
-  var order = createOrderDetail(req, id);
+  var order = dbManager.createOrderDetail(req, id);
   res.setHeader('Content-Type', 'application/json');
   if (order) {
     req.app.mailer.send('sale_email', {
@@ -298,7 +223,7 @@ router.post('/subscribe', function (req, res, next) {
 
   mc.lists.subscribe(mcReq, function(data) {
       console.log('User subscribed successfully! Look for the confirmation email.');
-      createUser(req);
+      dbManager.createUser(req);
       res.redirect('/checklist');
     },
     function(error) {

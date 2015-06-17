@@ -1,78 +1,25 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mailer = require('express-mailer');
-var mcapi = require('./node_modules/mailchimp-api/mailchimp');
-var routes = require('./routes/route');
-var users = require('./routes/users');
-var app = express();
-var fs = require('fs');
-var MCKEY = process.env.MC_KEY;
+var express = require('express')
+  , passport = require('passport')
+  , flash = require('connect-flash')
+  , auth = require('./modules/auth')
+  , session = require('express-session')
+  , path = require('path')
+  , favicon = require('serve-favicon')
+  , logger = require('morgan')
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
+  , mailer = require('express-mailer')
+  , mcapi = require('./node_modules/mailchimp-api/mailchimp')
+  , routes = require('./routes/route')
+  , users = require('./routes/users')
+  , blog = require('./routes/blog')
+  , app = express()
+  , fs = require('fs')
+  , dbManager = require('./modules/database-manager')
+  , MCKEY = process.env.MC_KEY;
 
-var Client = require('pg-native');
-var conString = process.env.DATABASE_URL; 
-// || 'postgres://steve007:@localhost/dev_clash'
-
-
-
-var client = new Client();
-var queryString = "CREATE TABLE IF NOT EXISTS users \
-  ( \
-    ID             SERIAL PRIMARY KEY     NOT NULL, \
-    NAME           TEXT,    \
-    EMAIL          TEXT    NOT NULL, \
-    PHONE          TEXT,    \
-    IP             TEXT,    \
-    CREATE_DATE    TIMESTAMP without time zone default (now() at time zone 'utc'), \
-    ADDRESS        CHAR(50), \
-    POSTAL         CHAR(50), \
-    CITY           CHAR(50) \
-  ); \
-  CREATE TABLE IF NOT EXISTS orders \
-  ( \
-    ID             SERIAL PRIMARY KEY     NOT NULL, \
-    USER_ID        INT,     \
-    STRIPE_CID     TEXT,     \
-    TOKEN          TEXT, \
-    PRODUCT_NAME   TEXT, \
-    MAIL           BOOL, \
-    SUBTOTAL       INT, \
-    TOTAL          INT, \
-    STATUS         TEXT, \
-    CREATE_DATE    TIMESTAMP without time zone default (now() at time zone 'utc'), \
-    APPROVE_DATE   TIMESTAMP without time zone default (now() at time zone 'utc') \
-  ); \
-  CREATE TABLE IF NOT EXISTS order_details \
-  ( \
-    ID             SERIAL PRIMARY KEY    NOT NULL, \
-    ORDER_ID       INT,     \
-    COMPANY_NAME   TEXT,     \
-    POSITION       TEXT, \
-    INDUSTRY       TEXT, \
-    YEARS          TEXT, \
-    WEBSITE        TEXT, \
-    IMPORTANT      TEXT, \
-    PURPOSE        TEXT, \
-    CUSTOMER       TEXT \
-  ); \
-"
-
-
-client.connect(conString, function(err) {
-  if(err) {
-    return console.error('could not connect to postgres', err);
-  }
-  client.query(queryString, function(err, result) {
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result);
-    client.end();
-  });
-});
+// Setup Databaes
+dbManager.init();
 
 
 mc = new mcapi.Mailchimp(MCKEY);
@@ -100,8 +47,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 6000000000 }}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', routes);
+app.use('/', blog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

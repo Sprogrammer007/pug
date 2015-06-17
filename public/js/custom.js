@@ -32,6 +32,7 @@
 
     
   $(document).ready(function() {
+    var $pageURL = $('.share-wrapper').attr('data-url');
 
     if (location.pathname === "/") {
       var anchor_offset = $(window).height() * 0.6 ;
@@ -45,8 +46,6 @@
         };
       });
     }
-    
-
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -223,10 +222,70 @@
       form.hide();
       form.parent('.analyzer').append('<p class="warning-title">Analyzing your website&hellip;</p><div id="analyzer-wrap"><div id="progressbar"></div></div><p id="analyzer-errors"><span>1 error</span> found&hellip;</p>');
       analize(form, 9.5);  
-
-
+     
     });
-  
+
+    // Social Counter
+    if ($('#social').length > 0 ) { 
+      (function(){
+        var position = $('.post-title').offset();
+        var width = $('.post-title').width();
+
+        $('#social').css({
+          'top': position.top,
+          'left': position.left + width + 20
+        });
+
+        $(window).on('scroll', function() {
+          if ( $(window).scrollTop() > (position.top - 100) ) {
+            $('#social').addClass('fixed');
+          } else {
+   
+            $('#social').removeClass('fixed');
+          };
+        });
+
+        // Facebook counter
+        $.getJSON('https://graph.facebook.com/?id=' + $pageURL, function (data) {
+          $('.facebook .count').text(data.shares);
+        }); 
+         // Twitter counter
+        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
+          $('.twitter .count').text(data.count);
+        });      
+         // Linkedin counter
+        $.getJSON('http://www.linkedin.com/countserv/count/share?url=' + $pageURL +'&callback=?', function (data) {
+          $('.linkedin .count').text(data.count);
+        }); 
+        // Google Plus counter
+        $.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent('https://plusone.google.com/_/+1/fastbutton?url=' +  $pageURL), function (data){
+          var gcount = (data.contents.match(/{c: (\d+)/) != null)  ? data.contents.match(/{c: (\d+)/)[1] : '0';
+          $('.gplus .count').text(gcount);
+        });
+      })();
+    }
+    // Socail Share
+    $('.post-share .share').on('click', function(e) {
+      var fShare = 'https://www.facebook.com/sharer/sharer.php?';
+      var tShare = 'https://twitter.com/intent/tweet?'; 
+      var lShare = 'https://www.linkedin.com/cws/share?'; 
+      var gShare = 'https://plus.google.com/share?url='; 
+      var tHandle = $('.post-share .twitter').attr('data-handle');
+      var pageTitle = $('.post-title h1').html();
+      var url = '';
+
+      if ($(this).hasClass('facebook')) {
+        url = fShare + 'u=' + encodeURIComponent($pageURL) + '&t=' + encodeURIComponent(pageTitle);
+      } else if ($(this).hasClass('twitter')) {
+        url = tShare + 'text=' + encodeURIComponent(pageTitle) + '&url=' + encodeURIComponent($pageURL) + '&via=' + tHandle;
+      } else if ($(this).hasClass('linkedin')) {
+        url = lShare + 'url=' + encodeURIComponent($pageURL) + '&token=&isFramed=true';
+      } else if ($(this).hasClass('gplus')) {
+        url = gShare + encodeURIComponent($pageURL)
+      }
+
+      window.open(url, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+    });
   });
 
 })(jQuery);

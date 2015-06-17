@@ -41,10 +41,9 @@ $(document).ready(function() {
   var c = 1;
   var i = 1;
   var v = 6;
-  if (isMobile.any) {
+  if (isMobile.any()) {
     v = 4;
   }
-
 
 
   while(c < v) {
@@ -203,7 +202,7 @@ $(document).ready(function() {
     var price =  $(this).data('price');
     $('#pay').find('.pname').html(productName);
     $('input[name="product_name"]').val(productName);
-    $('input[name="sub_total"]').val(price);
+    $('input[name="subtotal"]').val(price);
     dataLayer.push({
       'event':'VirtualPageview',
       'virtualPageURL':'/tripwire/address',
