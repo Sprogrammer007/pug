@@ -250,7 +250,7 @@
           $('.facebook .count').text(data.shares);
         }); 
          // Twitter counter
-        $.getJSON('httpss://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
+        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
           $('.twitter .count').text(data.count);
         });      
          // Linkedin counter
@@ -258,7 +258,7 @@
           $('.linkedin .count').text(data.count);
         }); 
         // Google Plus counter
-        $.getJSON('https://anyorigin.com/get?callback=?&url=' + encodeURIComponent('https://plusone.google.com/_/+1/fastbutton?url=' +  $pageURL), function (data){
+        $.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent('https://plusone.google.com/_/+1/fastbutton?url=' +  $pageURL), function (data){
           var gcount = (data.contents.match(/{c: (\d+)/) != null)  ? data.contents.match(/{c: (\d+)/)[1] : '0';
           $('.gplus .count').text(gcount);
         });
