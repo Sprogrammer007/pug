@@ -1,4 +1,4 @@
-var express = require('express')
+  var express = require('express')
   , moment = require('moment')
   , router = express.Router()
   , https = require('https')
@@ -70,7 +70,7 @@ router.get('/admin/post/new', function (req, res, next) {
     return res.render('blog/new', { title: 'New Post | Designed For Result',  path: req.path, isMobile: is_mobile(req), user: req.user});
   } else {
     req.flash('error', "please login!")
-    return res.redirect('/blog/login'); 
+    return res.redirect('/admin/login'); 
   }
 });
 
@@ -95,7 +95,7 @@ router.get('/admin/post/edit/:id', function (req, res, next) {
     return res.render('blog/edit', { title: 'Edit Post | Designed For Result',  path: req.path, isMobile: is_mobile(req), post: post});
   } else {
     req.flash('error', "please login!")
-    return res.redirect('/blog/login');  
+    return res.redirect('/admin/login');  
   }
 });
 

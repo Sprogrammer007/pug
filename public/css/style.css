@@ -92,25 +92,10 @@ header .nav li.active > a,
   margin-left: -36px;
 }
 
-hr.divider_double {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 0;
-  border-top: 10px double #eee;
+hr.divider2 {
+  background: transparent url("../images/fill_dot.png") repeat scroll 0% 0%;
 }
 
-hr.divider_double:before {
-  content: "\f1b3";
-  font: normal normal normal 14px/1 FontAwesome;
-  position: relative;
-  top: -20px;
-  font-size: 30px;
-  margin-left: -30px;
-  color: #5F5F5F;
-  left: 50%;
-  background-color: #FFF;
-  padding: 0 20px;
-}
 
 /** 2.0 - Header **/
 header .navbar {
@@ -421,6 +406,7 @@ header .navbar-nav li a.logo {
 }
 
 .post-item-wrapper .post-item-title h2 {
+  font-family: 'Oswald';
   color: #5D6769;
   font-size: 35px;
   line-height: 40px;
@@ -452,7 +438,7 @@ header .navbar-nav li a.logo {
 
 
 .post-item-wrapper .post-item-excerpt {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .post-item-wrapper .post-item-title:hover {
