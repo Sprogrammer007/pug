@@ -250,15 +250,15 @@
           $('.facebook .count').text(data.shares);
         }); 
          // Twitter counter
-        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
+        $.getJSON('httpss://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
           $('.twitter .count').text(data.count);
         });      
          // Linkedin counter
-        $.getJSON('http://www.linkedin.com/countserv/count/share?url=' + $pageURL +'&callback=?', function (data) {
+        $.getJSON('https://www.linkedin.com/countserv/count/share?url=' + $pageURL +'&callback=?', function (data) {
           $('.linkedin .count').text(data.count);
         }); 
         // Google Plus counter
-        $.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent('https://plusone.google.com/_/+1/fastbutton?url=' +  $pageURL), function (data){
+        $.getJSON('https://anyorigin.com/get?callback=?&url=' + encodeURIComponent('https://plusone.google.com/_/+1/fastbutton?url=' +  $pageURL), function (data){
           var gcount = (data.contents.match(/{c: (\d+)/) != null)  ? data.contents.match(/{c: (\d+)/)[1] : '0';
           $('.gplus .count').text(gcount);
         });

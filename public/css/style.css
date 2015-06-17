@@ -7,7 +7,7 @@
  */
 
 /*Fonts*/
-@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
 
 /* Global */
@@ -92,6 +92,25 @@ header .nav li.active > a,
   margin-left: -36px;
 }
 
+hr.divider_double {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 10px double #eee;
+}
+
+hr.divider_double:before {
+  content: "\f1b3";
+  font: normal normal normal 14px/1 FontAwesome;
+  position: relative;
+  top: -20px;
+  font-size: 30px;
+  margin-left: -30px;
+  color: #5F5F5F;
+  left: 50%;
+  background-color: #FFF;
+  padding: 0 20px;
+}
 
 /** 2.0 - Header **/
 header .navbar {
@@ -471,6 +490,11 @@ header .navbar-nav li a.logo {
 
 .single-header .post-di {
   width: 100%;
+}
+
+#single .main-content-wrapper {
+  width: 800px;
+  margin: auto;
 }
 
 .main-content-wrapper h1 {
