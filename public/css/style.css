@@ -94,6 +94,8 @@ header .nav li.active > a,
 
 hr.divider2 {
   background: transparent url("../images/fill_dot.png") repeat scroll 0% 0%;
+  border: 0;
+  height: 36px
 }
 
 

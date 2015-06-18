@@ -1,0 +1,317 @@
+extends ./layout
+
+block content
+  #single
+    .container
+      .single-header
+        -if (post)
+          img.post-di(src="#{post.display_image}")
+      -if (post)
+
+        #social.share-wrapper(data-url='https://designedforresult.com/blog/#{post.url}' style='')
+          ul.post-share
+            li.facebook.share()
+              i.social-icon.fa.fa-facebook
+              .count 0
+            li.twitter.share(data-handle='designedforresult')
+              i.social-icon.fa.fa-twitter
+              .count 0
+            li.linkedin.share()
+              i.social-icon.fa.fa-linkedin
+              .count 0
+
+      .main-content-wrapper
+        .post-title
+          h1 TEST HEADING
+          .post-meta
+            .pull-left
+              .post-category
+                | TEST
+            .pull-right
+              span By: 
+                span.arthur STEVE
+                | on  
+              span.date
+                | 24/24/24
+          .clearfix
+        .post-content
+          p Last time we check there are about 1 billion websites live on the internet right now as you're reading this article.
+          p That's right... 1 Billionnnnnnnnn. That's a 1 with 9 zeros  behind it. That is roughly the equivalent of the population of both United States and Europe combined.
+          p But what does this mean for you and your website as a business or a small business owner? 
+          p Well... as users see more and more websites, their expectation of what is acceptable has gone through the roof. Users expect your business website to be insanely fast. They expect it to works on with all mobile and screen sizes, and look great. 
+            | They expect it to look great and have great user experiences...
+          p Rand Fishkin from 
+            a(href="https://moz.com/") Moz
+            |  said it best “For many businesses, a Web site is the first way that your clientele will look at you–even if it’s just to find your address and phone number,” and 
+            | “The quality of your site is often a measure of the quality of your business.” 
+          p These days... just having a business website is just not "good enough", you must have a insanely great website. 
+          p But don't panic just yet, we are going to show you a 21-steps plan to raise your business website design to the next level.
+          hr.divider2
+          section
+              h2.sub-heading Website Plan Step #1: How Does The Website Fit Into Your Business?
+              p Why do you want to create a website? 
+              p How does the website integrate with your current business?  
+                br
+                |     What purpose does the website server?  
+                br
+                |     Do you want to sell your product or services online?  
+                br
+                |     Different purpose will change the structure and design of your website. For example: if you want to establish a stronger brand, then how you present your home page is critical. Figuring out the purpose of your website is going the most important part of your development process.
+          hr.divider2
+          section
+            h2.sub-heading Set a Budget for your website.
+            |   
+            p
+              | A quality website is like great piece of art. It is never really finished, and it is never really perfect.
+              | Odds are you're not going to create your perfect website the first try. You'll want to update it, change it, upgrade it and edit it.
+              | So set a budget for your website, it could be $1000 or $2000. Just make sure your budget is realistic, you do not want a cheap website that is going to cost you thousands later to change.
+              | That's like buying a second hand car for $500 only to find out you'll need to spent another $3000 more just to fix it up.
+          section
+            h2.sub-heading Figure out Who are the Audiences of your Website.
+            |   
+            p
+              | There isn't one site for everyone, just like there isn't an one size fits all shoe.
+              | Who are the viewers or audiences of your website once it is finished?
+              | Are they elderly who has a hard time reading small font size?
+              | Is it mostly going to be female visitors on your site?
+              | Pinterest is 68% female audience, they like pictures. What do
+              | your audience like? What do your audience want to know?
+            |   
+            p
+              | A good way to get some answers is to ask your existing customers. Ask them why they buy from you or do business with you. What would they like to learn, etc...
+          section
+            h2.sub-heading Design Your Core Pages.
+            |     
+            p
+              | Core pages are the pages that are must haves of your website. There is no rules on how many core pages a website should have but most business websites have at least 4. Home, About Us, Contact Us, and Our Services or Products.
+          section
+            h2.sub-heading Decide on a Color Scheme.
+            |   
+            p
+              | Colors speaks. Having the right color scheme for your website is important. It puts your viewers at the right mood to either leave your site or buy something.
+              | There are many books written on colors and how colors can effect emotions.
+              | A good book to read is &quot;Pantone Guide to Communicating with Color&quot; by &quot;Leatrice Eisemann&quot;.
+            |   
+            p
+              | While there are many guide lines you can follow when it comes to choosing a color scheme for your website.
+              | There is no right or wrong choices. And that is because every person will experience colors slightly different from cultures to cultures.
+              | Just start with two main colors that you believe speaks for your brand and then use free web tools such as Adobe Kular to figure out your color scheme.
+          section
+            h2.sub-heading Figure out If your Website Needs Illustration.
+            |   
+            p
+              | Most websites do not need custom illustrations.
+              | That said, illustrations are a great way to distinguish your brand from everyone else in your industry.
+              | Regardless of how professional we think we are, there is a kid in all of us who loves to play.
+              | Illustrations can really bring that fun, and personality out of your website.
+            |   
+            p
+              | If you think your site is going to need illustrations it is a good idea to plan ahead of time.
+              | Good illustration are very time consuming, and a good illustrator is expensive.
+              | Knowing you need illustrations on your website will allow you to tweak your budget accordingly.
+            |   
+            p
+              | Lastly there are many styles when it comes to illustrations. You can have a childish style, or a more mature style.
+              | Find an illustrator that has a style that connects with you and your brand.
+          section
+            h2.sub-heading Figure out what Images you want to Display.
+            |   
+            p
+              | Images are a vital part of any website. The old saying &ldquo;A picture is worth a thousand words&rdquo; rings extremely true when it comes to website design.
+              | People are visual, they like to look at images and watch videos.
+              | Studies has shown that 90% of all information are process as visual to our brain. And 40% of people respond better to visual information than plain text.
+            |   
+            p
+              | Spent some time and figure out images you want to display on your site.
+              | Use your own images is highly recommend, but you can always buy licenses to images on stock images site although they don't work as good.
+          section
+            h2.sub-heading Decide If you want Horizontal or Vertical Navigation.
+            |   
+            p
+              | What most people don't know is that a little more than a decade ago Vertical Navigation bar was far more popular than Horizontal Navigation bars. Web design was easy. There were no dropdowns menus, depth or categories for pages. A client would give you 7 to 8 pages and the designer would simply line them up vertically on the home and that was it.
+            |   
+            p
+              | As the world changes and the World Wide Web got more sophisticated,   individual websites also become more complex. Instead of the 8 pages most websites use to have; now websites will easily go over 20 pages of content. Listing every single page in a Vertical Navigation simply wasn't going to cut it. This force web designer to really think deeply about their design and learned to properly architect all the contents in an organized fashion. And in many ways a Horizontal bar was simply better than the traditional Vertical Navigation bar.
+            |   
+            p
+              | Fast track to today... Many professional web designer still argue furiously over wither Horizontal Navigation is better or Vertical Navigation is better. While there great companies who still make very good use of Vertical Navigations such as Walmart and Amazon, it is pretty clear that most websites favorites the Horizontal Navigation bar.
+            |   
+            p
+              | My person opinion is this: if you have a few pages then both Horizontal and Vertical would work. If you have a lot of pages and content with multiple level of depth then Horizontal with dropdown is more intuitive to users. But if you want to build an ecommerce with a lot of categories and you want the user to be able to visually see all the top categories right away then Vertical or a combination of both would be a great choice.
+          section
+            h2.sub-heading Design your Navigation Flow.
+            |   
+            p
+              | For most businesses 4 to 5 core pages and maybe a blog is all they're ever going to need for a website.
+              | However, we've worked with companies (Usually Professional firms or Retailers with a lot of products) that have hundreds of pages and dozens of categories.
+            |   
+            p
+              | For example: A law firm may want to have a home, about, team, practice area, media, FAQ, blog, careers and many more pages on their navigation.
+              | That is 8 different button on their main navigation, and that is a lot. You'll not only run out of room to display everyone of them on your main navigation bar, but it can also be overwhelming to your clients.
+            |   
+            p
+              | A good practice is to plan a head and design a navigation flow. Amazon does an exceptional job at their navigation flow.
+              | If you visit Amazon.com you see button &quot;Shop by Department&quot;, then you get a drop down menu of all the categories and sub-categories.
+              | It is well organized and intuitive to the their user.
+            |   
+            p
+              | A great tool that you can use to visualize your navigation flow is to use a tree diagram. This way you'll know exactly what page links to what and what category each page belongs to.
+          section
+            h2.sub-heading Figure out the Layout of the Homepage.
+            |   
+            p
+              | Homepage is going to be the one of most important page for your business website.
+              | In my opinion the purpose of your homepage is to connect and tell your audiences what you're about.
+              | For example: if you visit Apples website their homepage is almost always a huge HD pictures of their current hottest products and nothing else.
+              | That is because Apple is all about the next hot product and their home page demonstrates exactly that.
+            |   
+            p
+              | There are many ways to structure your homepage, some business uses videos, some has lots of pictures, and some business uses their blog as their homepage.
+              | But as a good rule to follow for homepages, is to keep it simple. The best homepages we have seen are not jam-packed with informations.
+              | Think about how you're going to layout your homepage. What content and information do you want to show your audience.
+          section
+            h2.sub-heading Decide How Many Contact Form your Website Needs.
+            |   
+            p
+              | Most companies we have worked with needed a contact form of some sort.
+              | Wither it is to get a quote request, consulting request, or to get feedbacks from customer, contact forms are a vital part of many businesses. Yet, we are always amazed at how horrible and complicated some of the contact forms that are out there. It is very simple. The more complicated a form appears the less likely the user will fill it out.
+            |   
+            p
+              | Also, if you're planning to implement multiple contact forms in different positions of your website.
+              | Make sure to ask your developers to implement a way to keep track of which form the user used to submit his information.
+              | This is little trick help many of our clients increase conversion simply by testing and moving the position of the contact form.
+          section
+            h2.sub-heading Write down a List of Functions your Website Needs.
+            |   
+            p
+              | One of the biggest mistakes business owners makes when creating their website is to add features and functionalities after the website has been completed.
+              | As developers we can tell you nothing kills more time and money then a client coming to as and say &quot;oh I want to add this to our website.&quot; one month after we've completed the site.
+            |   
+            p
+              | Anytime a new feature is added to the website, we must make sure that it is congruent and that it doesn't introduce new problems to the existing site.
+              | All that requires time to implement and test. While it is inevitable for business to make changes to their website as they grow.
+              | It is best for business owners to think and plan ahead, this will guranatee to save you money and time.
+          section
+            h2.sub-heading Create a Mock-up of your Website.
+            |   
+            p
+              | Most websites never go through the mock-up phase, which is very unfortunate. In the website development process Mock-ups are called wireframes. Wireframes can either be draw by hand or created digitally using applications such as Adobe Photoshop or Illustrator.
+            |   
+            p
+              | Wireframes are usually black and white with no fancy graphics or images. The only real goal of creating wireframes is to architect the Structure
+              | and flow of the website and it's content.
+            |   
+            p
+              | Using mock-ups or wireframes to plan your website will give you and your website developer a much clearer picture of how the website should look like once completed. As a result there will be less guessing, shorter development period, and more money back into your pocket.
+          section
+            h2.sub-heading Built your Website.
+            |   
+            p
+              | Finally it is time to make your dream into reality and actually built that website. But wait&mldr; there is more, having a website is only the beginning of being successful online.
+          section
+            h2.sub-heading Make your Website Mobile Friendly.
+            |   
+            p
+              | With 4 out of 5 consumers using their smart phones to shop online. SMBs who choose to do business online simply cannot affordable to leave their sites unresponsive for mobile usage.
+            |   
+            p
+              | To most people the idea of having a &ldquo;Responsive&rdquo; web design means mobile friendly, but what they don't realize is that there are actually two ways to make your site mobile friendly and Responsive is only one of them.
+              | Adaptive design is also a process of making your site mobile friendly but it is rarely talked about in the main stream. All Responsive designs can also be considered to be Adaptive but the reverse is not true. Allow me to explain.
+            |   
+            p
+              | Adaptive design is targeted modification of your website to specifically fit for certain screen sizes that you want to target such as iPhone 4, iPhone 5, iPad, Samsung Note 3, etc&mldr; Where as Responsive designs are more fluid with set break points. Another way to understand this is that Responsive design will scale accordingly as the screen size changes but Adaptive will only change to certain amount of specified screen sizes.
+            |   
+            p
+              | whether you should use an Adaptive approach or Responsive approach is purely base on the purpose of your site. If you know most of your users are going to use only desktop and say iPhone 5 then using the Adaptive approach will save you a lot of time and money. But chances are it is hard to predict what your users are going to use with dozens of different smart phones and tablets out there. In my opinion in most cases Responsive design is usually the better choice.
+          section
+            h2.sub-heading Create Contents for your Website.
+            |   
+            p
+              | Bill Gates famously said &ldquo;content is king&rdquo;, and that is especially true when it comes to creating an awesome website.
+              | What most people don't realize is that almost all websites are about 80% content and 20% aesthetics /structure.
+            |   
+            p
+              | This is why most website templates falls flat after you purchase it. They look great when you view them as demo but some how your site just doesn't seem to match up.
+              | That's because the templates are carefully crafted with the right content to draw attention, and with out those contents the templates are just shapes with color.
+          section
+            h2.sub-heading Create Legal Pages for your website.
+            |   
+            p
+              | Legal pages should exist for every website. Disclaimer, Privacy Policy, and Terms of Use. You don't know who is going to use your website, it's better to protect yourself.
+            |   
+            p
+              span.strong Terms of Use
+              | - This page explains what actions a user can and cannot perform while browsing your website. Terms of Use may vary from websites to websites, as many website will have different purpose and content.  A few important item you should in this page are ownership of content on site and submitted by your users, types of allowed and disallowed material in the contents submitted by users, how links should be used on your site, and how any advice provided on your site should be consume by the user.
+            |   
+            p
+              span.strong Disclaimer 
+              | - Disclaimers are much like Terms of Use but usually shorter. Disclaimers are usually for site with a lot of submitted content by users such as a forum or a blog (commenting), as well as site with a lot of advisory information. Disclaimer should simply state that most information on your site are not moderated and you and your business should not be held responsible able on how people will use the information.
+            |   
+            p
+              span.strong Privacy Policy 
+              | - This legal page should tell your user how their private informations are collected and used by your website and company. Privacy Policy should contain the use of cookies and trackers, a way for your users to contact you if they want their information removed, and if you work with third party sites you must also disclose if they will be collecting information as well.
+          section
+            h2.sub-heading Get  Honest Feedbacks  from Friends and Families.
+            |   
+            p
+              | This is a tricky one. The keyword here is &ldquo;honest&rdquo;. You want to get some feed back from your friends and families before you go live with your website. That said, most friends and families will give you positive answers cause they don't want to hurt your feelings, so it is your job to encourage them to give you honest feed backs.
+          section
+            h2.sub-heading Register your Domain Name.
+            |   
+            p
+              | Whenever you type a domain name such as example.com the browser looks up the associated I.P address or addresses and then uses that I.P address to fetch the files of your website on a server connected to the World Wide Web.
+            |   
+            p Simple enough right?
+            |   
+            p
+              | Don't worry if you don't quiet get it. All you need to know is that a domain name is simply a unique string of letters that identifies where about is your files for your website is located in this world.
+            |   
+            p
+              | There are usually 2 parts to any domain name. The Top Level Domain and the Second/Lower Level Domain. The top-level domain the &ldquo;com&rdquo; or &ldquo;org&rdquo; or &ldquo;net&rdquo; part of the domain name, and the second/lower-level domain are the names directly to the left of .com, .net, and the other top-level domains.
+            |   
+            p
+              | Now that we understand the difference between the top-level domain and the lower-level domain, here are a few suggestions when purchasing your domain name. First domain names with their top-level domain as .com, or .ca are usually going to rank better then .net or. org.
+            |   
+            p
+              | Second, when picking out a name for your lower-level domain. Find something that is easy to remember, short, and simple to spell. Try to avoid using hyphens or numbers in your domain name as much as possible.
+          section
+            h2.sub-heading Choose a Hosting Provider.
+            |   
+            p
+              | There are dozens of web hosting companies out that and most of them are affordable. But choose carefully, here are a you should consider when choosing an idea hosting for your website.
+            |   
+            p
+              span.strong 1) Will it support your site 
+              | - While most of the web hosting provider companies now days will support the most commonly used programming languages for websites,
+              |     it is always a good idea to double check. If you have no idea what you technical specs you should look for ask your developer before signing up.
+            |   
+            p
+              span.strong 2) Type of hosting 
+              | - There are 3 types of hosting that most hosting companies will offer.
+              |     Shared hosting, Virtual Private hosting, and Dedicated private hosting.
+              |     Shared is hosting is the cheapest, that is because your website will be sharing resources with hundreds of other website on the same server.
+              |     Hence the name Shared hosting. Virtual Private hosting is the most idea for smaller businesses.
+              |     Unlike Share hosting, Virtual Private hosting allocates a specific amount of resources from a physical server in a virtual environment just for your website.
+              |     Dedicated private hosting is the most expensive, but you get your own physical server and 100% of the resources all to yourself.
+              |     Ideal for larger websites with huge traffic.
+            |   
+            p
+              span.strong 3) Up Time 
+              | - Most web-hosting provider will guarantee you 99% uptime, but 1% of 365 days is 3 and half days of time.
+              |     The 3 days might seem small but if you rely on your website to generate revenue, 3 days of down time can cost you a lot.
+              |     Look for hosting provider who guarantee 99.9% uptown, the 0.9% uptime come at a higher upfront cost but it's worth it.
+            |   
+            p
+              span.strong 4) Bandwidth &amp; Speed 
+              | - Some hosting provider will promise you unlimited Bandwidth, and in most cases unlimited Bandwidth is never really unlimited.
+              |     Unlimited bandwidth usually comes with slow speed, and the speed of your site is a big ranking factor for Google. Look for a provider with reasonable Bandwidth for your traffic load.
+            |   
+            p
+              span.strong 5) Support 
+              | - Good support is critical when it comes to hosting provider. Enough said.
+          section
+            h2.sub-heading Launch &amp; Promote your website.
+            |   
+            p
+              | That's right you're not finish yet&mldr; Creating and launching a website is only the first step of your path to online success, now you must promote your site. You can promote your site offline to friends, families, and current clients/customer.
+              | Or you can try marketing your site online using ideas such as SEO, PPC, Social Media, etc&mldr;

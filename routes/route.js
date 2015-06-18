@@ -200,6 +200,10 @@ router.get('/getanswers', function (req, res, next) {
   res.render('contact', { title: 'Get Answers | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
 });
 
+router.get('/test', function (req, res, next) {
+  res.render('test', { title: 'Test Page | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+});
+
 
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
