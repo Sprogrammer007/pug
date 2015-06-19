@@ -173,40 +173,45 @@ header .navbar-nav li a.logo {
 .post-share li {
   cursor: pointer;
 }
-
-.post-share .facebook {
+#facebookf .box,
+#facebook .box {
   background-color: #435e9c;
 }
-
-.post-share .facebook:hover {
+#facebookf .box:hover,
+#facebook .box:hover {
   background-color: #304472;
 }
 
-.post-share .twitter {
+#twitterf .box,
+#twitter .box {
   background-color: #4bc6fd;
 }
-
-.post-share .twitter:hover {
+#twitterf .box:hover,
+#twitter .box:hover {
   background-color: #2E7FA3;
 }
 
-.post-share .linkedin {
+#linkedinf .box,
+#linkedin .box {
   background-color: #007bb6;
 }
-
-.post-share .linkedin:hover {
+#linkedinf .box:hover,
+#linkedin .box:hover {
   background-color: #004E73;
 }
-
-.post-share .gplus {
+#googleplusf .box,
+#googleplus .box {
   background-color: #DC4748;
 }
 
-.post-share .gplus:hover {
+#googleplusf .box:hover,
+#googleplus .box:hover {
   background-color: #DC4748;
 }
 
-.post-share .share {
+#social .box,
+#post-footer-share .box {
+  width: 90px;
   display: block;
   color: #fff;
   font-size: 16px;
@@ -214,18 +219,38 @@ header .navbar-nav li a.logo {
   -moz-border-radius: 2px;
   border-radius: 2px;
   margin-bottom: 10px;
-  padding: 10px 13px;
+  padding: 5px 13px;
 }
 
-.post-share .count {
-  display: inline-block;
+#social a:hover,
+#post-footer-share a:hover {
+  text-decoration: none;
+}
+
+#post-footer-share .box {
+  float: left;
+  margin-right: 10px;
+}
+
+#social .count,
+#post-footer-share .count {
   width: 30px;
 }
-
-.post-share .social-icon {
+#social .social-icon,
+#post-footer-share .social-icon {
   width: 20px;
   margin-right: 5px;
 }
+
+#social .box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#post-footer-share {
+  margin: 20px 0;
+}
+
 
 /*Home*/
 

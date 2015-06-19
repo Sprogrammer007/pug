@@ -8,17 +8,11 @@ block content
           img.post-di(src="#{post.display_image}")
       -if (post)
 
-        #social.share-wrapper(data-url='https://designedforresult.com/blog/#{post.url}' style='')
-          ul.post-share
-            li.facebook.share()
-              i.social-icon.fa.fa-facebook
-              .count 0
-            li.twitter.share(data-handle='designedforresult')
-              i.social-icon.fa.fa-twitter
-              .count 0
-            li.linkedin.share()
-              i.social-icon.fa.fa-linkedin
-              .count 0
+        #social.share-wrapper()
+          #twitter(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+          #facebook(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+          #googleplus(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+          #linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
 
       .main-content-wrapper
         - if (post)
@@ -35,13 +29,19 @@ block content
                 span.date
                   | #{post.create_date}
             .clearfix
-          .post-content(data-pon="#{post.popon}")
+          .post-content(data-pon= (post.popon != undefined) ? '#{post.popon}' : '')
             | !{post.content}
+            #post-footer-share
+              #twitterf(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+              #facebookf(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+              #googleplusf(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+              #linkedinf(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
 
     .post-optin-wrapper
       .container
         .optin-box.optin-content.col-lg-8.col-lg-offset-2
-          - if (post.boptin)
+    
+          - if (post.boptin != undefined)
             | !{post.boptin} 
           - else
             p.optin-title

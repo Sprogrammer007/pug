@@ -335,6 +335,7 @@ router.get('/robots.txt', function (req, res) {
   res.send("User-agent: *\n\
 Disallow: /lp/guide\n\
 Disallow: /guide\n\
+Disallow: /test\n\
 Disallow: /cc/thank-you\n\
 Disallow: /wireframe/thank-you\n\
 Disallow: /wireframe-discount");

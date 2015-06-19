@@ -32,6 +32,64 @@
 
     
   $(document).ready(function() {
+    // Sharrre
+
+    $('#twitter, #twitterf').sharrre({
+      share: {
+        twitter: true
+      },
+      enableHover: false,
+      enableTracking: true,
+      buttons: { twitter: {via: ''}},
+      template: '<a class="box" href="#"><i class="social-icon fa fa-twitter"></i><span class="count" href="#">{total}</span></a>',
+
+      click: function(api, options){
+        api.simulateClick();
+        api.openPopup('twitter');
+      }
+    });
+    $('#facebook, #facebookf').sharrre({
+      share: {
+        facebook: true
+      },
+      enableHover: false,
+      enableTracking: true,
+      template: '<a class="box" href="#"><i class="social-icon fa fa-facebook"></i><span class="count" href="#">{total}</span></a>',
+
+      click: function(api, options){
+        api.simulateClick();
+        api.openPopup('facebook');
+      }
+    });
+    $('#googleplus, #googleplusf').sharrre({
+      share: {
+        googlePlus: true
+      },
+
+      enableHover: false,
+      enableTracking: true,
+      template: '<a class="box" href="#"><i class="social-icon fa fa-google-plus"></i><span class="count" href="#">{total}</span></a>',
+
+      click: function(api, options){
+        api.simulateClick();
+        api.openPopup('googlePlus');
+      }
+    });    
+    $('#linkedin, #linkedinf').sharrre({
+      share: {
+        linkedin: true
+      },
+
+      enableHover: false,
+      enableTracking: true,
+      template: '<a class="box" href="#"><i class="social-icon fa fa-linkedin"></i><span class="count" href="#">{total}</span></a>',
+
+      click: function(api, options){
+        api.simulateClick();
+        api.openPopup('linkedin');
+      }
+    });
+
     var $pageURL = $('.share-wrapper').attr('data-url');
 
     if (location.pathname === "/") {
@@ -233,7 +291,7 @@
 
         $('#social').css({
           'top': position.top,
-          'left': position.left + width + 20
+          'left': position.left + width + 80
         });
 
         $(window).on('scroll', function() {
@@ -245,42 +303,10 @@
           };
         });
 
-        // Facebook counter
-        $.getJSON('https://graph.facebook.com/?id=' + $pageURL, function (data) {
-          $('.facebook .count').text(data.shares);
-        }); 
-         // Twitter counter
-        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + $pageURL +'&callback=?', function (data) {
-          $('.twitter .count').text(data.count);
-        });      
-         // Linkedin counter
-        $.getJSON('https://www.linkedin.com/countserv/count/share?url=' + $pageURL +'&callback=?', function (data) {
-          $('.linkedin .count').text(data.count);
-        }); 
+   
       })();
     }
-    // Socail Share
-    $('.post-share .share').on('click', function(e) {
-      var fShare = 'https://www.facebook.com/sharer/sharer.php?';
-      var tShare = 'https://twitter.com/intent/tweet?'; 
-      var lShare = 'https://www.linkedin.com/cws/share?'; 
-      var gShare = 'https://plus.google.com/share?url='; 
-      var tHandle = $('.post-share .twitter').attr('data-handle');
-      var pageTitle = $('.post-title h1').html();
-      var url = '';
-
-      if ($(this).hasClass('facebook')) {
-        url = fShare + 'u=' + encodeURIComponent($pageURL) + '&t=' + encodeURIComponent(pageTitle);
-      } else if ($(this).hasClass('twitter')) {
-        url = tShare + 'text=' + encodeURIComponent(pageTitle) + '&url=' + encodeURIComponent($pageURL) + '&via=' + tHandle;
-      } else if ($(this).hasClass('linkedin')) {
-        url = lShare + 'url=' + encodeURIComponent($pageURL) + '&token=&isFramed=true';
-      } else if ($(this).hasClass('gplus')) {
-        url = gShare + encodeURIComponent($pageURL)
-      }
-
-      window.open(url, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
-    });
+  
   });
 
 })(jQuery);
