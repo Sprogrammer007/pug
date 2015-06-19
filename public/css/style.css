@@ -7,7 +7,7 @@
  */
 
 /*Fonts*/
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
 
 
 /* Global */
@@ -489,6 +489,7 @@ header .navbar-nav li a.logo {
   font-family: 'Oswald';
   color: #5D6769;
   font-size: 40px;
+  font-weight: 900;
   line-height: 50px;
   color: #f16334;
 }
@@ -505,9 +506,30 @@ header .navbar-nav li a.logo {
 }
 
 .post-content h2 { 
+  font-size: 25px;
+  color: #3E413F;
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-family: 'Oswald';
 } 
 
-.post-optin-wrapper {
+.post-content li {
+  margin-bottom: 10px;
+}
+
+.post-content img { 
+  margin-top: 15px;
+  margin-bottom: 15px;
+  max-width: 100%;
+}
+
+.post-content .sblue {
+  font-weight: 900;
+  color: #149BE0;
+}
+
+.post-content a {
+  color: #5399F2;
 }
 
 .post-optin-wrapper .optin-box {
@@ -1064,13 +1086,18 @@ footer ul li {
   padding-top: 20px;
 }
 
+#thankyou i {
+  font-size: 250px;
+  color: #555;
+}
+
 #thankyou.container {
   font-family: 'Oswald';
   width: 800px;
 }
 
 #thankyou h1 {
-  font-size: 80px;
+  font-size: 60px;
   font-weight: 900;
   color: #f16334;
   text-align: center;

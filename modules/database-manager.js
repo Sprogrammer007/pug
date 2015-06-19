@@ -50,11 +50,14 @@ var queryString = "CREATE TABLE IF NOT EXISTS users \
     ARTHUR         TEXT, \
     CONTENT        TEXT, \
     EXCERPT        TEXT, \
+    BOPTIN         TEXT, \
+    POPTIN         TEXT, \
+    POPON          BOOL, \
     CATEGORY       TEXT, \
     TITLE          TEXT, \
     URL            TEXT, \
     DISPLAY_IMAGE  TEXT, \
-    STATUS         TEXT, \
+    STATUS         BOOL, \
     CREATE_DATE    DATE, \
     UPDATE_DATE    DATE \
   ); \

@@ -14,3 +14,12 @@ footer
             a(href='/terms') Terms & Condition
           li
             a(href='/privacy') Privacy Policy
+#poptin.modal.fade
+  .modal-dialog
+    .modal-content
+      button.close(type='button', data-dismiss='modal', aria-label='Close')
+        span &times;
+      - if (post)
+        .popoptin
+          | !{post.poptin}
+

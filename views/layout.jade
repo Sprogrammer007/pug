@@ -19,7 +19,30 @@ head
   link(rel='stylesheet', href='/css/ie7.css')
   link(rel='stylesheet', href='/css/style.css')
 
-    
+
+
+  // Facebook Conversion Code for Lead Meg One
+  script.
+    (function() {
+    var _fbq = window._fbq || (window._fbq = []);
+    if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+    }
+    _fbq.push(['addPixelId', '467069506789584']);
+    })();
+    window._fbq = window._fbq || [];
+    window._fbq.push(['track', 'PixelInitialized', {}]);
+    window._fbq.push(['track', '6026857587376', {'value':'0.00','currency':'CAD'}]);
+  noscript
+    img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?ev=6026857587376&cd[value]=0.00&cd[currency]=CAD&noscript=1')
+  noscript
+    img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?id=467069506789584&ev=PixelInitialized')
+
   body
 
     // Google Tag Manager
@@ -36,6 +59,7 @@ head
     block content
     include ./footer.jade
     //js
+    script(src='/js/modernizr.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/wow.min.js')
     script(src='/js/custom.js')

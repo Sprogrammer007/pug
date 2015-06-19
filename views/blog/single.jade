@@ -20,7 +20,7 @@ block content
               i.social-icon.fa.fa-linkedin
               .count 0
 
-      .main-content-wrapper
+      .main-content-wrapper(data-pon="#{post.popon}"))
         - if (post)
           .post-title
             h1 #{post.title}
@@ -40,11 +40,13 @@ block content
 
     .post-optin-wrapper
       .container
-        .optin-box.col-lg-8.col-lg-offset-2
-        
-          p.optin-title
-            | How To Tell If A Website Is Right For Your Small Business
-          p.optin-description
-            | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
-          a.btn.btn-optin(href="/lp/guide")
-            | Download This Guide
+        .optin-box.optin-content.col-lg-8.col-lg-offset-2
+          - if (post.boptin)
+            | !{post.boptin} 
+          - else
+            p.optin-title
+              | How To Tell If A Website Is Right For Your Small Business
+            p.optin-description
+              | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
+            a.btn.btn-optin(href="/lp/guide")
+              | Download This Guide

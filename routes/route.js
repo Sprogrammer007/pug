@@ -169,8 +169,12 @@ router.get('/cc/thank-you/:dt', function(req, res) {
   var s = req.params.dt.split(" ");
   var date = s[0];
   var time = s[1];
-  res.render('tripthankyou', { title: 'Thank You | Designed for Result', date: date, time: time,  path: req.path, isMobile: is_mobile(req)});
-
+  res.render('tripthankyou', { title: 'Thank You | Designed for Result', 
+    date: date, 
+    time: time,  
+    path: req.path, 
+    isMobile: is_mobile(req)
+  });
 });
 
 router.post('/wireframe/thank-you/done/:id', function(req, res) {

@@ -37,5 +37,16 @@ block content
           option(value="true") Live
           option(value="false") Draft
       .form-group
+        label Bottom Optin
+        textarea.form-control(name='boptin' rows="4" value="#{post.boptin}")
+      .form-group
+        label Popup Optin
+        textarea.form-control(name='boptin' rows="4" value="#{post.poptin}")
+      .form-group    
+        label Popup On or Off
+        select.form-control(name="popon")
+          option(value="true") On
+          option(value="false") Off
+      .form-group
         input.form-control(type='submit', value='Update Post' style="margin-left: 50%; width: 50%; background-color: #555; color: #FFF;")
 
