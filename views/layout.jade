@@ -22,7 +22,7 @@ head
 
   // Open Graph
   meta(property='og:url', content='https://designedforresult.com#{path}')      
-  meta(property='og:image:url', content='#{(post != undefined) ? ((post.og_image != "") ? post.og_image : post.display_image) : locals.deafult_og_image }')      
+  meta(property='og:image', content='#{(post != undefined) ? ((post.og_image != "") ? post.og_image : post.display_image) : locals.deafult_og_image }')      
   meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
   meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
   meta(property='og:type', content='#{(post != undefined) ? "article" : "page" }')
