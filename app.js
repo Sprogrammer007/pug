@@ -15,6 +15,7 @@ var express = require('express')
   , blog = require('./routes/blog')
   , app = express()
   , fs = require('fs')
+  , db = require('./modules/db')
   , dbManager = require('./modules/database-manager')
   , MCKEY = process.env.MC_KEY;
 
@@ -32,6 +33,10 @@ mailer.extend(app, {
     pass: 'process.env.GM_PASS'
   }
 });
+
+if (process.env.RUN_DB === 'true') {
+  db.init();
+}
 
 app.locals.default_description = "We love beautiful designs too, but beauty alone doesn\'t always deliver result for your business. Designed for Result will help you get clear on the objecti";
 app.locals.deafult_og_image = "https://s3.amazonaws.com/designforresult/og_images/default_og.png";

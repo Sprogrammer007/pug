@@ -63,15 +63,24 @@ var queryString = "CREATE TABLE IF NOT EXISTS users \
   ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT; \
 ";
 
-client.connect(conString, function(err) {
-  if(err) {
-    return console.error('could not connect to postgres', err);
+var db = {
+  init: function() {
+
+    client.connect(conString, function(err) {
+      if(err) {
+        return console.error('could not connect to postgres', err);
+      }
+      client.query(queryString, function(err, result) {
+        if(err) {
+          return console.error('error running query', err);
+        }
+        console.log(result);
+        client.end();
+      });
+    });
+
+
   }
-  client.query(queryString, function(err, result) {
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result);
-    client.end();
-  });
-});
+}
+
+module.exports = db;
