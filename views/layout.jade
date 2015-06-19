@@ -21,6 +21,7 @@ head
   link(rel='canonical' href="https://designedforresult.com#{path}")
 
   // Open Graph
+  meta(property='og:url', content='https://designedforresult.com#{path}')      
   meta(property='og:image', content='#{(post != undefined) ? post.og_image : locals.deafult_og_image }')      
   meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
   meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
