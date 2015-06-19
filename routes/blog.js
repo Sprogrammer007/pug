@@ -44,9 +44,13 @@ router.get('/blog', function (req, res, next) {
 
 router.get('/blog/:url', function (req, res, next) {
   var post = dbManager.getPostByURL(req.params.url);
-  post.create_date = moment(post.create_date).format('MMMM Do, YYYY');
+  if (post) {
+    post.create_date = moment(post.create_date).format('MMMM Do, YYYY');
+    return res.render('blog/single', { title: h.titleHelper(post.title),  path: req.path, isMobile: is_mobile(req), post: post});
+  } else {
+    res.redirect('/404');
+  }
 
-  return res.render('blog/single', { title: h.titleHelper(post.title),  path: req.path, isMobile: is_mobile(req), post: post});
 });
 
 
