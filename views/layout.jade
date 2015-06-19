@@ -18,7 +18,15 @@ head
   link(rel='stylesheet', href='/css/ie.css')
   link(rel='stylesheet', href='/css/ie7.css')
   link(rel='stylesheet', href='/css/style.css')
-  link(rel='canonical' href="https://moz.com/blog/the-colossus-update-waking-the-giant")
+  link(rel='canonical' href="https://designedforresult.com#{path}")
+
+  // Open Graph
+  meta(property='og:image', content='#{(post != undefined) ? post.og_image : locals.deafult_og_image }')      
+  meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
+  meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
+  meta(property='og:type', content='#{(post != undefined) ? "article" : "page" }')
+  meta(property='og:site_name', content='Designed For Result')
+
 
   // Facebook Conversion Code for Lead Meg One
   script.

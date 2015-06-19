@@ -18,9 +18,6 @@ var express = require('express')
   , dbManager = require('./modules/database-manager')
   , MCKEY = process.env.MC_KEY;
 
-// Setup Databaes
-dbManager.init();
-
 
 mc = new mcapi.Mailchimp(MCKEY);
 // setup mailer
@@ -36,6 +33,9 @@ mailer.extend(app, {
   }
 });
 
+app.locals.default_description = "We love beautiful designs too, but beauty alone doesn\'t always deliver result for your business. Designed for Result will help you get clear on the objecti";
+app.locals.deafult_og_image = "https://s3.amazonaws.com/designforresult/og_images/default_og.png";
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -47,7 +47,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 6000000000 }}));
+app.use(session({ secret: toString(Math.random()), 
+  cookie: { maxAge: 9000000000 },
+  resave: true,
+  saveUninitialized: false
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

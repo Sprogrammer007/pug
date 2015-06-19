@@ -1,5 +1,6 @@
   var express = require('express')
   , moment = require('moment')
+  , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
   , https = require('https')
   , dbManager = require('../modules/database-manager')
@@ -36,7 +37,7 @@ router.get('/blog', function (req, res, next) {
   posts.forEach(function(e, i, a) {
     e.create_date = moment(e.create_date).format('MMMM Do, YYYY');
   });
-  return res.render('blog/list', { title: 'Blog | Designed For Result',  path: req.path, isMobile: is_mobile(req), posts: posts});
+  return res.render('blog/list', { title: h.titleHelper('Blog'),  path: req.path, isMobile: is_mobile(req), posts: posts});
 });
 
 // Single Post
@@ -45,21 +46,30 @@ router.get('/blog/:url', function (req, res, next) {
   var post = dbManager.getPostByURL(req.params.url);
   post.create_date = moment(post.create_date).format('MMMM Do, YYYY');
 
-  return res.render('blog/single', { title: post.title + ' | Designed For Result',  path: req.path, isMobile: is_mobile(req), post: post});
+  return res.render('blog/single', { title: h.titleHelper(post.title),  path: req.path, isMobile: is_mobile(req), post: post});
 });
 
 
 
 // Posts
+
+router.get('/admin', function (req, res, next) {
+  if (req.user) {
+    return res.redirect('/admin/posts');  
+  } else {
+    req.flash('error', "please login!");
+    return res.redirect('/admin/login');  
+  }
+});
 router.get('/admin/posts', function (req, res, next) {
   if (req.user) {
     var posts = dbManager.getAllPosts();    
     posts.forEach(function(e, i, a) {
       e.create_date = formatDate(e.create_date);
     });
-    return res.render('blog/posts', { title: 'Post List | Designed For Result',  path: req.path, isMobile: is_mobile(req), posts: posts});
+    return res.render('blog/posts', { title: h.titleHelper('Post List'),  path: req.path, isMobile: is_mobile(req), posts: posts});
   } else {
-    req.flash('error', "please login!")
+    req.flash('error', "please login!");
     return res.redirect('/admin/login');  
   }
 });
@@ -67,7 +77,7 @@ router.get('/admin/posts', function (req, res, next) {
 // New Post
 router.get('/admin/post/new', function (req, res, next) {
   if (req.user) {
-    return res.render('blog/new', { title: 'New Post | Designed For Result',  path: req.path, isMobile: is_mobile(req), user: req.user});
+    return res.render('blog/new', { title: h.titleHelper('New Post'),  path: req.path, isMobile: is_mobile(req), user: req.user});
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login'); 
@@ -92,7 +102,7 @@ router.get('/admin/post/edit/:id', function (req, res, next) {
   if (req.user) {
     var post = dbManager.findPostByID(req.params.id);
     post.create_date = formatDate(post.create_date);
-    return res.render('blog/edit', { title: 'Edit Post | Designed For Result',  path: req.path, isMobile: is_mobile(req), post: post});
+    return res.render('blog/edit', { title: h.titleHelper('Edit Post'),  path: req.path, isMobile: is_mobile(req), post: post});
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  
@@ -130,7 +140,7 @@ router.get('/admin/post/delete/:id', function (req, res, next) {
 // Login page
 router.get('/admin/login', function (req, res, next) {
   var message = req.flash('error');
-  res.render('blog/login', { title: 'Login | Designed For Result',  path: req.path, isMobile: is_mobile(req), message: message});
+  res.render('blog/login', { title: h.titleHelper('Login'),  path: req.path, isMobile: is_mobile(req), message: message});
 });
 
 router.post('/admin/login', function (req, res, next) {

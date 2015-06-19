@@ -118,7 +118,7 @@ header .logo img {
 
 header .navbar-nav li a {
   font-family: 'Oswald';
-  color: #FFF;
+  color: #3c3b3b;
   font-size: 16px;
   text-transform: uppercase;
   font-weight: 500;
@@ -133,7 +133,7 @@ header .navbar-nav li a:hover {
 }
 
 header .hvr-underline-from-center:before {
-  background-color: #FFF;
+  background-color: #3c3b3b;
 }
 
 header .navbar-nav li a.logo {
@@ -412,7 +412,7 @@ header .navbar-nav li a.logo {
   font-weight: bold;
   font-size: 50px;
   padding: 0 15px;
-  color: #5D6769;
+  color: #3c3b3b;
 }
 
 #blog p.subtitle {

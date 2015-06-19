@@ -1,11 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var stripe = require("stripe")(process.env.STRIPE_KEY);
-// var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
-var MCID = process.env.MC_ID;
-var https = require('https');
-var dbManager = require('../modules/database-manager');
+var express = require('express')
+  , h = require('../modules/application_helpers') // Helpers
+  , router = express.Router()
+  , stripe = require("stripe")(process.env.STRIPE_KEY)
+  , MCID = process.env.MC_ID
+  , https = require('https')
+  , dbManager = require('../modules/database-manager');
 
+// var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
 // Insight API
 var Insight_API_KEY = process.env.INSIGHT_KEY;
 
@@ -144,24 +145,24 @@ router.get('/', function(req, res, next) {
 
 /* GET Landing page. */
 router.get('/guide', function(req, res, next) {
-  res.render('tripwire', { title: 'Step Guide | Designed For Result',  path: req.path, isMobile: is_mobile(req) });
+  res.render('tripwire', { title: h.titleHelper('Step Guide'),  path: req.path, isMobile: is_mobile(req) });
 });
 
 router.get('/lp/guide', function(req, res, next) {
-  res.render('landing/landing-part1', { title: 'Free Guide | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('landing/landing-part1', { title: h.titleHelper('Free Guide'),  path: req.path, isMobile: is_mobile(req)});
 });
 
 router.get('/wireframe-discount', function(req, res) {
-  res.render('sales/sales1', { title: 'WireFrames | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('sales/sales1', { title: h.titleHelper('Wireframes'),  path: req.path, isMobile: is_mobile(req)});
 });
 
 router.get('/wireframe/thank-you/:id', function(req, res) {
   var order_id = req.params.id
   if (order_id) {
-    res.render('sales/thankyou', { title: 'Thank You | Designed for Result', id: order_id,  path: req.path, isMobile: is_mobile(req)});
+    res.render('sales/thankyou', { title: h.titleHelper('Thank You'), id: order_id,  path: req.path, isMobile: is_mobile(req)});
   } else {
     console.log('error')
-    res.render('sales/error', { title: 'No Order | Designed for Result',  path: req.path, isMobile: is_mobile(req)});
+    res.render('sales/error', { title: h.titleHelper('No Order Found'),  path: req.path, isMobile: is_mobile(req)});
   }
 });
 
@@ -169,7 +170,8 @@ router.get('/cc/thank-you/:dt', function(req, res) {
   var s = req.params.dt.split(" ");
   var date = s[0];
   var time = s[1];
-  res.render('tripthankyou', { title: 'Thank You | Designed for Result', 
+  res.render('tripthankyou', { 
+    title: h.titleHelper('Thank You'), 
     date: date, 
     time: time,  
     path: req.path, 
@@ -201,11 +203,11 @@ router.post('/wireframe/thank-you/done/:id', function(req, res) {
 });
 
 router.get('/getanswers', function (req, res, next) {
-  res.render('contact', { title: 'Get Answers | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('contact', { title: h.titleHelper('Get Answers'),  path: req.path, isMobile: is_mobile(req)});
 });
 
 router.get('/test', function (req, res, next) {
-  res.render('test', { title: 'Test Page | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('test', { title: h.titleHelper('Test'),  path: req.path, isMobile: is_mobile(req)});
 });
 
 
@@ -336,6 +338,7 @@ router.get('/robots.txt', function (req, res) {
 Disallow: /lp/guide\n\
 Disallow: /guide\n\
 Disallow: /test\n\
+Disallow: /admin/*\n\
 Disallow: /cc/thank-you\n\
 Disallow: /wireframe/thank-you\n\
 Disallow: /wireframe-discount");
@@ -345,10 +348,10 @@ Disallow: /wireframe-discount");
 /* Legal Pages */
 
 router.get('/terms', function(req, res) {
-  res.render('terms', { title: 'Terms & Conditions | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('terms', { title: h.titleHelper('Terms & Conditions'),  path: req.path, isMobile: is_mobile(req)});
 });
 
 router.get('/privacy', function(req, res) {
-  res.render('privacy', { title: 'Privacy Policy | Designed For Result',  path: req.path, isMobile: is_mobile(req)});
+  res.render('privacy', { title:  h.titleHelper('Privacy Policy'),  path: req.path, isMobile: is_mobile(req)});
 });
 module.exports = router;

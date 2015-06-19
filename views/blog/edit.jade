@@ -10,7 +10,6 @@ block content
         label Arthur
         input.form-control(type='text', name='arthur' value="#{post.arthur}")
       select.form-control(name='category')
-        -console.log(post.category === 'Beginners');
         option Beginners          
         option Optimization          
         option Marketing          
@@ -27,7 +26,10 @@ block content
         input.form-control(type="text" name='create_date' value="#{post.create_date}")
       .form-group
         label Display Image
-        input.form-control(type='text', name='display_image' value="#{post.display_image}")      
+        input.form-control(type='text', name='display_image' value="#{post.display_image}")
+      .form-group
+        label OG Image
+        input.form-control(type='text', name='og_image' value="#{post.og_image}")      
       .form-group
         label URL
         input.form-control(type='text', name='url' value="#{post.url}")
@@ -41,7 +43,7 @@ block content
         textarea.form-control(name='boptin' rows="4" value="#{post.boptin}")
       .form-group
         label Popup Optin
-        textarea.form-control(name='boptin' rows="4" value="#{post.poptin}")
+        textarea.form-control(name='poptin' rows="4" value="#{post.poptin}")
       .form-group    
         label Popup On or Off
         select.form-control(name="popon")
