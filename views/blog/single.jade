@@ -20,7 +20,7 @@ block content
               i.social-icon.fa.fa-linkedin
               .count 0
 
-      .main-content-wrapper(data-pon="#{post.popon}"))
+      .main-content-wrapper
         - if (post)
           .post-title
             h1 #{post.title}
@@ -35,7 +35,7 @@ block content
                 span.date
                   | #{post.create_date}
             .clearfix
-          .post-content
+          .post-content(data-pon="#{post.popon}")
             | !{post.content}
 
     .post-optin-wrapper
