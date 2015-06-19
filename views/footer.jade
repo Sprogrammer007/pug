@@ -19,7 +19,7 @@ footer
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
         span &times;
-      - if (post && post.popoptin != undefined)
+      - if (post && post.popoptin != '')
         .popoptin
           | !{post.poptin}
 

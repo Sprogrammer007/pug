@@ -61,20 +61,20 @@
         api.openPopup('facebook');
       }
     });
-    $('#googleplus, #googleplusf').sharrre({
-      share: {
-        googlePlus: true
-      },
+    // $('#googleplus, #googleplusf').sharrre({
+    //   share: {
+    //     googlePlus: true
+    //   },
 
-      enableHover: false,
-      enableTracking: true,
-      template: '<a class="box" href="#"><i class="social-icon fa fa-google-plus"></i><span class="count" href="#">{total}</span></a>',
+    //   enableHover: false,
+    //   enableTracking: true,
+    //   template: '<a class="box" href="#"><i class="social-icon fa fa-google-plus"></i><span class="count" href="#">{total}</span></a>',
 
-      click: function(api, options){
-        api.simulateClick();
-        api.openPopup('googlePlus');
-      }
-    });    
+    //   click: function(api, options){
+    //     api.simulateClick();
+    //     api.openPopup('googlePlus');
+    //   }
+    // });    
     $('#linkedin, #linkedinf').sharrre({
       share: {
         linkedin: true
