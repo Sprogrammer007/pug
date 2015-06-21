@@ -14,7 +14,7 @@ footer
             a(href='/terms') Terms & Condition
           li
             a(href='/privacy') Privacy Policy
-#poptin.modal.fade(data-pon= (post.popon != undefined && post.popon) ? '#{post.popon}' : '')
+#poptin.modal.fade(data-pon= (post && post.popon != undefined && post.popon) ? '#{post.popon}' : '')
   .modal-dialog
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
