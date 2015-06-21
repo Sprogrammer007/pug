@@ -1,32 +1,39 @@
 footer
   .top-footer
     .container
-      .col-lg-3.col-xs-6.footer-logo
-        a(href="/") DESIGNED FOR RESULT  
-      .col-lg-4.col-xs-6.footer-legal
-        | &copy; 2015 
-        a(href='/') Designed For Result
-      .col-lg-5.col-xs-12.useful-links
-        ul.menu
-          li
-            a(href='/blog') Blog
-          li
-            a(href='/terms') Terms & Condition
-          li
-            a(href='/privacy') Privacy Policy
+      - if (isMobile)
+        include ./shared/footer-mobile.jade
+      - else
+        include ./shared/footer-desktop.jade
+        
 #poptin.modal.fade(data-pon= (post && post.popon != undefined && post.popon) ? '#{post.popon}' : '')
   .modal-dialog
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
-
-      - if (post && post.popoptin != '' && post.popoptin != undefined)
-        .popoptin
+      .modal-body
+        - if (post && post.popoptin != '' && post.popoptin != undefined)
           | !{post.poptin}
-      - else
-        p.optin-title
-          | How To Tell If A Website Is Right For Your Small Business
-        p.optin-description
-          | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
-        a.btn.btn-optin(href="/lp/guide")
-          | Download This Guide
-
+        - else
+          .step1.active
+            .row.mbm
+              .col-lg-8
+                .presents 
+                  span Designed For Result Presents
+                p.optin-title
+                  span.sm.lspace-1 How To Tell If A Website 
+                  span.md.lspace-4 Is Right For Your 
+                  span.xl Small Business
+                p.optin-description
+                  | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
+              .col-lg-4.optin-image
+                img(src="/images/ebookcoverflat.png")
+            hr
+            .optin-buttons
+              a.btn.btn-poptin.btn-yes(href="/lp/guide")
+                | Yes
+                br
+                span I want FREE website planner
+              .btn.btn-poptin.btn-no(data-dismiss='modal', aria-label='Close')
+                | No
+                br
+                span I will do it myself

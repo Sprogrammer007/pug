@@ -30,12 +30,11 @@
     }
   };
 
-  function setCookie(name, path, value, days) {
-    console.log(path);
+  function setCookie(name, value, days) {
     var now = new Date();
     var expireDate= new Date();
     expireDate.setTime(now.getTime() + days*24*60*60*1000); 
-    var curCookie = name + "=" + escape(value) + ";path=/" + path + ";domain=.designedforresult.com;expires=" + expireDate; 
+    var curCookie = name + "=" + escape(value) + ";path=/;domain=.designedforresult.com;expires=" + expireDate; 
     document.cookie = curCookie;
   }
 
@@ -57,15 +56,36 @@
 
   function openOptin() {
     if (!$('#poptin').attr('data-pon')) return;
-      
+    var seen = getCookie('o_shown');
+    if (seen) return;
+    setCookie('o_shown', 'yes', 2)
     $('#poptin').modal('show');
-    
   }
 
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 1*1000);
+    setTimeout(openOptin, 2*30*1000);
+
+    $('#poptin').on('click', '.btn-yes', function(e) {
+      if ($('#poptin .step2').length === 0 ) return;
+      $('#poptin .step1').hide("slide", { direction: "left" }, 1200);
+      $('#poptin .step2').delay(400).show("slide", { direction: "right" }, 1200);
+      $('.modal-body').delay(400).animate({ height: 380  }, 1200 );
+    });
+
+    function reposition() {
+      var modal = $(this),
+          dialog = modal.find('.modal-dialog');
+      modal.css('display', 'block');
+      dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+    }
+    // Reposition when a modal is shown
+    $('.modal').on('show.bs.modal', reposition);
+    // Reposition when the window is resized
+    $(window).on('resize', function() {
+      $('.modal:visible').each(reposition);
+    });
 
     // Sharrre
 
@@ -83,6 +103,8 @@
         api.openPopup('twitter');
       }
     });
+
+
     $('#facebook, #facebookf').sharrre({
       share: {
         facebook: true
