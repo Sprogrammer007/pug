@@ -5,7 +5,9 @@ block content
     .container
       .single-header
         -if (post)
-          img.post-di(src="#{post.display_image}")
+          .post-dispaly-image
+            .feature-offer
+            img.post-di(src="#{post.display_image}")
       -if (post)
 
         #social.share-wrapper()
@@ -29,7 +31,7 @@ block content
                 span.date
                   | #{post.create_date}
             .clearfix
-          .post-content(data-pon= (post.popon != '') ? '#{post.popon}' : '')
+          .post-content
             | !{post.content}
             #post-footer-share
               #twitterf(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
@@ -40,7 +42,7 @@ block content
     .post-optin-wrapper
       .container
         .optin-box.optin-content.col-lg-8.col-lg-offset-2
-          - if (post.boptin != '')
+          - if (post.boptin != '' && post.boptin != undefined)
             | !{post.boptin} 
           - else
             p.optin-title

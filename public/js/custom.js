@@ -30,8 +30,43 @@
     }
   };
 
+  function setCookie(name, path, value, days) {
+    console.log(path);
+    var now = new Date();
+    var expireDate= new Date();
+    expireDate.setTime(now.getTime() + days*24*60*60*1000); 
+    var curCookie = name + "=" + escape(value) + ";path=/" + path + ";domain=.designedforresult.com;expires=" + expireDate; 
+    document.cookie = curCookie;
+  }
+
+
+  function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+      begin = dc.indexOf(prefix);
+      if (begin != 0) return null;
+    } else
+      begin += 2;
+    var end = document.cookie.indexOf(";", begin);
+    if (end == -1)
+      end = dc.length;
+    return unescape(dc.substring(begin + prefix.length, end));
+  }
+
+  function openOptin() {
+    if (!$('#poptin').attr('data-pon')) return;
+      
+    $('#poptin').modal('show');
+    
+  }
+
     
   $(document).ready(function() {
+    // Optin
+    setTimeout(openOptin, 1*1000);
+
     // Sharrre
 
     $('#twitter, #twitterf').sharrre({
@@ -90,20 +125,6 @@
       }
     });
 
-    var $pageURL = $('.share-wrapper').attr('data-url');
-
-    if (location.pathname === "/") {
-      var anchor_offset = $(window).height() * 0.6 ;
-      $(window).on('scroll', function() {
-        if ( $(window).scrollTop() > anchor_offset ) {
-          $('.navbar').addClass('sticky');
-        } else {
-          if(isMobile.any()) { return };
- 
-          $('.navbar').removeClass('sticky');
-        };
-      });
-    }
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -121,7 +142,7 @@
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
     jQuery("form#contact-form").submit(function(){
-      console.log(window.location.origin);
+
       var error = false;
       var that = jQuery(this)
       jQuery(this).find('.require-field').each(function(){
@@ -272,10 +293,7 @@
           error = true;
           $(this).tooltip('show');
         }
-      });
-
-             
-      
+      });      
       if(error) return false;
       form.hide();
       form.parent('.analyzer').append('<p class="warning-title">Analyzing your website&hellip;</p><div id="analyzer-wrap"><div id="progressbar"></div></div><p id="analyzer-errors"><span>1 error</span> found&hellip;</p>');
@@ -283,27 +301,42 @@
      
     });
 
-    // Social Counter
+    // Social Fix Scroller
     if ($('#social').length > 0 ) { 
       (function(){
         var position = $('.post-title').offset();
         var width = $('.post-title').width();
+        var position2 = $('#post-footer-share').offset();
 
-        $('#social').css({
-          'top': position.top,
-          'left': position.left + width + 80
-        });
+        if (isMobile.any()) {
+          $('#social').css({
+            'top': 'auto',
+            'left': 0,
+            'bottom': 0
+          });
+        } else{
+          $('#social').css({
+            'top': position.top,
+            'left': position.left + width + 80
+          });
+         }
 
         $(window).on('scroll', function() {
-          if ( $(window).scrollTop() > (position.top - 100) ) {
-            $('#social').addClass('fixed');
+          if (isMobile.any()) {
+            if ( $(window).scrollTop() > (position.top - 100) && $(window).scrollTop() < (position2.top - $(window).height() + 20)) {
+              $('#social').addClass('fixed');
+            } else {
+              $('#social').removeClass('fixed');
+            };
           } else {
-   
-            $('#social').removeClass('fixed');
-          };
+            if ( $(window).scrollTop() > (position.top - 100) ) {
+              $('#social').addClass('fixed');
+            } else {
+              $('#social').removeClass('fixed');
+            };
+          }
         });
 
-   
       })();
     }
   
