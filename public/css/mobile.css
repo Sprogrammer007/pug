@@ -242,12 +242,6 @@
   #poptin .btn-optin {
     width: 100%;
   }
-    
-  #social .box, #post-footer-share .box { 
-    width: 31%;
-    float: left;
-    margin-right: 5px;
-  }
 
   #single .share-wrapper {
     margin: 0 15px;
@@ -322,6 +316,7 @@
   .btn-poptin span {
     font: 300 16px/18px "Oswald";
   }
+
   #poptin .modal-content::after {
     left: 46%;
   }
@@ -734,6 +729,14 @@
   #single .main-content-wrapper {
     width: 700px;
   }
+
+      
+  #social .box, #post-footer-share .box { 
+    width: 31%;
+    float: left;
+    margin-right: 5px;
+  }
+
 
 }
 
