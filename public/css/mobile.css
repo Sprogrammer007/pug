@@ -262,65 +262,7 @@
     padding-bottom: 5px;
   }
 
-  #poptin .modal-dialog {
-    width: 95%;
-    margin-top: 20px !important;
-  }
-
-  #poptin .modal-content {
-    padding: 30px 87px 60px;
-  }
-
-  #poptin .modal-content .close {
-    right: -10px;
-  }
-
-  #poptin .modal-content::after {
-    left: 40%;
-  }
-
-  #poptin .optin-image img { 
-    width: 50%;
-    margin: auto;
-    display: block;
-  }
-
-  .presents {
-    font-size: 26px;
-  }
-  .optin-title span.sm {
-    font-size: 50px;
-    line-height: 56px;
-  }
-
-  .optin-title span.md {
-    font-size: 62px;
-    line-height: 68px;
-  }
-
-  .optin-title span.xl {
-    font-size: 80px;
-    line-height: 85px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    min-width: 47%;
-    width: 47%;
-    padding: 20px 15px 15px;
-    margin: 0 15px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-
-  #poptin .modal-content::after {
-    left: 46%;
-  }
-
+  
   footer .footer-logo {
     text-align: center;
   }
@@ -569,6 +511,9 @@
 
 /* Portrait */
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) { 
+  
+
+
   #poptin .optin-image img { 
     width: 50%;
     margin: auto;
@@ -725,10 +670,143 @@
 
 /* Portrait */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+  #poptin .modal-dialog {
+    width: 95%;
+    margin-top: 20px !important;
+  }
 
   #single .main-content-wrapper {
     width: 700px;
   }
+  #poptin .modal-content {
+    padding: 30px 87px 60px;
+  }
+
+  #poptin .modal-content .close {
+    right: -10px;
+  }
+
+  #poptin .modal-content::after {
+    left: 40%;
+  }
+
+  #poptin .optin-image img { 
+    width: 50%;
+    margin: auto;
+    display: block;
+  }
+
+  .presents {
+    font-size: 26px;
+  }
+  .optin-title span.sm {
+    font-size: 50px;
+    line-height: 56px;
+  }
+
+  .optin-title span.md {
+    font-size: 62px;
+    line-height: 68px;
+  }
+
+  .optin-title span.xl {
+    font-size: 80px;
+    line-height: 85px;
+  }
+
+  .btn-yes,
+  .btn-no { 
+    min-height: 166px;
+    min-width: 47%;
+    width: 47%;
+    padding: 20px 15px 15px;
+    margin: 0 15px 0 0;
+    font: 900 72px/87px "Oswald",sans-serif;
+  }
+
+  .btn-poptin span {
+    font: 300 16px/18px "Oswald";
+  }
+
+  #poptin .modal-content::after {
+    left: 46%;
+  }
+
+
+
+  #social .box, #post-footer-share .box { 
+    width: 31%;
+    float: left;
+    margin-right: 5px;
+  }
+
+
+}
+
+/* Portrait Mini */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+  #poptin .modal-dialog {
+    width: 95%;
+    margin-top: 20px !important;
+  }
+
+  #single .main-content-wrapper {
+    width: 700px;
+  }
+  #poptin .modal-content {
+    padding: 30px 87px 60px;
+  }
+
+  #poptin .modal-content .close {
+    right: -10px;
+  }
+
+  #poptin .modal-content::after {
+    left: 40%;
+  }
+
+  #poptin .optin-image img { 
+    width: 50%;
+    margin: auto;
+    display: block;
+  }
+
+  .presents {
+    font-size: 26px;
+  }
+  .optin-title span.sm {
+    font-size: 50px;
+    line-height: 56px;
+  }
+
+  .optin-title span.md {
+    font-size: 62px;
+    line-height: 68px;
+  }
+
+  .optin-title span.xl {
+    font-size: 80px;
+    line-height: 85px;
+  }
+
+  .btn-yes,
+  .btn-no { 
+    min-height: 166px;
+    min-width: 47%;
+    width: 47%;
+    padding: 20px 15px 15px;
+    margin: 0 15px 0 0;
+    font: 900 72px/87px "Oswald",sans-serif;
+  }
+
+  .btn-poptin span {
+    font: 300 16px/18px "Oswald";
+  }
+
+  #poptin .modal-content::after {
+    left: 46%;
+  }
+
 
 
   #social .box, #post-footer-share .box { 
