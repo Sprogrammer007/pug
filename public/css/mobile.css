@@ -105,7 +105,7 @@
   }
 
   #single .main-content-wrapper {
-    width: 80;
+    width: 100%;
   }
 
   .single-header { 
@@ -730,7 +730,7 @@
     width: 700px;
   }
 
-      
+
   #social .box, #post-footer-share .box { 
     width: 31%;
     float: left;
