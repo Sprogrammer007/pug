@@ -65,7 +65,7 @@
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 1*1000);
+    setTimeout(openOptin, 3*15*1000);
 
     $('#poptin').on('click', '.btn-yes', function(e) {
       if ($('#poptin .step2').length === 0 ) return;
