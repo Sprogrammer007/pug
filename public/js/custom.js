@@ -58,7 +58,7 @@
     if (!$('#poptin').attr('data-pon')) return;
     var seen = getCookie('o_shown');
     if (seen) return;
-    setCookie('o_shown', 'yes', 2)
+    setCookie('o_shown', 'yes', 2);
     $('#poptin').modal('show');
   }
 
@@ -68,10 +68,17 @@
     setTimeout(openOptin, 3*15*1000);
 
     $('#poptin').on('click', '.btn-yes', function(e) {
+
       if ($('#poptin .step2').length === 0 ) return;
+      dataLayer.push({
+        'event':'VirtualPageview',
+        'virtualPageURL':'/website_planner',
+        'virtualPageTitle' : 'Website Planner Optin'
+      });
       $('#poptin .step1').hide("slide", { direction: "left" }, 1200);
-      $('#poptin .step2').delay(400).show("slide", { direction: "right" }, 1200);
-      $('.modal-body').delay(400).animate({ height: 380  }, 1200 );
+      $('#poptin .step2').delay(400).show("slide", { direction: "right" }, 1200);;
+      $('.modal-body').delay(400).animate({ height: 'auto' }, 1200 );
+      $('#poptin .step2').delay(400).css('position', 'relative');
     });
 
     function reposition() {
@@ -163,7 +170,7 @@
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-    jQuery("form#contact-form").submit(function(){
+    jQuery("form#contact-form, form#optin-form").submit(function(){
 
       var error = false;
       var that = jQuery(this)

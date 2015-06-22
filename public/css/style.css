@@ -1171,34 +1171,33 @@ header .navbar-nav li a.logo {
 .optin-title span {
   display: block;
   width: 100%;
+  text-align: center;
 }
 
-.optin-title span.sm { 
-  font-size: 46px;
+.optin-title span.l10 { 
+  font-size: 6.7em;
+  line-height: 106px;
+}
+
+
+.optin-title span.l15 { 
+  font-size: 4.6em;
+  line-height: 65px;
+}
+
+.optin-title span.l16 { 
+  font-size: 4.0em;
   line-height: 55px;
 }
 
-.optin-title span.md { 
-  font-size: 56px;
-  line-height: 66px;
+.optin-title span.l18 { 
+  font-size: 4.0em;
+  line-height: 55px;
 }
 
-.optin-title span.lg {
-  font-size: 60px;
-  line-height: 65px; 
-}
-
-.optin-title span.xl { 
-  font-size: 73px;
-  line-height: 83px;
-}
-
-.optin-title span.lspace-1 {
-  letter-spacing: 1px;
-}
-
-.optin-title span.lspace-4 {
-  letter-spacing: 4px;
+.optin-title span.l24 { 
+  font-size: 3em;
+  line-height: 53px;
 }
 
 #poptin form {
@@ -1221,7 +1220,7 @@ header .navbar-nav li a.logo {
 
 .presents {
   color: #FFF;
-  font-size: 22px;
+  font-size: 19px;
   text-transform: uppercase;
   line-height: 25px;
   text-align: center;

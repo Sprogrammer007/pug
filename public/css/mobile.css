@@ -174,7 +174,6 @@
     display: block;
   }
 
-
   footer .footer-logo {
     text-align: center;
   }
@@ -300,525 +299,622 @@
 
 }
 
-/* ----------- iPhone 4 and 4S ----------- */
-
-/* Portrait and Landscape */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-
-}
-
-/* Portrait */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-}
-
-/* Landscape */
-@media only screen  and (min-device-width: 320px ) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-  
-  #poptin .modal-content {
-    padding: 30px 20px 60px;
-  }
-  .presents {
-    font-size: 18px;
-  }
-  .optin-title span.sm {
-    font-size: 28px;
-    line-height: 46px;
-  }
-
-  .optin-title span.md {
-    font-size: 35px;
-    line-height: 58px;
-  }
-
-  .optin-title span.xl {
-    font-size: 50px;
-    line-height: 65px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    min-width: 46%;
-    width: 46%;
-    padding: 20px 10px 15px;
-    margin: 0 5px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-
-}
-
-/* ----------- iPhone 5 and 5S ----------- */
-
-/* Portrait and Landscape */
-@media only screen and (min-device-width: 320px)  and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
-
-}
-
-/* Portrait */
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  .presents {
-    font-size: 12px;
-  }
-  .optin-title span.sm {
-    font-size: 22px;
-    line-height: 26px;
-  }
-
-  .optin-title span.md {
-    font-size: 24px;
-    line-height: 28px;
-  }
-
-  .optin-title span.xl {
-    font-size: 37px;
-    line-height: 45px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 156px;
-    min-width: 125px;
-    width: 125px;
-    padding: 20px 15px 15px;
-    margin: 0 5px 0 0;
-    font: 900 62px/77px "Oswald",sans-serif;
-  }
-
-  .btn-poptin span {
-    font: 300 10px/18px "Oswald";
-  }
-  #poptin .modal-content::after {
-    width: 56px;
-    height: 56px;
-      background-size: 42px;
-    bottom: -23px;
-  }
-}
-
-/* Landscape */
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-  #poptin .modal-content {
-    padding: 30px 60px 60px;
-  }
-  .presents {
-    font-size: 18px;
-  }
-  .optin-title span.sm {
-    font-size: 38px;
-    line-height: 46px;
-  }
-
-  .optin-title span.md {
-    font-size: 45px;
-    line-height: 58px;
-  }
-
-  .optin-title span.xl {
-    font-size: 60px;
-    line-height: 65px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    padding: 20px 10px 15px;
-    margin: 0 15px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-
-}
 
 /* ----------- iPhone 6 ----------- */
 
-/* Portrait and Landscape */
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) { 
+  /* Portrait and Landscape */
+  @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) { 
 
-}
-
-/* Portrait */
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) { 
-
-
-  .presents {
-    font-size: 14px;
-  }
-  .optin-title span.sm {
-    font-size: 28px;
-    line-height: 32px;
   }
 
-  .optin-title span.md {
-    font-size: 32px;
-    line-height: 35px;
-  }
-
-  .optin-title span.xl {
-    font-size: 46px;
-    line-height: 55px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-width: 150px;
-    width: 150px;
-    padding: 20px 15px 15px;
-    margin: 0 5px 0 0;
-  }
-
-  .btn-poptin span {
-    font: 300 14px/18px "Oswald";
-  }
-}
-
-/* Landscape */
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) { 
-  #poptin .modal-content {
-    padding: 30px 60px 60px;
-  }
+  /* Portrait */
+  @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) { 
 
 
-  .btn-yes,
-  .btn-no { 
-    min-width: 46%;
-    width: 46%;
-    padding: 20px 15px 15px;
-    margin: 0 15px 0 0;
+    .presents {
+      font-size: 14px;
+    }
+    .optin-title span.l10 { 
+      font-size: 6.7em;
+      line-height: 106px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 3.2em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 2.2em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l18 { 
+      font-size: 2.8em;
+      line-height: 40px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 2.1em;
+      line-height: 43px;
+    }
+
+    .btn-yes,
+    .btn-no { 
+      min-width: 150px;
+      width: 150px;
+      padding: 20px 15px 15px;
+      margin: 0 5px 0 0;
+    }
+
+    .btn-poptin span {
+      font: 300 14px/18px "Oswald";
+    }
   }
 
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
+  /* Landscape */
+  @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) { 
+    #poptin .modal-content {
+      padding: 30px 60px 60px;
+    }
+    .optin-title span.l10 { 
+      font-size: 5.7em;
+      line-height: 86px;
+    }
 
-  #poptin .modal-content::after {
-    left: 42%;
+    .optin-title span.l15 { 
+      font-size: 4.5em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 3.5em;
+      line-height: 55px;
+    }
+    .optin-title span.l18 { 
+      font-size: 4.0em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 3em;
+      line-height: 53px;
+    }
+
+
+    .btn-yes,
+    .btn-no { 
+      min-width: 46%;
+      width: 46%;
+      padding: 20px 15px 15px;
+      margin: 0 15px 0 0;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+    #poptin .modal-content::after {
+      left: 42%;
+    }
   }
-}
 
 /* ----------- iPhone 6+ ----------- */
 
-/* Portrait and Landscape */
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) { 
+  /* Portrait and Landscape */
+  @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) { 
 
-}
-
-/* Portrait */
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) { 
-  
-
-
-  #poptin .optin-image img { 
-    width: 50%;
-    margin: auto;
-    display: block;
   }
 
-  .presents {
-    font-size: 14px;
-  }
-  .optin-title span.sm {
-    font-size: 30px;
-    line-height: 35px;
+  /* Portrait */
+  @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) { 
+    
+
+
+    #poptin .optin-image img { 
+      width: 50%;
+      margin: auto;
+      display: block;
+    }
+
+    .presents {
+      font-size: 14px;
+    }
+
+    .optin-title span.l10 { 
+      font-size: 6.7em;
+      line-height: 106px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 3.5em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 2.2em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l18 { 
+      font-size: 3.1em;
+      line-height: 40px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 2.3em;
+      line-height: 43px;
+    }
+
+
+    .btn-yes,
+    .btn-no { 
+      min-width: 170px;
+      width: 170px;
+      padding: 20px 15px 15px;
+      margin: 0 5px 0 0;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
   }
 
-  .optin-title span.md {
-    font-size: 36px;
-    line-height: 40px;
-  }
-
-  .optin-title span.xl {
-    font-size: 50px;
-    line-height: 63px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-width: 170px;
-    width: 170px;
-    padding: 20px 15px 15px;
-    margin: 0 5px 0 0;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-}
-
-/* Landscape */
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) { 
+  /* Landscape */
+  @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) { 
     #poptin .modal-content {
-    padding: 60px 87px;
+      padding: 60px 87px;
+    }
+
+    .optin-title span.l10 { 
+      font-size: 5.7em;
+      line-height: 86px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 4.5em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 3.5em;
+      line-height: 55px;
+    }
+    .optin-title span.l18 { 
+      font-size: 4.0em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 3em;
+      line-height: 53px;
+    }
+
+    .btn-yes,
+    .btn-no { 
+      min-width: 46%;
+      width: 46%;
+      padding: 20px 15px 15px;
+      margin: 0 15px 0 0;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+    #poptin .modal-content::after {
+      left: 42%;
+    }
+
   }
-
-
-  .btn-yes,
-  .btn-no { 
-    min-width: 46%;
-    width: 46%;
-    padding: 20px 15px 15px;
-    margin: 0 15px 0 0;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-
-  #poptin .modal-content::after {
-    left: 42%;
-  }
-
-}
 
 /* Note 2 & 3 */
 
+  /* Portrait */
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+
+    .presents {
+      font-size: 12px;
+    }
 
 
-/* Portrait */
-@media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  
 
+    .btn-yes,
+    .btn-no { 
+      min-height: 156px;
+      min-width: 46%;
+      width: 46%;
+      padding: 20px 15px 15px;
+      margin: 0 10px 0 0;
+      font: 900 62px/77px "Oswald",sans-serif;
+    }
 
-  .presents {
-    font-size: 12px;
-  }
-  .optin-title span.sm {
-    font-size: 26px;
-    line-height: 26px;
-  }
-
-  .optin-title span.md {
-    font-size: 29px;
-    line-height: 34px;
-  }
-
-  .optin-title span.xl {
-    font-size: 43px;
-    line-height: 50px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 156px;
-    min-width: 46%;
-    width: 46%;
-    padding: 20px 15px 15px;
-    margin: 0 10px 0 0;
-    font: 900 62px/77px "Oswald",sans-serif;
+    .btn-poptin span {
+      font: 300 10px/18px "Oswald";
+    }
+    #poptin .modal-content::after {
+      width: 56px;
+      height: 56px;
+      background-size: 42px;
+      bottom: -23px;
+    }
   }
 
-  .btn-poptin span {
-    font: 300 10px/18px "Oswald";
-  }
-  #poptin .modal-content::after {
-    width: 56px;
-    height: 56px;
-    background-size: 42px;
-    bottom: -23px;
-  }
-}
+  /* Landscape */
+  @media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    #poptin .modal-content {
+      padding: 30px 87px 60px;
+    }
+    .presents {
+      font-size: 18px;
+    }
+    .optin-title span.l10 { 
+      font-size: 5.7em;
+      line-height: 86px;
+    }
 
-/* Landscape */
-@media only screen and (min-device-width: 360px) and (max-device-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-  #poptin .modal-content {
-    padding: 30px 87px 60px;
-  }
-  .presents {
-    font-size: 18px;
-  }
-  .optin-title span.sm {
-    font-size: 38px;
-    line-height: 46px;
-  }
+    .optin-title span.l15 { 
+      font-size: 4.5em;
+      line-height: 60px;
+    }
 
-  .optin-title span.md {
-    font-size: 45px;
-    line-height: 58px;
-  }
+    .optin-title span.l16 { 
+      font-size: 3.5em;
+      line-height: 55px;
+    }
 
-  .optin-title span.xl {
-    font-size: 60px;
-    line-height: 65px;
-  }
+    .optin-title span.l18 { 
+      font-size: 4.0em;
+      line-height: 60px;
+    }
 
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    padding: 20px 10px 15px;
-    margin: 0 15px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
+    .optin-title span.l24 { 
+      font-size: 3em;
+      line-height: 53px;
+    }
 
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
 
-}
+    .btn-yes,
+    .btn-no { 
+      min-height: 166px;
+      padding: 20px 10px 15px;
+      margin: 0 15px 0 0;
+      font: 900 72px/87px "Oswald",sans-serif;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+  }
 
 
 /* ----------- iPad 3 and 4 ----------- */
-/* Portrait and Landscape */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
+  /* Portrait and Landscape */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
 
-}
-
-/* Portrait */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
-  #poptin .modal-dialog {
-    width: 95%;
-    margin-top: 20px !important;
   }
 
-  #single .main-content-wrapper {
-    width: 700px;
-  }
-  #poptin .modal-content {
-    padding: 30px 87px 60px;
-  }
+  /* Portrait */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+    #poptin .modal-dialog {
+      width: 95%;
+      margin-top: 20px !important;
+    }
 
-  #poptin .modal-content .close {
-    right: -10px;
-  }
+    #single .main-content-wrapper {
+      width: 700px;
+    }
+    #poptin .modal-content {
+      padding: 30px 87px 60px;
+    }
 
-  #poptin .modal-content::after {
-    left: 40%;
-  }
+    #poptin .modal-content .close {
+      right: -10px;
+    }
 
-  #poptin .optin-image img { 
-    width: 50%;
-    margin: auto;
-    display: block;
-  }
+    #poptin .modal-content::after {
+      left: 40%;
+    }
 
-  .presents {
-    font-size: 26px;
-  }
-  .optin-title span.sm {
-    font-size: 50px;
-    line-height: 56px;
-  }
+    #poptin .optin-image img { 
+      width: 50%;
+      margin: auto;
+      display: block;
+    }
 
-  .optin-title span.md {
-    font-size: 62px;
-    line-height: 68px;
-  }
+    .presents {
+      font-size: 26px;
+    }
+    .optin-title span.sm {
+      font-size: 50px;
+      line-height: 56px;
+    }
 
-  .optin-title span.xl {
-    font-size: 80px;
-    line-height: 85px;
-  }
+    .optin-title span.md {
+      font-size: 62px;
+      line-height: 68px;
+    }
 
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    min-width: 47%;
-    width: 47%;
-    padding: 20px 15px 15px;
-    margin: 0 15px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
+    .optin-title span.xl {
+      font-size: 80px;
+      line-height: 85px;
+    }
 
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
+    .btn-yes,
+    .btn-no { 
+      min-height: 166px;
+      min-width: 47%;
+      width: 47%;
+      padding: 20px 15px 15px;
+      margin: 0 15px 0 0;
+      font: 900 72px/87px "Oswald",sans-serif;
+    }
 
-  #poptin .modal-content::after {
-    left: 46%;
-  }
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
 
-
-
-  #social .box, #post-footer-share .box { 
-    width: 31%;
-    float: left;
-    margin-right: 5px;
-  }
+    #poptin .modal-content::after {
+      left: 46%;
+    }
 
 
-}
 
-/* Portrait Mini */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
-  #poptin .modal-dialog {
-    width: 95%;
-    margin-top: 20px !important;
-  }
+    #social .box, #post-footer-share .box { 
+      width: 31%;
+      float: left;
+      margin-right: 5px;
+    }
 
-  #single .main-content-wrapper {
-    width: 700px;
-  }
-  #poptin .modal-content {
-    padding: 30px 87px 60px;
   }
 
-  #poptin .modal-content .close {
-    right: -10px;
+  /* Portrait Mini */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+    #poptin .modal-dialog {
+      width: 95%;
+      margin-top: 20px !important;
+    }
+
+    #single .main-content-wrapper {
+      width: 700px;
+    }
+    #poptin .modal-content {
+      padding: 30px 87px 60px;
+    }
+
+    #poptin .modal-content .close {
+      right: -10px;
+    }
+
+    #poptin .modal-content::after {
+      left: 40%;
+    }
+
+    #poptin .optin-image img { 
+      width: 50%;
+      margin: auto;
+      display: block;
+    }
+
+    .presents {
+      font-size: 26px;
+    }
+    .optin-title span.sm {
+      font-size: 50px;
+      line-height: 56px;
+    }
+
+    .optin-title span.md {
+      font-size: 62px;
+      line-height: 68px;
+    }
+
+    .optin-title span.xl {
+      font-size: 80px;
+      line-height: 85px;
+    }
+
+    .btn-yes,
+    .btn-no { 
+      min-height: 166px;
+      min-width: 47%;
+      width: 47%;
+      padding: 20px 15px 15px;
+      margin: 0 15px 0 0;
+      font: 900 72px/87px "Oswald",sans-serif;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+    #poptin .modal-content::after {
+      left: 46%;
+    }
+
+
+
+    #social .box, #post-footer-share .box { 
+      width: 31%;
+      float: left;
+      margin-right: 5px;
+    }
+
   }
-
-  #poptin .modal-content::after {
-    left: 40%;
-  }
-
-  #poptin .optin-image img { 
-    width: 50%;
-    margin: auto;
-    display: block;
-  }
-
-  .presents {
-    font-size: 26px;
-  }
-  .optin-title span.sm {
-    font-size: 50px;
-    line-height: 56px;
-  }
-
-  .optin-title span.md {
-    font-size: 62px;
-    line-height: 68px;
-  }
-
-  .optin-title span.xl {
-    font-size: 80px;
-    line-height: 85px;
-  }
-
-  .btn-yes,
-  .btn-no { 
-    min-height: 166px;
-    min-width: 47%;
-    width: 47%;
-    padding: 20px 15px 15px;
-    margin: 0 15px 0 0;
-    font: 900 72px/87px "Oswald",sans-serif;
-  }
-
-  .btn-poptin span {
-    font: 300 16px/18px "Oswald";
-  }
-
-  #poptin .modal-content::after {
-    left: 46%;
-  }
-
-
-
-  #social .box, #post-footer-share .box { 
-    width: 31%;
-    float: left;
-    margin-right: 5px;
-  }
-
-
-}
 
 /* Landscape */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
 
 }
+
+
+/* ----------- iPhone 5 and 5S ----------- */
+
+  /* Portrait and Landscape */
+  @media only screen and (min-device-width: 320px)  and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+
+  }
+
+  /* Portrait */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .presents {
+      font-size: 12px;
+    }
+
+
+    .btn-yes,
+    .btn-no { 
+      min-height: 156px;
+      min-width: 46%;
+      width: 46%;
+      padding: 20px 15px 15px;
+      margin: 0 5px 0 0;
+      font: 900 62px/77px "Oswald",sans-serif;
+    }
+    .optin-title span.l10 { 
+      font-size: 3.8em;
+      line-height: 66px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 2.7em;
+      line-height: 55px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 2.3em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l18 { 
+      font-size: 2.4em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 1.8em;
+      line-height: 43px;
+    }
+
+    .btn-poptin span {
+      font: 300 10px/18px "Oswald";
+    }
+    #poptin .modal-content::after {
+      width: 56px;
+      height: 56px;
+        background-size: 42px;
+      bottom: -23px;
+    }
+  }
+
+  /* Landscape */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    #poptin .modal-content {
+      padding: 30px 60px 60px;
+    }
+    .presents {
+      font-size: 18px;
+    }
+
+    .optin-title span.l10 { 
+      font-size: 6.7em;
+      line-height: 106px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 4.2em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 2.0em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l18 { 
+      font-size: 3.7em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 2.7em;
+      line-height: 53px;
+    }
+
+
+    .btn-yes,
+    .btn-no { 
+      min-height: 166px;
+      padding: 20px 10px 15px;
+      margin: 0 15px 0 0;
+      font: 900 72px/87px "Oswald",sans-serif;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+  }
+
+  /* ----------- iPhone 4 and 4S ----------- */
+
+  /* Portrait and Landscape */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+
+  }
+
+  /* Portrait */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  }
+
+  /* Landscape */
+  @media only screen  and (min-device-width: 320px ) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    
+    #poptin .modal-content {
+      padding: 30px 20px 60px;
+    }
+    .presents {
+      font-size: 18px;
+    }
+
+   .optin-title span.l10 { 
+      font-size: 6.7em;
+      line-height: 106px;
+    }
+
+    .optin-title span.l15 { 
+      font-size: 4.2em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l16 { 
+      font-size: 2.0em;
+      line-height: 35px;
+    }
+
+    .optin-title span.l18 { 
+      font-size: 3.7em;
+      line-height: 60px;
+    }
+
+    .optin-title span.l24 { 
+      font-size: 2.7em;
+      line-height: 53px;
+    }
+
+    .btn-yes,
+    .btn-no { 
+      min-height: 166px;
+      min-width: 46%;
+      width: 46%;
+      padding: 20px 10px 15px;
+      margin: 0 5px 0 0;
+      font: 900 72px/87px "Oswald",sans-serif;
+    }
+
+    .btn-poptin span {
+      font: 300 16px/18px "Oswald";
+    }
+
+  }

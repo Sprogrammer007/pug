@@ -45,12 +45,20 @@ head
         .container
           h1 Thank You! Download Your 
             br
-            | "How To Tell If A Website Is Right For Your Small Business" Guide.
+            - if (type === 'planner')
+              | "30 Minute Website Planner" Below.
+            - else
+              | "How To Tell If A Website Is Right For Your Small Business" Guide.
 
           .download-guide
-            a(href="https://s3.amazonaws.com/designforresult/pdfs/websiteguide_dfr.pdf" target="_blank")
-              i.fa.fa-cloud-download
-              span Download this Guide
+            - if (type === 'planner')
+              a(href="https://s3.amazonaws.com/designforresult/pdfs/website_planner.pdf" target="_blank")
+                i.fa.fa-cloud-download
+                span Download the Planner
+            - else
+              a(href="https://s3.amazonaws.com/designforresult/pdfs/websiteguide_dfr.pdf" target="_blank")
+                i.fa.fa-cloud-download
+                span Download the Guide
           p Wait! Before You Leave Allow Us Make You Another Crazy Offer Below...
       hr.divider_double
       section.sp

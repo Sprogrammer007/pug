@@ -2,7 +2,8 @@ var express = require('express')
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
   , stripe = require("stripe")(process.env.STRIPE_KEY)
-  , MCID = process.env.MC_ID
+  , MCID = '9f81cf88cc'
+  , MCID_Planner = '08f00544da'
   , https = require('https')
   , dbManager = require('../modules/database-manager');
 
@@ -145,7 +146,12 @@ router.get('/', function(req, res, next) {
 
 /* GET Landing page. */
 router.get('/guide', function(req, res, next) {
-  res.render('tripwire', { title: h.titleHelper('Step Guide'),  path: req.path, isMobile: is_mobile(req) });
+  
+  res.render('tripwire', { title: h.titleHelper('Step Guide'), 
+     path: req.path, 
+     isMobile: is_mobile(req),
+     type: req.query.type
+   });
 });
 
 router.get('/lp/guide', function(req, res, next) {
@@ -213,10 +219,14 @@ router.get('/test', function (req, res, next) {
 
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
-  console.log(req.body)
+  var list_type = req.body.list_type;
+
+  delete req.body['list_type'];
+  var MID = ( list_type === 'planner') ? MCID_Planner : MCID;
+  console.log(MID)
   var email = req.body.email;
   var mcReq = {
-    id: MCID,
+    id: MID,
     email: { email: email },
     merge_vars: {
       EMAIL: req.body.email,
@@ -234,7 +244,7 @@ router.post('/subscribe', function (req, res, next) {
   mc.lists.subscribe(mcReq, function(data) {
       console.log('User subscribed successfully! Look for the confirmation email.');
       dbManager.createUser(req);
-      res.redirect('/checklist');
+      res.redirect('/guide?type='+list_type);
     },
     function(error) {
       if (error.error) {

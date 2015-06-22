@@ -74,6 +74,7 @@ body.landing-page
             | YES, I Want to Figure Out Whither My Business Need a Website!
 
           form.optins.form-horizonta(action='/subscribe' method='post') 
+            input(type="hidden" name="list_type", value="guide")
             .form-group.clearfix
               input#inputEmail3.form-control(type='text', name="name", placeholder='Name*')      
             .form-group
