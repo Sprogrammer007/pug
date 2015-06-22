@@ -65,7 +65,7 @@
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 2*30*1000);
+    setTimeout(openOptin, 1*1*1000);
 
     $('#poptin').on('click', '.btn-yes', function(e) {
       if ($('#poptin .step2').length === 0 ) return;
@@ -332,7 +332,6 @@
 
         if (isMobile.any()) {
           $('#social').css({
-            'top': 'auto',
             'left': 0,
             'bottom': 0
           });
