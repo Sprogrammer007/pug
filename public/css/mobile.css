@@ -104,6 +104,9 @@
     line-height: 25px;
   }
 
+  #single .main-content-wrapper {
+    width: 80;
+  }
 
   .single-header { 
     margin: 15px 0;
@@ -220,10 +223,6 @@
   #contact ul ol p {
     font-size: 18px;
     width: 82%;
-  }
-
-  #single .main-content-wrapper {
-    width: auto;
   }
 
   .single-header { 
@@ -731,6 +730,10 @@
 
 /* Portrait */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+
+  #single .main-content-wrapper {
+    width: 700px;
+  }
 
 }
 
