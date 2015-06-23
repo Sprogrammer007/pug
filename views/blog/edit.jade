@@ -40,10 +40,12 @@ block content
           option(value="false") Draft
       .form-group
         label Bottom Optin
-        textarea.form-control(name='boptin' rows="4" value="#{post.boptin}")
+        textarea.form-control(name='boptin' rows="4")
+          | #{post.boptin}
       .form-group
         label Popup Optin
-        textarea.form-control(name='poptin' rows="4" value="#{post.poptin}")
+        textarea.form-control(name='poptin' rows="4")
+          | #{post.poptin}
       .form-group    
         label Popup On or Off
         select.form-control(name="popon")
