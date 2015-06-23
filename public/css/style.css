@@ -181,38 +181,37 @@ header .navbar-nav li a.logo {
 .post-share li {
   cursor: pointer;
 }
-#facebookf .box,
+
 #facebook .box {
   background-color: #435e9c;
 }
-#facebookf .box:hover,
+
 #facebook .box:hover {
   background-color: #304472;
 }
 
-#twitterf .box,
+
 #twitter .box {
   background-color: #4bc6fd;
 }
-#twitterf .box:hover,
+
 #twitter .box:hover {
   background-color: #2E7FA3;
 }
 
-#linkedinf .box,
+
 #linkedin .box {
   background-color: #007bb6;
 }
-#linkedinf .box:hover,
+
 #linkedin .box:hover {
   background-color: #004E73;
 }
-#googleplusf .box,
+
 #googleplus .box {
   background-color: #DC4748;
 }
 
-#googleplusf .box:hover,
 #googleplus .box:hover {
   background-color: #DC4748;
 }

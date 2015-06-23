@@ -109,7 +109,7 @@
 
     // Sharrre
 
-    $('#twitter, #twitterf').sharrre({
+    $('.twitter').sharrre({
       share: {
         twitter: true
       },
@@ -125,7 +125,7 @@
     });
 
 
-    $('#facebook, #facebookf').sharrre({
+    $('.facebook').sharrre({
       share: {
         facebook: true
       },
@@ -138,21 +138,8 @@
         api.openPopup('facebook');
       }
     });
-    // $('#googleplus, #googleplusf').sharrre({
-    //   share: {
-    //     googlePlus: true
-    //   },
-
-    //   enableHover: false,
-    //   enableTracking: true,
-    //   template: '<a class="box" href="#"><i class="social-icon fa fa-google-plus"></i><span class="count" href="#">{total}</span></a>',
-
-    //   click: function(api, options){
-    //     api.simulateClick();
-    //     api.openPopup('googlePlus');
-    //   }
-    // });    
-    $('#linkedin, #linkedinf').sharrre({
+  
+    $('.linkedin').sharrre({
       share: {
         linkedin: true
       },
@@ -364,6 +351,7 @@
       analize(form, 9.5);  
      
     });
+
 
     // Social Fix Scroller
     if ($('#social').length > 0 ) { 
