@@ -11,7 +11,8 @@ footer
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
       .modal-body
-        - if (post && post.popoptin != '' && post.popoptin != undefined)
+
+        - if (post && post.poptin != '' && post.poptin != undefined)
           | !{post.poptin}
         - else
 
@@ -38,4 +39,3 @@ footer
                 | No
                 br
                 span I already know the answer
-      

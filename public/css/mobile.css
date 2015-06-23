@@ -238,9 +238,6 @@
     margin-bottom: 20px;
   }
 
-  #poptin .btn-optin {
-    width: 100%;
-  }
 
   #single .share-wrapper {
     margin: 0 15px;
@@ -252,9 +249,6 @@
     top: auto !important;
   }
 
-  #single .btn-optin {
-    width: 100%;
-  }
 
   #social .box {
     padding-top: 5px;
@@ -660,6 +654,9 @@
     }
 
 
+    #poptin .btn-optin {
+      width: 100%;
+    }
 
     #social .box, #post-footer-share .box { 
       width: 31%;

@@ -65,7 +65,7 @@
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 3*15*1000);
+    setTimeout(openOptin, 1*1000);
 
     $('#poptin').on('click', '.btn-yes', function(e) {
 
@@ -79,6 +79,14 @@
       $('#poptin .step2').delay(400).show("slide", { direction: "right" }, 1200);;
       $('.modal-body').delay(400).animate({ height: 'auto' }, 1200 );
       $('#poptin .step2').delay(400).css('position', 'relative');
+    });
+
+    $('.boptin').on('click', function(e) { 
+      $('#poptin .step1').hide();
+      $('#poptin .step2').show();
+      $('#poptin .step2').delay(400).css('position', 'relative');
+      $('.modal-body').css('height', 'auto');
+      $('#poptin').modal('show');
     });
 
     function reposition() {
