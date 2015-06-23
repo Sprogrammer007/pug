@@ -65,7 +65,7 @@
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 1*1000);
+    setTimeout(openOptin, 3*15*1000);
 
     $('#poptin').on('click', '.btn-yes', function(e) {
 
@@ -84,6 +84,11 @@
     $('.boptin').on('click', function(e) { 
       $('#poptin .step1').hide();
       $('#poptin .step2').show();
+      dataLayer.push({
+        'event':'VirtualPageview',
+        'virtualPageURL':'/website_planner',
+        'virtualPageTitle' : 'Website Planner Optin'
+      });
       $('#poptin .step2').delay(400).css('position', 'relative');
       $('.modal-body').css('height', 'auto');
       $('#poptin').modal('show');
@@ -177,8 +182,30 @@
     // Submit Form
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    jQuery("form#optin-form").submit(function(){
 
-    jQuery("form#contact-form, form#optin-form").submit(function(){
+      var error = false;
+      var that = jQuery(this)
+      jQuery(this).find('.require-field').each(function(){
+        if(jQuery.trim(jQuery(this).val()) == '') {
+          error = true;
+          $(this).tooltip('show');
+        } else if(jQuery(this).hasClass('email')) {
+          if(!emailReg.test(jQuery.trim(jQuery(this).val()))) {
+            error = true;
+            $(this).tooltip('show');
+          }
+        } else if(jQuery(this).hasClass('phone')) {
+          if(!phoneReg.test(jQuery.trim(jQuery(this).val()))) {
+            error = true;
+            $(this).tooltip('show');
+          }
+        }
+      });
+      if(error) return false;
+    });
+
+    jQuery("form#contact-form").submit(function(){
 
       var error = false;
       var that = jQuery(this)
