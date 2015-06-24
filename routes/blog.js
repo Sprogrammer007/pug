@@ -2,13 +2,9 @@
   , moment = require('moment')
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
-  , querystring = require('querystring')
-  , https = require('https')
   , dbManager = require('../modules/database-manager')
   , passport = require('passport');
 
-
-var Insight_API_KEY = process.env.INSIGHT_KEY || 'AIzaSyBMMa9dBTGZ70abFZ-MkQ1C1U_-7zeJpjg';
 
 function is_mobile(req) {
   var ua = req.header('user-agent');
@@ -30,46 +26,8 @@ function is_mobile(req) {
   }
 }
 
-function getGPlusCount(url) {
-  var data = JSON.stringify({
-    "method":"pos.plusones.get",
-    "id": 'p',
-    "params":{
-        "nolog":true,
-        "id": url,
-        "source":"widget",
-        "userId":"@viewer",
-        "groupId":"@self"
-    },
-    "jsonrpc":"2.0",
-    "key":"p",
-    "apiVersion":"v1"
-  });
-
-  var post_options = {
-    host: 'clients6.google.com',
-    port: '443',
-    path: '/rpc?key=' + Insight_API_KEY,
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': data.length
-    }
-  };
-  
-  // Set up the request
-  var post_req = https.request(post_options, function(res) {
-    res.setEncoding('utf8');
-    res.on('data', function (chunk) {
-     console.log('Response: ' + chunk);
-    });
-  });
 
 
-  post_req.write(data);
-  post_req.end();
-
-} 
 
 function formatDate(string) {
   return moment(string).format('YYYY-MM-DD');
@@ -88,10 +46,7 @@ router.get('/blog', function (req, res, next) {
 // Single Post
 
 router.get('/blog/:url', function (req, res, next) {
-  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   var post = dbManager.getPostByURL(req.params.url);
-  console.log(fullUrl)
-  getGPlusCount(fullUrl);
   if (post) {
     post.create_date = moment(post.create_date).format('MMMM Do, YYYY');
     return res.render('blog/single', { title: h.titleHelper(post.title),  path: req.path, isMobile: is_mobile(req), post: post});

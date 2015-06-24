@@ -356,6 +356,7 @@
     // Social Fix Scroller
     if ($('#social').length > 0 ) { 
       (function(){
+
         var position = $('.post-title').offset();
         var width = $('.post-title').width();
         var position2 = $('#post-footer-share').offset();
@@ -388,8 +389,18 @@
           }
         });
 
+        //google plus counter
+        var url = 'https://plusone.google.com/_/+1/fastbutton?url=https://' + $('.googleplus').attr('data-url');
+        jQuery.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent(url), function (data){
+          $('.googleplus').find('.count').text(data.contents.match(/{c: (\d+)/)[1]);
+        });
+
       })();
     }
+    // Google plus share
+    $('.googleplus').on('click', function(e) {
+      window.open("https://plus.google.com/share?url=" + $('.facebook').attr('data-url'), "_blank", "top=0, left=500,width=600, height=400")
+    });
   
   });
 
