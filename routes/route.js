@@ -217,6 +217,10 @@ router.get('/test', function (req, res, next) {
 });
 
 
+router.get('/lp/planner', function(req, res, next) {
+  res.render('landing', { title: h.titleHelper('Website Planner'),  path: req.path, isMobile: is_mobile(req)});
+});
+
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
   var list_type = req.body.list_type;

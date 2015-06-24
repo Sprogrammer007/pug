@@ -55,7 +55,6 @@
   }
 
   function openOptin() {
-    if (!$('#poptin').attr('data-pon')) return;
     var seen = getCookie('o_shown');
     if (seen) return;
     setCookie('o_shown', 'yes', 2);
@@ -65,7 +64,9 @@
     
   $(document).ready(function() {
     // Optin
-    setTimeout(openOptin, 3*15*1000);
+    if ($('#poptin').attr('data-pon')) {
+     setTimeout(openOptin, 3*15*1000);
+    };
 
     $('#poptin').on('click', '.btn-yes', function(e) {
 

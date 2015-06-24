@@ -102,6 +102,11 @@ hr.divider2 {
   height: 36px
 }
 
+.container.csm {
+  width: 850px;
+
+}
+
 
 /** 2.0 - Header **/
 header .navbar {
@@ -469,7 +474,6 @@ header .navbar-nav li a.logo {
   font-weight: 600;
   color: #78D6A5;
 }
-
 
 .post-item-wrapper .post-item-excerpt {
   font-size: 16px;
@@ -1604,4 +1608,53 @@ footer .footer-social ul li a:hover i {
 }
 
 
+/*Planner Landing*/
 
+#lp .optin-image img {
+  width: 100%;
+  border: 2px solid #858585;
+
+}
+
+#lp {
+  font: 300 16px/20px 'Oswald';
+  color: #454547;
+}
+
+#lp h1 {
+  font-size: 3.2em;
+  font-weight: 900;
+  margin-bottom: 50px;
+  color: #03A47F;
+}
+
+#lp h2 {
+  font-size: 1.6em;
+  font-weight: 500;
+  line-height: 1.4em;
+  margin-top: 0;
+}
+
+#lp span.privacy {
+  display: block;
+  text-align: center;
+  color: #858585;
+}
+
+#lp p { 
+  font-size: 1.4em;
+  margin-top: 25px;
+}
+
+#lp .jointhefamily {
+  border-top: 5px solid #454547;
+  border-bottom: 2px solid #454547;
+  margin: 60px 0;
+  padding: 30px 0;
+  font-weight: 500;
+}
+
+#lp .btn-optin {
+  width: 100%;
+  margin-bottom: 0;
+}

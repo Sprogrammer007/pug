@@ -1,0 +1,66 @@
+extends ./layout
+
+block content
+  #lp
+    .container.csm
+      h1.text-center [INTERACTIVE PDF]
+        br
+        | Download Your 30 MINUTE Small WEBSITE PLANNER!
+
+      .row
+        .col-lg-7.col-md-7.col-sm-7.col-xs-7.optin-description
+          h2 Use this Professional Website Planner to Plan your Awesome Small Business Website Today.
+          p.optin-description.text-left
+            i.fa.fa-check(style="color: green;")
+            |  Plan your entire small Business website in 30 minutes.                
+          p.optin-description.text-left 
+            i.fa.fa-check(style="color: green;")
+            |  Know exactly what to put in each pages.          
+          p.optin-description.text-left 
+            i.fa.fa-check(style="color: green;")
+            |  Plan and reduce overall developement time and cost. 
+          p.optin-description.text-left 
+            i.fa.fa-check(style="color: green;")
+            |  Built highly effective Business website with this planner.          
+          p.optin-description.text-left 
+            i.fa.fa-check(style="color: green;")
+            |  Built highly effective Business website with this planner.
+        .col-lg-5.col-md-5.col-sm-5.col-xs-5.optin-image
+          img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
+          .btn.btn-optin.boptin
+            | Download This Planner
+          span.privacy
+            |  We value your privacy and would never spam you
+      .row
+        .col-lg-12.col-xs-12
+          p.jointhefamily.text-center Join 
+            span(style="font-size: 1.4em; color: #f16334;") 468 
+            | Small Business Owners Today, and Plan your Awesome Website.
+  #poptin.modal.fade()
+    .modal-dialog
+      .modal-content
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+        .modal-body
+          .step2
+            .progress-bar
+              span.bar-text 50% Completed
+              .bar 
+
+            span.notice
+              | (enter your email address below and click the “Get Instant Access!” button)
+            .optin-title
+              | YES, I want FREE Website Planner!
+
+            form#optin-form.optins.form-horizonta(action='/subscribe' method='post')
+              input(type="hidden" name="list_type", value="planner")
+              .form-group.clearfix
+                input#inputEmail3.require-field.form-control(type='text', name="name", placeholder='Name*' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your name.")      
+              .form-group
+                input#inputPassword3.require-field.form-control(type='email', name="email", placeholder='Email*' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your email.")
+              .form-group
+                button.btn.btn-optin(type='submit') Get The Planner!
+            p.privacy 
+              i.fa.fa-lock
+              |  We value your privacy and would never spam you
+            p(style="font-size:12px;") By signing up you'll also receive access to the "Designed for Result" bi-weekly newsletter, exclusive offers, event information and helpful tips. View Designed for Result's 
+              a(href="/privacy-policy") Privacy Policy 
