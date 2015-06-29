@@ -35,5 +35,213 @@ block content
                 | 24/24/24
           .clearfix
         .post-content
-          
-         
+          p In the world of web design, the idea of having a beautifully designed website and a website that ranks well on search engines just don’t mix.
+            | This was true in 1997, this was true in 2004, and this was even true in 2008.
+            | But since the beginning of 2010 the gap between SEO and web design has merged ever closer.
+          img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/design-seo-synergy.jpg" alt="web design seo synergy") 
+          p This change was largely due to the maturity of HTML5 and CSS3. Here is a great timeline created Wix.com of the history of HTML5.
+          a(href="https://s3.amazonaws.com/designforresult/post-default-images/post2/bd7f6ce7.jpg" target="_blank").thumb-wrapper
+            .overlay
+              i.fa.fa-search-plus.fa-2x         
+            img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/html-info-thumb.jpg" alt="web design seo synergy")
+          p So what does this mean for web designers, web developers, business owners, and Internet marketers all around the world? 
+          p Does this mean that we can finally create both beautiful websites and websites that rank well on search engines?
+          p Well… that depends on your definition the word “beautiful”.
+          p Even though HTML5 and CSS3 have largely lessen the gap between SEO and web design, there are still limitations.
+          p If you’re a designer who wants to create masterpieces of art and still expect search engine bots to understand what you’re website is about then you’ll probably run into a lot of people that will tell you to change career. 
+            | But don’t get discourage. We at Designed for Result believe in “finding away” rather than accepting the “status quo”. 
+            | And if you do decide to take our approach make sure you contact us ☺.
+          p In this post we’ll show you 8 ways to improve website with HTML5 and CSS3 while maintaining maximum SEO friendliness. 
+          hr.divider2
+          section
+            h2 #1 New Html 5 Semantic Elements
+            p Prior to Html 5 web developers would wrap everything that is not a table, image, title, or form into to 
+              em &lt;div&gt; and &lt;span>
+              | . While these 
+              em &lt;div> and &lt;span> 
+              | elements worked great, they never really clearly defined what contents are being wrapped in them. 
+            p So developers would have to use ids and classes to label each div and span elements for different parts of the website.
+              | This made it hard for search engines bots to figure out what part did each 
+              em &lt;div> 
+              | elements represented because each developer will label them slightly differently.
+            p HTML5 introduced 13 new semantic elements that web designers & developers can use to clearly define each part of the web page. 
+              | While we don’t have any official proof that search algorithms will take these new HTML5 elements in to consideration when indexing a new web page. 
+              | But it is not hard to see the benefits of these new semantic elements for both web designers and SEO.
+            p Here is a simple layout to demonstrate some of these new HTML5 semantic elements. 
+            img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/html5_tags_layout.jpg" alt="html5 semantic elements layout")
+            p Here is a list of all the available HTML 5 Semantics Elements.
+            table.table.table-striped
+              thead
+                tr
+                  th Tag
+                  th Description
+              tbody
+                tr
+                  td &lt;article>
+                  td Defines an article
+                tr
+                  td &lt;aside>
+                  td Defines content aside from the page content(usually sidebars)                
+                tr
+                  td &lt;details>
+                  td Defines additional details that the user can view or hide 
+                tr
+                  td &lt;figcaption>
+                  td Defines a caption for a &lt;figure> element                
+                tr
+                  td &lt;figure>
+                  td Specifies self-contained content, like illustrations, diagrams, photos, code listings, etc.                
+                tr
+                  td &lt;footer>
+                  td Defines a footer for a document or section                
+                tr
+                  td &lt;header>
+                  td Specifies a header for a document or section                
+                tr
+                  td &lt;main>
+                  td Specifies the main content of a document                
+                tr
+                  td &lt;mark>
+                  td Defines marked/highlighted text                
+                tr
+                  td &lt;nav>
+                  td Defines navigation links                
+                tr
+                  td &lt;section>
+                  td Defines a section in a document               
+                tr
+                  td &lt;summary>
+                  td Defines a visible heading for a &lt;details> element                
+                tr
+                  td &lt;time>
+                  td Defines a date/time
+          hr.divider2
+          section
+            h2 #2 HTML 5 Videos
+            p 
+              em “Here is one more nail in Flash’s coffin” 
+              a(href="http://techcrunch.com/2015/01/27/youtube-goes-html5-flash-is-now-deader/" rel="no-follow") Techcrunch.com 
+              | says as YouTube officially switched over to using HTML5 Video as their default video player for all modern browsers earlier January of 2015.
+            p The video giant had adopted HTML5 as early as 2010 but it wasn’t until 2015 that HTML5 Video player has matured enough for YouTube to make the complete switch.  The switch was a major performance booth says YouTube. 
+              | Videos now starts 15 to 80 percent faster and reduces average bandwidth usage to stream a video by 35 percent.
+            p Apart from the fast load time and webmasters are no longer required to use Flash or any other video player plugins. 
+              | HTML5 Video also allows the use of captions and subtitles, giving webmasters an opportunity define the intent of the video to search engines. 
+            p Here is a simple and quick way to use HTML5 Videos in your website:
+            pre
+              code.language-markup &lt;video id="video" controls preload="metadata">    
+                |    &lt;source src="video/sintel-short.mp4" type="video/mp4">    
+                |    &lt;source src="video/sintel-short.webm" type="video/webm">    
+                |    &lt;track label="English" kind="subtitles" srclang="en" src="captions/vtt/sintel-en.vtt" default>
+                |    &lt;label="Deutsch" kind="subtitles" srclang="de" src="captions/vtt/sintel-de.vtt">    
+                |    &lt;label="Español" kind="subtitles" srclang="es" src="captions/vtt/sintel-es.vtt"> 
+                | &lt;/video>
+            p The &lt;video> tag is the wrapper for your media. 
+              br
+              | The &lt;source> tag defines the video and audio of your media. 
+              br
+              | The &lt;track> defines the text tracks available for your media.
+            p This is the most basic way of adding HTML5 Video to your website. For more advance techniques check out
+              a(href="http://www.w3schools.com/html/html5_video.asp" rel="no-follow") W3Schools HTML5 Video
+              | and 
+              a(href="https://developer.mozilla.org/en-US/Apps/Build/Audio_and_video_delivery/Adding_captions_and_subtitles_to_HTML5_video#Building_a_caption_menu" rel="no-follow") Developer Mozilla HTML5 Video.
+          hr.divider2
+          section
+            h2 #3 HTML 5 SVG
+            p SVG stands for Scalable Vector Graphics. Simply put it is web graphics that can be scale in sizes without losing quality. 
+            p Here is an example… If you have a bitmap, jpg, or png image file of 200x200 pixel and you scale that up to 400x400 pixel on your website. The image will look pixelated. But if you scale the same vector image, the quality will remain the same. 
+            img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/bitmap-vs-vector.png" alt="bitmap vs vector web design")
+            p The only catch to vector base image is that they’re only limited to computer generated graphics, which means they’re usually icons and illustrations. But apart from that SVGs are fast and can be manipulated with CSS/Javascript to create some really cool animations and hover effects.
+            p Good usages for SVGs are Icons. Traditionally if you wanted to incorporate icons on your web design you’ll need to create 2 separate images of the same icon. One image for the normal state, and one for the hover state.
+            p With SVGs, adding one line of styling in your CSS style sheet can solve the same problem. Just add a “fill” to the SVG path to change the color and now you have a hover effect without having to create 2 separate images of the same icon. Here are some icon hover effects using SVGs and CSS only.
+            p If you’re interested in using SVGs in your web design, 
+              a(href="http://www.flaticon.com/" rel="no-follow") flaticon.com 
+              | has a huge selection that you can use for free.
+          hr.divider2
+          section
+            h2 #4 CSS3 Web Fonts
+            p The ability to use Web Fonts is a major game changer for SEO and web design. Prior to web fonts, in order to create an awesome promotional image you’ll have to get your graphic designer to design the image in Photoshop 
+              | so you can use some really fancy fonts to grab attention and then embed it into your web page using the &lt;img> tag or css background-image property.
+            p The problem with this is that any text on the image will be “lost in translation” when search engines crawl through your page. Search engine bots do not have the ability to read the text on your image, at least not yet. 
+            p With CSS3 web fonts this is no longer a problem. Now you can include all kinds of custom web fonts and overlay styled text on top of your promotional image. Search engine crawlers can now pick up all the texts on your promotional images.   
+            p(data-height="268" data-theme-id="16338" data-slug-hash="WbOjyo" data-default-tab="result" data-user="blindingstars" class='codepen')
+            script(async src="//assets.codepen.io/assets/embed/ei.js")
+            p To include web fonts into your website you’ll have to either use @font-face in your style sheet.
+            pre
+              code.language-css @font-face {
+                |   font-family: 'MyWebFont';
+                |   src: url('webfont.eot'); /* IE9 Compat Modes */
+                |   src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                |        url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+                |        url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+                |        url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+                |        url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+                |}
+    
+            p Or import one of many fonts that Google provides for free here using @import. 
+            pre
+              code.language-css @import url(//fonts.googleapis.com/css?family=Open+Sans);
+            p For more details on how to use @font-face check out this from 
+              a(href="https://css-tricks.com/snippets/css/using-font-face/" rel="no-follow") css-tricks.com
+              |.
+          hr.divider2
+          section
+            h2 #5 CSS3 Transform
+            p Suppose you’re not quiet done with your promotional header. What if you want something a little different than all your competition? What if you want to rotate the headline of the promotional header by 23 degree to disguise yourself even more from everyone else out there?
+            p(data-height="268" data-theme-id="16338" data-slug-hash="pired" data-default-tab="result" data-user="flxa" class='codepen')
+            p Prior to CSS3 this would be impossible to accomplish without the use of Photoshop and having the text be “loss in translation” to the search engines. But with CSS3 and the transform property you can do exactly that and still have your text be picked up by search engines.
+            p The transform property is incredibly powerful! You can rotate, skew, scale, any elements in both 2D and 3D. Here is a quick example:
+            p For more ways of using the CSS3 transform property 
+              a(href="https://css-tricks.com/almanac/properties/t/transform/" rel="no-follow") check out this.
+          hr.divider2
+          section
+            h2 #6 CSS3 Rounded Corners & Gradients    
+            p Rounded corners and gradients were essential part of most Call to Action button. But prior to CSS3 you would again have to design them in Photoshop first. This causes two problems. 
+            p First, with every button you would need to create two sets of graphics. One for the button and one for the button when someone hover their mouse over it. Second, if you want to make your web design responsive (scale for different screen sizes) you would need to create different sizes buttons for each screen sizes. 
+            p Both of these problems will increase your overall assets needed for your website thus increasing the overall load time of your website. With CSS3 you can easily create round corners and gradients within your style sheet. 
+            p To create round corners, use the border-radius property.
+            pre
+              code.language-css div { border-radius: 5px; }  
+            p To create gradients you can use either the lineage-gradients or the radial gradients helpers to any CSS properties that deals with colors.
+            pre
+              code.language-css #grad {
+                |   background: -webkit-linear-gradient(red, blue); /* For Safari 5.1 to 6.0 */
+                |   background: -o-linear-gradient(red, blue); /* For Opera 11.1 to 12.0 */
+                |   background: -moz-linear-gradient(red, blue); /* For Firefox 3.6 to 15 */
+                |   background: linear-gradient(red, blue); /* Standard syntax */
+                | }
+            p There are also a number of CSS3 gradient generators that you can use for free such as 
+              a(href="http://www.colorzilla.com/gradient-editor/" rel="no-follow") colorzilla.com
+              | . Or even better you can use this 
+              a(href="http://css3buttongenerator.com/" rel="no-follow") CSS3 button generator 
+              | to generate your call to action button. 
+          hr.divider2
+          section
+            h2 #7 CSS3 Box Shadow & Text Shadow
+            p Just like round corners and gradients. CSS3 also offers a way to incorporate shadow effects in your web design without the use of Photoshop. 
+            p To add shadow effects to various of elements use the box-shadow property. You can also use this 
+              a(href="http://css3gen.com/box-shadow/" rel="no-follow") box shadow generator
+              | to generate your ideal box-shadow effects.
+            img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/box-shadow-ex.jpg" alt="web design box-shadow")
+            p To add shadow effects to text use the text-shadow property. You can also use this  
+            a(href="http://css3gen.com/text-shadow/" rel="no-follow") text shadow generator here.
+            img.center-block(src="https://s3.amazonaws.com/designforresult/post-default-images/post2/text-shadow-exp.jpg" alt="web design text-shadow")
+
+          hr.divider2
+          section
+            h2 #8 CSS3 Animation & Transition
+            p CSS3 animations and transitions is large topic that we’ll not be able to cover here in this post in details. We will help you get start with some basic usage of CSS3 animation and transitions and additional resources for you’re to learn more on the subject.
+            p(data-height="268" data-theme-id="16338" data-slug-hash="gJric" data-default-tab="result" data-user="kavendish" class='codepen')
+            p Animation example…
+            p(data-height="268" data-theme-id="16338" data-slug-hash="xBkFI" data-default-tab="result" data-user="geertjanhendriks" class='codepen')
+            p Resources for CSS3 transitions and animations: 
+              a(href="http://www.w3schools.com/css/css3_transitions.asp" rel="no-follow") W3 Schools              
+              |, 
+              a(href="https://css-tricks.com/almanac/properties/t/transition/" rel="no-follow") CSS-Tricks              
+              , 
+              a(href="http://learn.shayhowe.com/advanced-html-css/transitions-animations/" rel="no-follow") learn.shayhowe.com
+              , 
+              a(href="http://webdesign.tutsplus.com/tutorials/a-beginners-introduction-to-css-animation--cms-21068" rel="no-follow") Tuts Plus
+          hr.divider2
+          section
+            h2 The Future
+            p With CSS4 just around the corner, giving us better support for responsive designs. And HTML6 development underway as I write this post, the future of web design looks promising.

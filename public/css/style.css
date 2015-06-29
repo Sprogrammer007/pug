@@ -321,7 +321,7 @@ header .navbar-nav li a.logo {
 
 #home form select {
   position: relative;
-  top: 2px;
+  top: 1px;
   width: 15%;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -508,6 +508,13 @@ header .navbar-nav li a.logo {
   color: #5D6769;
 }
 
+#single pre {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  border-left: 5px solid #2F97CC; 
+}
+
 .single-header {
   margin:  50px 0;
 }
@@ -551,6 +558,38 @@ header .navbar-nav li a.logo {
 
 .post-content li {
   margin-bottom: 10px;
+}
+
+.post-content .thumb-wrapper {
+  position: relative;
+  cursor: pointer;
+  display: block;  
+}
+
+.post-content .thumb-wrapper .overlay { 
+  position: absolute;
+  top: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+}
+
+.post-content .thumb-wrapper .overlay i {
+  color: rgb(255, 255, 255);
+  text-align: center;
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin: 10px;
+
+}
+
+.post-content .thumb-wrapper:hover .overlay i { 
+  animation-name: hvr-pulse;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .post-content img { 
