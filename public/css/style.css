@@ -528,6 +528,7 @@ header .navbar-nav li a.logo {
   margin: auto;
 }
 
+
 .main-content-wrapper h1 {
   font-family: 'Oswald';
   color: #5D6769;
@@ -546,6 +547,15 @@ header .navbar-nav li a.logo {
   font-size: 18px;
   line-height: 28px;
   margin-bottom: 50px;
+}
+
+
+.post-content .shareit {
+  margin-bottom: 8px;
+  display: block;
+  widows: 100%;
+  color: #A23EFF;
+  font-weight: 900;
 }
 
 .post-content h2 { 
