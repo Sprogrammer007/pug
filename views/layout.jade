@@ -81,12 +81,12 @@ body
   block content
   include ./footer.jade
   //js
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js' async)
   script(src='/js/modernizr.js')
   script(src='/js/jquery-ui.min.js')
   script(src='/js/bootstrap.min.js')
   script(src='/js/sharrre.min.js')
-  script(src='/js/wow.min.js' )
+  script(src='/js/wow.min.js' async)
 
   - if (path.substring(0, 5) === '/blog' )
     script(src='/js/prism.js')
