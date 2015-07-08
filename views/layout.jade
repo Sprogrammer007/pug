@@ -82,10 +82,10 @@ body
   include ./footer.jade
   //js
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js' async)
-  script(src='/js/modernizr.js' async)
-  script(src='/js/jquery-ui.min.js' async)
-  script(src='/js/bootstrap.min.js' async)
-  script(src='/js/sharrre.min.js' async)
+  script(src='/js/modernizr.js')
+  script(src='/js/jquery-ui.min.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/sharrre.min.js')
   script(src='/js/wow.min.js' async)
 
   - if (path.substring(0, 5) === '/blog' )
@@ -97,14 +97,15 @@ body
    link(rel='stylesheet', href='/css/score.css')
   - console.log(path.substring(0, 6))
   - if (path.substring(0, 6) === '/lp/tp' )
-    script(src='/js/jquery.payment.js' async)
+    script(src='/js/jquery.payment.js')
     script(type='text/javascript', src='https://js.stripe.com/v2/')
     script(type='text/javascript').
       // This identifies your website in the createToken call below
-        Stripe.setPublishableKey('pk_live_ub2PBP7qG6Eebl6s9HUVXDpJ');
-        // ...
+      Stripe.setPublishableKey('pk_live_ub2PBP7qG6Eebl6s9HUVXDpJ');
+      // ...
 
-    script(src='/js/tripewire.js')
+    script(src='/js/tripewire.js÷π
+      ,.m+')
   - else 
     script(src='/js/custom.js')
  
