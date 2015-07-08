@@ -81,12 +81,12 @@ body
   block content
   include ./footer.jade
   //js
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js' async)
-  script(src='/js/modernizr.js' async)
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+  script(src='/js/modernizr.js')
   script(src='/js/jquery-ui.min.js')
   script(src='/js/bootstrap.min.js')
   script(src='/js/sharrre.min.js')
-  script(src='/js/wow.min.js' async)
+  script(src='/js/wow.min.js' )
 
   - if (path.substring(0, 5) === '/blog' )
     script(src='/js/prism.js')
@@ -104,8 +104,7 @@ body
       Stripe.setPublishableKey('pk_live_ub2PBP7qG6Eebl6s9HUVXDpJ');
       // ...
 
-    script(src='/js/tripewire.js÷π
-      ,.m+')
+    script(src='/js/tripewire.js')
   - else 
     script(src='/js/custom.js')
  
