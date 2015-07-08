@@ -1,9 +1,61 @@
+/** 2.0 - Header **/
+header .navbar {
+  margin-bottom: 0;
+  background-color: #f16334;
+  border-radius: 0;
+}
+
+header .logo {
+  margin-left: 20px;
+  display: block;
+  height: 50px;
+  max-height:  50px;
+}
+header .logo img { 
+  height: 100%;
+}
+
+header .navbar-nav li a {
+  font-family: 'Oswald';
+  color: #3c3b3b;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+header .navbar-toggle .icon-bar {
+  background-color: #3c3b3b;
+}
+
+header .navbar-nav li.active a {
+  color: #1FF5BF;
+}
+
+header .navbar-nav li a:hover {
+  background-color: transparent;
+}
+
+header .hvr-underline-from-center:before {
+  background-color: #3c3b3b;
+}
+
+header .navbar-nav li a.logo {
+  padding: 0;
+}
+
 #tripwire {
   font-family: "Oswald";
 }
 
 #tripwire span.orange {
   color: #f16334;
+}
+#tripwire span.black {
+  color: #262527;
+}
+
+#tripwire span.stronger {
+  font-weight: 600;
 }
 
 #tripwire .container {
@@ -21,64 +73,33 @@
 
 #tripwire .download-section {
   position: relative;
-  background: #f16334;
-  padding-bottom: 80px;
+  background-image: url('/images/bg.jpg');
+  padding: 50px 0;
+
 }
 
-#tripwire .download-section:after, #report .report-wrapper:before {
-  top: 100%;
-  left: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
+
+.download-section .btn-download {
+  width: 100%;
+  border: 2px solid #666;
+  color:  #666;
+  font-size: 18px;
 }
 
-#tripwire .download-section:after {
-  border-color: rgba(136, 183, 213, 0);
-  border-top-color: #f16334;
-  border-width: 30px;
-  margin-left: -30px;
-}
-
-#tripwire .download-section:before {
-  border-color: rgba(194, 225, 245, 0);
-  border-top-color: #f16334;
-  border-width: 36px;
-  margin-left: -36px;
-}
-
-#tripwire h1 {
-  text-align: center;
-  color: #FFF;
-  font-size: 50px;
-  line-height: 60px;
-  font-weight: bold;
-}
-
-.download-section a {
-  display: block;
-  border: 3px dashed #555;
-  width: 40%;
-  margin: 20px auto;
-  padding: 10px;
+.download-section img {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .download-section i {
-  font-size: 90px;
-  color: #555;
+  color: #666;
   text-align: center;
-  display: block;
-  width: 100%;
+  position: relative;
+  width: 30px;
+  left: 25px;
+  top: 0px;
 }
 
-.download-section a span {
-  text-align: center;
-  display: block;
-  color: #555;
-}
 
 .download-section a:hover {
   background-color: transparent;
@@ -92,16 +113,18 @@
 } 
 
 .download-section p {
-  text-align: center;
-  color: #FFF;
-  font-size: 35px;
-  line-height: 45px;
+  text-align: left;
+  font-size: 23px;
+  font-weight: 300;
+  color: #666;
 }
 
 
 
-#tripwire section {
-  background-image: url('../images/landingbg.png');
+#tripwire section:first-child {
+  border-color: #DFDFDF;
+  border-width: 1px;
+  border-style: solid;
 }
 
 #tripwire .sp {

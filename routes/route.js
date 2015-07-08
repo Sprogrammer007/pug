@@ -48,178 +48,24 @@ function extractFormats(formats, type) {
 }
 
 
-router.post('/checkout', function (req, res, next) {
-  console.log(req.body)
-  var token = req.body.stripeToken;
-  var user = dbManager.getUserByEmail(req.body.email);
-  var order = null;
-  if (user === undefined ) {
-    user = dbManager.createUser(req);
-  } else {
-    dbManager.updateUser(req, user.id)
-  }
 
-
-  stripe.customers.create({
-    source: token,
-    email: req.body.email,
-    description: 'waiting for approvel for product '
-  }).then(function(customer) {
-    console.log(customer);
-    order = dbManager.createOrder(req, user.id, customer.id, token);
-    res.redirect('/wireframe/thank-you/' + order.id);
-  });
- 
-});
-
-router.post('/ckc', function (req, res, next) {
-  var userParams = {};
-  userParams.body = {};
-  userParams.body.email = req.body.email;
-  userParams.body.name = req.body.name;
-  userParams.body.address = req.body.address;
-  userParams.body.city = req.body.city;
-  userParams.body.postal = req.body.postal;
-  userParams.body.phone = req.body.phone;
-  userParams.body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  var orderParams = {};
-  orderParams.body = {};
-  orderParams.body.product_name = req.body.product_name;
-  orderParams.body.subtotal = req.body.subtotal;
-
-  var token = req.body.stripeToken;
-  var user = dbManager.getUserByEmail(req.body.email);
-  var order = null;
-  if (user === undefined ) {
-    user = dbManager.createUser(userParams);
-  } else {
-    dbManager.updateUser(userParams, user.id)
-  }
-
-  // create stripe character
-  stripe.customers.create({
-    source: token,
-    email: req.body.email,
-    description: 'waiting for approvel for product '
-  }).then(function(customer) {
-    console.log(customer);
-    // create order in db
-    order = dbManager.createOrder(orderParams, user.id, customer.id, token);
-    
-    // charge amount
-    stripe.charges.create({ 
-      amount: order.subtotal,
-      currency: 'cad',
-      customer: customer.id,
-      description: "Charges for " + order.product_name
-    }, function(err, charge) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("payment charged");
-      }
-    });
-
-    req.app.mailer.send('trip_email', {
-      to: 'stevey@bigtalkconsulting.com', 
-      subject: 'New sale Consultation', 
-      body: req.body,
-      id: order.id,
-      pname: order.product_name
-    }, function (err) {
-      if (err) {
-        // handle error
-        console.log(err);
-        return;
-      }
-    });
-
-    res.redirect('/cc/thank-you/' + req.body.dt );
-  });
- 
-});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Designed for Result',  path: req.path, isMobile: is_mobile(req) });
+  res.render('index', { title: 'Designed for Result',  path: req.originalUrl, isMobile: is_mobile(req) });
 });
 
-/* GET Landing page. */
-router.get('/guide', function(req, res, next) {
-  
-  res.render('tripwire', { title: h.titleHelper('Step Guide'), 
-     path: req.path, 
-     isMobile: is_mobile(req),
-     type: req.query.type
-   });
-});
-
-router.get('/lp/guide', function(req, res, next) {
-  res.render('landing/landing-part1', { title: h.titleHelper('Free Guide'),  path: req.path, isMobile: is_mobile(req)});
-});
-
-router.get('/wireframe-discount', function(req, res) {
-  res.render('sales/sales1', { title: h.titleHelper('Wireframes'),  path: req.path, isMobile: is_mobile(req)});
-});
-
-router.get('/wireframe/thank-you/:id', function(req, res) {
-  var order_id = req.params.id
-  if (order_id) {
-    res.render('sales/thankyou', { title: h.titleHelper('Thank You'), id: order_id,  path: req.path, isMobile: is_mobile(req)});
-  } else {
-    console.log('error')
-    res.render('sales/error', { title: h.titleHelper('No Order Found'),  path: req.path, isMobile: is_mobile(req)});
-  }
-});
-
-router.get('/cc/thank-you/:dt', function(req, res) {
-  var s = req.params.dt.split(" ");
-  var date = s[0];
-  var time = s[1];
-  res.render('tripthankyou', { 
-    title: h.titleHelper('Thank You'), 
-    date: date, 
-    time: time,  
-    path: req.path, 
-    isMobile: is_mobile(req)
-  });
-});
-
-router.post('/wireframe/thank-you/done/:id', function(req, res) {
-  var id = req.params.id;
-  var order = dbManager.createOrderDetail(req, id);
-  res.setHeader('Content-Type', 'application/json');
-  if (order) {
-    req.app.mailer.send('sale_email', {
-      to: 'stevey@bigtalkconsulting.com', // REQUIRED. This can be a comma delimited string just like a normal email to field. 
-      subject: 'New sale Wireframe', // REQUIRED.
-      otherProperty: id // All additional properties are also passed to the template as local variables.
-    }, function (err) {
-      if (err) {
-        // handle error
-        console.log(err);
-        return;
-      }
-      res.send(JSON.stringify({ 'success': 1 }));
-    });
-      
-  } else {
-    res.send(JSON.stringify({ 'success': 0 }));
-  }
-});
 
 router.get('/getanswers', function (req, res, next) {
-  res.render('contact', { title: h.titleHelper('Get Answers'),  path: req.path, isMobile: is_mobile(req)});
+  res.render('contact', { title: h.titleHelper('Get Answers'),  path: req.originalUrl, isMobile: is_mobile(req)});
 });
 
 router.get('/test', function (req, res, next) {
-  res.render('test', { title: h.titleHelper('Test'),  path: req.path, isMobile: is_mobile(req)});
+  res.render('test', { title: h.titleHelper('Test'),  path: req.originalUrl, isMobile: is_mobile(req)});
 });
 
 
-router.get('/lp/planner', function(req, res, next) {
-  res.render('landing', { title: h.titleHelper('Website Planner'),  path: req.path, isMobile: is_mobile(req)});
-});
+
 
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
@@ -305,7 +151,7 @@ router.post('/speedtest/report', function(req, res, next ){
 
         res.render('report', { 
           title: 'Designed for Result | Speed Test Report', 
-          path: req.path,
+          path: req.originalUrl,
           url: url,
           score: score,
           mime_type: mime,
@@ -330,7 +176,7 @@ router.post('/speedtest/report', function(req, res, next ){
 
 /* Post Sent Mail */
 router.post('/contact_mailer', function (req, res, next) {
-  req.app.mailer.send('email', {
+  req.app.mailer.send('/emails/lead', {
     to: 'stevey@bigtalkconsulting.com', // REQUIRED. This can be a comma delimited string just like a normal email to field. 
     subject: 'contact from ' + req.body.position, // REQUIRED.
     otherProperty: req.body // All additional properties are also passed to the template as local variables.
@@ -362,10 +208,10 @@ Disallow: /wireframe-discount");
 /* Legal Pages */
 
 router.get('/terms', function(req, res) {
-  res.render('terms', { title: h.titleHelper('Terms & Conditions'),  path: req.path, isMobile: is_mobile(req)});
+  res.render('terms', { title: h.titleHelper('Terms & Conditions'),  path: req.originalUrl, isMobile: is_mobile(req)});
 });
 
 router.get('/privacy', function(req, res) {
-  res.render('privacy', { title:  h.titleHelper('Privacy Policy'),  path: req.path, isMobile: is_mobile(req)});
+  res.render('privacy', { title:  h.titleHelper('Privacy Policy'),  path: req.originalUrl, isMobile: is_mobile(req)});
 });
 module.exports = router;

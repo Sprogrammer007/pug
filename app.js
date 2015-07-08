@@ -10,9 +10,13 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , mailer = require('express-mailer')
   , mcapi = require('./node_modules/mailchimp-api/mailchimp')
+  //route files
   , routes = require('./routes/route')
   , users = require('./routes/users')
   , blog = require('./routes/blog')
+  , admin = require('./routes/admin')
+  , lp = require('./routes/landing')
+
   , app = express()
   , fs = require('fs')
   , db = require('./modules/db')
@@ -60,8 +64,12 @@ app.use(session({ secret: toString(Math.random()),
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Routes
 app.use('/', routes);
-app.use('/', blog);
+app.use('/blog', blog);
+app.use('/lp', lp);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

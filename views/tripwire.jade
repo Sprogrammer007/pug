@@ -1,391 +1,294 @@
-doctype html
-head
-  meta(charset="UTF-8")
-  meta(name='viewport', content='width=device-width')
-  title= title
-  link(rel='profile', href='http://gmpg.org/xfn/11')
-  link(href='//fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css')
-  link(href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-  link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
-  //if lt IE 9 <script src="/js/html5.js"></script>
+extends ./layout
+
+block content
+  #tripwire
  
-  // css
-  link(rel='stylesheet', href='/css/bootstrap.min.css')
-  link(rel='stylesheet', href='/css/animation.css')
-  link(rel='stylesheet', href='/css/fonts.icons.css')
-  link(rel='stylesheet', href='/css/hover.min.css')
-  link(rel='stylesheet', href='/css/ie.css')
-  link(rel='stylesheet', href='/css/ie7.css')
-  link(rel='stylesheet', href='/css/style.css')
-  link(rel='stylesheet', href='/css/tripwire.css')
-
-     
-  script.
-    (function() {
-      var _fbq = window._fbq || (window._fbq = []);
-      if (!_fbq.loaded) {
-      var fbds = document.createElement('script');
-      fbds.async = true;
-      fbds.src = '//connect.facebook.net/en_US/fbds.js';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(fbds, s);
-      _fbq.loaded = true;
-      }
-      _fbq.push(['addPixelId', '467069506789584']);
-      })();
-      window._fbq = window._fbq || [];
-      window._fbq.push(['track', 'PixelInitialized', {}]);
-  noscript
-    img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?id=467069506789584&ev=PixelInitialized')
-
-  script.
-    (function() {
-    var _fbq = window._fbq || (window._fbq = []);
-    if (!_fbq.loaded) {
-    var fbds = document.createElement('script');
-    fbds.async = true;
-    fbds.src = '//connect.facebook.net/en_US/fbds.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(fbds, s);
-    _fbq.loaded = true;
-    }
-    })();
-    window._fbq = window._fbq || [];
-    window._fbq.push(['track', '6026857587376', {'value':'0.00','currency':'CAD'}]);
-  noscript
-    img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?ev=6026857587376&cd[value]=0.00&cd[currency]=CAD&noscript=1')
-
-  body
-    // Google Tag Manager
-    noscript
-      iframe(src='//www.googletagmanager.com/ns.html?id=GTM-PGXB9P', height='0', width='0', style='display:none;visibility:hidden')
-    script.
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PGXB9P');
-    // End Google Tag Manager
-    header
-
-      nav.navbar
-        .container
-          .navbar-header 
-            a.logo(href="/" target="_blank")
-              img(src="/images/logo.png")
-    #tripwire
-   
-      section.download-section
-        .container
-          h1 Thank You! Download Your 
-            br
-            - if (type === 'planner')
-              | "30 Minute Website Planner" Below.
-            - else
-              | "How To Tell If A Website Is Right For Your Small Business" Guide.
-
-          .download-guide
-            - if (type === 'planner')
-              a(href="https://s3.amazonaws.com/designforresult/pdfs/website_planner.pdf" target="_blank")
+    section.download-section
+      .container
+        .row
+          .col-lg-7
+            p.thankyou Thank you for downloading our website planner here is your download link. 
+            p.offer 
+              span.orange.stronger One Time Offer: 
+              | How would you like to use 4 of our best
+              span.black  Tried and Tested 
+              | web page layouts to 
+              span.black.stronger Increase Leads, Trail Sign-ups, Sales, Quotes, and Other Conversions for only $20. 
+              | Read the letter below carefully for details on 
+              span.black how you can get access today.
+          .col-lg-5
+            .download-guide
+              img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg")
+              a.btn.btn-download(href="https://s3.amazonaws.com/designforresult/pdfs/website_planner.pdf" target="_blank")
+                | Download the Planner
                 i.fa.fa-cloud-download
-                span Download the Planner
-            - else
-              a(href="https://s3.amazonaws.com/designforresult/pdfs/websiteguide_dfr.pdf" target="_blank")
-                i.fa.fa-cloud-download
-                span Download the Guide
-          p Wait! Before You Leave Allow Us Make You Another Crazy Offer Below...
-      hr.divider_double
-      section.sp
-        .container.has-bottom-border 
-          h2 We'll Answer 
-            span.orange All Your Question 
-            | Regarding Your Business Website In A 30 Minutes Consultation Call For Only $20.
-          p After speaking to well over 60 business owners. 
-            | We understand that there could be a lot of questions and frustration around the idea of creating and operating a business website.
-            | Questions like... "How much should I pay for a website?", "Do I manage the site my self or wire someone?", "Where do I get a domain?", "Do I really need a website?", "How do I promote my site", etc...
-            | We want to answer as many of your question as possible and help you make a better decision.
-      section.sp
-        .container.has-bottom-border 
-          h2 Is This a Sales Call in Disguise?
-          p We understand many consultation calls are sales calls in disguise. 
-            span.orange But this is not a sales call in disguise. 
-            | In fact if you think even for 1 minute that we've wasted your time, we will fully refund the $20.
-            | This call is 100% gear to answering all your questions in regarding to running a business website.
-            | And if by the end of the call you feel that there is something we can help, we will simply ask you whither you would like us to help you implement it for you and that's it.
-      section.sp
-        .container.has-bottom-border 
-          h2 Why Only $20?
-          p Believe me we value our time just as much as you do. So we completely understand how important your time is to you.
-            | Normally we charge a lot more for our consultation time($100 + per hour) but that could be way too much for small business owners to commit to.
-            | So we only ask for $20 for you to show us that you're just as commit to solving your problem as we are, so we don't waste each other time.
-      section.sp
-        .container.has-bottom-border 
-          h2 What's Going to Happen During the Call?
-          p The call will generally follow a very simple 3 step process.
-          p.steps
-            span.step Step 1
-            span.step-text We will ask you a few questions regarding your business and what you would like to accomplish with a website.
-          p.steps
-            span.step Step 2
-            span.step-text You'll ask any questions regarding business websites you like and we will answer as many as possible.
-          p.steps 
-            span.step Step 3
-            span.step-text Finally, if we still have time we will try to put together an excutation plan for your business website.
-          P And at the end of the call we will simply ask if you would like our help to implement everything.
-       section.sp
-        .container.has-bottom-border 
-          h2 What Should I Ask During the Call?
-          p Well the question may vary from business to business but here are some questions that most of our clients often asks:
-          ul 
-            ol How much does an average website cost?
-            ol What type of website is best suited for my business?
-            ol Do I need to manage my own website?            
-            ol How do I acquire new customers with my website?
-            ol I hear the term "S.E.O" being used a lot what is that and do I need it?
-            ol Do I need facebook? Twitter? Linkedin?
-            ol What name should I get for my business website?
-            ol Do I need a sperate logo for my website?
-            ol What do I do after my website is created?
-            ol What happen is I want to make changes to the website?
-            ol What does responsive design mean?
-            ol Does my site need to be mobile friendly?
-          p There are many more but these are the ones we get often.       
-      section.sp
-        .container.has-bottom-border 
-          h2 Why Should I Listen to You?
-          .row
-            .col-lg-3.col-xs-4.profile-pic
-              img(src="/images/profile.png")
-            .col-lg-9.col-xs-8
-              p Let me introduce my self. Hi, I'm Steve. The Founder of Designed for Result. For the last couple of years I've spent most of my time helping and building different start ups.
-                | Very few worked, but most didn't work. Regardless, I've learned that I love to create and design incridble applications.
-                | And what better way to put my experience and knowledge to work then to help other business owners to create incridble websites and applications.
+    section.sp.bt
+      .container.has-bottom-border 
+        h2 We'll Answer 
+          span.orange All Your Question 
+          | Regarding Your Business Website In A 30 Minutes Consultation Call For Only $20.
+        p After speaking to well over 60 business owners. 
+          | We understand that there could be a lot of questions and frustration around the idea of creating and operating a business website.
+          | Questions like... "How much should I pay for a website?", "Do I manage the site my self or wire someone?", "Where do I get a domain?", "Do I really need a website?", "How do I promote my site", etc...
+          | We want to answer as many of your question as possible and help you make a better decision.
+    section.sp
+      .container.has-bottom-border 
+        h2 Is This a Sales Call in Disguise?
+        p We understand many consultation calls are sales calls in disguise. 
+          span.orange But this is not a sales call in disguise. 
+          | In fact if you think even for 1 minute that we've wasted your time, we will fully refund the $20.
+          | This call is 100% gear to answering all your questions in regarding to running a business website.
+          | And if by the end of the call you feel that there is something we can help, we will simply ask you whither you would like us to help you implement it for you and that's it.
+    section.sp
+      .container.has-bottom-border 
+        h2 Why Only $20?
+        p Believe me we value our time just as much as you do. So we completely understand how important your time is to you.
+          | Normally we charge a lot more for our consultation time($100 + per hour) but that could be way too much for small business owners to commit to.
+          | So we only ask for $20 for you to show us that you're just as commit to solving your problem as we are, so we don't waste each other time.
+    section.sp
+      .container.has-bottom-border 
+        h2 What's Going to Happen During the Call?
+        p The call will generally follow a very simple 3 step process.
+        p.steps
+          span.step Step 1
+          span.step-text We will ask you a few questions regarding your business and what you would like to accomplish with a website.
+        p.steps
+          span.step Step 2
+          span.step-text You'll ask any questions regarding business websites you like and we will answer as many as possible.
+        p.steps 
+          span.step Step 3
+          span.step-text Finally, if we still have time we will try to put together an excutation plan for your business website.
+        P And at the end of the call we will simply ask if you would like our help to implement everything.
+     section.sp
+      .container.has-bottom-border 
+        h2 What Should I Ask During the Call?
+        p Well the question may vary from business to business but here are some questions that most of our clients often asks:
+        ul 
+          ol How much does an average website cost?
+          ol What type of website is best suited for my business?
+          ol Do I need to manage my own website?            
+          ol How do I acquire new customers with my website?
+          ol I hear the term "S.E.O" being used a lot what is that and do I need it?
+          ol Do I need facebook? Twitter? Linkedin?
+          ol What name should I get for my business website?
+          ol Do I need a sperate logo for my website?
+          ol What do I do after my website is created?
+          ol What happen is I want to make changes to the website?
+          ol What does responsive design mean?
+          ol Does my site need to be mobile friendly?
+        p There are many more but these are the ones we get often.       
+    section.sp
+      .container.has-bottom-border 
+        h2 Why Should I Listen to You?
+        .row
+          .col-lg-3.col-xs-4.profile-pic
+            img(src="/images/profile.png")
+          .col-lg-9.col-xs-8
+            p Let me introduce my self. Hi, I'm Steve. The Founder of Designed for Result. For the last couple of years I've spent most of my time helping and building different start ups.
+              | Very few worked, but most didn't work. Regardless, I've learned that I love to create and design incridble applications.
+              | And what better way to put my experience and knowledge to work then to help other business owners to create incridble websites and applications.
 
-              p As a team Designed for Result has worked with and answered well over hundreds of questions from business owners just like you.Designed
-                | We have created incridble websites and applications that were both aesthetically pleasing and designed for result. Our biggest challenge is finding the next "Right Client" to do amazing work today, and perhaps it could be you.
-      section.sp
-        .container.has-bottom-border
-          h2 What Some of Our Customers Say...
-          .testimonial
-            .company-logo
-              img(src="/images/stone_gary.png")
-            blockquote 
-              | “Designed For Result not only retouched our company home page but also developed our quotation web app that is easy to use and intuitive. Designed For Result understands the importance of user experience."
-              .bio
-                | - Gary Goldschimdt, Partner, Stone Hedge Financial Group.  
-                img(src="/images/sales/5stars.png")
-          .testimonial
-            .company-logo
-              img(src="/images/sos_gary.png")
-            blockquote
-              | "We are extremely happy with our website design, it is very easy to manage and has a clean layout. Designed For Result was great to work with, Steve really listened to what we needed and designed a very ideal website for us. I highly recommend using Designed For Result."   
-              .bio
-                | - Emma Majd, Owner, S.O.S Wildlife Control.  
-                img(src="/images/sales/4stars.png")
-          .testimonial
-            .company-logo
-              img(src="/images/sira_gary.png")
-            blockquote
-              | "The service I have received from Designed For Result has been extremely reliable and quick. I appreciate the fact that days and nights you respond to my many complaints and find permanent solutions quickly and efficiently. Exceptional service,  keep up the good work!"            
-              .bio
-                | - Rafik Farag, Partner, Sira Print Inc.  
-                img(src="/images/sales/5stars.png")
-      section.sp.cta
-        .container
-          h2 I'm Ready to Reserve My Spot
-          p(style="text-align: center;") Please select from the available date and time below to reserve your spot today.
-          .calendar
-            table#calendar.table.table-bordered.table-striped(data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Please select a time")
-              thead
-                tr
-                  th
-             
-              tbody
-                tr
-                  th 11AM - 12AM
-                  td.col-md-2.booked
-                    span(class="t1" data-time="11AM") Booked                  
-                  td.col-md-2.open
-                      span(class="timepicker t2" data-time="11AM") Opened                      
-                    td.col-md-2.booked
-                      span(class="t3" data-time="11AM") Booked
-                     - if (!isMobile)  
-                      td.col-md-2.booked
-                        span(class="t4" data-time="11AM") Booked                      
-                      td.col-md-2.booked
-                        span(class="t5" data-time="11AM") Booked  
-                tr
-                  th 1PM - 2PM
-                  td.col-md-2.open
-                    span(class="timepicker t1" data-time="1PM") Opened                  
-                  td.col-md-2.open
-                    span(class="timepicker t2" data-time="1PM") Opened                    
-                  td.col-md-2.booked
-                    span(class="t3" data-time="1PM") Booked                      
-                  - if (!isMobile)  
-                    td.col-md-2.booked
-                      span(class="t4" data-time="1PM") Booked                      
-                    td.col-md-2.open
-                      span(class="timepicker t5" data-time="1PM") Opened   
-                tr
-                  th 2PM - 3PM
-                  td.col-md-2.booked
-                    span(class="t1" data-time="2PM") Booked                  
-                  td.col-md-2.booked
-                    span(class="t2" data-time="2PM") Booked                      
-                  td.col-md-2.booked
-                    span(class="t3" data-time="2PM") Booked                      
-                  - if (!isMobile)   
-                    td.col-md-2.open
-                      span(class="timepicker t4" data-time="2PM") Opened                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="2PM") Booked  
-       
-                tr
-                  th 3PM - 4PM
-                  td.col-md-2.booked
-                    span(class="t1" data-time="3PM") Booked                  
-                  td.col-md-2.booked
-                    span(class="t2" data-time="3PM") Booked                      
-                  td.col-md-2.booked
-                    span(class="t3" data-time="3PM") Booked                      
-                  - if (!isMobile)   
-                    td.col-md-2.open
-                      span(class="timepicker t4" data-time="3PM") Opened                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="3PM") Booked  
-                tr
-                  th 4PM - 5PM
-                  td.col-md-2.booked
-                    span(class="t1" data-time="4PM") Booked                  
-                  td.col-md-2.open
-                    span(class="timepicker t2" data-time="4PM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t3" data-time="4PM") Booked                      
-                  - if (!isMobile)   
-                    td.col-md-2.open
-                      span(class="timepicker t4" data-time="4PM") Opened                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="4PM") Booked  
-         
-                tr
-                  th 5PM - 6PM
-                  td.col-md-2.open
-                    span(class="timepicker t1" data-time="5PM") Opened                  
-                  td.col-md-2.booked
-                    span(class="t2" data-time="5PM") Booked                      
-                  td.col-md-2.booked
-                    span(class="timepicker t3" data-time="5PM") Booked 
-                  - if (!isMobile)                      
-                    td.col-md-2.open
-                      span(class="timepicker t4" data-time="5PM") Opened                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="5PM") Booked   
-       
-          - if (isMobile)
-            .buy-now-group
-              a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
-                | Get
-                br 
-                span(style="font-size: 18px") 30 Minute Spot
-                br
-                span(style="font-size: 14px;") For Only $20  
-                span.regprice not $50 
-              a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
-                | Get 
-                br
-                | 15 Minute Spot 
-                br
-                | For $15
-          -else
-            .buy-now-group
-              a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
-                | Get 
-                span(style="font-size: 26px") 30 Minute Spot 
-                span(style="font-size: smaller;") For Only $20  
-                span.regprice not $50 
-              a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
-               | Get 15 Minute Spot For $15
-          br 
-          span.returndays Full refund if you feel we have wasted your time.
-          img.center-block(src="../images/sales/securebadge.png")
-
-    include ./footer.jade
-    //js
-    script(type='text/javascript', src='https://js.stripe.com/v2/')
-    script(type='text/javascript').
-      // This identifies your website in the createToken call below
-        Stripe.setPublishableKey('pk_live_ub2PBP7qG6Eebl6s9HUVXDpJ');
-        // ...
-    script(src='/js/bootstrap.min.js')
-    script(src='/js/wow.min.js')
-    script(src='/js/jquery-ui.min.js')
-    script(src='/js/jquery.payment.js')
-    script(src='/js/moment.js')
-    script(src='/js/tripewire.js')
-
-    #pay.modal.fade
-      .modal-dialog
-          .modal-content
-            .modal-header
-              button.close(type='button', data-dismiss='modal', aria-label='Close')
-              button.back(type='button')
-              h4 
-                span.pname 30 Minute Consultation
-            .modal-body
-              form#payment-form(action="/ckc" method="post")
-                input(type="hidden" name="product_name" value="")
-                input(type="hidden" name="subtotal" value="")
-                input(type="hidden" name="dt" value="")
-                .step-one 
-                  .form-group.email
-                    .inputs-group
-                      input.required-info.email.form-control(type='email', name='email',  placeholder='Enter email')  
-                      i.fa.fa-envelope-o 
-                  .form-group.address     
-                    .inputs-group
-                      input.required-info.form-control(type="text", name='name', placeholder='Name') 
-                      i.fa.fa-user
-                    .inputs-group
-                      input.phone.required-info.form-control(name='phone', placeholder='phone')
-                      i.fa.fa-phone 
-                    .inputs-group
-                      input.required-info.form-control(name='address', placeholder='Address')
-                      i.fa.fa-map-marker  
-                    .form-set.clearfix
-                      .inputs-group
-                        input.required-info.form-control(name='postal', placeholder='Postal')  
-                      .inputs-group
-                        input.required-info.form-control(name='city', placeholder='City') 
-        
-                  a.hvr-wobble-horizontal.btn.btn-info(type='submit') Continue 
-                    span.arrow-right
-
-                .step-two(style="display: none")  
-                  .form-group     
-                    .inputs-group
-                      input.required-cc.cc-num.form-control(type='tel' placeholder='Card number' x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  
-                      i.fa.fa-credit-card
-                      span.card
-                    .form-set.clearfix
-                      .inputs-group
-                        input.required-cc.cc-exp.form-control(type='text' placeholder='MM / YY')  
-                        i.fa.fa-calendar
-                      .inputs-group
-                        input.required-cc.cc-cvc.form-control(type='text' save="4" placeholder='CVC') 
-                        i.fa.fa-lock
-                  button.hvr-wobble-horizontal.btn.btn-payment(type='submit') Checkout 
-                    span.arrow-right
-          
+            p As a team Designed for Result has worked with and answered well over hundreds of questions from business owners just like you.Designed
+              | We have created incridble websites and applications that were both aesthetically pleasing and designed for result. Our biggest challenge is finding the next "Right Client" to do amazing work today, and perhaps it could be you.
+    section.sp
+      .container.has-bottom-border
+        h2 What Some of Our Customers Say...
+        .testimonial
+          .company-logo
+            img(src="/images/stone_gary.png")
+          blockquote 
+            | “Designed For Result not only retouched our company home page but also developed our quotation web app that is easy to use and intuitive. Designed For Result understands the importance of user experience."
+            .bio
+              | - Gary Goldschimdt, Partner, Stone Hedge Financial Group.  
+              img(src="/images/sales/5stars.png")
+        .testimonial
+          .company-logo
+            img(src="/images/sos_gary.png")
+          blockquote
+            | "We are extremely happy with our website design, it is very easy to manage and has a clean layout. Designed For Result was great to work with, Steve really listened to what we needed and designed a very ideal website for us. I highly recommend using Designed For Result."   
+            .bio
+              | - Emma Majd, Owner, S.O.S Wildlife Control.  
+              img(src="/images/sales/4stars.png")
+        .testimonial
+          .company-logo
+            img(src="/images/sira_gary.png")
+          blockquote
+            | "The service I have received from Designed For Result has been extremely reliable and quick. I appreciate the fact that days and nights you respond to my many complaints and find permanent solutions quickly and efficiently. Exceptional service,  keep up the good work!"            
+            .bio
+              | - Rafik Farag, Partner, Sira Print Inc.  
+              img(src="/images/sales/5stars.png")
+    section.sp.cta
+      .container
+        h2 I'm Ready to Reserve My Spot
+        p(style="text-align: center;") Please select from the available date and time below to reserve your spot today.
+        .calendar
+          table#calendar.table.table-bordered.table-striped(data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Please select a time")
+            thead
+              tr
+                th
            
+            tbody
+              tr
+                th 11AM - 12AM
+                td.col-md-2.booked
+                  span(class="t1" data-time="11AM") Booked                  
+                td.col-md-2.open
+                    span(class="timepicker t2" data-time="11AM") Opened                      
+                  td.col-md-2.booked
+                    span(class="t3" data-time="11AM") Booked
+                   - if (!isMobile)  
+                    td.col-md-2.booked
+                      span(class="t4" data-time="11AM") Booked                      
+                    td.col-md-2.booked
+                      span(class="t5" data-time="11AM") Booked  
+              tr
+                th 1PM - 2PM
+                td.col-md-2.open
+                  span(class="timepicker t1" data-time="1PM") Opened                  
+                td.col-md-2.open
+                  span(class="timepicker t2" data-time="1PM") Opened                    
+                td.col-md-2.booked
+                  span(class="t3" data-time="1PM") Booked                      
+                - if (!isMobile)  
+                  td.col-md-2.booked
+                    span(class="t4" data-time="1PM") Booked                      
+                  td.col-md-2.open
+                    span(class="timepicker t5" data-time="1PM") Opened   
+              tr
+                th 2PM - 3PM
+                td.col-md-2.booked
+                  span(class="t1" data-time="2PM") Booked                  
+                td.col-md-2.booked
+                  span(class="t2" data-time="2PM") Booked                      
+                td.col-md-2.booked
+                  span(class="t3" data-time="2PM") Booked                      
+                - if (!isMobile)   
+                  td.col-md-2.open
+                    span(class="timepicker t4" data-time="2PM") Opened                      
+                  td.col-md-2.booked
+                    span(class="t5" data-time="2PM") Booked  
+     
+              tr
+                th 3PM - 4PM
+                td.col-md-2.booked
+                  span(class="t1" data-time="3PM") Booked                  
+                td.col-md-2.booked
+                  span(class="t2" data-time="3PM") Booked                      
+                td.col-md-2.booked
+                  span(class="t3" data-time="3PM") Booked                      
+                - if (!isMobile)   
+                  td.col-md-2.open
+                    span(class="timepicker t4" data-time="3PM") Opened                      
+                  td.col-md-2.booked
+                    span(class="t5" data-time="3PM") Booked  
+              tr
+                th 4PM - 5PM
+                td.col-md-2.booked
+                  span(class="t1" data-time="4PM") Booked                  
+                td.col-md-2.open
+                  span(class="timepicker t2" data-time="4PM") Opened                      
+                td.col-md-2.booked
+                  span(class="t3" data-time="4PM") Booked                      
+                - if (!isMobile)   
+                  td.col-md-2.open
+                    span(class="timepicker t4" data-time="4PM") Opened                      
+                  td.col-md-2.booked
+                    span(class="t5" data-time="4PM") Booked  
+       
+              tr
+                th 5PM - 6PM
+                td.col-md-2.open
+                  span(class="timepicker t1" data-time="5PM") Opened                  
+                td.col-md-2.booked
+                  span(class="t2" data-time="5PM") Booked                      
+                td.col-md-2.booked
+                  span(class="timepicker t3" data-time="5PM") Booked 
+                - if (!isMobile)                      
+                  td.col-md-2.open
+                    span(class="timepicker t4" data-time="5PM") Opened                      
+                  td.col-md-2.booked
+                    span(class="t5" data-time="5PM") Booked   
+     
+        - if (isMobile)
+          .buy-now-group
+            a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
+              | Get
+              br 
+              span(style="font-size: 18px") 30 Minute Spot
+              br
+              span(style="font-size: 14px;") For Only $20  
+              span.regprice not $50 
+            a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
+              | Get 
+              br
+              | 15 Minute Spot 
+              br
+              | For $15
+        -else
+          .buy-now-group
+            a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
+              | Get 
+              span(style="font-size: 26px") 30 Minute Spot 
+              span(style="font-size: smaller;") For Only $20  
+              span.regprice not $50 
+            a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
+             | Get 15 Minute Spot For $15
+        br 
+        span.returndays Full refund if you feel we have wasted your time.
+        img.center-block(src="/images/sales/securebadge.png")
 
-    //Google Analytics
-    script.
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-62924535-2', 'auto');
-        ga('send', 'pageview');
 
+  #pay.modal.fade
+    .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+            button.back(type='button')
+            h4 
+              span.pname 30 Minute Consultation
+          .modal-body
+            form#payment-form(action="/ckc" method="post")
+              input(type="hidden" name="product_name" value="")
+              input(type="hidden" name="subtotal" value="")
+              input(type="hidden" name="dt" value="")
+              .step-one 
+                .form-group.email
+                  .inputs-group
+                    input.required-info.email.form-control(type='email', name='email',  placeholder='Enter email')  
+                    i.fa.fa-envelope-o 
+                .form-group.address     
+                  .inputs-group
+                    input.required-info.form-control(type="text", name='name', placeholder='Name') 
+                    i.fa.fa-user
+                  .inputs-group
+                    input.phone.required-info.form-control(name='phone', placeholder='phone')
+                    i.fa.fa-phone 
+                  .inputs-group
+                    input.required-info.form-control(name='address', placeholder='Address')
+                    i.fa.fa-map-marker  
+                  .form-set.clearfix
+                    .inputs-group
+                      input.required-info.form-control(name='postal', placeholder='Postal')  
+                    .inputs-group
+                      input.required-info.form-control(name='city', placeholder='City') 
+      
+                a.hvr-wobble-horizontal.btn.btn-info(type='submit') Continue 
+                  span.arrow-right
+
+              .step-two(style="display: none")  
+                .form-group     
+                  .inputs-group
+                    input.required-cc.cc-num.form-control(type='tel' placeholder='Card number' x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  
+                    i.fa.fa-credit-card
+                    span.card
+                  .form-set.clearfix
+                    .inputs-group
+                      input.required-cc.cc-exp.form-control(type='text' placeholder='MM / YY')  
+                      i.fa.fa-calendar
+                    .inputs-group
+                      input.required-cc.cc-cvc.form-control(type='text' save="4" placeholder='CVC') 
+                      i.fa.fa-lock
+                button.hvr-wobble-horizontal.btn.btn-payment(type='submit') Checkout 
+                  span.arrow-right
+        
+           

@@ -11,8 +11,6 @@ head
   //if lt IE 9 <script src="/js/html5.js"></script>
 
   // css
-  link(rel='stylesheet', href='/css/animation.css')
-  link(rel='stylesheet', href='/css/hover.min.css')
   link(rel='stylesheet', href='/css/ie.css')
   link(rel='stylesheet', href='/css/ie7.css')
   link(rel='stylesheet', href='/css/error.css')
@@ -43,11 +41,7 @@ head
                 span.slicknav_icon-bar
             ul.slicknav_nav.slicknav_hidden(role='menu', aria-hidden='true', style='display: none;')
               li.current
-                a(tabindex='-1', role='menuitem', href='#') home        
-              li
-                a(tabindex='-1', role='menuitem', href='#') about    
-              li
-                a(tabindex='-1', role='menuitem', href='#') services    
+                a(tabindex='-1', role='menuitem', href='/') home        
               li
                 a(tabindex='-1', role='menuitem', href='#') blog      
               li
@@ -55,11 +49,7 @@ head
         nav.panda-menu
           ul#menu.rs
             li.current
-              a(href='#') home   
-            li
-              a(href='#') about       
-            li
-              a(href='#') services         
+              a(href='/') home        
             li
               a(href='#') blog    
             li

@@ -38,29 +38,7 @@ $(document).ready(function() {
   var backButton = $('.back')
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  var c = 1;
-  var i = 1;
-  var v = 6;
-  if (isMobile.any()) {
-    v = 4;
-  }
 
-
-  while(c < v) {
-    var day = moment().add(i, 'days');
-    if (day.format('ddd') === "Sat" || day.format('ddd') === "Sun") { 
-      i++
-      continue;
-    }
-
-    $(".t"+c).each(function(){
-      $(this).attr('data-day', day.format('MM-DD'))
-    });
-
-    $('#calendar thead').find('tr').append("<th>" + day.format('dddd') + " ("+day.format('MM-DD') +") </th>")
-    c++
-    i++
-  }
 
   $('input.cc-num').payment('formatCardNumber');
   $('input.cc-exp').payment('formatCardExpiry');
