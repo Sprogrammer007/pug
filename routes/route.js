@@ -51,7 +51,6 @@ function extractFormats(formats, type) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.cookies)
   res.render('index', { title: 'Designed for Result',  path: req.originalUrl, isMobile: is_mobile(req) });
 });
 

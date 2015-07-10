@@ -13,7 +13,7 @@ block content
               | Website planning is time consuming. How would you like to use 4 of our best
               span.black  Tried and Tested 
               | web page layouts to 
-              span.black.stronger Increase Leads, Trail Sign-ups, Sales, Quotes, and Other Conversions for only $20. 
+              span.black.stronger Increase Leads, Trail Sign-ups, Sales, Quotes, and Other Conversions for only $#{price}. 
               | Read the letter below carefully for details on 
               span.black how you can get access today.
           .col-lg-5.col-xs-12
@@ -29,24 +29,21 @@ block content
       .container 
         h2 Most Websites Are Time Wasters
         p.text-center Here’s How We Got an EXTRA 38% Increase In Conversion With Just a Few Simple Changes... and Turning a Plain Website Into a Lead Generation Monster.
-        img(src="/images/proof.png")
+        img(src="https://s3.amazonaws.com/designforresult/assets/images/proof.png")
         - if (isMobile)
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span 4 Conversion Layouts PLUS Bonus 
               br 
-              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+              | For Only $#{price}
         -else
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20' data-price="20")
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}' data-price="20")
               | Get All 
               span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
-              span(style="font-size: smaller;")  For Only 
-              - if (discount === "seen")
-                | $40
-              - else
-                | $20 
+              span(style="font-size: smaller;")  For Only $#{price} 
+              - if (price === 20)
                 span.regprice not $50 
 
         span.returndays No questions asked, 30 day money back guarantee.
@@ -115,24 +112,21 @@ block content
       .container.has-bottom-border 
         h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
         p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
-        img(src="/images/cl_banner.png")
+        img(src="https://s3.amazonaws.com/designforresult/assets/images/cl_banner.png")
         - if (isMobile)
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span 4 Conversion Layouts PLUS Bonus 
               br 
-              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+              | For Only $#{price}   
         -else
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
-              span(style="font-size: smaller;")  For Only 
-              - if (discount === "seen")
-                | $40
-              - else
-                | $20 
+              span(style="font-size: smaller;")  For Only $#{price} 
+              - if (price === 20)
                 span.regprice not $50 
 
         span.returndays No questions asked, 30 day money back guarantee.
@@ -190,7 +184,7 @@ block content
         p Really… it is a no brainer. Even a 
           span.orange 1% increase in conversation can be a potential 2 or 3 new clients or customers a month at $0 extra cost to you.
         p If you’re going to build and run your website anyway why wouldn’t you use layouts that has already been proven to bring results?
-        p And the price shouldn’t be an issue, because you get all 4 layouts PLUS the bonus report for just $20.
+        p And the price shouldn’t be an issue, because you get all 4 layouts PLUS the bonus report for just $#{price}.
         p That’s only $5 per layout! 
         p Drink one less coffee today and you can…
         p Become a super-star at your company by being the guy or gal who helped to redesigned the company website that actually brings results.
@@ -202,24 +196,21 @@ block content
       .container 
         h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
         p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
-        img(src="/images/cl_banner.png")
+        img(src="https://s3.amazonaws.com/designforresult/assets/images/cl_banner.png")
         - if (isMobile)
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span 4 Conversion Layouts PLUS Bonus 
               br 
-              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+              | For Only $#{price} 
         -else
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
-              span(style="font-size: smaller;")  For Only 
-              - if (discount === "seen")
-                | $40
-              - else
-                | $20 
+              span(style="font-size: smaller;")  For Only $#{price} 
+              - if (price === 20)
                 span.regprice not $50 
 
         span.returndays No questions asked, 30 day money back guarantee.
@@ -242,13 +233,13 @@ block content
                 | And it is harder to customize HTML tempaltes then layouts. 
           .col-lg-6.col-xs-6    
             .question
-              p Why Only $20?
+              p Why Only $#{price}?
            
             .answer
-              p $20 does seem cheap, but if you thinking "what's the catch?"
+              p $#{price} does seem cheap, but if you thinking "what's the catch?"
               p There is 
                 u None!
-              p It's simple really. To us $20 dollar is cheap enough so anyone who needs this can afford it, but not so cheap "Free" that we'll end up with only "freebie-seekers".
+              p It's simple really. To us $#{price} dollar is cheap enough so anyone who needs this can afford it, but not so cheap "Free" that we'll end up with only "freebie-seekers".
               p Besides this is a great way to allow people to try out products 
                 u Risk Free.
         .row
@@ -269,24 +260,21 @@ block content
       .container 
         h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
         p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
-        img(src="/images/cl_banner.png")
+        img(src="https://s3.amazonaws.com/designforresult/assets/images/cl_banner.png")
         - if (isMobile)
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span 4 Conversion Layouts PLUS Bonus 
               br 
-              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+              | For Only $#{price} 
         -else
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
               | Get All 
               span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
-              span(style="font-size: smaller;")  For Only 
-              - if (discount === "seen")
-                | $40
-              - else
-                | $20 
+              span(style="font-size: smaller;")  For Only $#{price} 
+              - if (price === 20)
                 span.regprice not $50 
               
         span.returndays No questions asked, 30 day money back guarantee.

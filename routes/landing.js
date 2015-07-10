@@ -35,20 +35,18 @@ router.get('/planner', function(req, res, next) {
 
 /* GET tripwire page. */
 router.get('/tp/v1', function(req, res, next) {
-  var discount = req.cookies.tpdiscount;
-
+  var price = (req.cookies.tpdiscount === 'seen') ? 40 : 20;
   res.render('tripwire', { title: h.titleHelper('Planner Download'), 
      path: req.originalUrl, 
      isMobile: is_mobile(req),
      navOff: true,
-     discount: discount
+     price: price
    });
 });
 
 
 router.post('/checkout', function (req, res, next) {
-  var discount = req.cookies.tpdiscount;
-  var price = (discount === 'seen') ? 40 : 20;
+  var price = (req.cookies.tpdiscount === 'seen') ? 40 : 20;
   var userParams = {};
   userParams.body = {};
   userParams.body.email = req.body.email;
