@@ -4,7 +4,7 @@ var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_
 
 var client = new Client();
 
-var queryString = "CREATE TABLE IF NOT EXISTS users \
+var queryV1 = "CREATE TABLE IF NOT EXISTS users \
   ( \
     ID             SERIAL PRIMARY KEY     NOT NULL, \
     NAME           TEXT,    \
@@ -22,26 +22,11 @@ var queryString = "CREATE TABLE IF NOT EXISTS users \
     USER_ID        INT,     \
     STRIPE_CID     TEXT,     \
     TOKEN          TEXT, \
+    RECEIPT        TEXT, \
     PRODUCT_NAME   TEXT, \
-    MAIL           BOOL, \
-    SUBTOTAL       INT, \
     TOTAL          INT, \
     STATUS         TEXT, \
-    CREATE_DATE    DATE, \
-    APPROVE_DATE   DATE \
-  ); \
-  CREATE TABLE IF NOT EXISTS order_details \
-  ( \
-    ID             SERIAL PRIMARY KEY    NOT NULL, \
-    ORDER_ID       INT,     \
-    COMPANY_NAME   TEXT,     \
-    POSITION       TEXT, \
-    INDUSTRY       TEXT, \
-    YEARS          TEXT, \
-    WEBSITE        TEXT, \
-    IMPORTANT      TEXT, \
-    PURPOSE        TEXT, \
-    CUSTOMER       TEXT \
+    CREATE_DATE    DATE \
   ); \
   CREATE TABLE IF NOT EXISTS posts \
   ( \
@@ -60,8 +45,11 @@ var queryString = "CREATE TABLE IF NOT EXISTS users \
     CREATE_DATE    DATE, \
     UPDATE_DATE    DATE \
   ); \
-  ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT; \
 ";
+
+var queryV2 = "ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT;"
+var queryV2 = "ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT; \
+"
 
 var db = {
   init: function() {
@@ -70,7 +58,7 @@ var db = {
       if(err) {
         return console.error('could not connect to postgres', err);
       }
-      client.query(queryString, function(err, result) {
+      client.query(queryV1, function(err, result) {
         if(err) {
           return console.error('error running query', err);
         }

@@ -2,12 +2,11 @@ var express = require('express')
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
   , stripe = require("stripe")(process.env.STRIPE_KEY)
-  , MCID = '9f81cf88cc'
-  , MCID_Planner = '08f00544da'
+  , MCID = process.env.MC_ID
   , https = require('https')
   , dbManager = require('../modules/database-manager');
 
-// var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
+
 // Insight API
 var Insight_API_KEY = process.env.INSIGHT_KEY;
 
@@ -52,6 +51,7 @@ function extractFormats(formats, type) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.cookies)
   res.render('index', { title: 'Designed for Result',  path: req.originalUrl, isMobile: is_mobile(req) });
 });
 
@@ -69,18 +69,14 @@ router.get('/test', function (req, res, next) {
 
 /* Subscribe Mailchimp */
 router.post('/subscribe', function (req, res, next) {
-  var list_type = req.body.list_type;
 
-  delete req.body['list_type'];
-  var MID = ( list_type === 'planner') ? MCID_Planner : MCID;
-  console.log(MID)
   var email = req.body.email;
   var mcReq = {
-    id: MID,
+    id: MCID,
     email: { email: email },
     merge_vars: {
-      EMAIL: req.body.email,
-      FNAME: req.body.name,
+      EMAIL: email,
+      FNAME: req.body.name
     },
     email_type: 'html',
     double_optin: false,
@@ -92,18 +88,18 @@ router.post('/subscribe', function (req, res, next) {
   
 
   mc.lists.subscribe(mcReq, function(data) {
-      console.log('User subscribed successfully! Look for the confirmation email.');
-      dbManager.createUser(req);
-      res.redirect('/guide?type='+list_type);
-    },
-    function(error) {
-      if (error.error) {
-        console.log(error.code + ": " + error.error);
-      } else {
-        console.log('There was an error subscribing that user');
-      }
-      res.redirect('/');
-    });
+    console.log('User subscribed successfully! Look for the confirmation email.');
+    dbManager.createUser(req);
+    res.redirect('/lp/tp/v1');
+  },
+  function(error) {
+    if (error.error) {
+      console.log(error.code + ": " + error.error);
+    } else {
+      console.log('There was an error subscribing that user');
+    }
+    res.redirect('/');
+  });
 
   
 });

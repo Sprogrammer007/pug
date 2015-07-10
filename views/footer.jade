@@ -15,27 +15,50 @@ footer
         - if (post && post.poptin != '' && post.poptin != undefined)
           | !{post.poptin}
         - else
-
-          .step1.active
+          .step1
             .row.mbm
-              .col-lg-8.col-md-8.col-xs-12
+              .col-lg-7.col-md-7.col-xs-12
                 .presents 
                   span Designed For Result Presents
                 p.optin-title
-                  span.l24 How To Tell If A Website 
-                  span.l18 Is Right For Your 
-                  span.l15 Small Business
-                p.optin-description
-                  | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
-              .col-lg-4.col-md-4.col-xs-12.optin-image
-                img(src="/images/ebookcoverflat.png")
+                  span.l16 [Interactive PDF] 
+                  span.l10 30 Minute
+                  span.l16 Website Planner
+
+              .col-lg-5.col-md-5.col-xs-12.optin-image
+                img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
             hr
             .optin-buttons
-              a.btn.btn-poptin.btn-yes(href="/lp/guide")
+              .btn.btn-poptin.btn-yes
                 | Yes
                 br
-                span I want to find out
+                span I want FREE website planner
               .btn.btn-poptin.btn-no(data-dismiss='modal', aria-label='Close')
                 | No
                 br
-                span I already know the answer
+                span I will do it myself 
+          .step2
+            .progress-bar
+              span.bar-text 50% Completed
+              .bar 
+
+            span.notice
+              | (enter your email address below and click the “Get Instant Access!” button)
+            .optin-title
+              | YES, I want FREE Website Planner!
+
+            form#optin-form.optins.form-horizonta(action='/subscribe' method='post')
+              input(type="hidden" name="list_type", value="planner")
+              .form-group.clearfix
+                input#inputEmail3.require-field.form-control(type='text', name="name", placeholder='Name*' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your name.")      
+              .form-group
+                input#inputPassword3.require-field.form-control(type='email', name="email", placeholder='Email*' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your email.")
+              .form-group
+                button.btn.btn-optin(type='submit') Get Instant Access!
+            p.privacy 
+              i.fa.fa-lock
+              |  We value your privacy and would never spam you
+            p(style="font-size:12px;") By signing up you'll also receive access to the "Designed for Result" bi-weekly newsletter, exclusive offers, event information and helpful tips. View Designed for Result's 
+              a(href="/privacy-policy") Privacy Policy 
+
+

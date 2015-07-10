@@ -76,13 +76,13 @@ var dbManager = {
     updateQuery('users', req.body, id)
   },
 
-  createOrder: function(req, user_id, customer_id, token) {
+  createOrder: function(req, user_id, customer_id, token, receipt) {
     var params = req.body;
     params['user_id'] = user_id;
     params['stripe_cid'] = customer_id;
+    params['receipt'] = receipt;
     params['token'] = token;
-    params['mail'] = false;
-    params['subtotal'] = dollarToCent(parseInt(params.subtotal));
+    params['total'] = dollarToCent(parseInt(params.total));
     params['status'] = 'Payed';
     params['create_date'] = moment().format('YYYY-MM-DD');
     // dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
@@ -94,27 +94,6 @@ var dbManager = {
     return order;
   },
 
-  createOrderDetail: function(req, id) {
-    client.connectSync(conString);
-    var params = req.body;
-    var company = params.company_name;
-    var position = params.position;
-    var industry = params.industry;
-    var years = params.year_business;
-    var website = params.website;
-    var important = params.website_importance;
-    var purpose = params.website_for;
-    var customer = params.customer;
-
-    query = 'INSERT INTO order_details (order_id, company_name, position, industry, \
-      years, website, important, purpose, customer) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
-    client.querySync(query, [id, company, position, industry, years, website, important, purpose, customer]);
-    client.end();
-    var detail = getDetailsByOrderID(id)
-  
-    return detail;
-
-  },
 
   getDetailsByOrderID: function(order_id) {
     client.connectSync(conString);
@@ -125,10 +104,17 @@ var dbManager = {
   },
 
   getOrderByToken: function(token) {
-    console.log(token);
     client.connectSync(conString);
     query = 'SELECT * FROM orders WHERE token=$1 LIMIT 1';
     var order = client.querySync(query, [token])
+    client.end();
+    return order[0];
+  },  
+
+  getOrderByReceipt: function(r) {
+    client.connectSync(conString);
+    query = 'SELECT * FROM orders WHERE receipt=$1 LIMIT 1';
+    var order = client.querySync(query, [r])
     client.end();
     return order[0];
   },

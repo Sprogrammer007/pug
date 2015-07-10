@@ -52,9 +52,24 @@ block content
           - if (post.boptin != '' && post.boptin != undefined)
             | !{post.boptin} 
           - else
-            p.optin-title.text-center
-              | How To Tell If A Website Is Right For Your Small Business
-            p.optin-description.text-center
-              | Follow a 5 Steps Question to Determine if a Website Will Benefit Your Business!
-            a.btn.btn-optin(href="/lp/guide")
+            p.optin-title.text-center.text-uppercase
+              | [Interactive PDF] 30 Minute Website Planner
+            .row
+              .col-lg-8.col-md-8.col-xs-8
+                
+                p.optin-description.text-left
+                  i.fa.fa-check(style="color: green;")
+                  |  Plan your entire small Business website in 30 minutes.                
+                p.optin-description.text-left 
+                  i.fa.fa-check(style="color: green;")
+                  |  Edit it on your computer or print it out for your team.          
+                p.optin-description.text-left 
+                  i.fa.fa-check(style="color: green;")
+                  |  Use the planner to reduce development time and cost.    
+                p.optin-description.text-left 
+                  i.fa.fa-check(style="color: green;")
+                  |  Built highly effective Business website with this planner.
+              .col-lg-4.col-md-4.col-xs-4.optin-image
+                img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
+            .btn.btn-optin.boptin
               | Download This Guide

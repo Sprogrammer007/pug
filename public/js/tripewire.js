@@ -39,6 +39,31 @@ $(document).ready(function() {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
+  function setCookie(name, value, days) {
+    var now = new Date();
+    var expireDate= new Date();
+    expireDate.setTime(now.getTime() + days*24*60*60*1000); 
+    var curCookie = name + "=" + escape(value) + ";path=/;domain=.designedforresult.com;expires=" + expireDate; 
+    document.cookie = curCookie;
+  }
+
+
+  function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+      begin = dc.indexOf(prefix);
+      if (begin != 0) return null;
+    } else
+      begin += 2;
+    var end = document.cookie.indexOf(";", begin);
+    if (end == -1)
+      end = dc.length;
+    return unescape(dc.substring(begin + prefix.length, end));
+  }
+
+  setCookie('tpdiscount', 'seen', 365);
 
   $('input.cc-num').payment('formatCardNumber');
   $('input.cc-exp').payment('formatCardExpiry');
@@ -48,7 +73,7 @@ $(document).ready(function() {
     if (direction === "forward") {
       activeStep.hide("slide", { direction: "left" }, 1200);
       $('.modal-dialog').delay(400).animate({ width: 350  }, 1200 );
-      $('.modal-body').delay(400).animate({ height: 150  }, 1200 );
+      $('.modal-body').delay(400).animate({ height: 200  }, 1200 );
       stepTwo.delay(400).fadeIn(1200);
       closeButton.hide();
       backButton.show();
@@ -147,17 +172,13 @@ $(document).ready(function() {
 
   function stripeResponseHandler(status, response) {
     var $form = $('#payment-form');
-    console.log(response)
     if (response.error) {
-      // Show the errors on the form
-      $form.find('.payment-errors').text(response.error.message);
+
+      $form.find('.payment-errors').html("<i class='fa fa-exclamation-triangle'></i> " + response.error.message);
       $form.find('button').prop('disabled', false);
     } else {
-      // response contains id and card, which contains additional card details
       var token = response.id;
-      // Insert the token into the form so it gets submitted to the server
       $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-      // and submit
       $form.get(0).submit();
     }
   };
@@ -166,10 +187,7 @@ $(document).ready(function() {
 
   $('.btn-buy').on('click', function (e) {
     e.preventDefault();
-    if ($('input[name="dt"]').val() === '') {
-      $('#calendar').tooltip('show');
-      return false
-    }
+
     $('#pay').modal({
       show: true,
       keyboard: false,
@@ -177,10 +195,8 @@ $(document).ready(function() {
 
     });
     var productName =  $(this).data('pname');
-    var price =  $(this).data('price');
     $('#pay').find('.pname').html(productName);
     $('input[name="product_name"]').val(productName);
-    $('input[name="subtotal"]').val(price);
     dataLayer.push({
       'event':'VirtualPageview',
       'virtualPageURL':'/tripwire/address',
@@ -256,16 +272,16 @@ $(document).ready(function() {
   });
 
   // Appointment time 
-  $('#calendar .open').on('click', function(e) {
-    var selected = $('input[name="dt"]');
-      $('#calendar').tooltip('hide');
-    if (selected.val() != '') {
-      $('#calendar .yourspot').find('span').html('Opened');
-      $('#calendar .yourspot').removeClass('yourspot').addClass('open')
-    }
+  // $('#calendar .open').on('click', function(e) {
+  //   var selected = $('input[name="dt"]');
+  //     $('#calendar').tooltip('hide');
+  //   if (selected.val() != '') {
+  //     $('#calendar .yourspot').find('span').html('Opened');
+  //     $('#calendar .yourspot').removeClass('yourspot').addClass('open')
+  //   }
 
-    $(this).removeClass('open').addClass('yourspot');
-    $(this).find('span').html('Reserved');
-    selected.val($(this).find('span').attr('data-day') + " " + $(this).find('span').attr('data-time'));
-  });
+  //   $(this).removeClass('open').addClass('yourspot');
+  //   $(this).find('span').html('Reserved');
+  //   selected.val($(this).find('span').attr('data-day') + " " + $(this).find('span').attr('data-time'));
+  // });
 });

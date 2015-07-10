@@ -193,6 +193,14 @@
     margin-top: 10px;
   } 
 
+  #thankyou h1 {
+    font-size: 25px;
+  }
+
+  #thankyou .btn-download {
+    width: 100%;
+  }
+
   footer .footer-logo {
     text-align: center;
   }

@@ -3,21 +3,23 @@ header
   nav.navbar(class= (!isMobile) ? '' : '')
     .container
       .navbar-header
-        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
-          span.sr-only Toggle navigation      
-          span.icon-bar    
-          span.icon-bar 
-          span.icon-bar   
+        - if (!navOff)
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
+            span.sr-only Toggle navigation      
+            span.icon-bar    
+            span.icon-bar 
+            span.icon-bar   
         a.logo(href="/")
           img(src="/images/logo.png")
-      #top-nav.collapse.navbar-collapse
+      - if (!navOff)
+        #top-nav.collapse.navbar-collapse
 
-        ul.nav.navbar-nav.navbar-right
-           
-          li.hvr-underline-from-center(class= (path === '/') ? 'active' : '')
-            a(href='/') Home 
-              span.sr-only (current)               
-          li.hvr-underline-from-center(class= (path === '/blog') ? 'active' : '')
-            a(href='/blog') Blog               
-          li.hvr-underline-from-center(class= (path === '/getanswers') ? 'active' : '')
-            a(href='/getanswers') Get Answers         
+          ul.nav.navbar-nav.navbar-right
+             
+            li.hvr-underline-from-center(class= (path === '/') ? 'active' : '')
+              a(href='/') Home 
+                span.sr-only (current)               
+            li.hvr-underline-from-center(class= (path === '/blog') ? 'active' : '')
+              a(href='/blog') Blog               
+            li.hvr-underline-from-center(class= (path === '/getanswers') ? 'active' : '')
+              a(href='/getanswers') Get Answers         

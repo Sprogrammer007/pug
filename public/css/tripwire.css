@@ -43,6 +43,100 @@ header .navbar-nav li a.logo {
   padding: 0;
 }
 
+.arrow {
+  position: relative;
+  bottom: 0;
+  left: 50%;
+  margin-left:-16px;
+  margin-top: 30px;
+  width: 32px;
+  height: 32px;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABCUlEQVRYhe3Vu0rEQBhA4c87WPkQ9j6BICqCCCIsiKUvY2WlC4IgiCAswoIIYuczWaz3C1psAiHsxGw2kyoHppn8M+ekSWhpaRkyiw5WGnAtYTm7sYhH/OIHhxHlq3hKXF1MQT/ZSFesiDU851zHMMhtxohYx8sIzwCORjyoM2ITrwFHLx06jRSxhbfA3Q9YyA7XHbGN98Cd93l53RE7BfI7zBcdnjRiFx+BO24xV+YNqkbs4TNwtl9WXjWiUyC/Mfzajk3ZiH18BWZ7mKkiLxtxgO/AzPWk8jIRIfkVpuuQ/xcxal3WLR8n4kLyl4tFUcR5bHlRxFlT8pSTjLzbpDjLRrJaWloq8wcYD8rvauOXTQAAAABJRU5ErkJggg==');
+  background-size: contain;
+}
+
+/*Footer*/
+
+footer {
+  background-color: #f16334;
+  color: #5E5757;
+  font-size: 1em;
+  padding: 20px 0 80px 0;
+}
+
+footer a {
+  color: #5E5757;
+}
+
+footer a:hover { 
+  text-decoration: none;
+  color: #34F1C5;
+}
+
+footer .footer-logo a { 
+  color: #FFF;
+}
+
+footer .footer-logo a:hover {
+  color: #FFF;
+}
+
+footer .footer-legal,
+footer .footer-logo {
+  display: inline-block;
+}
+
+footer .footer-logo {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: 'Oswald';
+  letter-spacing: 4px;
+}
+
+footer .footer-legal {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+}
+
+footer ul {
+  padding: 0;
+  text-align: center;
+}
+
+footer ul li {
+  list-style: none;
+  display: inline-block;
+}
+
+footer ul.menu li:after {
+  content: "|";
+  padding: 0 10px;
+}
+
+footer ul.menu li:last-child:after {
+  content: "";
+  padding: 0;
+}
+
+footer .footer-social span {
+  font-size: 1.2em;
+  font-family: 'Oswald';
+}
+
+footer .footer-social ul {
+  text-align: left;
+}
+
+footer .footer-social ul li {
+  margin-right: 10px;
+}
+
+footer .footer-social ul li a:hover i { 
+  color: #34F1C5;
+}
+
+
 #tripwire {
   font-family: "Oswald";
 }
@@ -71,10 +165,10 @@ header .navbar-nav li a.logo {
   border-bottom-color: #F11F31;
 }
 
-#tripwire .download-section {
+#tripwire .bg-grey {
   position: relative;
   background-image: url('/images/bg.jpg');
-  padding: 50px 0;
+  padding: 50px 0 10px 0;
 
 }
 
@@ -87,8 +181,9 @@ header .navbar-nav li a.logo {
 }
 
 .download-section img {
-  width: 100%;
-  margin-bottom: 20px;
+  width: 65%;
+  margin: auto;
+  display: block;
 }
 
 .download-section i {
@@ -97,26 +192,32 @@ header .navbar-nav li a.logo {
   position: relative;
   width: 30px;
   left: 25px;
-  top: 0px;
+  top: -1px;
+  font-size: 20px;
 }
 
+.btn-download:hover {
+  color: #f16334;
+  border-color:  #f16334;
+ }
 
-.download-section a:hover {
-  background-color: transparent;
-  color: transparent;
-  border-color: #FFF;
-}
-
-.download-section a:hover i,
-.download-section a:hover span {
-  color: #FFF;
+.download-section a:hover i {
+  color: #f16334;
 } 
 
 .download-section p {
   text-align: left;
-  font-size: 23px;
+  font-size: 24px;
   font-weight: 300;
   color: #666;
+}
+
+.download-guide span { 
+  color: #999999;
+  font-size: 11px;
+  display: block;
+  text-align: center;
+  padding-top: 3px;
 }
 
 
@@ -125,10 +226,6 @@ header .navbar-nav li a.logo {
   border-color: #DFDFDF;
   border-width: 1px;
   border-style: solid;
-}
-
-#tripwire .sp {
-  padding-top: 50px;
 }
 
 .sp h2 {
@@ -153,27 +250,34 @@ section .has-bottom-border {
 
 .sp p {
   font-weight: 300;
-  font-size: 25px;
-  line-height: 35px;
+  font-size: 20px;
+  line-height: 32px;
+  margin-bottom: 20px;
 }
+
 
 .sp .steps .step {
   display: inline-block;
-  width: 80px;
-  height: 80px;
+  width: 45px;
+  height: 45px;
   color: #FFF;
-  line-height: 80px;
+  line-height: 45px;
   text-align: center;
   border-radius: 50px;
   background-color: #f16334;
   margin-right: 15px;
+  vertical-align: top;
+}
+
+
+.sp .steps .step i { 
+  font-size: 22px;
 }
 
 .sp .steps .step-text {
   display: inline-block;
   width: 80%;
   position: relative;
-  top: 20px;
 }
 
 .sp ul {
@@ -223,22 +327,49 @@ section .has-bottom-border {
   width: 100%;
 }
 
-/* CTA */
-.cta {
-  margin-bottom: 50px;
+
+.sp .question p {
+  vertical-align: top;
+  display: inline-block;
+  top: 10px;
+  position: relative;
+  width: 85%;
 }
 
-.cta .buy-now-group {
-  margin-top: 20px;
+.sp .question:before {
+  content: "Q";
+  font-size: 50px;
+  margin-right: 10px;
+  color: #C0BDBD;
+  font-family: 'Museo';
+  font-weight: 900;
+  width: 10%;
+  vertical-align: top;
 }
-.cta .buy-now-group a:last-child { 
-  margin-right: 0;
-  padding: 22px 10px;
-  width: 36.2%;
-}    
+
+
+/* CTA */
+
+.cta.proof h2 {
+  font-size: 45px;
+}
+.cta.proof p {
+  font-size: 28px;
+  line-height: 40px;
+}
+
+.cta  h2 { 
+  font-size: 35px;
+  margin-bottom: 5px;
+}
+.cta .buy-now-group {
+  margin-top: 0;
+}
+
 
 .cta .btn-buy {
-  width: 62.5%;
+  width: 100%;
+
   background-color: #ff3f00;
   color: #FFF;
   font-weight: 300;
@@ -264,39 +395,12 @@ section .has-bottom-border {
 }
 
 .cta .returndays {
+  font-size: 18px;
   display: block;
   text-align: center;
 }
 
-/*Calendar*/
 
-#calendar td,
-#calendar th {
-  text-align: center;
-}
-
-
-#calendar td.open {
-  cursor: pointer;
-  background-color: #8EC12F;
-  color: #FFF;
-}
-
-#calendar td.booked {
-  cursor: no-drop;
-  background-color: #5F5F5F;
-  color: #FFF;
-}
-
-#calendar td.open:hover {
-  background-color: #538BC1;
-}
-
-#calendar td.yourspot {
-  cursor: no-drop;
-  background-color: #538BC1;
-  color: #FFF;
-}
 
 /* PAY */
 
@@ -513,25 +617,21 @@ section .has-bottom-border {
   top: 12px;
 }
 
+#pay .payment-errors {
+  padding: 10px 0;
+  font-size: 16px;
+  font-family: 'Oswald';
+}
 
+#pay .payment-errors i {
+  color: #E92300;
+}
 @media(max-width:767px){
   #tripwire .container {
     width: 100%;
   }
-  #tripwire .sp {
-    padding-top: 20px;
-  }
 
-  #tripwire h1 {
-    font-size: 25px;
-    line-height: 32px;
-    font-weight: 600;
-  }
 
-  #tripwire .download-section {
-    padding-bottom: 30px;
-  }
-  
   section .has-bottom-border {
     padding-bottom: 20px;
   }
@@ -541,18 +641,27 @@ section .has-bottom-border {
   }
 
   .download-section i {
-    font-size: 50px;
+    font-size: 22px;
   }
   .download-section p {
     font-size: 18px;
-    line-height: 25px;
+    line-height: 28px;
     font-weight: 300;
+  }
+
+  .cta.proof h2 {
+    font-size: 25px;
+  }
+
+  .cta.proof p {
+    font-size: 16px;
+    line-height: 23px;
   }
   .sp h2 {
     font-weight: 600;
     font-size: 25px;
     line-height: 32px;
-    margin-bottom: 20px;
+    margin: 10px 0;
   }
 
   .sp ul {
@@ -577,23 +686,19 @@ section .has-bottom-border {
   }
 
   .cta img {
-    width: 80%;
+    width: 100%;
  
   }
 
   .cta .btn-buy {
-    width: 48%;
-    font-size: 20px;
-    height: 130px;
+    width: 100%;
+    font-size: 16px;
   }
 
   .cta .btn-buy:first-child span:first-child {
     font-size: 16px !important;
   }
 
-  .cta .buy-now-group a:last-child {
-    width: 48%;
-  }
 
   .testimonial .bio {
     line-height: 23px;

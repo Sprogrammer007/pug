@@ -3,241 +3,295 @@ extends ./layout
 block content
   #tripwire
  
-    section.download-section
+    section.download-section.bg-grey
       .container
         .row
-          .col-lg-7
+          .col-lg-7.col-xs-12
             p.thankyou Thank you for downloading our website planner here is your download link. 
             p.offer 
               span.orange.stronger One Time Offer: 
-              | How would you like to use 4 of our best
+              | Website planning is time consuming. How would you like to use 4 of our best
               span.black  Tried and Tested 
               | web page layouts to 
               span.black.stronger Increase Leads, Trail Sign-ups, Sales, Quotes, and Other Conversions for only $20. 
               | Read the letter below carefully for details on 
               span.black how you can get access today.
-          .col-lg-5
+          .col-lg-5.col-xs-12
             .download-guide
-              img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg")
+              - if (!isMobile)
+                img(src="/images/planner_dl.png")
               a.btn.btn-download(href="https://s3.amazonaws.com/designforresult/pdfs/website_planner.pdf" target="_blank")
                 | Download the Planner
                 i.fa.fa-cloud-download
-    section.sp.bt
-      .container.has-bottom-border 
-        h2 We'll Answer 
-          span.orange All Your Question 
-          | Regarding Your Business Website In A 30 Minutes Consultation Call For Only $20.
-        p After speaking to well over 60 business owners. 
-          | We understand that there could be a lot of questions and frustration around the idea of creating and operating a business website.
-          | Questions like... "How much should I pay for a website?", "Do I manage the site my self or wire someone?", "Where do I get a domain?", "Do I really need a website?", "How do I promote my site", etc...
-          | We want to answer as many of your question as possible and help you make a better decision.
-    section.sp
-      .container.has-bottom-border 
-        h2 Is This a Sales Call in Disguise?
-        p We understand many consultation calls are sales calls in disguise. 
-          span.orange But this is not a sales call in disguise. 
-          | In fact if you think even for 1 minute that we've wasted your time, we will fully refund the $20.
-          | This call is 100% gear to answering all your questions in regarding to running a business website.
-          | And if by the end of the call you feel that there is something we can help, we will simply ask you whither you would like us to help you implement it for you and that's it.
-    section.sp
-      .container.has-bottom-border 
-        h2 Why Only $20?
-        p Believe me we value our time just as much as you do. So we completely understand how important your time is to you.
-          | Normally we charge a lot more for our consultation time($100 + per hour) but that could be way too much for small business owners to commit to.
-          | So we only ask for $20 for you to show us that you're just as commit to solving your problem as we are, so we don't waste each other time.
-    section.sp
-      .container.has-bottom-border 
-        h2 What's Going to Happen During the Call?
-        p The call will generally follow a very simple 3 step process.
-        p.steps
-          span.step Step 1
-          span.step-text We will ask you a few questions regarding your business and what you would like to accomplish with a website.
-        p.steps
-          span.step Step 2
-          span.step-text You'll ask any questions regarding business websites you like and we will answer as many as possible.
-        p.steps 
-          span.step Step 3
-          span.step-text Finally, if we still have time we will try to put together an excutation plan for your business website.
-        P And at the end of the call we will simply ask if you would like our help to implement everything.
-     section.sp
-      .container.has-bottom-border 
-        h2 What Should I Ask During the Call?
-        p Well the question may vary from business to business but here are some questions that most of our clients often asks:
-        ul 
-          ol How much does an average website cost?
-          ol What type of website is best suited for my business?
-          ol Do I need to manage my own website?            
-          ol How do I acquire new customers with my website?
-          ol I hear the term "S.E.O" being used a lot what is that and do I need it?
-          ol Do I need facebook? Twitter? Linkedin?
-          ol What name should I get for my business website?
-          ol Do I need a sperate logo for my website?
-          ol What do I do after my website is created?
-          ol What happen is I want to make changes to the website?
-          ol What does responsive design mean?
-          ol Does my site need to be mobile friendly?
-        p There are many more but these are the ones we get often.       
-    section.sp
-      .container.has-bottom-border 
-        h2 Why Should I Listen to You?
-        .row
-          .col-lg-3.col-xs-4.profile-pic
-            img(src="/images/profile.png")
-          .col-lg-9.col-xs-8
-            p Let me introduce my self. Hi, I'm Steve. The Founder of Designed for Result. For the last couple of years I've spent most of my time helping and building different start ups.
-              | Very few worked, but most didn't work. Regardless, I've learned that I love to create and design incridble applications.
-              | And what better way to put my experience and knowledge to work then to help other business owners to create incridble websites and applications.
-
-            p As a team Designed for Result has worked with and answered well over hundreds of questions from business owners just like you.Designed
-              | We have created incridble websites and applications that were both aesthetically pleasing and designed for result. Our biggest challenge is finding the next "Right Client" to do amazing work today, and perhaps it could be you.
-    section.sp
-      .container.has-bottom-border
-        h2 What Some of Our Customers Say...
-        .testimonial
-          .company-logo
-            img(src="/images/stone_gary.png")
-          blockquote 
-            | “Designed For Result not only retouched our company home page but also developed our quotation web app that is easy to use and intuitive. Designed For Result understands the importance of user experience."
-            .bio
-              | - Gary Goldschimdt, Partner, Stone Hedge Financial Group.  
-              img(src="/images/sales/5stars.png")
-        .testimonial
-          .company-logo
-            img(src="/images/sos_gary.png")
-          blockquote
-            | "We are extremely happy with our website design, it is very easy to manage and has a clean layout. Designed For Result was great to work with, Steve really listened to what we needed and designed a very ideal website for us. I highly recommend using Designed For Result."   
-            .bio
-              | - Emma Majd, Owner, S.O.S Wildlife Control.  
-              img(src="/images/sales/4stars.png")
-        .testimonial
-          .company-logo
-            img(src="/images/sira_gary.png")
-          blockquote
-            | "The service I have received from Designed For Result has been extremely reliable and quick. I appreciate the fact that days and nights you respond to my many complaints and find permanent solutions quickly and efficiently. Exceptional service,  keep up the good work!"            
-            .bio
-              | - Rafik Farag, Partner, Sira Print Inc.  
-              img(src="/images/sales/5stars.png")
-    section.sp.cta
-      .container
-        h2 I'm Ready to Reserve My Spot
-        p(style="text-align: center;") Please select from the available date and time below to reserve your spot today.
-        .calendar
-          table#calendar.table.table-bordered.table-striped(data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Please select a time")
-            thead
-              tr
-                th
-           
-            tbody
-              tr
-                th 11AM - 12AM
-                td.col-md-2.booked
-                  span(class="t1" data-time="11AM") Booked                  
-                td.col-md-2.open
-                    span(class="timepicker t2" data-time="11AM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t3" data-time="11AM") Booked
-                   - if (!isMobile)  
-                    td.col-md-2.booked
-                      span(class="t4" data-time="11AM") Booked                      
-                    td.col-md-2.booked
-                      span(class="t5" data-time="11AM") Booked  
-              tr
-                th 1PM - 2PM
-                td.col-md-2.open
-                  span(class="timepicker t1" data-time="1PM") Opened                  
-                td.col-md-2.open
-                  span(class="timepicker t2" data-time="1PM") Opened                    
-                td.col-md-2.booked
-                  span(class="t3" data-time="1PM") Booked                      
-                - if (!isMobile)  
-                  td.col-md-2.booked
-                    span(class="t4" data-time="1PM") Booked                      
-                  td.col-md-2.open
-                    span(class="timepicker t5" data-time="1PM") Opened   
-              tr
-                th 2PM - 3PM
-                td.col-md-2.booked
-                  span(class="t1" data-time="2PM") Booked                  
-                td.col-md-2.booked
-                  span(class="t2" data-time="2PM") Booked                      
-                td.col-md-2.booked
-                  span(class="t3" data-time="2PM") Booked                      
-                - if (!isMobile)   
-                  td.col-md-2.open
-                    span(class="timepicker t4" data-time="2PM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t5" data-time="2PM") Booked  
-     
-              tr
-                th 3PM - 4PM
-                td.col-md-2.booked
-                  span(class="t1" data-time="3PM") Booked                  
-                td.col-md-2.booked
-                  span(class="t2" data-time="3PM") Booked                      
-                td.col-md-2.booked
-                  span(class="t3" data-time="3PM") Booked                      
-                - if (!isMobile)   
-                  td.col-md-2.open
-                    span(class="timepicker t4" data-time="3PM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t5" data-time="3PM") Booked  
-              tr
-                th 4PM - 5PM
-                td.col-md-2.booked
-                  span(class="t1" data-time="4PM") Booked                  
-                td.col-md-2.open
-                  span(class="timepicker t2" data-time="4PM") Opened                      
-                td.col-md-2.booked
-                  span(class="t3" data-time="4PM") Booked                      
-                - if (!isMobile)   
-                  td.col-md-2.open
-                    span(class="timepicker t4" data-time="4PM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t5" data-time="4PM") Booked  
-       
-              tr
-                th 5PM - 6PM
-                td.col-md-2.open
-                  span(class="timepicker t1" data-time="5PM") Opened                  
-                td.col-md-2.booked
-                  span(class="t2" data-time="5PM") Booked                      
-                td.col-md-2.booked
-                  span(class="timepicker t3" data-time="5PM") Booked 
-                - if (!isMobile)                      
-                  td.col-md-2.open
-                    span(class="timepicker t4" data-time="5PM") Opened                      
-                  td.col-md-2.booked
-                    span(class="t5" data-time="5PM") Booked   
-     
+              span an email with the download link has also been sent to you.
+        .arrow.bounce
+    section.sp.cta.proof
+      .container 
+        h2 Most Websites Are Time Wasters
+        p.text-center Here’s How We Got an EXTRA 38% Increase In Conversion With Just a Few Simple Changes... and Turning a Plain Website Into a Lead Generation Monster.
+        img(src="/images/proof.png")
         - if (isMobile)
           .buy-now-group
-            a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
-              | Get
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span 4 Conversion Layouts PLUS Bonus 
               br 
-              span(style="font-size: 18px") 30 Minute Spot
-              br
-              span(style="font-size: 14px;") For Only $20  
-              span.regprice not $50 
-            a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
-              | Get 
-              br
-              | 15 Minute Spot 
-              br
-              | For $15
+              | For Only #{(discount === "seen") ? '$40' : '$20' }  
         -else
           .buy-now-group
-            a#bb3-big.btn.btn-buy(href="" data-pname="30 Minute Consultation" data-price="20")
-              | Get 
-              span(style="font-size: 26px") 30 Minute Spot 
-              span(style="font-size: smaller;") For Only $20  
-              span.regprice not $50 
-            a#bb3-small.btn.btn-buy(href="" data-pname="15 Minute Wireframes" data-price="15")
-             | Get 15 Minute Spot For $15
-        br 
-        span.returndays Full refund if you feel we have wasted your time.
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20' data-price="20")
+              | Get All 
+              span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
+              span(style="font-size: smaller;")  For Only 
+              - if (discount === "seen")
+                | $40
+              - else
+                | $20 
+                span.regprice not $50 
+
+        span.returndays No questions asked, 30 day money back guarantee.
+        img.center-block(src="/images/sales/securebadge.png")
+        br
+    section.sp
+      .container
+     
+        p Chances are if you’re still reading this then you’re either looking to redesign your website or you want to design a brand new website…
+        p We get that!
+        p But what we want to know is if you’re looking to just build a website or a 
+          span.stronger Success Website?
+        p The world has changed, a lot of people wants to build a website, that’s nothing special. But very few people understand the difference between a website and a website designed, build, and tested for conversion.
+        p But… I’m going to take a wild guess here. That you’re one of those few people that gets it. You took the time to download our Website Planner, which means you understand the value of planning a head. 
+        p Or perhaps you’ve even been burned before with a web design that just wasn’t done right…
+        p We understand… many of our clients has faced the same challenges that you’re facing right now. Many had hired a web design agency to build a website and get sold on a monthly SEO (Search Engine Optimize) plan only to come to us months later to redesign their site.
+        p We’re not against SEO, but SEO alone can only bring you traffic and not leads or customers. If your pages are not optimize for conversion, chances are 
+          span.orange half of all the money and effort you spent goes straight down the drain. 
+          | And this is not something we made up...
+        p 
+          span.stronger 
+            a(href="") Forrester Research
+          | , one of the most influential research and advisory firms in the world reported that 
+          em “49% of sites fail to comply with basic usability principles, and 50% of online sales are lost because visitors can’t find content.” 
+        p Today, the barrier of entry is much higher than say 5 or 6 years ago. Just having a website is just not good enough. 
+        p In order to design a good business website today, 
+          span.orange you must design, built, test, analyze and do it all over again. 
+          span.stronger This is insane
+          |, most SMBs simply don’t have the time or money to waste on this. 
+        p Someone has to find a better way.
+        p And this is exactly what we did, we created…
+
+    section.sp
+      .container.has-bottom-border 
+        h2 The Ultimate Conversion Layouts
+        p Since dozens and dozens of our own clients all shared the same problem. We took their web pages and made a bunch of variations.
+        P And then we took those pages and of split tests the heck out of them for conversion optimization. This wasn’t any fancy or something innovative but it was time consuming. 
+        p After that we extracted the layouts and structures that give us the best results and oragnized them into 
+          span.orange 4 layouts that almost any business can implement easily to increase lead, sales, trail sign-ups, etc...
+        p Here is what we ended up with:
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text 
+            span.stronger LAYOUT #1: “SaaS and Membership” 
+            | get more trails and membership signs ups with this specially designed layout.
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text 
+            span.stronger LAYOUT #2: “Lead Generation” 
+            | get more phone calls, consultation request, and quote request with the lead generation layout.
+        p.steps  
+          span.step 
+            i.fa.fa-check
+          span.step-text 
+            span.stronger LAYOUT #3: “Online Course Sale” 
+            | get more students, and online courses sales with this specifically designed layout.
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text 
+            span.stronger LAYOUT #4: “Mobile App Download” 
+            | get more app downloads with the mobile app download layout.
+    section.sp.cta
+      .container.has-bottom-border 
+        h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
+        p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
+        img(src="/images/cl_banner.png")
+        - if (isMobile)
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span 4 Conversion Layouts PLUS Bonus 
+              br 
+              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+        -else
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
+              span(style="font-size: smaller;")  For Only 
+              - if (discount === "seen")
+                | $40
+              - else
+                | $20 
+                span.regprice not $50 
+
+        span.returndays No questions asked, 30 day money back guarantee.
+        img.center-block(src="/images/sales/securebadge.png")
+    section.sp
+      .container.has-bottom-border 
+        h2 But that’s not all, we made it even better.
+        p Every layout comes in the 
+          span.orange original PSD(Photoshop) file 
+          | and a 
+          span.orange detail PDF 
+          | explaining how to optimize the layout for your business. Here is what these will cover…
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text Know exactly what and where to best place your lead generation forms, call to action buttons, and testimonials. 
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text Know exactly what to edit, and how to customize the layout to fit your brand.
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text Get full control of the layouts and manipulate them however you like. 
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text Create responsive, mobile friendly web pages with 960px and 1200px Grid based layout design.
+           p.steps
+        p.steps
+          span.step 
+            i.fa.fa-check
+          span.step-text 
+            span.stronger And Special Report 
+            | showing you "The Exact Single Tweak That We Made To Increase Conversion By 22%".
+       
+
+        p Now before you get too excited thinking these layouts are everything, and in a way they’re great. But we do not want anyone getting something they do not really need. It’s not good for you and not good for us either.
+    section.sp
+      .container.has-bottom-border 
+        h2 What These Layouts Are 
+          u Not
+        p These layouts are not templates. 
+          span.orange They’re not HTML files or Wordpress Template. 
+          | They’re layouts that we’ve tested and carefully selected based on their results.
+        p These layout are not meant to be use as is, although they are designed so well that they can actually be used as is but we recommend you use the layout and customize them for your brand. 
+        p The magic is in the structure of the layouts and not the pretty design.
+        p We’re telling you all this is because want to be up front about everything.
+    
+    section.sp
+      .container.has-bottom-border 
+        h2 Don't Design Any Web Page Before You Get This!
+        p Seriously… we are that confident about this.
+        p Why would you want to spend all your time and effort in building a website that doesn’t work in your favorite?
+        p Really… it is a no brainer. Even a 
+          span.orange 1% increase in conversation can be a potential 2 or 3 new clients or customers a month at $0 extra cost to you.
+        p If you’re going to build and run your website anyway why wouldn’t you use layouts that has already been proven to bring results?
+        p And the price shouldn’t be an issue, because you get all 4 layouts PLUS the bonus report for just $20.
+        p That’s only $5 per layout! 
+        p Drink one less coffee today and you can…
+        p Become a super-star at your company by being the guy or gal who helped to redesigned the company website that actually brings results.
+        p Save time and money because most of your website planning is already done for you. 
+        p Get started building your online business with a website designed for result.
+        p But we cannot force you, the choice is yours.
+
+    section.sp.cta
+      .container 
+        h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
+        p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
+        img(src="/images/cl_banner.png")
+        - if (isMobile)
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span 4 Conversion Layouts PLUS Bonus 
+              br 
+              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+        -else
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
+              span(style="font-size: smaller;")  For Only 
+              - if (discount === "seen")
+                | $40
+              - else
+                | $20 
+                span.regprice not $50 
+
+        span.returndays No questions asked, 30 day money back guarantee.
         img.center-block(src="/images/sales/securebadge.png")
 
-
+    section.sp.bg-grey
+      .container
+        h2 Frequently Asked Questions
+        .row
+          .col-lg-6.col-xs-6
+            .question
+              p Are these HTML or Wordpress Templates?
+            .answer
+              p No, These are not HTML or Wordpress Templates. 
+              p These layouts guides to help you structure your web pages to increase leads, sales, trail sign-ups, etc...
+              p One of the reason why we did not make these into HTML formats is because these are not ment to be use as is.
+              p People often ask us for magic template that will work for every business and every offer. 
+              p We hate to break it to you but there is no such a thing.
+              p Even if these layouts were made into HTML formats you'll still need to customize it to fit you brand.
+                | And it is harder to customize HTML tempaltes then layouts. 
+          .col-lg-6.col-xs-6    
+            .question
+              p Why Only $20?
+           
+            .answer
+              p $20 does seem cheap, but if you thinking "what's the catch?"
+              p There is 
+                u None!
+              p It's simple really. To us $20 dollar is cheap enough so anyone who needs this can afford it, but not so cheap "Free" that we'll end up with only "freebie-seekers".
+              p Besides this is a great way to allow people to try out products 
+                u Risk Free.
+        .row
+          .col-lg-6.col-xs-6
+            .question
+              p Is there a guarantee?
+            .answer
+              p Yes... all our products have a 30-day, no-questions-asked guarantee.
+              p If for whatever reason you're not happy with our products. Just let us know and we'll give you your money back.
+                | We obviously don’t think it’ll come to that, but if you’re even the least bit worried if this will work for you, then put your mind at ease. You either get the results you want or you get your money back. It’s as simple as that!
+          .col-lg-6.col-xs-6
+            .question
+              p When do I get access to these conversion layouts?
+            .answer
+              p You get them Immediately.
+              p Once you purchases these conversion layouts, you'll be sent to a page to download them and that's it.
+    section.sp.cta
+      .container 
+        h2 Get All 4 Of Our Tried & Tested Conversion Layouts 
+        p(style="text-align: center;") Plus A Bonus Report Showing You "The Exact Tweaked That We Made To Increase Conversion By 22%".
+        img(src="/images/cl_banner.png")
+        - if (isMobile)
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span 4 Conversion Layouts PLUS Bonus 
+              br 
+              | For Only #{(discount === "seen") ? '$40' : '$20' }  
+        -else
+          .buy-now-group
+            a.btn.btn-buy(href="" data-pname=(discount === "seen") ? '4 Layouts Plus Bonus For $40' : '4 Layouts Plus Bonus For $20')
+              | Get All 
+              span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
+              span(style="font-size: smaller;")  For Only 
+              - if (discount === "seen")
+                | $40
+              - else
+                | $20 
+                span.regprice not $50 
+              
+        span.returndays No questions asked, 30 day money back guarantee.
+        img.center-block(src="/images/sales/securebadge.png")
+        br
   #pay.modal.fade
     .modal-dialog
         .modal-content
@@ -245,11 +299,11 @@ block content
             button.close(type='button', data-dismiss='modal', aria-label='Close')
             button.back(type='button')
             h4 
-              span.pname 30 Minute Consultation
+              span.pname 4 Conversion Layouts PLUS Bonus
           .modal-body
-            form#payment-form(action="/ckc" method="post")
+           
+            form#payment-form(action="/lp/checkout" method="post")
               input(type="hidden" name="product_name" value="")
-              input(type="hidden" name="subtotal" value="")
               input(type="hidden" name="dt" value="")
               .step-one 
                 .form-group.email
@@ -276,6 +330,7 @@ block content
                   span.arrow-right
 
               .step-two(style="display: none")  
+                .payment-errors
                 .form-group     
                   .inputs-group
                     input.required-cc.cc-num.form-control(type='tel' placeholder='Card number' x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  

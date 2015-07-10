@@ -94,8 +94,7 @@ body
   
 
   - if (path === "/speedtest/report")
-   link(rel='stylesheet', href='/css/score.css')
-  - console.log(path.substring(0, 6))
+    link(rel='stylesheet', href='/css/score.css')
   - if (path.substring(0, 6) === '/lp/tp' )
     script(src='/js/jquery.payment.js')
     script(type='text/javascript', src='https://js.stripe.com/v2/')

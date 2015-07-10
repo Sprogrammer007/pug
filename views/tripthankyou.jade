@@ -3,16 +3,18 @@ extends ./layout
 block content
   #thankyou.container
     h1 Thank You, You're All Done!
-    .text-center
-      i.fa.fa-smile-o
-    
-    span.subsubtitle We've reserved a spot for you on #{date} for #{time}. Please add a reminder on your calender and wait for our phone call.
-      | Once again, to ensure the best experience; Write down your questions that you wanted to be answered ahead of time on a piece of paper.
-    br
-    span.subsubtitle Please also allow a 15 minute gap between the scheduled time and the time of the actual phone call, as we can get very busy.
-      | Finally, we want to again ensure you that if you feel that we've wasted your time during the phone call at any moment, just tell us so and we will issue you a refund right away.
-    br
-    span.subsubtitle(style="color: red;") Important Notice: To avoid confusion the name of the company that will appear on your invoice is "Big Talk Consulting Group" as Designedforresult.com is owned a operated by it.
-    br
-    br
-    br
+    .subsection
+      p.text-center Your Order # is #{oNum}.
+      .text-center
+        i.fa.fa-smile-o
+       
+      a.btn.btn-download(href="") Download Your Conversion Layouts
+
+      p An email of your receipt has been sent to your mailing address. 
+      p Please save this url should you need to access your download again:
+      .text-center(style="padding: 10px 30px; background-color: #DEDEDE; color: #f16334; border-radius: 5px; margin: 10px 50px;") 
+        | https://designedforresult.com/lp/thankyou/#{oNum} 
+      p Should there be any issue please email as at 
+        a(href="mailto:info@designedforresult.com") info@designedforresult.com
+        |. Please remember you have 30 days, no question refund guarantee with us.
+      p Thank You for puchasing the "Ultimate Conversion Layouts".
