@@ -5,6 +5,8 @@ var express = require('express')
   , stripe = require("stripe")(process.env.STRIPE_KEY)
   , MCID = process.env.MC_ID
   , https = require('https')
+  , AWS = require('aws-sdk')
+  , s3 = new AWS.S3()
   , dbManager = require('../modules/database-manager');
 // var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
 
@@ -124,6 +126,8 @@ router.post('/checkout', function (req, res, next) {
 
 router.get('/thankyou/:receipt', function(req, res) {
   var order = dbManager.getOrderByReceipt(req.params['receipt']);
+  var params = {Bucket: 'designforresult', Key: 'ucl_v1.zip', Expires: 450};
+  var url = s3.getSignedUrl('getObject', params);
   if (!order) {
     return res.redirect('/');
   } else {
@@ -131,7 +135,8 @@ router.get('/thankyou/:receipt', function(req, res) {
       title: h.titleHelper('Thank You'), 
       path: req.originalUrl, 
       isMobile: is_mobile(req),
-      oNum: order.receipt
+      oNum: order.receipt,
+      url: url
     });
   };
 });
