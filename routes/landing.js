@@ -128,17 +128,17 @@ router.get('/thankyou/:receipt', function(req, res) {
   var order = dbManager.getOrderByReceipt(req.params['receipt']);
   var params = {Bucket: 'designforresult', Key: 'ps/ucl_v1.zip', Expires: 450};
   var url = s3.getSignedUrl('getObject', params);
-  // if (!order) {
-  //   return res.redirect('/');
-  // } else {
+  if (!order) {
+    return res.redirect('/');
+  } else {
     res.render('tripthankyou', { 
       title: h.titleHelper('Thank You'), 
       path: req.originalUrl, 
       isMobile: is_mobile(req),
-      // oNum: order.receipt,
+      oNum: order.receipt,
       url: url
     });
-  // };
+  };
 });
 
 module.exports = router;
