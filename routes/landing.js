@@ -126,7 +126,7 @@ router.post('/checkout', function (req, res, next) {
 
 router.get('/thankyou/:receipt', function(req, res) {
   var order = dbManager.getOrderByReceipt(req.params['receipt']);
-  var params = {Bucket: 'designforresult', Key: 'ucl_v1.zip', Expires: 450};
+  var params = {Bucket: 'designforresult', Key: 'ps/ucl_v1.zip', Expires: 450};
   var url = s3.getSignedUrl('getObject', params);
   // if (!order) {
   //   return res.redirect('/');
