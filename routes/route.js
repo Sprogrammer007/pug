@@ -66,42 +66,6 @@ router.get('/test', function (req, res, next) {
 
 
 
-/* Subscribe Mailchimp */
-router.post('/subscribe', function (req, res, next) {
-
-  var email = req.body.email;
-  var mcReq = {
-    id: MCID,
-    email: { email: email },
-    merge_vars: {
-      EMAIL: email,
-      FNAME: req.body.name
-    },
-    email_type: 'html',
-    double_optin: false,
-    update_existing: false,
-    replace_interests: true,
-    send_welcome: true
-  };
-
-  
-
-  mc.lists.subscribe(mcReq, function(data) {
-    console.log('User subscribed successfully! Look for the confirmation email.');
-    dbManager.createUser(req);
-    res.redirect('/lp/tp/v1');
-  },
-  function(error) {
-    if (error.error) {
-      console.log(error.code + ": " + error.error);
-    } else {
-      console.log('There was an error subscribing that user');
-    }
-    res.redirect('/');
-  });
-
-  
-});
 
 // SpeedTest
 
@@ -190,13 +154,9 @@ router.post('/contact_mailer', function (req, res, next) {
 router.get('/robots.txt', function (req, res) {
   res.type('text/plain');
   res.send("User-agent: *\n\
-Disallow: /lp/guide\n\
-Disallow: /guide\n\
+Disallow: /lp/*\n\
 Disallow: /test\n\
-Disallow: /admin/*\n\
-Disallow: /cc/thank-you\n\
-Disallow: /wireframe/thank-you\n\
-Disallow: /wireframe-discount");
+Disallow: /admin/*");
 });
 
 

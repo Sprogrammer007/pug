@@ -1251,7 +1251,7 @@ header .navbar-nav li a.logo {
 }
 
 .optin-title span.l18 { 
-  font-size: 4.0em;
+  font-size: 3.9em;
   line-height: 55px;
 }
 
@@ -1611,7 +1611,6 @@ footer .footer-social ul li a:hover i {
 
 #lp .optin-image img {
   width: 100%;
-  border: 2px solid #858585;
 
 }
 
@@ -1621,15 +1620,15 @@ footer .footer-social ul li a:hover i {
 }
 
 #lp h1 {
-  font-size: 3.2em;
+  font-size: 3.3em;
   font-weight: 900;
-  margin-bottom: 50px;
-  color: #03A47F;
+  color: #444444;
+  text-transform: uppercase;
 }
 
 #lp h2 {
-  font-size: 1.6em;
-  font-weight: 500;
+  font-size: 1.4em;
+  font-weight: 300;
   line-height: 1.4em;
   margin-top: 0;
 }
@@ -1646,11 +1645,19 @@ footer .footer-social ul li a:hover i {
 }
 
 #lp .jointhefamily {
-  border-top: 5px solid #454547;
-  border-bottom: 2px solid #454547;
-  margin: 60px 0;
-  padding: 30px 0;
+  margin-bottom: 50px;
   font-weight: 500;
+  color: #A7A7A7;
+}
+
+#lp blockquote {
+  text-align: center;
+  font-size: 25px;
+  line-height: 35px;
+}
+
+#lp .profile-image img {
+  width: 100%;
 }
 
 #lp .btn-optin {

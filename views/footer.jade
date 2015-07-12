@@ -47,8 +47,7 @@ footer
             .optin-title
               | YES, I want FREE Website Planner!
 
-            form#optin-form.optins.form-horizonta(action='/subscribe' method='post')
-              input(type="hidden" name="list_type", value="planner")
+            form#optin-form.optins.form-horizonta(action='/lp/subscribe' method='post')
               .form-group.clearfix
                 input#inputEmail3.require-field.form-control(type='text', name="name", placeholder='Name*' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your name.")      
               .form-group

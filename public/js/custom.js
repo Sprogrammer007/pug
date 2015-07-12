@@ -63,6 +63,16 @@
 
     
   $(document).ready(function() {
+
+    wow = new WOW({
+      boxClass:     'wow',      // default
+      animateClass: 'animated', // default
+      offset:       0,          // default
+      mobile:       true,       // default
+      live:         true        // default
+    });
+    wow.init();
+
     // Optin
     if ($('#poptin').attr('data-pon')) {
      setTimeout(openOptin, 3*15*1000);
@@ -73,7 +83,7 @@
       if ($('#poptin .step2').length === 0 ) return;
       dataLayer.push({
         'event':'VirtualPageview',
-        'virtualPageURL':'/website_planner',
+        'virtualPageURL':'/optinstep2',
         'virtualPageTitle' : 'Website Planner Optin'
       });
       $('#poptin .step1').hide("slide", { direction: "left" }, 1200);
@@ -87,7 +97,7 @@
       $('#poptin .step2').show();
       dataLayer.push({
         'event':'VirtualPageview',
-        'virtualPageURL':'/website_planner',
+        'virtualPageURL':'/optinstep2',
         'virtualPageTitle' : 'Website Planner Optin'
       });
       $('#poptin .step2').delay(400).css('position', 'relative');
@@ -155,17 +165,58 @@
       }
     });
 
+    // Social Fix Scroller
+    if ($('#social').length > 0 ) { 
+      (function(){
+
+        var position = $('.post-title').offset();
+        var width = $('.post-title').width();
+        var position2 = $('#post-footer-share').offset();
+
+        if (isMobile.any()) {
+          $('#social').css({
+            'left': 0,
+            'bottom': 0
+          });
+        } else{
+          $('#social').css({
+            'top': position.top,
+            'left': position.left + width + 80
+          });
+         }
+
+        $(window).on('scroll', function() {
+          if (isMobile.any()) {
+            if ( $(window).scrollTop() > (position.top - 100) && $(window).scrollTop() < (position2.top - $(window).height() + 20)) {
+              $('#social').addClass('fixed');
+            } else {
+              $('#social').removeClass('fixed');
+            };
+          } else {
+            if ( $(window).scrollTop() > (position.top - 100) ) {
+              $('#social').addClass('fixed');
+            } else {
+              $('#social').removeClass('fixed');
+            };
+          }
+        });
+
+        //google plus counter
+        var url = 'https://plusone.google.com/_/+1/fastbutton?url=https://' + $('.googleplus').attr('data-url');
+        jQuery.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent(url), function (data){
+          $('.googleplus').find('.count').text(data.contents.match(/{c: (\d+)/)[1]);
+        });
+
+      })();
+    }
+    // Google plus share
+    $('.googleplus').on('click', function(e) {
+      window.open("https://plus.google.com/share?url=" + $('.facebook').attr('data-url'), "_blank", "top=0, left=500,width=600, height=400")
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    wow = new WOW({
-      boxClass:     'wow',      // default
-      animateClass: 'animated', // default
-      offset:       0,          // default
-      mobile:       true,       // default
-      live:         true        // default
-    });
-    wow.init();
+
 
     // Submit Form
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -242,38 +293,8 @@
     $('.require-field').on('focus', function(e) {
       $(this).tooltip('hide');
     });
-
-    $('#thankyouform').submit(function(e) {
-      e.preventDefault();
-      var the_form = $(this);
-      var error = false;
-
-      $(this).find('.require-field').each(function(){
-        if($.trim($(this).val()) == '') {
-          error = true;
-          $(this).tooltip('show');
-        }
-      });
-
-      if(error) return false;
-      var send_data = $(this).serialize();
-      var url = $(this).attr('action')
-      $.post(url, send_data, function(data){
-        if( data.success == '1' ){
-          the_form.parent().remove();
-          $('.success').show();
-          dataLayer.push({
-            'event':'VirtualPageview',
-            'virtualPageURL':'/wireframe/thank-you-done',
-            'virtualPageTitle' : 'Order Complete'
-          });
-        }else{
-          $('.failure').show();
-        }
-      }, 'json');
-
-    });    
-
+  
+    // Home page
     $('.website-url').change(function(e){
       var val = $(this).val();
       $(this).val(val.replace(/.*?:\/\//g, ""))
@@ -354,54 +375,6 @@
     });
 
 
-    // Social Fix Scroller
-    if ($('#social').length > 0 ) { 
-      (function(){
-
-        var position = $('.post-title').offset();
-        var width = $('.post-title').width();
-        var position2 = $('#post-footer-share').offset();
-
-        if (isMobile.any()) {
-          $('#social').css({
-            'left': 0,
-            'bottom': 0
-          });
-        } else{
-          $('#social').css({
-            'top': position.top,
-            'left': position.left + width + 80
-          });
-         }
-
-        $(window).on('scroll', function() {
-          if (isMobile.any()) {
-            if ( $(window).scrollTop() > (position.top - 100) && $(window).scrollTop() < (position2.top - $(window).height() + 20)) {
-              $('#social').addClass('fixed');
-            } else {
-              $('#social').removeClass('fixed');
-            };
-          } else {
-            if ( $(window).scrollTop() > (position.top - 100) ) {
-              $('#social').addClass('fixed');
-            } else {
-              $('#social').removeClass('fixed');
-            };
-          }
-        });
-
-        //google plus counter
-        var url = 'https://plusone.google.com/_/+1/fastbutton?url=https://' + $('.googleplus').attr('data-url');
-        jQuery.getJSON('http://anyorigin.com/get?callback=?&url=' + encodeURIComponent(url), function (data){
-          $('.googleplus').find('.count').text(data.contents.match(/{c: (\d+)/)[1]);
-        });
-
-      })();
-    }
-    // Google plus share
-    $('.googleplus').on('click', function(e) {
-      window.open("https://plus.google.com/share?url=" + $('.facebook').attr('data-url'), "_blank", "top=0, left=500,width=600, height=400")
-    });
   
   });
 

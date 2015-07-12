@@ -271,17 +271,4 @@ $(document).ready(function() {
     return false;
   });
 
-  // Appointment time 
-  // $('#calendar .open').on('click', function(e) {
-  //   var selected = $('input[name="dt"]');
-  //     $('#calendar').tooltip('hide');
-  //   if (selected.val() != '') {
-  //     $('#calendar .yourspot').find('span').html('Opened');
-  //     $('#calendar .yourspot').removeClass('yourspot').addClass('open')
-  //   }
-
-  //   $(this).removeClass('open').addClass('yourspot');
-  //   $(this).find('span').html('Reserved');
-  //   selected.val($(this).find('span').attr('data-day') + " " + $(this).find('span').attr('data-time'));
-  // });
 });

@@ -24,7 +24,7 @@ var express = require('express')
   , MCKEY = process.env.MC_KEY;
 
 
-mc = new mcapi.Mailchimp(MCKEY);
+mc = new mcapi.Mailchimp('8b8bff773968e11ac3881a74bb8bef66-us10');
 // setup mailer
 mailer.extend(app, {
   from: 'no-reply@gmail.com',

@@ -181,17 +181,30 @@
 
   #lp h1 {
     font-size: 1.6em;
-    margin-bottom: 20px;
+  }
+
+  #lp .jointhefamily {
+    margin-bottom: 10px;
   }
 
   #lp h2 {
     font-size: 1em;
   }
 
-  #lp p {
+  #lp p,
+  #lp blockquote {
     font-size: 0.9em;
+    line-height: 1.2em;
     margin-top: 10px;
   } 
+
+  #lp .btn-optin {
+    margin-top: 0;
+  }
+
+  #lp span.privacy { 
+    margin-bottom: 10px;
+  }
 
   #thankyou h1 {
     font-size: 25px;
@@ -199,6 +212,7 @@
 
   #thankyou .btn-download {
     width: 100%;
+
   }
 
   footer .footer-logo {
