@@ -668,8 +668,7 @@ header .navbar-nav li a.logo {
 
 .btn-optin:hover {
   background-color: #CE562E;
-  text-shadow: 2px 1px 0 #CE562E;
-  color: #E7E7E7;
+  color: #FFF;
 }
 /* Report Contact */
 
@@ -1627,7 +1626,7 @@ footer .footer-social ul li a:hover i {
 }
 
 #lp h2 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight: 300;
   line-height: 1.4em;
   margin-top: 0;
@@ -1636,18 +1635,19 @@ footer .footer-social ul li a:hover i {
 #lp span.privacy {
   display: block;
   text-align: center;
+  font-size: 14px;
   color: #858585;
 }
 
 #lp p { 
-  font-size: 1.4em;
-  margin-top: 25px;
+  font-size: 1.1em;
+  margin-bottom: 15px;
 }
 
 #lp .jointhefamily {
   margin-bottom: 50px;
-  font-weight: 500;
-  color: #A7A7A7;
+  font-weight: 300;
+  color: #888888;
 }
 
 #lp blockquote {
@@ -1661,6 +1661,14 @@ footer .footer-social ul li a:hover i {
 }
 
 #lp .btn-optin {
-  width: 100%;
+  width: 80%;
+  margin-top: 20px;
   margin-bottom: 0;
+  background-color: #E40B00;
+  text-shadow: 2px 1px 0 #CC0F21;
+}
+
+
+#lp .btn-optin:hover { 
+  background-color: #FF1421;
 }
