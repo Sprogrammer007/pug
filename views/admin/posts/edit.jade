@@ -1,0 +1,63 @@
+extends ../layout
+
+block content
+  #newpost
+
+    form(action='/admin/post/update/#{post.id}' method='post')
+      .form-group
+        label Title
+        input.form-control(type='text', name='post[title]' value="#{post.title}")      
+      .form-group
+        label Categories
+        - each category in categories
+          - if (post.categories.indexOf(category.category) > -1)
+            input(type="checkbox" name="post[categories]" value=category.id checked)
+            | #{category.category}
+          - else
+            input(type="checkbox" name="post[categories]" value=category.id) 
+            | #{category.category}
+         
+      .form-group
+        label Content
+        textarea#CKEditor.form-control(name='post[content]' rows="10")
+          | #{post.content}
+      .form-group
+        label Excerpt
+        textarea.form-control(name='post[excerpt]' rows="4" )
+          | #{post.excerpt}
+      .form-group
+        label Publish Date
+        input.publish-date.form-control(type="text" name='post[posted_date]' value="#{post.postDate('YYYY-MM-DD')}")
+      .form-group
+        label Display Image
+        input.form-control(type='text', name='post[display_image]' value="#{post.display_image}")
+      - if (post.options.ogs)
+        .form-group
+      
+          label OG Image
+          input.form-control(type='text', name='post[option][ogs][og_image]' value="#{post.options.ogs.og_image}")      
+      .form-group
+        label URL
+        input.form-control(type='text', name='post[url]' value="#{post.url}")
+      .form-group    
+        label Status
+        select.form-control(name="status")
+          - each v in ['Live', 'Draft']
+            option(value="#{v}" selected=post.status === v) #{v}
+      - if (post.options.optins)
+        .form-group
+          label Bottom Optin
+          textarea.form-control(name='post[option][optins][boptin]' rows="4")
+              | #{post.options.optins.boptin}
+        .form-group
+          label Popup Optin
+          textarea.form-control(name='post[option][optins][poptin]' rows="4")
+              | #{post.options.optins.poptin}
+        .form-group    
+          label Popup On or Off
+          select.form-control(name="post[option][optins][popon]")
+             - each v in ['On', 'Off']
+              option(value="#{v}" selected=post.options.optins.popon === v) #{v}
+      .form-group
+        input.form-control(type='submit', value='Update Post' style="margin-left: 50%; width: 50%; background-color: #555; color: #FFF;")
+

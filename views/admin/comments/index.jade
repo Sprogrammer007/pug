@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+
+  #posts
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th POST ID
+          th Arthur Email
+          th Arthur URL
+          th Comment
+          th Status
+          th Type
+          th
+      tbody
+        - each comment in comments
+          tr
+            td
+              | #{comment.post_id}       
+            td 
+              | #{comment.author_email}      
+            td 
+              | #{comment.author_url}       
+            td
+              | !{comment.content} 
+            td
+              | #{comment.approved}
+            td
+              | #{comment.comment_type}         
+            td
+              a.btn.btn-default(href="/admin/comment/#{comment.id}/approve") Approve
+              a.btn.btn-default(href="/admin/comment/#{comment.id}/destroy") Remove
+                     

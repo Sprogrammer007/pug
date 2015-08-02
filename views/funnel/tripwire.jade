@@ -1,5 +1,7 @@
 extends ../layout
 
+block css 
+  link(rel='stylesheet', href='/css/tripwire.css')
 block content
   #tripwire
  
@@ -122,7 +124,7 @@ block content
               | For Only $#{price}   
         -else
           .buy-now-group
-            a.btn.btn-buy(href="" data-pname='4 Layouts Plus Bonus For $#{price}')
+            a.btn.btn-buy(href="")
               | Get All 
               span(style="font-size: 26px") 4 Conversion Layouts PLUS Bonus
               span(style="font-size: smaller;")  For Only $#{price} 
@@ -280,58 +282,6 @@ block content
         span.returndays No questions asked, 30 day money back guarantee.
         img.center-block(src="/images/sales/securebadge.png")
         br
-  #pay.modal.fade
-    .modal-dialog
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-label='Close')
-            button.back(type='button')
-            h4 
-              span.pname 4 Conversion Layouts PLUS Bonus
-          .modal-body
-           
-            form#payment-form(action="/lp/checkout" method="post")
-              input(type="hidden" name="product_name" value="")
-              input(type="hidden" name="dt" value="")
-              .step-one 
-                .form-group.email
-                  .inputs-group
-                    input.required-info.email.form-control(type='email', name='email',  placeholder='Enter email')  
-                    i.fa.fa-envelope-o 
-                .form-group.address     
-                  .inputs-group
-                    input.required-info.form-control(type="text", name='name', placeholder='Name') 
-                    i.fa.fa-user
-                  .inputs-group
-                    input.phone.required-info.form-control(name='phone', placeholder='phone')
-                    i.fa.fa-phone 
-                  .inputs-group
-                    input.required-info.form-control(name='address', placeholder='Address')
-                    i.fa.fa-map-marker  
-                  .form-set.clearfix
-                    .inputs-group
-                      input.required-info.form-control(name='postal', placeholder='Postal')  
-                    .inputs-group
-                      input.required-info.form-control(name='city', placeholder='City') 
-      
-                a.hvr-wobble-horizontal.btn.btn-info(type='submit') Continue 
-                  span.arrow-right
 
-              .step-two(style="display: none")  
-                .payment-errors
-                .form-group     
-                  .inputs-group
-                    input.required-cc.cc-num.form-control(type='tel' placeholder='Card number' x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  
-                    i.fa.fa-credit-card
-                    span.card
-                  .form-set.clearfix
-                    .inputs-group
-                      input.required-cc.cc-exp.form-control(type='text' placeholder='MM / YY')  
-                      i.fa.fa-calendar
-                    .inputs-group
-                      input.required-cc.cc-cvc.form-control(type='text' save="4" placeholder='CVC') 
-                      i.fa.fa-lock
-                button.hvr-wobble-horizontal.btn.btn-payment(type='submit') Checkout 
-                  span.arrow-right
-        
-           
+block script
+  script(src='/js/tripewire.js')

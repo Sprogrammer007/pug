@@ -1,4 +1,4 @@
-footer
+footer#footer
   .top-footer
     .container
       - if (isMobile)
@@ -6,14 +6,14 @@ footer
       - else
         include ./shared/footer-desktop.jade
         
-#poptin.modal.fade(data-pon= (post && post.popon != undefined && post.popon) ? '#{post.popon}' : '')
+#poptin.modal.fade(data-pon="#{(post) ? post.options.optins.popon : '' }")
   .modal-dialog
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
       .modal-body
 
-        - if (post && post.poptin != '' && post.poptin != undefined)
-          | !{post.poptin}
+        - if (post && post.options.optins.popon != 'On')
+          | !{post.options.optins.poptin} 
         - else
           .step1
             .row.mbm

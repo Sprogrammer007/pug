@@ -28,58 +28,66 @@ block content
               .social-icon.fa.fa-google-plus
               span.count 0
           #linkedin.linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+      main
+        .main-content-wrapper.container-800
+          - if (post)
+            .post-title
+              h1 #{post.title}
+              .post-meta
+                .pull-left
+                  .post-category
+                    | #{post.categories.join(" | ")}
+                .pull-right
+                  span By: 
+                    span.author #{post.author} 
+                    | on  
+                  span.date
+                    | #{post.postDate('MMMM Do, YYYY')}
+              .clearfix
+            .post-content
+              | !{post.content}
+              #post-footer-share
+                span.shareit If you Like it, Share it... Thanks
+                #twitter.twitter(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+                #facebook.facebook(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+                #googleplus.googleplus(data-url='designedforresult.com/blog/#{post.url}', data-text='')
+                  a.box(href="#")
+                    .social-icon.fa.fa-google-plus
+                    span.count 0
+                #linkedin.linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
 
-      .main-content-wrapper
-        - if (post)
-          .post-title
-            h1 #{post.title}
-            .post-meta
-              .pull-left
-                .post-category
-                  | #{post.category}
-              .pull-right
-                span By: 
-                  span.arthur #{post.arthur} 
-                  | on  
-                span.date
-                  | #{post.create_date}
-            .clearfix
-          .post-content
-            | !{post.content}
-            #post-footer-share
-              span.shareit If you Like it, Share it... Thanks
-              #twitter.twitter(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-              #facebook.facebook(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-              #googleplus.googleplus(data-url='designedforresult.com/blog/#{post.url}', data-text='')
-                a.box(href="#")
-                  .social-icon.fa.fa-google-plus
-                  span.count 0
-              #linkedin.linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+    aside
+      .post-optin-wrapper
+        .container
+          .optin-box.optin-content.col-lg-8.col-lg-offset-2
+            - if (options.optins != undefined && options.optins.boptin != '')
+              | !{ptions.optins.boptin} 
+            - else
+              p.optin-title.text-center.text-uppercase
+                | [Interactive PDF] 30 Minute Website Planner
+              .row
+                .col-lg-8.col-md-8.col-xs-8
+                  
+                  p.optin-description.text-left
+                    i.fa.fa-check(style="color: green;")
+                    |  Plan your entire small Business website in 30 minutes.                
+                  p.optin-description.text-left 
+                    i.fa.fa-check(style="color: green;")
+                    |  Edit it on your computer or print it out for your team.          
+                  p.optin-description.text-left 
+                    i.fa.fa-check(style="color: green;")
+                    |  Use the planner to reduce development time and cost.    
+                  p.optin-description.text-left 
+                    i.fa.fa-check(style="color: green;")
+                    |  Built highly effective Business website with this planner.
+                .col-lg-4.col-md-4.col-xs-4.optin-image
+                  img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
+              .btn.btn-optin.boptin
+                | Download This Guide
 
-    .post-optin-wrapper
-      .container
-        .optin-box.optin-content.col-lg-8.col-lg-offset-2
-          - if (post.boptin != '' && post.boptin != undefined)
-            | !{post.boptin} 
-          - else
-            p.optin-title.text-center.text-uppercase
-              | [Interactive PDF] 30 Minute Website Planner
-            .row
-              .col-lg-8.col-md-8.col-xs-8
-                
-                p.optin-description.text-left
-                  i.fa.fa-check(style="color: green;")
-                  |  Plan your entire small Business website in 30 minutes.                
-                p.optin-description.text-left 
-                  i.fa.fa-check(style="color: green;")
-                  |  Edit it on your computer or print it out for your team.          
-                p.optin-description.text-left 
-                  i.fa.fa-check(style="color: green;")
-                  |  Use the planner to reduce development time and cost.    
-                p.optin-description.text-left 
-                  i.fa.fa-check(style="color: green;")
-                  |  Built highly effective Business website with this planner.
-              .col-lg-4.col-md-4.col-xs-4.optin-image
-                img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
-            .btn.btn-optin.boptin
-              | Download This Guide
+    include ./comments
+    
+block script
+  script(src='/js/prism.js')
+  script(src='/js/comment.js')
+  script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')

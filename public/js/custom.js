@@ -73,8 +73,9 @@
     });
     wow.init();
 
+
     // Optin
-    if ($('#poptin').attr('data-pon')) {
+    if ($('#poptin').attr('data-pon') === "On") {
      setTimeout(openOptin, 3*15*1000);
     };
 
@@ -221,7 +222,7 @@
     // Submit Form
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    jQuery("form#optin-form").submit(function(){
+    jQuery("#optin-form").submit(function(){
 
       var error = false;
       var that = jQuery(this)
@@ -283,8 +284,6 @@
           $('.failure').show();
         }
       }, 'json');
-      
-      
       return false;
     });
 
@@ -305,62 +304,11 @@
       return Math.floor(Math.random() * (max - min)) + min;
     };  
 
-    function analize(form, time){
 
-      var max_errors = getRandomInt(8,16),
-        xx = false,
-        percent = 0.0, 
-        errors = 0,
-        i = 0,
-        j = 0,  
-        jj = 0,
-        k = 0,
-        bar = document.getElementById('progressbar'),
-        aa  = document.getElementById('analyzer-errors'),
-        times = [];
-
-        for( i = 0; i <= max_errors; i++) {
-          times.push(getRandomInt(5,25)*time)
-        }
-
-        times.sort(function() {
-            return .2 - Math.random();
-        });
-
-        var progress = setInterval(function() {
-          if( ++i < 25*time || ( i > 50*time && i < 85*time ) || i > 135*time ){
-            percent = Math.round( (percent+1/time) * 10 ) / 10;
-            j++;
-            bar.style.width = percent+'%';  
-
-            if( xx && errors < max_errors && j>=jj ){
-              errors++;
-              jj += times[k++]*time/max_errors;
-              text = (errors > 1) ? "errors" : "error";
-              aa.innerHTML = errors+" "+text+" found&hellip;";
-            }
-          }
-
-          if( !xx && i > 40 ){
-            xx= true;
-            jj =j;
-            aa.classList.remove("hide");
-          }
-
-          if ( percent >= 100 ) {
-            clearInterval(progress);
-            $('.analyzer .warning-title').html('Preparing your report please be patient...')
-            form.submit();
-          }
-
-        }, 5);
-                    
-      };
     $('#speedtest button').on('click', function(e) {
       e.preventDefault();
       var form = $('#speedtest');
       var error = false;
-      console.log('test');
       form.find('.require-field').each(function(){
         if($.trim($(this).val()) == '') {
           error = true;
@@ -373,6 +321,8 @@
       analize(form, 9.5);  
      
     });
+
+    
 
 
   

@@ -1,5 +1,7 @@
 var Client = require('pg-native')
-  , moment = require('moment');
+  , Serializer = require('node-serialize')
+  , moment = require('moment')
+  , _ = require('underscore');
 
 var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';
 
@@ -7,169 +9,190 @@ var client = new Client();
 var query = '';
 
 
-// Private functions
-function dollarToCent(dollar) {
-  return (dollar * 100)
-}
 
-function createQuery(table, hash) {
+function createQuery(table, v, r) {
   var qHead = "INSERT INTO ";
   var columns = [];
   var vHolder = [];
   var values = [];
+  var returns = (r || "*")
   var count = 0;
-  for (var h in hash) { 
-    
-    if (hash.hasOwnProperty(h)) {
+  for (var h in v) { 
+    if (v.hasOwnProperty(h)) {
       columns.push(h);
       count++
       vHolder.push("$" + count);
-      values.push(hash[h]);
+      values.push(v[h]);
     }
   }
-  var query =  qHead + table + " (" + columns.join(", ") + ") " + "VALUES (" + vHolder.join(", ") + ")";
+
+  query =  qHead + table + " (" + columns.join(", ") + ") " + "VALUES (" + vHolder.join(", ") + ") RETURNING " + returns + ";";
   client.connectSync(conString);
-  client.querySync(query, values);
+
+  var result = client.querySync(query, values);
+  client.end();
+
+  return result[0]
+}
+
+function createMultiQuery(t, p, v, id) {
+
+  var qHead = "INSERT INTO ";
+  var values = [];
+  for (var h in v) {  
+    if (v.hasOwnProperty(h) && v[h] != '') {
+      if (v[h].constructor == Object){
+        v[h] = Serializer.serialize(v[h]);
+      }
+      values.push('(' + id + ", '" + h + "', '" + v[h] + "')");
+    }
+  }
+  if (values.length === 0) { return };
+  query =  qHead + t + " (" + p.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
+  client.connectSync(conString);
+  client.querySync(query);
   client.end();
 }
 
-function updateQuery(table, hash, id) {
+function createRelationQuery(t, p, v, id) {
+  var qHead = "INSERT INTO ";
+  var values = [];
+  // Fix single category issue of not being an array.
+  v = [].concat.apply([], [v]);
+
+  v.forEach(function(e, i, a) {
+    values.push('(' + id + ', ' + e + ')');
+  });
+
+  query =  qHead + t + " (" + p.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
+  client.connectSync(conString);
+  client.querySync(query);
+  client.end();
+}
+
+function updateQuery(table, properties, id) {
+
   var qHead = "UPDATE ";
   var columns = [];
   var values = [];
   var count = 0;
-  var idIndex = Object.keys(hash).length + 1;
-  for (var h in hash) { 
+  for (var h in properties) { 
     
-    if (hash.hasOwnProperty(h)) {
+    if (properties.hasOwnProperty(h)) {
       count++
       columns.push(h + "=$" + count );
-      values.push(hash[h]);
+      values.push(properties[h]);
     }
   }
-  values.push(id)
-  var query =  qHead + table + " SET " + columns.join(", ")  + ' WHERE id=$' + idIndex; 
+  query =  qHead + table + " SET " + columns.join(", ")  + ' WHERE id=' + id + " RETURNING *;"; 
   client.connectSync(conString);
-  client.querySync(query, values);
+  var result = client.querySync(query, values);
   client.end();
-}
+};
+
+
+function countQuery(table, item, conditions) {
+  c = _.map(conditions, function(v, k) {
+    if (_.isString(v)) {
+      return k + "='" + v + "'";
+    } else {
+      return k + "=" + v;
+    }
+  });
+
+  client.connectSync(conString);
+  query = "SELECT COUNT(" + item + ") FROM " + table + " WHERE " + c.join(" AND ") + ";";
+  var result = client.querySync(query);
+
+  client.end();
+  return result[0].count;
+};
+
 
 var dbManager = {
-
-  createUser: function(req) { 
-    req.body['create_date'] = moment().format('YYYY-MM-DD');
-    createQuery('users', req.body);
-
-    var user = this.getUserByEmail(req.body.email)
-    return user;
-  },
-
-  getUserByEmail: function(email) {
-    client.connectSync(conString);
-    query = 'SELECT * FROM users WHERE email=$1 LIMIT 1';
-    var user = client.querySync(query, [email]);
-    client.end();
-    return user[0];
-  },
-
-  updateUser: function(req, id) {
-    updateQuery('users', req.body, id)
-  },
-
-  createOrder: function(req, user_id, customer_id, token, receipt) {
-    var params = req.body;
-    params['user_id'] = user_id;
-    params['stripe_cid'] = customer_id;
-    params['receipt'] = receipt;
-    params['token'] = token;
-    params['total'] = dollarToCent(parseInt(params.total));
-    params['status'] = 'Payed';
-    params['create_date'] = moment().format('YYYY-MM-DD');
-    // dollarToCent((mail === "on") ? (parseInt(params.sub_total) + 5) : parseInt(params.sub_total));
   
-    createQuery('orders', params);
-
-    var order = this.getOrderByToken(token);
-    
-    return order;
+  rawQuery: function(q) {
+    client.connectSync(conString);
+    var results = client.querySync(q);
+    client.end();
+    return results
   },
 
 
-  getDetailsByOrderID: function(order_id) {
+  getAll: function(table, conditions, order, direction) {
+    query = query = 'SELECT * FROM ' + table; 
     client.connectSync(conString);
-    query = 'SELECT * FROM order_details WHERE order_id=$1 LIMIT 1';
-    var details = client.querySync(query, [order_id])
+    if (conditions != null) {
+      query = query + ' WHERE ' + conditions;
+    }
+
+    if (order != null) {
+      query = query  + ' ORDER BY ' + order + ' ' + direction + ';';
+    }
+    var results = client.querySync(query);
     client.end();
-    return details[0];
+    return results
   },
 
-  getOrderByToken: function(token) {
-    client.connectSync(conString);
-    query = 'SELECT * FROM orders WHERE token=$1 LIMIT 1';
-    var order = client.querySync(query, [token])
-    client.end();
-    return order[0];
+  create: function(table, properties, returns) {
+    return createQuery(table, properties, returns);
+  },
+
+  createMultiple: function(table, properties, values, id) {
+    createMultiQuery(table, properties, values, id);
   },  
 
-  getOrderByReceipt: function(r) {
-    client.connectSync(conString);
-    query = 'SELECT * FROM orders WHERE receipt=$1 LIMIT 1';
-    var order = client.querySync(query, [r])
-    client.end();
-    return order[0];
+  createRelation: function(table, properties, values, id) {
+    createRelationQuery(table, properties, values, id);
   },
 
-  getAllPosts: function() {
+  findBy: function(table, property, value, done) {
     client.connectSync(conString);
-    query = 'SELECT * FROM posts ORDER BY CREATE_DATE DESC';
-    var posts = client.querySync(query);
+    query = 'SELECT * FROM ' + table + ' WHERE ' + property + '=$1 LIMIT 1;';
+    var result = client.querySync(query, [value]);
+
     client.end();
-    return posts
+    if (!result) {
+      return done(null, null);
+    } else {
+      return done(null, result);
+  
+    }
   },
 
-  getAllLivePosts: function() {
-    client.connectSync(conString);
-    query = "SELECT * FROM posts WHERE status= 'true' ORDER BY CREATE_DATE DESC"
-    var posts = client.querySync(query);
-    client.end();
-    return posts
+  findById: function(table, id, done) {
+    this.findBy(table, 'id', id, function(err, user) {
+      if (!user) {
+        return done(null, null);
+      } else {
+        return done(null, user);
+      }
+    });
   },
 
-  getPostByURL: function(url) {
+  findAllBy: function(table, select, property, value) {
     client.connectSync(conString);
-    query = 'SELECT * FROM posts WHERE url=$1 LIMIT 1';
-    var post = client.querySync(query, [url])
-    client.end();
-    return post[0];
+    select = select || "*";
+    query = 'SELECT ' + (select || "*") + ' FROM ' + table + ' WHERE ' + property + '=$1;';
+    var result = client.querySync(query, [value]);
+    return result;
   },
 
-  createPost: function(r) {
-    r.body.url = r.body.title.trim().replace(/\s+/g, '-').replace(',', '').toLowerCase();
-    r.body.create_date = moment().format('YYYY-MM-DD');
-    createQuery("posts", r.body);
-    return
-  },  
-
-  updatePost: function(r) {
-    updateQuery('posts', r.body, r.params.id);
-    return
+  update: function(table, values, id) {
+    updateQuery(table, values, id);
   },
 
-  deletePost: function(id) {
-    client.connectSync(conString);
-    query = 'DELETE FROM posts WHERE id=$1'
-    client.querySync(query, [id]);
-    client.end();
-    return
+  count: function(table, item, conditions) {
+    return countQuery(table, item, conditions);
   },
 
-  findPostByID: function(id) {
+  destroy: function(table, p, v) {
     client.connectSync(conString);
-    query = 'SELECT * FROM posts WHERE id=$1 LIMIT 1';
-    var post = client.querySync(query, [id])[0];
+    query = 'DELETE FROM ' + table + ' WHERE ' + p + '=$1'
+    client.querySync(query, [v]);
     client.end();
-    return post;
-  }
+  },
+
 }
 
 

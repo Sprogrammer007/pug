@@ -1,5 +1,7 @@
 extends ../layout
-
+block css
+  link(rel='stylesheet', href='/css/prism.css')
+    
 block content
   #blog
     .container
@@ -8,21 +10,25 @@ block content
       -if (posts.length > 0)
         - each post in posts
           .post-item-wrapper.col-lg-6.col-xs-12
-           
             .post-item-image
               a(href="/blog/#{post.url}")
                 img(src="#{post.display_image}")
             .post-meta
               span By: 
-                span.arthur #{post.arthur}
-              span.date.pull-right
-                | #{post.create_date}
+                span.arthur  #{post.author}
+              span.date.pull-right #{post.postDate('MMMM Do, YYYY')}
             a.post-item-title(href="/blog/#{post.url}")
               h2 #{post.title}
             .post-category
-              p #{post.category}
+              p 
+                | #{post.categories.join(" | ")}
             .post-item-excerpt
               p
               |  !{post.excerpt}
 
             a.btn.btn-more(href="/blog/#{post.url}") Read this post
+
+block script
+  script(src='/js/prism.js')
+  script(src='/js/comment.js')
+  script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')

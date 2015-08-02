@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  #newpost
+    form(action='/admin/post/create' method='post')
+      .form-group
+        label Title
+        input.form-control(type='text', name='post[title]') 
+      .form-group
+        label Categories
+        - each category in categories
+          input(type="checkbox" name="categories" value=category.id) 
+          | #{category.category}
+      .form-group
+        label Content
+        textarea#CKEditor.form-control(name='post[content]' rows="10")   
+      .form-group
+        label Excerpt
+        textarea.form-control(name='post[excerpt]' rows="4")
+      .form-group
+        label Display Image
+        input.form-control(type='text', name='post[display_image]')
+      .form-group
+        label OG Image
+        input.form-control(type='text', name='post[option][ogs][og_image]')
+      .form-group    
+        label Status
+        select.form-control(name="post[status]")
+          option(value="Live") Live
+          option(value="Draft") Draft
+      .form-group
+        label Bottom Optin
+        textarea.form-control(name='post[option][optins][boptin]' rows="4")
+      .form-group
+        label Popup Optin
+        textarea.form-control(name='post[option][optins][poptin]' rows="4")
+      .form-group    
+        label Popup On or Off
+        select.form-control(name="post[option][optins][popon]")
+          option(value="On") On
+          option(value="Off") Off
+      .form-group
+        input.form-control(type='submit', value='Create Post' style="margin-left: 50%; width: 50%; background-color: #555; color: #FFF;")
+

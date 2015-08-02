@@ -37,7 +37,7 @@ $(document).ready(function() {
   var closeButton = $('.close')
   var backButton = $('.back')
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  var phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
 
   function setCookie(name, value, days) {
     var now = new Date();
@@ -150,13 +150,6 @@ $(document).ready(function() {
           }else{
             issuccess(this);
           }
-        }else if(jQuery(this).hasClass('phone')) {
-          if(!phoneReg.test(jQuery.trim(jQuery(this).val()))) {
-            error = true;
-            isfail(this);
-          }else{
-            issuccess(this);
-          }
         }else{
           issuccess(this);
         }
@@ -178,7 +171,7 @@ $(document).ready(function() {
       $form.find('button').prop('disabled', false);
     } else {
       var token = response.id;
-      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      $form.append($('<input type="hidden" name="order[token]" />').val(token));
       $form.get(0).submit();
     }
   };

@@ -1,0 +1,43 @@
+
+form#payment-form(action="/lp/checkout" method="post")
+  input(type="hidden" name="order[product_name]" value="")
+  .step-one 
+    .form-group.email
+      .inputs-group
+        input.required-info.email.form-control(type='email', name='user[email]',  placeholder='Enter email')  
+        i.fa.fa-envelope-o 
+    .form-group.address     
+      .inputs-group
+        input.required-info.form-control(type="text", name='user[name]', placeholder='Name') 
+        i.fa.fa-user
+      .inputs-group
+        input.required-info.form-control(name='order[address]', placeholder='Address')
+        i.fa.fa-map-marker  
+      .form-set.clearfix
+        .inputs-group
+          input.required-info.form-control(name='order[postal]', placeholder='Postal')  
+        .inputs-group
+          input.required-info.form-control(name='order[city]', placeholder='City') 
+
+    a.hvr-wobble-horizontal.btn.btn-info(type='submit') Continue 
+      span.arrow-right
+
+  .step-two(style="display: none")  
+    .payment-errors
+    .form-group     
+      .inputs-group
+        input.required-cc.cc-num.form-control(type='tel' placeholder='Card number' x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  
+        i.fa.fa-credit-card
+        span.card
+      .form-set.clearfix
+        .inputs-group
+          input.required-cc.cc-exp.form-control(type='text' placeholder='MM / YY')  
+          i.fa.fa-calendar
+        .inputs-group
+          input.required-cc.cc-cvc.form-control(type='text' save="4" placeholder='CVC') 
+          i.fa.fa-lock
+    button.hvr-wobble-horizontal.btn.btn-payment(type='submit') Checkout 
+      span.arrow-right
+
+block script
+  script(src='/js/jquery.payment.js')

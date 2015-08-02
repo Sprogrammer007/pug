@@ -1,0 +1,279 @@
+extends ../layout
+block css
+ link(rel='stylesheet', href='/css/survey.css')
+block content
+  #survey
+    .container
+      .row
+        .col-lg-8.col-lg-offset-2
+          .progress
+            .progress-bar
+              | 0%
+          form(action="/contact_mailer" method="post")
+
+            .form-group.question.active(data-type='multiA')
+              p 1. You major reason you want to build, design, or create a website is…
+              .row 
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q1' name='s1q1') 
+                  label(for='s1q1') Increase Exposure  
+
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q2' name='s1q1') 
+                  label(for='s1q2') Establish Online Presence 
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q3' name='s1q1') 
+                  label(for='s1q3') Get More Leads
+              .row 
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q4' name='s1q1') 
+                  label(for='s1q4') Establish Passive Incomes 
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q5' name='s1q1') 
+                  label(for='s1q5') Sell Products     
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q6' name='s1q1') 
+                  label(for='s1q6') Blog 
+              .row 
+       
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q7' name='s1q1') 
+                  label(for='s1q7') Quit My Job (Start a Business) 
+                .checkbox.col-lg-4
+                  input(type='checkbox' id='s1q8' name='s1q1' value='other') 
+                  label(for='s1q8') Other        
+            .form-group.question(data-type='multiQ')
+              p 2. Which one of the following is the most important to you when designing or creating the website. 
+              table.table.table-striped
+                thead
+                  tr
+                    th
+                    th Not Important
+                    th Some What Important
+                    th Important
+                    th Pretty Important
+                    th Very Important
+                tbody
+                  - each p, i in ['Aesthetics', 'User Experience', 'SEO', 'Mobile Friendliness', 'Cutting Edge Technologies', 'Conversion Optimization']
+                    tr.subquestion
+                      td
+                        | #{p}
+                      td
+                        .checkbox 
+                          input(type='radio' id='q2a1v'+i name='s1q1a'+i) 
+                          label(for='q2a1v'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q2a2v'+i name='s1q1a'+i) 
+                          label(for='q2a2v'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q2a3v'+i name='s1q1a'+i) 
+                          label(for='q2a3v'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q2a4v'+i name='s1q1a'+i) 
+                          label(for='q2a4v'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q2a5v'+i name='s1q1a'+i) 
+                          label(for='q2a5v'+i) 
+
+            .form-group.question(data-type='multiQ')
+              p 3. We want to understand what your problems and challenges are with building, designing, or creating a website?
+              table.table.table-striped
+                thead
+                  tr
+                    th
+                    - var n = 0
+                    while n < 4
+                      th= n++
+                  
+                tbody
+                  - each p, a in ['Feeling Overwhelmed', 'Don’t Know Where To Start', 'Don’t Have to Skills', "Don't Have the Time", "Don't Have the Money"]
+                    tr.subquestion
+                      td
+                        | #{p}
+                      - var x = 0
+                      while x < 4
+                        td
+                          .checkbox 
+                            input(type='radio' id='q3a'+a+'s'+x name='q3a'+a+'s'+x) 
+                            label(for='q3a'+a+'s'+x)
+                        - x++
+
+
+            .form-group.question(data-type='multiQ')
+              p 4. You major reason you want to build, design, or create a website is…
+              table.table.table-striped
+                thead
+                  tr
+                    th
+                    th Not Important
+                    th Some What Important
+                    th Pretty Important
+                    th Very Important
+                tbody
+                  - each p, i in q1 
+                    tr.subquestion
+                      td
+                        | #{p}
+                      td
+                        .checkbox 
+                          input(type='radio' id='q4a1s'+i name='q4a1s'+i) 
+                          label(for='q4a1s'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q4a2s'+i name='q4a1s'+i) 
+                          label(for='q4a2s'+i)
+    
+                      td
+                        .checkbox 
+                          input(type='radio' id='q4a3s'+i name='q4a1s'+i) 
+                          label(for='q4a3s'+i)
+                      td
+                        .checkbox 
+                          input(type='radio' id='q4a4s'+i name='q4a1s'+i) 
+                          label(for='q4a4s'+i) 
+
+            .form-group.question(data-type='multiPart')
+              p 5. Do you currently operate a website?
+              .checkbox
+                input(type='radio' id='q5a1' name='q5a1' data-subq="<div class='part2'><p>5b. Do you operate more than one website?</p><div class='checkbox'><input type='radio' id='q6a1' name='q6a1'/><label for='q6a1'>Yes  </label></div><div class='checkbox'><input type='radio' id='q6a2' name='q6a2'/><label for='q6a2'>No   </label></div></div>") 
+                label(for='q5a1') Yes  
+              .checkbox
+                input(type='radio' id='q5a2' name='q5a2') 
+                label(for='q5a2') No        
+
+            .form-group.question(data-type='multiPart')     
+              p 6. Have you hired a web design agency before??
+              .checkbox
+                input(type='radio' id='q7a1' name='q7a1') 
+                label(for='q7a1') Yes  
+              .checkbox
+                input(type='radio' id='q7a2' name='q7a2') 
+                label(for='q7a2') No 
+              .part2            
+                p 6b. How satisfied were you with their services?
+                .checkbox
+                  input(type='radio' id='q8a1' name='q8a1') 
+                  label(for='q8a1') Very Dissatisfied  
+                .checkbox
+                  input(type='radio' id='q8a2' name='q8a2') 
+                  label(for='q8a2') Somewhat Dissatisfied  
+                .checkbox
+                  input(type='radio' id='q9a1' name='q9a1') 
+                  label(for='q9a1') Somewhat Satisfied   
+                .checkbox
+                  input(type='radio' id='q9a2' name='q9a2') 
+                  label(for='q9a2') Very Satisfied        
+            .form-group.question                 
+              p 7. If you would to build, design, create the website right now are you most likely going to …
+              .checkbox
+                input(type='radio' id='q10a1' name='q10a1') 
+                label(for='q10a1') Hire a Profession or Agency
+              .checkbox
+                input(type='radio' id='q10a2' name='q10a2') 
+                label(for='q10a2') Do It Yourself
+                
+            .form-group.question                 
+              p 8. Where do they get their information
+              .checkbox
+                input(type='radio' id='q11a1' name='q11a1') 
+                label(for='q11a1') Facebook
+              .checkbox
+                input(type='radio' id='q11a2' name='q11a2') 
+                label(for='q11a2') Linkedin
+              .checkbox
+                input(type='radio' id='q11a3' name='q11a3') 
+                label(for='q11a3') Twitter
+              .checkbox
+                input(type='radio' id='q11a4' name='q11a4') 
+                label(for='q11a4') Google Plus      '
+              .checkbox
+                input(type='radio' id='q11a5' name='q11a5') 
+                label(for='q11a5') Other                       
+            .form-group.question                 
+              p 9. Which one of the following do you want to spent more time one
+              .checkbox
+                input(type='radio' id='q12a1' name='q12a1') 
+                label(for='q12a1') Spending time with Family
+              .checkbox
+                input(type='radio' id='q12a2' name='q12a2') 
+                label(for='q12a2') Spending time for yourself
+              .checkbox
+                input(type='radio' id='q12a3' name='q12a3') 
+                label(for='q12a3') Twitter
+              .checkbox
+                input(type='radio' id='q12a4' name='q12a4') 
+                label(for='q12a4') Google Plus      '
+              .checkbox
+                input(type='radio' id='q12a5' name='q12a5') 
+                label(for='q12a5') Other            
+
+            .form-group.question
+              p 10. Where do they get their information
+              .checkbox
+                input(type='radio' id='q13a1' name='q13a1') 
+                label(for='q13a1') Male
+              .checkbox
+                input(type='radio' id='q13a2' name='q13a2') 
+                label(for='q13a2') Female  
+            .form-group.question
+              p 11. How old are you?
+              .select
+                select
+                  option Under 18
+                  option 18 - 24
+                  option 25 - 34
+                  option 35 - 44
+                  option 45 - 54
+                  option 55 - 64
+                  option Above 65
+            .form-group.question
+              p 12. And are you currently?
+              .checkbox
+                input(type='radio' id='q14a1' name='q14a1') 
+                label(for='q14a1') Single
+              .checkbox
+                input(type='radio' id='q14a2' name='q14a2') 
+                label(for='q14a2') Married   
+              .checkbox
+                input(type='radio' id='q14a3' name='q14a3') 
+                label(for='q14a3') Married With Kids
+            .form-group.question
+              p 13. Which one of the following best describes your right now?
+              .checkbox
+                input(type='radio' id='q15a1' name='q15a1') 
+                label(for='q15a1') Business Owner
+              .checkbox
+                input(type='radio' id='q15a2' name='q15a2') 
+                label(for='q15a2') Freelance Designer or Developer
+              .checkbox
+                input(type='radio' id='q15a3' name='q15a3') 
+                label(for='q15a3') Project Manager 
+              .checkbox
+                input(type='radio' id='q15a4' name='q15a4') 
+                label(for='q15a4') Other             
+              .part2
+                p 14b. How many years have you been in business
+                input(type="text")
+            .form-group.question
+              p 15. Current industry
+              select
+                option Under 18
+                option 18 - 24
+                option 25 - 34
+                option 35 - 44
+                option 45 - 54
+                option 55 - 64
+                option Above 65
+            .form-group.question
+              input.require-field.name(name="name" placeholder="First Name" title="Enter your name.")
+              i.fa.fa-user
+    
+              input.require-field.email(name="email" placeholder="Best Email"  title="Incorrect Email.")
+              i.fa.fa-envelope-o
+
+block script
+  script(src='/js/survey.js')

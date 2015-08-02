@@ -1,4 +1,5 @@
 var Client = require('pg-native');
+var bcrypt = require('bcrypt-nodejs');
 
 var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';
 
@@ -6,59 +7,111 @@ var client = new Client();
 
 var queryV1 = "CREATE TABLE IF NOT EXISTS users \
   ( \
-    ID             SERIAL PRIMARY KEY     NOT NULL, \
-    NAME           TEXT,    \
-    EMAIL          TEXT    NOT NULL, \
-    PHONE          TEXT,    \
-    IP             TEXT,    \
-    CREATE_DATE    DATE , \
-    ADDRESS        CHAR(50), \
-    POSTAL         CHAR(50), \
-    CITY           CHAR(50) \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    NAME           VARCHAR(100), \
+    EMAIL          VARCHAR(100) NOT NULL, \
+    USERNAME       VARCHAR(60) NOT NULL, \
+    PASSWORD       VARCHAR(64) NOT NULL, \
+    IP             VARCHAR(64), \
+    ROLE           VARCHAR(64), \
+    DISPLAY_NAME   VARCHAR(250), \
+    ACTIVATION_KEY VARCHAR(60), \
+    STATUS         INT, \
+    REGISTER_DATE  TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+    UNIQUE (EMAIL, USERNAME) \
   ); \
   CREATE TABLE IF NOT EXISTS orders \
   ( \
-    ID             SERIAL PRIMARY KEY     NOT NULL, \
-    USER_ID        INT,     \
-    STRIPE_CID     TEXT,     \
-    TOKEN          TEXT, \
-    RECEIPT        TEXT, \
-    PRODUCT_NAME   TEXT, \
-    TOTAL          INT, \
-    STATUS         TEXT, \
-    CREATE_DATE    DATE \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID        BIGINT,  \
+    ADDRESS        VARCHAR(255),  \
+    CITY           VARCHAR(60),  \
+    POSTAL         VARCHAR(20),  \
+    STRIPE_CID     VARCHAR(255), \
+    TOKEN          VARCHAR(100), \
+    RECEIPT        VARCHAR(60), \
+    PRODUCT_NAME   VARCHAR(255), \
+    TOTAL          NUMERIC, \
+    STATUS         VARCHAR(60), \
+    ORDERED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP \
   ); \
   CREATE TABLE IF NOT EXISTS posts \
   ( \
-    ID             SERIAL PRIMARY KEY    NOT NULL, \
-    ARTHUR         TEXT, \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID        BIGINT, \
+    AUTHOR         VARCHAR(100), \
     CONTENT        TEXT, \
     EXCERPT        TEXT, \
-    BOPTIN         TEXT, \
-    POPTIN         TEXT, \
-    POPON          BOOL, \
-    CATEGORY       TEXT, \
+    POST_TYPE      VARCHAR(20), \
+    COMMENT_COUNT  BIGINT DEFAULT 0, \
+    COMMENT_STATUS VARCHAR(20), \
+    POST_MIME_TYPE VARCHAR(100), \
+    POST_PASSWORD  VARCHAR(20), \
     TITLE          TEXT, \
-    URL            TEXT, \
-    DISPLAY_IMAGE  TEXT, \
-    STATUS         BOOL, \
-    CREATE_DATE    DATE, \
-    UPDATE_DATE    DATE \
+    URL            VARCHAR(255), \
+    DISPLAY_IMAGE  VARCHAR(255), \
+    STATUS         VARCHAR(20), \
+    POSTED_DATE    TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+    MODIFIED_DATE  TIMESTAMP \
   ); \
+  CREATE TABLE IF NOT EXISTS post_options \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    POST_ID        BIGINT NOT NULL, \
+    OPTION_KEY     VARCHAR(255), \
+    OPTION_VALUE   TEXT \
+  ); \
+  CREATE TABLE IF NOT EXISTS post_categories \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    CATEGORY       VARCHAR(60) \
+  ); \
+  CREATE TABLE IF NOT EXISTS post_category_relationships \
+  ( \
+    POST_ID        INT REFERENCES posts (id) ON UPDATE CASCADE ON DELETE CASCADE, \
+    CATEGORY_ID    INT REFERENCES post_categories (id) ON UPDATE CASCADE \
+  ); \
+  CREATE TABLE IF NOT EXISTS comments \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    POST_ID        BIGINT NOT NULL, \
+    USER_ID        BIGINT, \
+    AUTHOR_NAME    VARCHAR(100) NOT NULL, \
+    AUTHOR_EMAIL   VARCHAR(100) NOT NULL, \
+    AUTHOR_URL     VARCHAR(200), \
+    AUTHOR_IP      VARCHAR(100), \
+    CONTENT        TEXT, \
+    KARMA          INT, \
+    LIKE_COMMENT   INT, \
+    DISLIKE_COMMENT INT, \
+    APPROVED       VARCHAR(20), \
+    COMMENT_AGENT  VARCHAR(255), \
+    COMMENT_TYPE   VARCHAR(20), \
+    COMMENT_PARENT BIGINT, \
+    COMMENT_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
+  ); \
+  CREATE TABLE IF NOT EXISTS comment_metas \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    COMMENT_ID     BIGINT NOT NULL, \
+    META_KEY       VARCHAR(255), \
+    META_VALUE     TEXT \
+  ); \
+  INSERT INTO users (username, email, password, display_name, role, status) VALUES ('Steve007', 'stevey@bigtalkconsulting.com', '" + bcrypt.hashSync('nning007') + "', 'Steve', 'Admin', 1); \
 ";
 
-var queryV2 = "ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT;"
-var queryV2 = "ALTER TABLE posts ADD COLUMN OG_IMAGE TEXT; \
-"
 
 var db = {
   init: function() {
+    this.runQuery(queryV1);
+  },
+  runQuery: function(query) {
 
     client.connect(conString, function(err) {
       if(err) {
         return console.error('could not connect to postgres', err);
       }
-      client.query(queryV1, function(err, result) {
+      client.query(query, function(err, result) {
         if(err) {
           return console.error('error running query', err);
         }
@@ -66,8 +119,9 @@ var db = {
         client.end();
       });
     });
-
-
+  },
+  dbMigrate: function() {
+    this.runQuery(queryV4);
   }
 }
 

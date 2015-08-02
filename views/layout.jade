@@ -17,20 +17,17 @@ head
   link(rel='stylesheet', href='/css/hover.min.css')
   link(rel='stylesheet', href='/css/ie.css')
   link(rel='stylesheet', href='/css/ie7.css')
-  - if (path.substring(0, 6) === '/lp/tp' )
-    link(rel='stylesheet', href='/css/tripwire.css')
-
-  - else
-    link(rel='stylesheet', href='/css/style.css')
-    link(rel='stylesheet', href='/css/mobile.css')
-    
+  
+  link(rel='stylesheet', href='/css/style.css')
+  link(rel='stylesheet', href='/css/mobile.css')
+  block css
+   
 
   link(rel='canonical' href="https://designedforresult.com#{path}")
 
   // Open Graph
-
   meta(property='og:url', content='https://www.designedforresult.com#{path}')      
-  meta(property='og:image', content='#{(post != undefined) ? ((post.og_image != "") ? post.og_image : post.display_image) : locals.deafult_og_image }')      
+  meta(property='og:image', content='#{(post != undefined) ? (( post.options.ogs.og_image != "") ? post.options.ogs.og_image : post.display_image) : locals.deafult_og_image }')      
   meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
   meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
   meta(property='og:type', content='#{(post != undefined) ? "article" : "website" }')
@@ -94,19 +91,13 @@ head
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
   script(src='/js/modernizr.js')
   script(src='/js/jquery-ui.min.js')
-  script(src='/js/bootstrap.min.js')
+  //- script(src='/js/bootstrap.min.js')
   script(src='/js/sharrre.min.js')
   script(src='/js/wow.min.js')
+  //- script(src='/js/custom.js')
 
-  - if (path.substring(0, 5) === '/blog' )
-    script(src='/js/prism.js')
-    link(rel='stylesheet', href='/css/prism.css')
-  
+  block script
 
-  - if (path === "/speedtest/report")
-    link(rel='stylesheet', href='/css/score.css')
-  - if (path.substring(0, 6) === '/lp/tp' )
-    script(src='/js/jquery.payment.js')
   - if (locals.settings.env != 'development')
     //Google Analytics
     script.
@@ -122,8 +113,5 @@ head
       // This identifies your website in the createToken call below
       Stripe.setPublishableKey('pk_live_ub2PBP7qG6Eebl6s9HUVXDpJ');
       // ...
-  - if (path.substring(0, 6) === '/lp/tp' )
-    script(src='/js/tripewire.js')
-  - else 
-    script(src='/js/custom.js')
+
  

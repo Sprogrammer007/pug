@@ -11,20 +11,14 @@ var express = require('express')
   , mailer = require('express-mailer')
   , mcapi = require('./node_modules/mailchimp-api/mailchimp')
   //route files
-  , routes = require('./routes/route')
-  , users = require('./routes/users')
-  , blog = require('./routes/blog')
-  , admin = require('./routes/admin')
-  , lp = require('./routes/landing')
-
+  , routes = require('./routes/routes')
   , app = express()
   , fs = require('fs')
   , db = require('./modules/db')
   , dbManager = require('./modules/database-manager')
   , MCKEY = process.env.MC_KEY;
 
-
-mc = new mcapi.Mailchimp('8b8bff773968e11ac3881a74bb8bef66-us10');
+mc = new mcapi.Mailchimp(MCKEY);
 // setup mailer
 mailer.extend(app, {
   from: 'no-reply@gmail.com',
@@ -38,9 +32,9 @@ mailer.extend(app, {
   }
 });
 
-if (process.env.RUN_DB === 'true') {
+// if (process.env.RUN_DB === 'true') {
   db.init();
-}
+// }
 
 app.locals.default_description = "We love beautiful designs too, but beauty alone doesn\'t always deliver result for your business. Designed for Result will help you get clear on the objecti";
 app.locals.deafult_og_image = "https://s3.amazonaws.com/designforresult/og_images/default_og.png";
@@ -53,7 +47,7 @@ app.set('view engine', 'jade');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: toString(Math.random()), 
@@ -66,10 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Routes
-app.use('/', routes);
-app.use('/blog', blog);
-app.use('/lp', lp);
-app.use('/admin', admin);
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -105,4 +96,5 @@ app.use(function(err, req, res, next) {
 });
 
 
+module.exports = app;
 module.exports = app;

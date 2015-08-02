@@ -1,0 +1,182 @@
+
+#survey {
+  font-family: 'Oswald';
+  font-weight: 300;
+  color: #3D3D3D;
+  padding: 50px 0;
+}
+
+#survey .question {
+  font-size: 18px;
+  display: none;
+}
+#survey .question.active {
+  display: block;
+}
+
+#survey .question p {
+  font-size: 25px;
+  font-weight: 300;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  display: none;
+  visibility: hidden;
+}
+
+#survey select {
+  color: #313131;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 15px 10px;
+  font-family: 'Oswald';
+  margin-bottom: 15px;
+}
+
+#survey select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #C5C5C5;
+  border-radius: 0;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+  background: #FFF url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 100% 50%;
+}
+
+#survey .checkbox, #survey .radio {
+  margin:  0;
+}
+
+#survey tbody td:not(:first-child),
+#survey thead th:not(:first-child) {
+  text-align: center;
+}
+
+#survey .nav-tabs  {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+  }
+
+#survey .nav-tabs .tab {
+  display: inline-block;
+  position: relative;
+  padding: 0 30px;
+  margin: 10px 0;
+  border-right: 1px solid #DDD;
+
+}
+
+#survey .nav-tabs .tab:last-child { 
+  border-right: 0;
+}
+
+#survey .nav-tabs .tab a {
+  color: #CDCDCD;
+}
+
+#survey .nav-tabs .tab.active a {
+  color: #4D4D4D;
+}
+
+#survey .nav-tabs .tab a:hover,
+#survey .nav-tabs .tab a:active,
+#survey .nav-tabs .tab a:focus  {
+  text-decoration: none !important;
+  outline: none;
+}
+
+.checkbox label {
+  position: relative;
+  vertical-align: top;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+}
+
+.checkbox label:before {
+  content: '';
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  border-radius: 2px;
+  margin-right: 8px;
+  border: 1px solid #C5C5C5;
+/*  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+  -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+*/  background-color: #FFF;
+}
+
+.checkbox label:after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  opacity: 0;
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 8px;
+  background: transparent;
+  top: 4px;
+  left: 4px;
+  border: 3px solid #459FF4;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.checkbox label:hover::after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+  opacity: 0.3;
+}
+
+.checkbox input[type=checkbox]:checked + label:after,
+.checkbox input[type=radio]:checked + label:after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+/*Progress*/
+
+#survey .progress {
+  border-radius: 10px;
+}
+
+#survey .progress .progress-bar {
+  color: #FFFFFF;
+  position: relative;
+  border-radius: 10px;
+  background: #5aaadb;
+  border-color: #459fd6 #3094d2 #277db2;
+  background-image: -webkit-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+  background-image: -moz-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+  background-image: -o-linear-gradient(top, #aed5ed, #7bbbe2 70%, #5aaadb);
+  background-image: linear-gradient(to bottom, #aed5ed, #7bbbe2 70%, #5aaadb);
+}
+
+#survey .progress  > .progress-bar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 18px;
+  background: url("/images/progress-bar.png") 0 0 repeat-x;
+  border-radius: 10px;
+}

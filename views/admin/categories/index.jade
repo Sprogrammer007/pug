@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+  #posts
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th Category
+          th
+      tbody
+        - each category in categories
+          tr
+            td
+              | #{category.category}       
+            td
+              a(href="/admin/comment/validate/#{category.id}") Edit
+              |  | 
+              a(href="/admin/comment/validate/#{category.id}") Remove         

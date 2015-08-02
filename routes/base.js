@@ -1,39 +1,16 @@
 var express = require('express')
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
-  , stripe = require("stripe")(process.env.STRIPE_KEY)
-  , MCID = process.env.MC_ID
-  , https = require('https')
-  , dbManager = require('../modules/database-manager');
+  , https = require('https')  
+  , app = express();
 
-
-// Insight API
+  // Insight API
 var Insight_API_KEY = process.env.INSIGHT_KEY;
 
-function is_mobile(req) {
-  var ua = req.header('user-agent');
-  if( ua.match(/Android/i)
-   || ua.match(/webOS/i)
-   || ua.match(/iPhone/i)
-   || ua.match(/iPad/i)
-   || ua.match(/iPod/i)
-   || ua.match(/BlackBerry/i)
-   || ua.match(/Windows Phone/i)
-   || ua.match(/Mobile/i)
-   || ua.match(/Kindle/i)
-   || ua.match(/Opera Mobi/i)
-   ){
-    return true;
-  }
-  else {
-    return false;
-  }
-}
 
 function extractFormats(formats, type) {
   var a = [];
   for(var i in formats) {
-
 
     if (type === 'errors' && formats[i].ruleImpact >= 10) {
       a.push(formats[i]);
@@ -46,27 +23,41 @@ function extractFormats(formats, type) {
   return a;
 }
 
-
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Designed for Result',  path: req.originalUrl, isMobile: is_mobile(req) });
+  res.render('index', { 
+    title: 'Designed for Result',  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req) 
+  });
 });
 
 
 router.get('/getanswers', function (req, res, next) {
-  res.render('contact', { title: h.titleHelper('Get Answers'),  path: req.originalUrl, isMobile: is_mobile(req)});
+  res.render('contact', { 
+    title: h.titleHelper('Get Answers'),  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req)
+  });
 });
 
 router.get('/test', function (req, res, next) {
-  res.render('test', { title: h.titleHelper('Test'),  path: req.originalUrl, isMobile: is_mobile(req)});
+  res.render('test', { 
+    title: h.titleHelper('Test'),  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req)
+  });
 });
 
+// Login
 
-
-
-
+router.get('/login', function(req, res, next) {
+  res.render('login', { 
+    title: h.titleHelper('Log In'),  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req)
+  });
+});
 // SpeedTest
 
 router.post('/speedtest/report', function(req, res, next ){
@@ -84,13 +75,12 @@ router.post('/speedtest/report', function(req, res, next ){
     path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
           '&screenshot=true&key='+Insight_API_KEY+'&strategy=desktop'
     }, function(r) {
-      console.log("statusCode: ", res.statusCode);
       r.on('data', function(chunk) {
          result += chunk;
       });
+      
       r.on('end', function(){
         result = JSON.parse(result);
-        console.log(result)
 
         if (result.ruleGroups != undefined ) {
           score = result.ruleGroups.SPEED.score;
@@ -115,7 +105,7 @@ router.post('/speedtest/report', function(req, res, next ){
           score: score,
           mime_type: mime,
           screenshot: screenshot,
-          isMobile: is_mobile(req) 
+          isMobile: h.is_mobile(req) 
         });
       });
    
@@ -163,10 +153,20 @@ Disallow: /admin/*");
 /* Legal Pages */
 
 router.get('/terms', function(req, res) {
-  res.render('terms', { title: h.titleHelper('Terms & Conditions'),  path: req.originalUrl, isMobile: is_mobile(req)});
+  res.render('terms', { 
+    title: h.titleHelper('Terms & Conditions'),  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req)
+  });
 });
 
 router.get('/privacy', function(req, res) {
-  res.render('privacy', { title:  h.titleHelper('Privacy Policy'),  path: req.originalUrl, isMobile: is_mobile(req)});
+  res.render('privacy', { 
+    title:  h.titleHelper('Privacy Policy'),  
+    path: req.originalUrl, 
+    isMobile: h.is_mobile(req)
+  });
 });
+
+
 module.exports = router;

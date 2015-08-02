@@ -1,17 +1,17 @@
-extends ./layout
+extends ../layout
 
 block content
-
+  -console.log(Post)
   #posts
     table.table.table-bordered.table-striped
       thead
         tr
           th Title
           th Arthur
-          th Category
+          th Categories
           th URL
           th Status
-          th Create Date
+          th Post Date
           th
       tbody
         - each post in posts
@@ -19,18 +19,16 @@ block content
             td
               | #{post.title}   
             td 
-              | #{post.arthur}      
+              | #{post.username}      
             td 
-              | #{post.category}             
+              - each category in post.categories
+                | #{category}           
             td
               | #{post.url}   
             td
-              - if (post.status)
-                | Live
-              - else
-                | Draft  
+              | #{post.status}
             td
-              | #{post.create_date}         
+              | #{post.postDate()}         
             td
               a(href="/admin/post/edit/#{post.id}") Edit
               |  | 
