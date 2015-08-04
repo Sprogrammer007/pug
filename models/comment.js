@@ -36,10 +36,7 @@ function Comment() {
   this.updatePostCommentCount = function() {
     Post.incrementCommentCount(this.post_id);
   };
-
-
 };
-
 
 Comment.findBy = function(k, v) {
   var comment;
@@ -67,7 +64,7 @@ Comment.create = function(ip, params, user_id) {
 
 Comment.all = function() {
   var cs = [];
-  _.map(dbManager.getAll('comments', null, 'comment_date', 'DESC'), function(c){
+  _.map(dbManager.all('comments', 'comment_date', 'DESC'), function(c){
     comment = dbToObject(new Comment(), c);
     cs.push(comment);
   });

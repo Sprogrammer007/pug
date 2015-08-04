@@ -100,6 +100,39 @@ var queryV1 = "CREATE TABLE IF NOT EXISTS users \
   INSERT INTO users (username, email, password, display_name, role, status) VALUES ('Steve007', 'stevey@bigtalkconsulting.com', '" + bcrypt.hashSync('nning007') + "', 'Steve', 'Admin', 1); \
 ";
 
+var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID        BIGINT, \
+    CAMPAIGN_NAME  VARCHAR(255), \
+    IMPRESSIONS    BIGINT DEFAULT 0, \
+    RESPONSE       BIGINT DEFAULT 0, \
+    AMOUNT_SPENT   BIGINT DEFAULT 0, \
+    TYPE           VARCHAR(20), \
+    STATUS         VARCHAR(60), \
+    CREATED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
+  ); \
+  CREATE TABLE IF NOT EXISTS survey_pages \
+  ( \
+    ID              SERIAL PRIMARY KEY NOT NULL, \
+    SURVEY_ID       BIGINT, \
+    TITLE           VARCHAR(255), \
+    TYPE            VARCHAR(20), \
+    POSITION        INT \
+  ); \
+  CREATE TABLE IF NOT EXISTS survey_questions \
+  ( \
+    ID              SERIAL PRIMARY KEY NOT NULL, \
+    SURVEY_ID       BIGINT, \
+    SURVEY_PAGE_ID  BIGINT, \
+    QUESTION        TEXT, \
+    ANSWERS         TEXT, \
+    LOGIC           VARCHAR(255), \
+    POSITION        INT, \
+    TYPE            VARCHAR(60), \
+    PARENT_QUESTION BIGINT \
+  ); \
+"
 
 var db = {
   init: function() {
@@ -121,7 +154,7 @@ var db = {
     });
   },
   dbMigrate: function() {
-    this.runQuery(queryV4);
+    this.runQuery(migration2);
   }
 }
 

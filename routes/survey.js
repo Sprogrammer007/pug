@@ -2,7 +2,7 @@
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
   , passport = require('passport')
-  , Post = require('../models/post');
+  , Survey = require('../models/survey');
 
 var q1 = ['How to create a business website (Step by Step)', 
                 'How to get more leads with your website', 
@@ -15,7 +15,23 @@ var q1 = ['How to create a business website (Step by Step)',
                 'How to increase engagement on your website.',
                 'How to build your website fully optimized for search engines (SEO).',
                 ]
-// Blog
+
+router.post('/create', function (req, res, next) {
+  var survey = Survey.create(req.body.survey);
+  res.redirect('/campaign/questions/' + survey.id);
+});
+
+// Question
+
+router.get('/campaign/questions/:id', function (req, res, next) {
+  var survey = Survey.findBy('id', req.params.id);
+  return res.render('survey/builder', {
+    title: h.titleHelper("Survey Builder"),
+    path: req.originalUrl,
+    isMobile: h.is_mobile(req),
+    survey: survey
+  })
+});
 
 router.get('/', function (req, res, next) {
 
@@ -27,7 +43,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-// Single Post
+// Single Survey
 
 router.get('/:url', function (req, res, next) {
 

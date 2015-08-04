@@ -1,0 +1,138 @@
+#builder {
+  background: #e9eaed;
+  font-family: helvetica, arial, sans-serif;
+  padding: 10px;
+  z-index: 1; }
+  #builder .block {
+    display: block;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #fff;
+    border: solid 1px #dcdee3; }
+    #builder .block header {
+      background-color: #f6f7f8;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 16px 12px; }
+  #builder .page {
+    width: 900px;
+    min-height: 300px;
+    margin: auto; }
+  #builder .question-list {
+    width: 35%;
+    min-height: 500px; }
+  #builder textarea {
+    resize: none; }
+  #builder span {
+    width: 100%; }
+  #builder input[type='radio'] {
+    visibility: none;
+    display: none; }
+  #builder input[type='checkbox'] {
+    visibility: none;
+    display: none; }
+  #builder .answer-types {
+    margin: 10px 0; }
+    #builder .answer-types .sub-headline {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px; }
+    #builder .answer-types .btn-wg {
+      display: inline-block; }
+  #builder .btn-wg {
+    background: #fff;
+    background: linear-gradient(to bottom, white 0, #f4f4f4 100%);
+    filter: progid:dximagetransform.microsoft.gradient(startcolorstr='$white', endcolorstr='$wild_sand',gradienttype=0 );
+    border: 1px solid;
+    border-color: #cccccc #c5c6c8 #b6b7b9;
+    color: #4e5665;
+    text-shadow: 0 1px 0 #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-sizing: content-box;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 10px;
+    padding: 6px 8px; }
+    #builder .btn-wg.selected {
+      background: #f16334;
+      color: #fff;
+      border-color: #de5d32 #bc4f2a #9a4123;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2); }
+  #builder .answers {
+    margin: 20px 0;
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5; }
+    #builder .answers .l-able {
+      text-align: right;
+      line-height: 39px;
+      color: #666;
+      font-weight: bold; }
+    #builder .answers .answer {
+      display: inline-block;
+      margin: 5px 0;
+      padding: 5px 10px;
+      font-size: 14px;
+      color: #646464;
+      font-style: italic;
+      margin-right: 5px;
+      border: 1px solid #e5e5e5; }
+      #builder .answers .answer button.close {
+        margin-left: 5px;
+        font-size: 19px; }
+        #builder .answers .answer button.close:focus {
+          outline: none; }
+    #builder .answers label {
+      display: block;
+      position: relative;
+      cursor: pointer; }
+      #builder .answers label .input-btn {
+        border-left: 1px solid #e5e5e5;
+        padding: 2px 0;
+        font-size: 12px;
+        line-height: 15px;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        width: 20%; }
+        #builder .answers label .input-btn:hover {
+          color: #4F99D4; }
+    #builder .answers input[type='text'] {
+      border: 0;
+      display: inline-block;
+      width: 80%; }
+      #builder .answers input[type='text']:focus {
+        outline: none; }
+    #builder .answers label.hcb {
+      cursor: pointer;
+      font-size: 12px;
+      color: #666;
+      margin: 10px 0; }
+      #builder .answers label.hcb input + span.cb {
+        margin-right: 22px; }
+        #builder .answers label.hcb input + span.cb:before {
+          background-image: url(/images/icons.png);
+          background-repeat: no-repeat;
+          background-size: auto;
+          background-position: 0 0px;
+          content: '';
+          display: inline-block;
+          height: 16px;
+          margin: 0 1px;
+          position: relative;
+          top: -1px;
+          vertical-align: middle;
+          width: 16px; }
+      #builder .answers label.hcb input:checked + span.cb:before {
+        background-position: -17px 0; }
+
+/*# sourceMappingURL=manager.css.map */

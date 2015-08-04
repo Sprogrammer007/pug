@@ -1,0 +1,10 @@
+extends ../layout
+block css
+  
+block content
+  .container(style='padding: 50px 0;')
+    form(action="/digest/create" method="post")
+      input.form-control(name="survey[campaign_name]")
+      button.btn.btn-default(type="submit") Submit
+
+block script

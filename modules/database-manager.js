@@ -119,12 +119,9 @@ var dbManager = {
   },
 
 
-  getAll: function(table, conditions, order, direction) {
+  all: function(table, order, direction) {
     query = query = 'SELECT * FROM ' + table; 
     client.connectSync(conString);
-    if (conditions != null) {
-      query = query + ' WHERE ' + conditions;
-    }
 
     if (order != null) {
       query = query  + ' ORDER BY ' + order + ' ' + direction + ';';
@@ -150,24 +147,13 @@ var dbManager = {
     client.connectSync(conString);
     query = 'SELECT * FROM ' + table + ' WHERE ' + property + '=$1 LIMIT 1;';
     var result = client.querySync(query, [value]);
-
     client.end();
+
     if (!result) {
       return done(null, null);
     } else {
       return done(null, result);
-  
     }
-  },
-
-  findById: function(table, id, done) {
-    this.findBy(table, 'id', id, function(err, user) {
-      if (!user) {
-        return done(null, null);
-      } else {
-        return done(null, user);
-      }
-    });
   },
 
   findAllBy: function(table, select, property, value) {

@@ -1,7 +1,7 @@
 var dbManager = require('../modules/database-manager')
-    , Serializer = require('node-serialize')
-    , bcrypt = require('bcrypt-nodejs')
-    , _ = require('underscore');
+  , Serializer = require('node-serialize')
+  , bcrypt = require('bcrypt-nodejs')
+  , _ = require('underscore');
 
 
 

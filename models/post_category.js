@@ -27,7 +27,7 @@ PostCategory.create = function(p) {
 
 PostCategory.all = function() {
   var pcs = [];
-  _.map(dbManager.getAll('post_categories', null, 'category', 'DESC'), function(p){
+  _.map(dbManager.all('post_categories', 'category', 'DESC'), function(p){
     pc = dbToObject(new PostCategory(), p);
     pcs.push(pc);
   });

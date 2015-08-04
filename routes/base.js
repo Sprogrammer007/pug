@@ -1,8 +1,7 @@
 var express = require('express')
   , h = require('../modules/application_helpers') // Helpers
   , router = express.Router()
-  , https = require('https')  
-  , app = express();
+  , https = require('https');
 
   // Insight API
 var Insight_API_KEY = process.env.INSIGHT_KEY;
@@ -49,15 +48,7 @@ router.get('/test', function (req, res, next) {
   });
 });
 
-// Login
 
-router.get('/login', function(req, res, next) {
-  res.render('login', { 
-    title: h.titleHelper('Log In'),  
-    path: req.originalUrl, 
-    isMobile: h.is_mobile(req)
-  });
-});
 // SpeedTest
 
 router.post('/speedtest/report', function(req, res, next ){

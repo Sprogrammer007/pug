@@ -7,12 +7,14 @@ var express = require('express')
   , landing = require('./landing')
   , admin = require('./admin/admin')
   , adminPost = require('./admin/post')
+  , adminPost = require('./admin/post')
   , adminComment = require('./admin/comments')
   , adminPostCat = require('./admin/post_category')
   , app = express();
 
 
 app.use('/', baseRoutes);
+app.use('/', users);
 app.use('/digest', survey);
 app.use('/order', order);
 app.use('/blog', blog);
