@@ -31,7 +31,7 @@ mailer.extend(app, {
     pass: process.env.GM_PASS
   }
 });
-
+console.log('testse')
 // if (process.env.RUN_DB === 'true') {
 db.init();
 // db.dbMigrate();
