@@ -1,10 +1,10 @@
 branch-defaults:
   master:
-    environment: Design-FR1-dev
+    environment: Default-Environment
 global:
-  application_name: Design-FR1
-  default_ec2_keyname: dfr
-  default_platform: Node.js
+  application_name: My First Elastic Beanstalk Application
+  default_ec2_keyname: null
+  default_platform: 64bit Amazon Linux 2015.03 v1.4.6 running Node.js
   default_region: us-east-1
   profile: eb-cli
   sc: git
