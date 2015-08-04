@@ -1,5 +1,5 @@
 var dbManager = require('../modules/database-manager')
-    , Comment = require('./Comment')
+    , Comment = require('./comment')
     , PostCategory = require('./post_category')
     , moment = require('moment')
     , Serializer = require('node-serialize')

@@ -1,6 +1,6 @@
 var dbManager = require('../modules/database-manager')
   , moment = require('moment')
-  , Post = require('./Post')
+  , Post = require('./post')
   , _ = require('underscore');
 
 function dbToObject(o, db) {
