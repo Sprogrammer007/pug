@@ -1,7 +1,7 @@
 var passport = require('passport')
   , util = require('util')
   , flash = require('connect-flash')
-  , dbManager = require('./database-manager')
+  , User = require('../models/user')
   , bcrypt = require('bcrypt-nodejs')
   , LocalStrategy = require('passport-local').Strategy;
 
@@ -11,22 +11,17 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  dbManager.findById('users', id, function (err, user) {
-    done(err, user[0]);
-  });
+  return done(null, User.findBy('id', id))
 });
 
 passport.use(new LocalStrategy({passReqToCallback: true },
   function(req, username, password, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
- 
-      dbManager.findBy('users', 'username', username, function(err, user) {
-        if (err) { return done(err); }
-        if (!user[0]) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (!bcrypt.compareSync(password, user[0].password)) { return done(null, false, { message: 'Invalid password' }); }
-        return done(null, user[0]);
-      })
+      var user = User.findBy('username', username);
+      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+      if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
+      return done(null, user);
     });
   }
 ));

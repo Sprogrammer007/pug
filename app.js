@@ -31,10 +31,10 @@ mailer.extend(app, {
     pass: process.env.GM_PASS
   }
 });
-console.log('testse')
+
 // if (process.env.RUN_DB === 'true') {
-db.init();
-// db.dbMigrate();
+// db.init();
+db.dbMigrate();
 // }
 
 app.locals.default_description = "We love beautiful designs too, but beauty alone doesn\'t always deliver result for your business. Designed for Result will help you get clear on the objecti";

@@ -16,7 +16,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/dashboard', function (req, res, next) {
+    console.log(req.user)
   if (req.user && req.user.role === "Admin") {
+    console.log('teste')
     return res.render('admin/dashboard', {
        title: h.titleHelper('Dashboard'),
        path: req.path,

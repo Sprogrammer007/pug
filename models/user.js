@@ -21,6 +21,8 @@ function User () {
   }
 }
 
+
+
 User.findBy = function(k, v) {
   var user;
   dbManager.findBy('users', k, v, function(error, result) {
