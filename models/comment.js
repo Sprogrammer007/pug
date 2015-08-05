@@ -74,24 +74,24 @@ Comment.all = function() {
 function commentTemplate (comment) {
   var html = '<div id="comment-' + comment.id + '" class="comment-wrapper" >' +
     ((comment.comment_parent != null) ? "<span class='arrow-up'></span>" : "") +
-    "<div class='comment-avatar pull-left'>" +
-      "<div class='avatar'>"  +
+    "<div class='row'>" +
+      "<div class='comment-avatar'>" +
         "<img src='//s3.amazonaws.com/designforresult/post-default-images/default_avatar.jpg' />"  +
       "</div>" +
-    "</div>" +
-    "<div class='comment-body' >" + 
-      " <header class='clearfix' >" + 
-        " <span class='comment-author pull-left'>" + comment.author_name + "</span>" +
-        " <span class='comment-date pull-right'>" + formatDate(comment.comment_date) + "</span>" +
-      "</header>" +
-      " <div class='comment-content' >" + comment.content +
-      " </div>" + 
-      " <footer>" +
+      "<div class='comment-body' >" + 
+        " <header class='clearfix' >" + 
+          " <span class='comment-author pull-left'>" + comment.author_name + "</span>" +
+          " <span class='comment-date pull-right'>" + formatDate(comment.comment_date) + "</span>" +
+        "</header>" +
+        " <div class='comment-content' >" + comment.content +
+        " </div>" + 
+        " <footer>" +
 
-        "<span><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>0</span></span>" +
-        "<span><i class='fa fa-thumbs-o-down'></i>  <span class='like-count'>0</span></span>" +
-        "<span class='comment-reply'><i class='fa fa-comment-o'></i>   Reply</span>" +
-      " </footer>" + 
+          "<span><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>0</span></span>" +
+          "<span><i class='fa fa-thumbs-o-down'></i>  <span class='like-count'>0</span></span>" +
+          "<span class='comment-reply'><i class='fa fa-comment-o'></i>   Reply</span>" +
+        " </footer>" + 
+      "</div>" + 
     "</div>" + 
   "</div>";
   return html;

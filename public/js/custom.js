@@ -136,7 +136,6 @@
       }
     });
 
-
     $('.facebook').sharrre({
       share: {
         facebook: true

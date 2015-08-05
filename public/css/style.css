@@ -103,7 +103,7 @@ hr.divider2 {
   width: 850px;
 }
 
-.container-800 {
+.container800 {
   width: 800px;
   margin: auto;
 }
@@ -114,10 +114,32 @@ hr.divider2 {
   color:  #666;
   font-size: 18px;
 }
+
 .btn-download:hover {
   color: #f16334;
   border-color:  #f16334;
  }
+
+.btn-default {
+  border: 1px solid;
+  border-color: #cccccc #c5c6c8 #b6b7b9;
+  color: #4e5665;
+  text-shadow: 0 1px 0 #fff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-sizing: content-box;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 10px;
+  padding: 6px 8px; 
+}
 
 /** 2.0 - Header **/
 
@@ -132,16 +154,13 @@ header .navbar {
   border: none;
 }
 
-header .navbar-header {
-  width: 10%;
-}
+
 
 header .logo {
   margin: 10px auto;
   display: block;
+  padding: 0 50px;
   height: 40px;
-  width: 50px;
-  max-height: 40px;
 }
 
 header .logo img { 
@@ -152,7 +171,7 @@ header .navbar-nav li a {
   color: #5A5959;
   font-size: 15px;
   font-weight: 500;
-  padding: 20px 50px;
+  padding: 20px 30px;
 }
 
 header .navbar-toggle .icon-bar {
@@ -1020,8 +1039,9 @@ header a.btn:hover, a.btn:focus, a.btn.focus {
 
 .optin-box {
   border-top: 1px solid rgba(211, 211, 211, 1);
+  border-bottom: 1px solid rgba(211, 211, 211, 1);
   margin-bottom: 30px;
-  padding: 30px;
+  padding: 20px;
 }
 
 .optin-box .optin-title {
@@ -1035,7 +1055,6 @@ header a.btn:hover, a.btn:focus, a.btn.focus {
   font-size: 18px;
   line-height: 25px;
   font-family: 'Oswald';
-  margin: 15px;
 }
 
 .optin-box .optin-image img {
@@ -1102,25 +1121,26 @@ header a.btn:hover, a.btn:focus, a.btn.focus {
   border: 1px solid #DBE3E3;
   margin: 35px 0px;
   padding: 20px;
-  display: table;
   width: 100%;
 }
 
-.comment-avatar {
-  margin-right: 20px;
+.comment-avatar,
+.comment-body {
+  display: inline-block;
+  float: left;
 }
 
-.comment-body,
 .comment-avatar {
-  display: table-cell;
-  vertical-align: top;
+  width: 20%;
+  margin-right: 10px;
 }
+
 
 .comment-body {
-  width: 100%;
+  width: 75%;
 }
-.comment-wrapper .avatar img {
-  width: 80px;
+.comment-avatar img {
+  width: 100%;
   border-radius: 50px;
 }
 
@@ -1134,6 +1154,10 @@ header a.btn:hover, a.btn:focus, a.btn.focus {
 .comment-body footer {
   display: block;
   width: 100%;
+}
+
+.comment-content p {
+  word-wrap: break-word;
 }
 
 .comment-body header {
@@ -1200,8 +1224,13 @@ header a.btn:hover, a.btn:focus, a.btn.focus {
 
 #comment-pop .btn-comment,
 #comments .btn-comment {
-  background-color: #78D6A5;
+  background: #20d86a;
+  background: linear-gradient(to bottom, #2bd184, #1cbf5b 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startcolorstr='#2bd184', endcolorstr='#1cbf5b',gradienttype=0 );
+  border: 1px solid;
   color: #FFF;
+  text-shadow: 0 1px 0 #66BE93;
+  border-color: #2bd184 #1ED566 #1cbf5b;
 }
 
 #comment-pop .modal-body p.reply-title {

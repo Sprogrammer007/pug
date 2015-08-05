@@ -1,18 +1,18 @@
 
 
 main.container
-  section#comments.post-comments-wrapper.container-800       
+  section#comments.post-comments-wrapper.container800       
     .row.post-comments-header
       .col-lg-12
         span Comments
         span.comment-count #{post.comment_count || '0'}
-        .pull-right.btn.btn-comment Add Comment
+        .pull-right.btn-default.btn.btn-comment Add Comment
     .row.post-comments-list
       .col-lg-12
         ul.comment-list.clearfix
           !{post.getComments()}
     - if (post.comment_count > 1)
-      .bottom.btn.btn-comment Add Comment
+      .bottom.btn.btn-default.btn-comment Add Comment
 
 
   #comment-pop.modal.fade
@@ -27,10 +27,10 @@ main.container
             input(type="hidden" name="comments[post_id]" value="#{post.id}")
             input(type="hidden" name="comments[comment_type]" value="Master")
 
-            .row.form-group
-              .col-lg-6
+            .row
+              .col-lg-6.col-sm-12.col-xs-12.form-group
                 input.require-field.form-control(type='text', name='comments[author_name]', placeholder='Your Name' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your name.")
-              .col-lg-6
+              .col-lg-6.col-sm-12.col-xs-12.form-group
                 input.require-field.email.form-control(type='email', name='comments[author_email]', placeholder='Your Email' data-toggle="tooltip" data-trigger="manual" data-placement="bottom" title="Enter your Email.")
             .form-group
               input.form-control(type='text', name='comments[author_url]', placeholder='Your Website')

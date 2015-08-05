@@ -1,9 +1,16 @@
 
 @media(max-width:767px){
 
-  .container.csm {
+  .container.csm,
+  .container800 {
     width: 100%;
   }
+
+  header .logo {
+    height: 30px;
+    padding: 0 20px;
+  }
+
 
   .wrapper_orange { 
     padding: 30px 0;
@@ -117,9 +124,19 @@
     margin: 15px 0;
   }
   
+  .single-header .follows {
+    top: -10px;
+  }
+
+  .follows li a {
+    width: 20px;
+    height: 20px;
+  }
+
+
   .main-content-wrapper h1 { 
-    font-size: 30px;
-    line-height: 40px;
+    font-size: 19px;
+    line-height: 22px;
   }
 
   .post-title {
@@ -132,9 +149,10 @@
   }
     
   #social .box, #post-footer-share .box { 
-    width: 31%;
+    padding: 3px 6px;
+    width: 23%;
     float: left;
-    margin-right: 5px;
+    margin-right: 3px;
   }
 
   #single .share-wrapper {
@@ -149,11 +167,36 @@
 
   #single .btn-optin {
     width: 100%;
+    padding: 12px 15px;
   }
 
-  #social .box {
-    padding-top: 5px;
-    padding-bottom: 5px;
+  .optin-box {
+    margin-bottom: 20px;
+    padding: 5px;
+  }
+
+  .optin-box .optin-title {
+    font-size: 15px;
+    line-height: 19px;
+
+  }
+
+  .optin-box .optin-description { 
+    font-size: 10px;
+    line-height: 15px;
+  }
+
+  .post-comments-header span {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .comment-body footer span {
+    margin-right: 15px;
+  }
+
+  .comment-body footer i { 
+    font-size: 18px;
   }
 
   #poptin .modal-dialog {
@@ -217,32 +260,35 @@
 
   #thankyou .btn-download {
     width: 100%;
-
   }
 
-  footer .footer-logo {
+  #comment-pop .modal-dialog {
+    width: auto;
+  }
+
+  #footer .footer-logo {
     text-align: center;
   }
 
-  footer .footer-legal,
-  footer .useful-links {
+  #footer .footer-legal,
+  #footer .useful-links {
     font-size: 0.8em;
   }
 
-  footer .footer-social {
+  #footer .footer-social {
     padding: 10px 0;
   }
 
-  footer .footer-social span {
+  #footer .footer-social span {
     display: block;
     text-align: center;
   }
 
-  footer .footer-social ul {
+  #footer .footer-social ul {
     text-align: center;
   }
 
-  footer .footer-social ul li {
+  #footer .footer-social ul li {
     margin-right: 5px;
   }
 
@@ -269,6 +315,7 @@
     font-size: 18px;
     width: 82%;
   }
+
 
   .single-header { 
     margin: 15px 0;
@@ -302,12 +349,12 @@
   }
 
   
-  footer .footer-logo {
+  #footer .footer-logo {
     text-align: center;
   }
 
   footer .footer-legal,
-  footer .useful-links {
+  #footer .useful-links {
     font-size: 1em;
   }
 
@@ -381,30 +428,6 @@
     #poptin .modal-content {
       padding: 30px 60px 60px;
     }
-    .optin-title span.l10 { 
-      font-size: 5.7em;
-      line-height: 86px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 4.5em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 3.5em;
-      line-height: 55px;
-    }
-    .optin-title span.l18 { 
-      font-size: 4.0em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 3em;
-      line-height: 53px;
-    }
-
 
     .btn-yes,
     .btn-no { 
@@ -445,31 +468,6 @@
       font-size: 14px;
     }
 
-    .optin-title span.l10 { 
-      font-size: 6.7em;
-      line-height: 106px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 3.5em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 2.2em;
-      line-height: 35px;
-    }
-
-    .optin-title span.l18 { 
-      font-size: 3.1em;
-      line-height: 40px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 2.3em;
-      line-height: 43px;
-    }
-
 
     .btn-yes,
     .btn-no { 
@@ -490,29 +488,6 @@
       padding: 60px 87px;
     }
 
-    .optin-title span.l10 { 
-      font-size: 5.7em;
-      line-height: 86px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 4.5em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 3.5em;
-      line-height: 55px;
-    }
-    .optin-title span.l18 { 
-      font-size: 4.0em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 3em;
-      line-height: 53px;
-    }
 
     .btn-yes,
     .btn-no { 
@@ -572,30 +547,7 @@
     .presents {
       font-size: 18px;
     }
-    .optin-title span.l10 { 
-      font-size: 5.7em;
-      line-height: 86px;
-    }
 
-    .optin-title span.l15 { 
-      font-size: 4.5em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 3.5em;
-      line-height: 55px;
-    }
-
-    .optin-title span.l18 { 
-      font-size: 4.0em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 3em;
-      line-height: 53px;
-    }
 
 
     .btn-yes,
@@ -799,30 +751,6 @@
       margin: 0 5px 0 0;
       font: 900 62px/77px "Oswald",sans-serif;
     }
-    .optin-title span.l10 { 
-      font-size: 3.8em;
-      line-height: 66px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 2.7em;
-      line-height: 55px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 2.3em;
-      line-height: 35px;
-    }
-
-    .optin-title span.l18 { 
-      font-size: 2.4em;
-      line-height: 35px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 1.8em;
-      line-height: 43px;
-    }
 
     .btn-poptin span {
       font: 300 10px/18px "Oswald";
@@ -852,32 +780,6 @@
     .presents {
       font-size: 18px;
     }
-
-    .optin-title span.l10 { 
-      font-size: 6.7em;
-      line-height: 106px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 4.2em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 2.0em;
-      line-height: 35px;
-    }
-
-    .optin-title span.l18 { 
-      font-size: 3.7em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 2.7em;
-      line-height: 53px;
-    }
-
 
     .btn-yes,
     .btn-no { 
@@ -922,31 +824,6 @@
     }
     .presents {
       font-size: 18px;
-    }
-
-   .optin-title span.l10 { 
-      font-size: 6.7em;
-      line-height: 106px;
-    }
-
-    .optin-title span.l15 { 
-      font-size: 4.2em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l16 { 
-      font-size: 2.0em;
-      line-height: 35px;
-    }
-
-    .optin-title span.l18 { 
-      font-size: 3.7em;
-      line-height: 60px;
-    }
-
-    .optin-title span.l24 { 
-      font-size: 2.7em;
-      line-height: 53px;
     }
 
     .btn-yes,

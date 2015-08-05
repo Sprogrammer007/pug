@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-  -console.log(Post)
   #posts
     table.table.table-bordered.table-striped
       thead
@@ -19,7 +18,7 @@ block content
             td
               | #{post.title}   
             td 
-              | #{post.username}      
+              | #{post.author}      
             td 
               - each category in post.categories
                 | #{category}           

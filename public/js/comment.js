@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var commentEditor;
+    
     //Comment Editor
     if ($('#CommentEditor').length != 0) {
       commentEditor = CKEDITOR.replace( 'CommentEditor', {
@@ -10,7 +11,7 @@ $(document).ready(function() {
         removePlugins : 'elementspath'  
       });
 
-      commentEditor.on( 'change', function( evt ) {
+      commentEditor.on('change', function( evt ) {
         $("textarea[name='comments[content]']").val(evt.editor.getData());
       });
     }
