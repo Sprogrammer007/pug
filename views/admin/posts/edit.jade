@@ -9,9 +9,13 @@ block content
         input.form-control(type='text', name='post[title]' value="#{post.title}")      
       .form-group
         label Categories
-        select.form-control(name='categories')
-          - each category in categories
-            option(selected=post.categories.indexOf(category.category) > -1 value=category.id) #{category.category}
+        - each category in categories
+          - if (post.categories.indexOf(category.category) > -1)
+            input(type="checkbox" name="post[categories]" value=category.id checked)
+            | #{category.category}
+          - else
+            input(type="checkbox" name="post[categories]" value=category.id) 
+            | #{category.category}
          
       .form-group
         label Content
