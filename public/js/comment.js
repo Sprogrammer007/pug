@@ -81,7 +81,7 @@ $(document).ready(function() {
           $('.btn-comment').remove();
           setTimeout(function() {
             commentPop('hide');
-          })
+          }, 2000);
         }else{
           $('.error').show();
         }

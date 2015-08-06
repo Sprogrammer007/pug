@@ -1,3 +1,35 @@
+#main-content input[type='checkbox'],
+#main-content input[type='radio'] {
+  display: none;
+  visibility: hidden;
+}
+#main-content label.hcb {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#main-content .categories {
+  display: block;
+  width: 100%;
+}
+#main-content label.hcb input + span.cb {
+  margin-right: 2px; }
+  #main-content label.hcb input + span.cb:before {
+    background-image: url(/images/icons.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 0 0px;
+    content: '';
+    display: inline-block;
+    height: 16px;
+    margin: 0 1px;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    width: 16px; }
+  #main-content  label.hcb input:checked + span.cb:before {
+    background-position: -17px 0; }
+
 #main-content {
   display: block;
   margin-left: 240px;

@@ -1,16 +1,16 @@
-var dbManager = require('../modules/database-manager')
+var DBManager = require('../modules/database-manager')
+  , db = new DBManager()
   , moment = require('moment')
-  , Post = require('./post')
   , _ = require('underscore');
 
-function dbToObject(o, db) {
+var table = 'comments';
 
+function dbToObject(o, db) {
   for (var key in db) {  
     if (db.hasOwnProperty(key)) {
       o[key] = db[key];
     }
   }
-
   return o;
 }
 
@@ -25,31 +25,39 @@ function Comment() {
     return true;
   };
 
-  this.destroy = function() {
-    dbManager.destroy('comments', 'id', this.id);
+  this.destroy = function(callback) {
+    db.destroy(table, 'id', this.id, function(success) {
+      if (!callback) { return success }; 
+      return callback(success)
+    });
   };
 
-  this.update = function(params) {
-    dbManager.update('comments', params, this.id)
+  this.update = function(params, callback) {
+    db.update(table, params, this.id, function(comment) {
+      if (!callback) { return comment }; 
+      return callback(comment)
+    });
   };
 
   this.updatePostCommentCount = function() {
-    Post.incrementCommentCount(this.post_id);
+    var query = "UPDATE posts SET comment_count = comment_count + 1 WHERE id=" + this.post_id + ";";
+    db.rawQuery(query, function(result) {
+      return(result ? true : false);
+    });
   };
 };
 
-Comment.findBy = function(k, v) {
-  var comment;
-  dbManager.findBy('comments', k, v, function(error, result) {
-    comment = result[0];
+Comment.findBy = function(k, v, callback) {
+  db.findBy(table, null, k, v, function(comment) {
+    if (comment[0]) {
+      return callback(dbToObject(new Comment(), comment[0]));
+    } else {
+      return callback(false);
+    }
   });
-  comment = dbToObject(new Comment(), comment);
-
-  return comment;
 }
 
-Comment.create = function(ip, params, user_id) {
-
+Comment.create = function(ip, params, user_id, callback) {
   if (params['content'] === '' ) {return false};
   params['approved'] = 'Pending';
   if (params['comment_parent']) {params['comment_parent'] = parseInt(params.comment_parent)};
@@ -57,20 +65,26 @@ Comment.create = function(ip, params, user_id) {
   if (user_id) {
     params['user_id'] = user_id;
   }
-
-  var comment = dbToObject(new Comment(), dbManager.create('comments', params, null));
-  return comment;
-}
-
-Comment.all = function() {
-  var cs = [];
-  _.map(dbManager.all('comments', 'comment_date', 'DESC'), function(c){
-    comment = dbToObject(new Comment(), c);
-    cs.push(comment);
+  db.create('comments', params, null, function(comment){;
+    if (comment) {
+      return callback(dbToObject(new Comment(), comment));
+    } else {
+      return callback(false);
+    }
   });
-  return cs;
+};
+
+Comment.all = function(callback) {
+  db.all(table, 'comment_date', 'DESC', function(cs) {
+    var a = [];
+    _.map(cs, function(c) {
+      a.push(dbToObject(new Comment(), c));
+    });
+    return callback(a);
+  });
 }
 
+// Comments template
 function commentTemplate (comment) {
   var html = '<div id="comment-' + comment.id + '" class="comment-wrapper" >' +
     ((comment.comment_parent != null) ? "<span class='arrow-up'></span>" : "") +
@@ -97,8 +111,7 @@ function commentTemplate (comment) {
   return html;
 }
 
-
-
+// Comments renderer
 function renderComment(depth, replies, results) {
   var html = '';
 
@@ -124,15 +137,16 @@ function renderComment(depth, replies, results) {
   return html;
 }
 
-
-Comment.render = function(k, v) {
-  var query = "SELECT * FROM comments WHERE " + k + "=" + v + " AND approved='Approved' ORDER BY comment_date DESC;" 
-
-  var results = dbManager.rawQuery(query);  
-  if (_.isEmpty(results)) {return false};
-  var a = _.groupBy(results, function(r){return r.comment_parent === null; });
-  return renderComment(0, a['true'], a['false']);
-
+// Render the comments
+Comment.render = function(k, v, callback) {
+  db.where(table, k + "=" + v + " AND approved='Approved'", null, 'comment_date', 'DESC', function(comments){
+    if (_.isEmpty(comments)) {
+      return callback(false);
+    } else {
+      var a = _.groupBy(comments, function(c){return c.comment_parent === null; });
+      return callback(renderComment(0, a['true'], a['false']));
+    }
+  });  
 }
 
 module.exports = Comment;

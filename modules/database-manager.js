@@ -1,187 +1,173 @@
-var Client = require('pg-native')
+var pg = require('pg')
   , Serializer = require('node-serialize')
   , moment = require('moment')
   , _ = require('underscore');
 
 var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_clash';
 
-var client = new Client();
 var query = '';
 
-
-
-function createQuery(table, v, r) {
-  var qHead = "INSERT INTO ";
-  var columns = [];
-  var vHolder = [];
-  var values = [];
-  var returns = (r || "*")
-  var count = 0;
-  for (var h in v) { 
-    if (v.hasOwnProperty(h)) {
-      columns.push(h);
-      count++
-      vHolder.push("$" + count);
-      values.push(v[h]);
-    }
-  }
-
-  query =  qHead + table + " (" + columns.join(", ") + ") " + "VALUES (" + vHolder.join(", ") + ") RETURNING " + returns + ";";
-  client.connectSync(conString);
-
-  var result = client.querySync(query, values);
-  client.end();
-
-  return result[0]
-}
-
-function createMultiQuery(t, p, v, id) {
-
-  var qHead = "INSERT INTO ";
-  var values = [];
-  for (var h in v) {  
-    if (v.hasOwnProperty(h) && v[h] != '') {
-      if (v[h].constructor == Object){
-        v[h] = Serializer.serialize(v[h]);
+function DBManager() {
+  this.rawQuery = function(query, callback) {
+    runQuery(query, null, function(err, result) {
+      if (callback) {
+        return callback((err ? false : result));
+      } else {
+        return (err ? false : result);
       }
-      values.push('(' + id + ", '" + h + "', '" + v[h] + "')");
-    }
-  }
-  if (values.length === 0) { return };
-  query =  qHead + t + " (" + p.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
-  client.connectSync(conString);
-  client.querySync(query);
-  client.end();
-}
+    });
+  };
 
-function createRelationQuery(t, p, v, id) {
-  var qHead = "INSERT INTO ";
-  var values = [];
-  // Fix single category issue of not being an array.
-  v = [].concat.apply([], [v]);
+  this.create = function(table, properties, returns, callback) {
+    var columns = _.allKeys(properties)
+      , values = _.values(properties)
+      , vHolder = _.map(values, function(v, i) { i++; return ("$" + i); });
+    returns = (returns || "*");
 
-  v.forEach(function(e, i, a) {
-    values.push('(' + id + ', ' + e + ')');
-  });
+    query =  "INSERT INTO " + table + " (" + columns.join(", ") + ") " + "VALUES (" + vHolder.join(", ") + ") RETURNING " + returns + ";";
+    runQuery(query, values, function(err, result) {
+      return callback((err ? false : result[0]));
+    });
+  };
 
-  query =  qHead + t + " (" + p.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
-  client.connectSync(conString);
-  client.querySync(query);
-  client.end();
-}
+  this.update = function(table, properties, id, callback) {
+    var values = _.values(properties)
+      , columns = _.map(_.allKeys(properties), function(v, i) {i++; return (v + "=$" + i);});
 
-function updateQuery(table, properties, id) {
+    query =  "UPDATE " + table + " SET " + columns.join(", ")  + ' WHERE id=' + id + " RETURNING *;"; 
+    runQuery(query, values, function(err, result) {
+      if (_.isFunction(callback)) {
+        callback(result);
+      } else {
+        return result;
+      }
+    });
+  };
 
-  var qHead = "UPDATE ";
-  var columns = [];
-  var values = [];
-  var count = 0;
-  for (var h in properties) { 
-    
-    if (properties.hasOwnProperty(h)) {
-      count++
-      columns.push(h + "=$" + count );
-      values.push(properties[h]);
-    }
-  }
-  query =  qHead + table + " SET " + columns.join(", ")  + ' WHERE id=' + id + " RETURNING *;"; 
-  client.connectSync(conString);
-  var result = client.querySync(query, values);
-  client.end();
-};
+  this.destroy = function(table, p, value, callback) {
+    query = 'DELETE FROM ' + table + ' WHERE ' + p + '=$1'
+    runQuery(query, _.flatten([value]), function(err, result) {
+      if (callback) {
+        return callback((err ? false : true));
+      } else {
+        return (err ? false : true);
+      }
+    });
+  };
 
+  this.where = function(table, property, values, order, direction, callback) {
+    var whereQuery = _.isString(property) ? property : (property + '=$1')
+    query = 'SELECT * FROM ' + table + ' WHERE ' + whereQuery + ' ORDER BY ' + order + ' ' + direction + ';';
 
-function countQuery(table, item, conditions) {
-  c = _.map(conditions, function(v, k) {
-    if (_.isString(v)) {
-      return k + "='" + v + "'";
-    } else {
-      return k + "=" + v;
-    }
-  });
+    runQuery(query, values, function(err, results) {
+      return callback((err ?  false : results));
+    });
+  };
 
-  client.connectSync(conString);
-  query = "SELECT COUNT(" + item + ") FROM " + table + " WHERE " + c.join(" AND ") + ";";
-  var result = client.querySync(query);
+  this.findBy = function(table, select, property, value, callback) {
+    select = select || "*";
+    query = 'SELECT ' + select + ' FROM ' + table + ' WHERE ' + property + '=$1;';
+    runQuery(query, _.flatten([value]), function(err, result) {
+      return callback(err ? false : result);
+    });
+  };
 
-  client.end();
-  return result[0].count;
-};
-
-
-var dbManager = {
+  this.all = function(table, order, direction, callback) {
+    query = 'SELECT * FROM ' + table; 
   
-  rawQuery: function(q) {
-    client.connectSync(conString);
-    var results = client.querySync(q);
-    client.end();
-    return results
-  },
-
-
-  all: function(table, order, direction) {
-    query = query = 'SELECT * FROM ' + table; 
-    client.connectSync(conString);
-
     if (order != null) {
       query = query  + ' ORDER BY ' + order + ' ' + direction + ';';
     }
-    var results = client.querySync(query);
-    client.end();
-    return results
-  },
+    runQuery(query, null, function(err, result) {
+      return callback((err ? false : result));
+    });
+  };
 
-  create: function(table, properties, returns) {
-    return createQuery(table, properties, returns);
-  },
+  this.manyToMany = function(table, properties, values, id, callback) {
+    var values = _.map(_.flatten([values]), function(e) {return ('(' + id + ', ' + e + ')');});
 
-  createMultiple: function(table, properties, values, id) {
-    createMultiQuery(table, properties, values, id);
-  },  
+    query = "INSERT INTO " + table + " (" + properties.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
 
-  createRelation: function(table, properties, values, id) {
-    createRelationQuery(table, properties, values, id);
-  },
+    runQuery(query, null, function(err, result) {
+      if (callback) {
+        return callback((err ? false : true));
+      } else {
+        return (err ? false : true);
+      }
+    });
+  };
 
-  findBy: function(table, property, value, done) {
-    client.connectSync(conString);
-    query = 'SELECT * FROM ' + table + ' WHERE ' + property + '=$1 LIMIT 1;';
-    var result = client.querySync(query, [value]);
-    client.end();
+  this.createMulti = function(table, columns, values, id, callback) {
+    var values =  _.map(values, function(v, k) {
+      if (values.hasOwnProperty(k) && values[k] != '') {
+         v = (values[k].constructor == Object) ? Serializer.serialize(values[k]) : values[k];
+         return ('(' + id + ", '" + k + "', '" + v + "')");
+      }
+    });
 
-    if (!result) {
-      return done(null, null);
-    } else {
-      return done(null, result);
+    if (values.length === 0) { return(callback? callback(false) : false) };
+    query =  "INSERT INTO " + table + " (" + columns.join(", ") + ") " + "VALUES " + values.join(", ") + ";";
+    runQuery(query, null, function(err, result) {
+      if (callback) {
+        return callback((err ? false : true));
+      } else {
+        return (err ? false : true);
+      }
+    });
+  };
+
+  this.count = function(table, item, conditions, callback) {
+    var c = _.map(conditions, function(v, k) {
+      if (_.isString(v)) {
+        return k + "='" + v + "'";
+      } else {
+        return k + "=" + v;
+      }
+    });
+
+    query = "SELECT COUNT(" + item + ") FROM " + table + " WHERE " + c.join(" AND ") + ";";
+
+    runQuery(query, null, function(err, result) {
+
+      return callback((err ? false : result[0].count));
+    })
+  };
+
+  function runQuery(query, values, callback) {
+    values = (values != null) ? (_.isArray(values) ? values : [values]) : values;
+    console.log(Object.keys(pg.pools.all));
+    console.log("Query being run is [%s]", query);
+    pg.connect(conString, function(err, client, done) {
+      // handle an error from the connection
+      if(handleError(err, client, done)){ return callback(err) };
+
+      client.query(query, values, function(err, result) { 
+        if(handleError(err, client, done)){ return callback(err) };
+        done();
+        return callback(false, result.rows);
+      });
+
+    });
+  };
+
+  function handleError(err, client, done) {
+    // no error occurred, continue with the request
+    if(!err) return false;
+
+    // An error occurred, remove the client from the connection pool.
+    // A truthy value passed to done will remove the connection from the pool
+    // instead of simply returning it to be reused.
+    // In this case, if we have successfully received a client (truthy)
+    // then it will be removed from the pool.
+    if(client){
+      done(client);
     }
-  },
-
-  findAllBy: function(table, select, property, value) {
-    client.connectSync(conString);
-    select = select || "*";
-    query = 'SELECT ' + (select || "*") + ' FROM ' + table + ' WHERE ' + property + '=$1;';
-    var result = client.querySync(query, [value]);
-    return result;
-  },
-
-  update: function(table, values, id) {
-    updateQuery(table, values, id);
-  },
-
-  count: function(table, item, conditions) {
-    return countQuery(table, item, conditions);
-  },
-
-  destroy: function(table, p, v) {
-    client.connectSync(conString);
-    query = 'DELETE FROM ' + table + ' WHERE ' + p + '=$1'
-    client.querySync(query, [v]);
-    client.end();
-  },
-
+    console.log('An Error has occurred');
+    console.log(err);
+    return true;
+  };
 }
 
 
-
-module.exports = dbManager;
+module.exports = DBManager;
 

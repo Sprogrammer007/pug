@@ -9,14 +9,15 @@ block content
         input.form-control(type='text', name='post[title]' value="#{post.title}")      
       .form-group
         label Categories
-        - each category in categories
-          - if (post.categories.indexOf(category.category) > -1)
-            input(type="checkbox" name="post[categories]" value=category.id checked)
-            | #{category.category}
-          - else
-            input(type="checkbox" name="post[categories]" value=category.id) 
-            | #{category.category}
-         
+        .categories
+          - each category in categories
+           label.hcb(for="checkbox-" + category.id)
+             - if (post.categories.indexOf(category.category) > -1)
+                input(type="checkbox" name="post[categories]" id="checkbox-" + category.id value=category.id checked)
+              - else
+                input(type="checkbox" name="post[categories]" id="checkbox-" + category.id value=category.id) 
+              span.cb
+              | #{category.category}
       .form-group
         label Content
         textarea#CKEditor.form-control(name='post[content]' rows="10")

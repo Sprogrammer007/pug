@@ -1,9 +1,10 @@
-var dbManager = require('../modules/database-manager')
-    , Serializer = require('node-serialize')
-    , bcrypt = require('bcrypt-nodejs')
-    , _ = require('underscore');
+var DBManager = require('../modules/database-manager')
+  , db = new DBManager()
+  , Serializer = require('node-serialize')
+  , bcrypt = require('bcrypt-nodejs')
+  , _ = require('underscore');
 
-
+var table = 'post_categories';
 
 function dbToObject(o, db) {
   for (var key in db) {  
@@ -11,32 +12,32 @@ function dbToObject(o, db) {
       o[key] = db[key];
     }
   }
-
   return o;
 }
 
 function PostCategory () {
   this.update = function(params) {
-    return dbToObject(this, dbManager.update('post_categories', params, this.id));
+    db.update(table, params, this.id, function(pc) {
+      return dbToObject(this, pc);
+    }); 
   }
-}
-
-PostCategory.create = function(p) {
-  return dbToObject(new PostCategory(), dbManager.create('post_categories', p, null));
 };
 
-PostCategory.all = function() {
-  var pcs = [];
-  _.map(dbManager.all('post_categories', 'category', 'DESC'), function(p){
-    pc = dbToObject(new PostCategory(), p);
-    pcs.push(pc);
+PostCategory.create = function(p, callback) {
+  db.create(table, p, null, function(pc) {
+    return callback(dbToObject(new PostCategory(), pc));
   });
-  return pcs;
 };
 
-PostCategory.update = function(id, categories) {
-  dbManager.destroy('post_category_relationships', 'post_id', id);
-  dbManager.createRelation('post_category_relationships', ['post_id', 'category_id'], categories, id);
-}
+PostCategory.all = function(callback) {
+
+  db.all(table, 'category', 'DESC', function(pcs) {
+    var a = [];
+    _.map(pcs, function(p) {
+      a.push(dbToObject(new PostCategory(), p));
+    });
+    return callback(a);
+  });
+};
 
 module.exports = PostCategory;

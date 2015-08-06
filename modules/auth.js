@@ -11,17 +11,21 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  return done(null, User.findBy('id', id))
+  User.findBy('id', id, function(user){
+    return done(null, user)
+  });
+
 });
 
 passport.use(new LocalStrategy({passReqToCallback: true },
   function(req, username, password, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      var user = User.findBy('username', username);
-      if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-      if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
-      return done(null, user);
+      User.findBy('username', username, function(user) {
+        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+        if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { message: 'Invalid password' }); }
+        return done(null, user);
+      });
     });
   }
 ));

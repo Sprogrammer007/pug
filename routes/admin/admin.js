@@ -16,9 +16,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/dashboard', function (req, res, next) {
-    console.log(req.user)
   if (req.user && req.user.role === "Admin") {
-    console.log('teste')
     return res.render('admin/dashboard', {
        title: h.titleHelper('Dashboard'),
        path: req.path,
@@ -43,8 +41,9 @@ router.get('/register', function (req, res, next) {
 });
 
 router.post('/register', function (req, res, next) {
-  User.create(req.body.admin, 'admin');
-  res.redirect('/admin/login');
+  User.create(req.body.admin, 'admin', function(user) {
+    res.redirect('/admin/login');
+  });
 });
 
 // Login page

@@ -1,4 +1,3 @@
-
 var express = require('express')
   , h = require('../../modules/application_helpers') // Helpers
   , router = express.Router()
@@ -7,13 +6,14 @@ var express = require('express')
 // List Category
 router.get('/categories', function (req, res, next) { 
   if (req.user && req.user.role === "Admin") {
-    var categories = PostCategory.all();    
-
-    return res.render('admin/categories/index', {
-      title: h.titleHelper('Dashboard'),  
-      path: req.path, 
-      isMobile: h.is_mobile(req), 
-      categories: categories });
+    PostCategory.all(function(categories) {
+      return res.render('admin/categories/index', {
+        title: h.titleHelper('Dashboard'),  
+        path: req.path, 
+        isMobile: h.is_mobile(req), 
+        categories: categories 
+      });
+    });    
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  
@@ -40,8 +40,10 @@ router.get('/category/new', function (req, res, next) {
 
 router.post('/category/create', function (req, res, next) {
   if (req.user && req.user.role === "Admin") {
-    PostCategory.create(req.body);
-    return res.redirect('/admin/categories');
+    PostCategory.create(req.body, function(category) {
+      return res.redirect('/admin/categories');
+    });
+    
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  

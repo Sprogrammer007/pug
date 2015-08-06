@@ -8,9 +8,12 @@ block content
         input.form-control(type='text', name='post[title]') 
       .form-group
         label Categories
-        - each category in categories
-          input(type="checkbox" name="categories" value=category.id) 
-          | #{category.category}
+        .categories
+          - each category in categories
+           label.hcb(for="checkbox-" + category.id)
+              input(type='checkbox'  name="post[categories]"  id="checkbox-" + category.id)
+              span.cb
+              | #{category.category}
       .form-group
         label Content
         textarea#CKEditor.form-control(name='post[content]' rows="10")   

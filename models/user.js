@@ -1,9 +1,10 @@
-var dbManager = require('../modules/database-manager')
+var DBManager = require('../modules/database-manager')
+  , db = new DBManager()
   , Serializer = require('node-serialize')
   , bcrypt = require('bcrypt-nodejs')
   , _ = require('underscore');
 
-
+var table = 'users';
 
 function dbToObject(o, db) {
   for (var key in db) {  
@@ -11,31 +12,33 @@ function dbToObject(o, db) {
       o[key] = db[key];
     }
   }
-
   return o;
 }
 
 function User () {
-  this.update = function(params) {
-    return dbToObject(this, dbManager.update('users', params, this.id));
+  this.update = function(params, callback) {
+    db.update(table, params, this.id, function(user) {
+      return dbToObject(this, user);
+    }); 
   }
-}
+};
 
-
-
-User.findBy = function(k, v) {
-  var user;
-  dbManager.findBy('users', k, v, function(error, result) {
-    user = result[0];
+User.findBy = function(k, v, callback) {
+  db.findBy(table, null, k, v, function(user) {
+    if (user[0]) {
+      return callback(dbToObject(new User(), user[0]));
+    } else {
+      return callback(false);
+    }
   });
-  user = dbToObject(new User(), user);
-  return user;
-}
+};
 
 User.create = function(p, type) {
   p['role'] = type || 'User';
   p['password'] = bcrypt.hashSync(p['password']);
-  var user = dbToObject(new User(), dbManager.create('users', p, null));
-  return user;
-}
+  db.create(table, p, null, function(user) {
+    return callback(dbToObject(new User(), user));
+  });
+};
+
 module.exports = User;

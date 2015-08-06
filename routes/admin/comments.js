@@ -3,18 +3,17 @@ var express = require('express')
   , router = express.Router()
   , Comments = require('../../models/comment');
 
-
-
 // List Category
 router.get('/comments', function (req, res, next) { 
   if (req.user && req.user.role === "Admin") {
-    var comments = Comments.all();    
-
-    return res.render('admin/comments/index', {
-      title: h.titleHelper('Comments'),  
-      path: req.path, 
-      isMobile: h.is_mobile(req), 
-      comments: comments });
+    Comments.all(function(comments) {
+      return res.render('admin/comments/index', {
+        title: h.titleHelper('Comments'),  
+        path: req.path, 
+        isMobile: h.is_mobile(req), 
+        comments: comments 
+      });
+    });    
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  
@@ -26,10 +25,12 @@ router.get('/comments', function (req, res, next) {
 router.get('/comment/:id/approve', function (req, res, next) { 
   if (req.user && req.user.role === "Admin") {
     
-    var comment = Comments.findBy('id', req.params.id);    
-    comment.update({'approved' : 'Approved'});  
-    comment.updatePostCommentCount();
-    return res.redirect('/admin/comments');
+    Comments.findBy('id', req.params.id, function(comment) {
+      comment.update({'approved' : 'Approved'});  
+      comment.updatePostCommentCount();
+      return res.redirect('/admin/comments');
+    });    
+
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  
@@ -39,9 +40,11 @@ router.get('/comment/:id/approve', function (req, res, next) {
 // Remove Comment
 router.get('/comment/:id/destroy', function (req, res, next) { 
   if (req.user && req.user.role === "Admin") {
-    var comment = Comments.findBy('id', req.params.id);    
-    comment.destroy();
-    return res.redirect('/admin/comments');
+    Comments.findBy('id', req.params.id, function(comment) {
+      comment.destroy();
+      return res.redirect('/admin/comments');
+    });
+   
   } else {
     req.flash('error', "please login!")
     return res.redirect('/admin/login');  

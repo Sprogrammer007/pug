@@ -10,8 +10,8 @@ main.container
     .row.post-comments-list
       .col-lg-12
         ul.comment-list.clearfix
-          -if (post.getComments());
-            !{post.getComments()}
+          -if (comments);
+            !{comments}
     - if (post.comment_count > 1)
       .bottom.btn.btn-default.btn-comment Add Comment
 
