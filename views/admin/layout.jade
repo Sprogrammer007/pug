@@ -1,36 +1,42 @@
 doctype html
-head
-  meta(charset="UTF-8")
-  meta(name='viewport', content='width=device-width')
-  title= title
-  link(rel='profile', href='http://gmpg.org/xfn/11')
-  link(href='//fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css')
-  link(href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-  link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
-  //if lt IE 9 <script src="/js/html5.js"></script>
+html(ng-app='dfr')
+  head
+    script(src="//cdn.optimizely.com/js/1916590817.js")
+    meta(charset="UTF-8")
+    meta(name='viewport', content='width=device-width')
+    title= title
+    link(rel='profile', href='http://gmpg.org/xfn/11')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+    //if lt IE 9 <script src="/js/html5.js"></script>
 
-  // css
-  link(rel='stylesheet', href='/css/bootstrap.min.css')
-  link(rel='stylesheet', href='/css/animation.css')
-  link(rel='stylesheet', href='/css/admin.css')
-
-    
+    // css
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/animation.css')
+    link(rel='stylesheet', href='/css/loader.css')
+    link(rel='stylesheet', href='/css/jquery-ui.min.css')
+    link(rel='stylesheet', href='/css/trackpad-scroll.css')
+    link(rel='stylesheet', href='/css/admin/admin.css')
+    block css
+      
   body
+    include ./header.jade
 
-    include ./menu.jade
-    #main-content
-      .wrapper
+    #globalWrapper
+      #mainContent
         block content
 
+    include ./custom-directives.jade    
+    block templates
+
     //js
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-    script(src='/js/modernizr.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script(src='/js/jquery-ui.min.js')
-    link(rel='stylesheet', href='/css/jquery-ui.min.css')
+    script(src='/js/trackpad-scroll.min.js')
     script(src='/js/bootstrap.min.js')
     script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')
-    script(src='/js/admin.js')
-
+    script(src='/js/a/ui.js')
+    script(src='/js/a/app.js')
+    block script
 
 

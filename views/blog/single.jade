@@ -1,4 +1,6 @@
 extends ../layout
+block css
+  link(rel='stylesheet', herf='cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css')  
 
 block content
   #single
@@ -88,6 +90,6 @@ block content
     include ./comments
     
 block script
-  script(src='/js/prism.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js')
   script(src='/js/comment.js')
   script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')

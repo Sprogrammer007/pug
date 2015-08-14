@@ -82,7 +82,7 @@ Comment.all = function(callback) {
     });
     return callback(a);
   });
-}
+};
 
 // Comments template
 function commentTemplate (comment) {

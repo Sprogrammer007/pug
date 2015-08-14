@@ -126,7 +126,11 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     SURVEY_ID       BIGINT, \
     SURVEY_PAGE_ID  BIGINT, \
     QUESTION        TEXT, \
+    HINT            VARCHAR(255), \
     ANSWERS         TEXT, \
+    RATINGS         TEXT, \
+    MULTI_ANSWERS   BOOL, \
+    REQUIRED        BOOL, \
     LOGIC           VARCHAR(255), \
     POSITION        INT, \
     TYPE            VARCHAR(60), \
@@ -139,7 +143,6 @@ var db = {
     this.runQuery(queryV1);
   },
   runQuery: function(query) {
-
     client.connect(conString, function(err) {
       if(err) {
         return console.error('could not connect to postgres', err);

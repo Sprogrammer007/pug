@@ -1,0 +1,44 @@
+.answer-wrapper.scale-ratings.clearfix(ng-if="qbCtrl.hasRating")     
+  .row
+    .tag.col-sm-2 Rating Type
+    .col-sm-10
+      .group-button
+        input(type='radio' ng-model='qbCtrl.ratingType' data-toggle='numeric' name='question[rating][type]' id='numeric' value='Numeric')  
+        label(for='numeric').btn.btn-default Numeric Scale
+        input(type='radio' ng-model='qbCtrl.ratingType' data-toggle='custom' name='question[rating][type]' id='custom' value='Custom')    
+        label(for='custom').btn.btn-default Custom
+  .row.numeric(ng-show="qbCtrl.isNumeric()")
+    .tag.col-sm-2 Max Rating
+    .col-sm-10
+      <custom-select placeholder="3" name="question[rating][max-rating]" disable="qbCtrl.isCustom()" items="[] | range:3:10" ></custom-select>
+  .row.custom(ng-show="qbCtrl.isCustom()")
+    .tag.col-sm-2 Add Rating
+    .col-sm-10
+      .ib.form-control
+        input(type='text' ng-keyup="qbCtrl.addRating($event)" ng-disabled="qbCtrl.isNumeric()" placeholder="Enter an rating")
+        div(ng-click="qbCtrl.addRating($event)").add-button Add Rating
+  .rating-list.arlist
+    ar-box(ng-repeat="rating in qbCtrl.ratings track by $index" 
+      removeitem="qbCtrl.removeItem($index, 'ratings')" 
+      name="question[rating]" 
+      value="rating" 
+      removeable="qbCtrl.Removeable") 
+.answer-wrapper.clearfix
+  .row(ng-if="qbCtrl.allowNewAnswer")      
+    .tag.col-sm-2 Answer
+    .col-sm-10
+      .ib.form-control
+        input(type='text' ng-keyup="qbCtrl.addAnswer($event)" placeholder="Enter an answer")
+        div(ng-click="qbCtrl.addAnswer($event)").add-button Add Answer
+  .row(ng-if="qbCtrl.allowMultiAnswer")
+    .col-sm-offset-2.col-sm-10
+      .ccb
+        label(for="multianswer")
+          input(type='checkbox' name='question[multi_answers]' id="multianswer")
+          span.cb Allow Multiple Answers
+  .answer-list.arlist
+    ar-box(ng-repeat="answer in qbCtrl.answers track by $index" 
+      removeitem="qbCtrl.removeItem($index, 'answers')" 
+      name="question[answer]" 
+      value="answer" 
+      removeable="qbCtrl.Removeable")

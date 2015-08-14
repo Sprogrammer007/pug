@@ -64,16 +64,6 @@
     
   $(document).ready(function() {
 
-    wow = new WOW({
-      boxClass:     'wow',      // default
-      animateClass: 'animated', // default
-      offset:       0,          // default
-      mobile:       true,       // default
-      live:         true        // default
-    });
-    wow.init();
-
-
     // Optin
     if ($('#poptin').attr('data-pon') === "On") {
      setTimeout(openOptin, 3*15*1000);
@@ -268,7 +258,6 @@
       if(error) return false;
 
       var send_data = jQuery(this).serialize();
-      $(this).find('.btn-reserve').append("<div class='loader8'></div>")
   
       jQuery.post(window.location.origin + '/contact_mailer', send_data, function(data){
         if( data.success == '1' ){
@@ -316,9 +305,6 @@
       });      
       if(error) return false;
       form.hide();
-      form.parent('.analyzer').append('<p class="warning-title">Analyzing your website&hellip;</p><div id="analyzer-wrap"><div id="progressbar"></div></div><p id="analyzer-errors"><span>1 error</span> found&hellip;</p>');
-      analize(form, 9.5);  
-     
     });
   
   });

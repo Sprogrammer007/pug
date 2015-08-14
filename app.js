@@ -15,7 +15,6 @@ var express = require('express')
   , app = express()
   , fs = require('fs')
   , db = require('./modules/db')
-  , dbManager = require('./modules/database-manager')
   , MCKEY = process.env.MC_KEY;
 
 mc = new mcapi.Mailchimp(MCKEY);

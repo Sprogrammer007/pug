@@ -459,28 +459,7 @@ section.company-bio .profile-pic img {
   margin: 0;
 }
 
-/*#pay .step-one .btn-yes {
-  border:1px solid #15aeec; 
-  color: #FFFFFF;
-  background-color: #49c0f0; 
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#49c0f0), to(#2CAFE3));
-  background-image: -webkit-linear-gradient(top, #49c0f0, #2CAFE3);
-  background-image: -moz-linear-gradient(top, #49c0f0, #2CAFE3);
-  background-image: -ms-linear-gradient(top, #49c0f0, #2CAFE3);
-  background-image: -o-linear-gradient(top, #49c0f0, #2CAFE3);
-  background-image: linear-gradient(to bottom, #49c0f0, #2CAFE3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#49c0f0, endColorstr=#2CAFE3);
-}
 
-#pay .step-one .btn-yes:hover{
- border:1px solid #1090c3;
- background-color: #1ab0ec; background-image: -webkit-gradient(linear, left top, left bottom, from(#1ab0ec), to(#1a92c2));
- background-image: -webkit-linear-gradient(top, #1ab0ec, #1a92c2);
- background-image: -moz-linear-gradient(top, #1ab0ec, #1a92c2);
- background-image: -ms-linear-gradient(top, #1ab0ec, #1a92c2);
- background-image: -o-linear-gradient(top, #1ab0ec, #1a92c2);
- background-image: linear-gradient(to bottom, #1ab0ec, #1a92c2);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#1ab0ec, endColorstr=#1a92c2);
-}
-*/
 #pay .step-one input[type=radio] + label {
  border:1px solid #d7dada; 
  color: #000;

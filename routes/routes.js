@@ -15,15 +15,13 @@ var express = require('express')
 
 app.use('/', baseRoutes);
 app.use('/', users);
-app.use('/digest', survey);
+app.use('/campaign', survey);
 app.use('/order', order);
 app.use('/blog', blog);
 app.use('/lp', landing);
-app.use('/admin', admin);
-app.use('/admin', adminPost);
-app.use('/admin', adminPostCat);
-app.use('/admin', adminComment);
-
-
+app.use('/campaign', admin);
+app.use('/campaign', adminPost);
+app.use('/campaign', adminPostCat);
+app.use('/campaign', adminComment);
 
 module.exports = app;

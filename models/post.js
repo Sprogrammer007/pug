@@ -121,9 +121,7 @@ Post.create = function(params, categories, user, callback) {
     }
     return callback(p);
   });
-
 }
-
 
 Post.all = function(callback) {
   Post.queries("All", null, function(posts){

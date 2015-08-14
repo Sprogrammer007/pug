@@ -1,0 +1,18 @@
+//loader
+script(type='text/ng-template' id="loader")
+  .loader
+    .inner-wrapper
+      .inner.one       
+      .inner.two    
+      .inner.three   
+    span Loading {{name}}
+
+//custom select
+script(type='text/ng-template' id="customSelect")
+  .select
+    .btn.btn-default.select-ui
+      span {{placeholder}}
+      input(type='hidden' ng-disabled="{{disable}}" name="{{name}}" readonly) 
+      i.fa.fa-caret-down  
+    ul.select-menu
+      li(ng-repeat="item in items" ng-click="" data-value="{{item}}").menu-item {{item}}

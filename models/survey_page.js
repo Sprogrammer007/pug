@@ -1,9 +1,10 @@
-var dbManager = require('../modules/database-manager')
-    , Serializer = require('node-serialize')
-    , bcrypt = require('bcrypt-nodejs')
-    , _ = require('underscore');
+var DBManager = require('../modules/database-manager')
+  , db = new DBManager()
+  , Serializer = require('node-serialize')
+  , bcrypt = require('bcrypt-nodejs')
+  , _ = require('underscore');
 
-
+var table = 'survey_pages'
 
 function dbToObject(o, db) {
   for (var key in db) {  
@@ -16,9 +17,7 @@ function dbToObject(o, db) {
 }
 
 function SurveyPage () {
-  this.update = function(params) {
-   
-  }
+ 
 }
 
 SurveyPage.create = function(p) {
@@ -26,16 +25,22 @@ SurveyPage.create = function(p) {
   return dbToObject(new SurveyPage(), dbManager.create('survey_pages', p, null));
 };
 
-SurveyPage.findBy = function() {
+SurveyPage.findBy = function(k, v, callback) {
 
-};
+};  
 
 SurveyPage.all = function() {
 
 };
 
-SurveyPage.findAllBy = function(k,v) {
-  return dbManager.findAllBy('survey_pages', null, k, v)
+SurveyPage.findAllBy = function(k,v, callback) {
+  db.findBy(table, null, k, v, function(pages) {
+    var a = [];
+    _.map(pages, function(p) {
+      a.push(dbToObject(new SurveyPage(), p));
+    });
+    return callback(a); 
+  });
 };
 
 SurveyPage.update = function(id, categories) {

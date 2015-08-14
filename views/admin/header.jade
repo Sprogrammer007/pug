@@ -1,0 +1,31 @@
+header#header
+
+  nav.navbar
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
+        span.sr-only Toggle navigation      
+        span.icon-bar    
+        span.icon-bar 
+        span.icon-bar   
+      a.logo(href="/")
+        img(src="/images/logo_orange.png")
+
+    #top-nav.collapse.navbar-collapse
+
+      ul.nav.navbar-nav
+         
+        li(class= (path === '/') ? 'active' : '')
+          a(href='/') Home           
+        li(class= (path === '/products') ? 'active' : '')
+          a(href='/') Products   
+        li(class= (path === '/tool') ? 'active' : '')
+          a(href='/') Free Tools               
+        li(class= (path === '/blog') ? 'active' : '')
+          a(href='/blog') Blog               
+        li(class= (path === '/getanswers') ? 'active' : '')
+          a(href='/getanswers') Get Answers
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href='').btn.btn-account Create an Free Account         
+        li
+          a(href='/login') Log In
