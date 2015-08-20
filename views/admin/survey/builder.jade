@@ -2,51 +2,35 @@ extends ../layout
 block css
 
 block content
-  survey#survey
+
+  survey(sid="#{survey}")#survey
+
+block templates
   script(type='text/ng-template' id="Survey")
     loader(name="Survey Manager" ng-class="{loaded:loaded}")
-    {{qPangel}}
-    .survey-builder
-      survey-page(ng-repeat="page in survey.pages" page='page')
-
+  
     .question-builder(ng-class="{active:openQuestion()}")
-
+      .overlay(ng-click="toggleQuestion('Close')")
       .wrapper
         header
           p Add a Question
         .tse-scrollable.body-content
           .tse-content
-            
-            form#qbForm(ng-controller="QuestionBuilderController as qbCtrl")
-              input(type='hidden', name='qestion[survey_page_id]' value=1)
-              .question
-                label Your Question
-                textarea#QuestionEditor.form-control(type='text', name='question[question]', rows='2')
-              .require.mb20
-                .ccb
-                  label(for="require")
-                    input(type='checkbox' name='question[require]' id="require")
-                    span.cb Question is Required
-              .hint.mb20
-                label A Supporting Hint (Optional)
-                input.form-control(type='text', name='question[hint]', rows='1')
-              .answer-types.mb20
-                label Select Question Type
-                div
-                  input(ng-repeat-start="atypes in qbCtrl.answerTypes" ng-click='qbCtrl.updateAnswer()' ng-model='qbCtrl.answerType' type="radio" name="question[type]" id="{{atypes.id}}" value="{{atypes.value}}")
-                  label(ng-repeat-end="" for="{{atypes.id}}" class="btn btn-default"){{atypes.name}}
-              .answers(ng-include="'surveyAnswerFrag'")
+            question-form(q="question")
         footer.submit-question
           .pull-right
-            button.btn.btn-default Close
-            button(type='button' form='qbForm').btn.btn-default Add Another
-            button(type='button').btn.btn-default Save
+            button(ng-click="toggleQuestion('Close')").btn.btn-default Close
+            button(type='button' ng-click="saveQuestion($event, false)").btn.btn-save Add Another
+            button(type='button' ng-click="saveQuestion($event, true)").btn.btn-save 
+              | Save
           .clearfix
-block templates
+    .survey-builder
+      survey-page(pages="survey.pages" sid="sid" toggle-question="toggleQuestion(state, id)")
+
   script(type='text/ng-template' id="surveyARBox")
     .answer.fadeIn.animated
       input(type='text' name="{{name}}" value="{{value}}")
-      button.close(type='button' ng-show="{{removeable}}" ng-click="removeitem()") &times;
+      button.close(type='button' ng-show="removeable" ng-click="removeItem()") &times;
       i.edit-answer.fa.fa-pencil
   script(type='text/ng-template' id="surveyPage")
     include ./survey-page.jade
@@ -54,6 +38,26 @@ block templates
     include ./answer-frag.jade    
   script(type='text/ng-template' id="surveyQuestion")
     include ./survey-question.jade
+  script(type='text/ng-template' id="questionForm")
+    form#qbForm
+      input(type='hidden', ng-model='q.survey_page_id' name='qestion[survey_page_id]' )
+      .question
+        label Your Question
+        textarea#QuestionEditor.form-control(type='text', ng-model='q.question')
+      .require.mb20
+        .ccb
+          label(for="require")
+            input(type='checkbox' ng-model='q.required' id="require")
+            span.cb Question is Required
+      .hint.mb20
+        label A Supporting Hint (Optional)
+        input.form-control(type='text',ng-model='q.hint' name='question[hint]', rows='1')
+      .answer-types.mb20
+        label Select Question Type
+        div
+          input(ng-repeat-start="atypes in qbCtrl.answerTypes" ng-click='qbCtrl.updateAnswer()' ng-model='q.type' type="radio" name="question[type]" id="{{atypes.id}}" value="{{atypes.value}}")
+          label(ng-repeat-end="" for="{{atypes.id}}" class="btn btn-default"){{atypes.name}}
+      .answers(ng-include="'surveyAnswerFrag'")
 
 block script
   script(src='/js/a/controllers/survey.js')

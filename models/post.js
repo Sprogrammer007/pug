@@ -1,22 +1,14 @@
 var DBManager = require('../modules/database-manager')
-    , db = new DBManager()
-    , Comment = require('./comment')
-    , PostCategoryRelation = require('./post_category_relation')
-    , moment = require('moment')
-    , Serializer = require('node-serialize')
-    , _ = require('underscore');
+  , db = new DBManager()
+  , Base = require('./base')
+  , Comment = require('./comment')
+  , PostCategoryRelation = require('./post_category_relation')
+  , moment = require('moment')
+  , Serializer = require('node-serialize')
+  , _ = require('underscore');
 
 var table = 'posts';
 
-//private helpers
-function dbToObject(o, db) {
-  for (var key in db) {  
-    if (db.hasOwnProperty(key)) {
-      o[key] = db[key];
-    }
-  }
-  return o;
-}
 
 // post object
 
@@ -106,6 +98,8 @@ function Post() {
   };
 }
 
+Post.inherits(Base);
+
 // Class methods
 
 Post.create = function(params, categories, user, callback) {
@@ -114,7 +108,7 @@ Post.create = function(params, categories, user, callback) {
   params['Author'] = user.username;
   params['user_id'] = user.id;
   db.create('posts', params, null, function(post) {
-    var p = dbToObject(new Post(), post);
+    var p = Base.convertObject(new Post(), post);
 
     if (categories && !_.isEmpty(categories)) {
       PostCategoryRelation.createAll(categories, p.id);
@@ -127,7 +121,7 @@ Post.all = function(callback) {
   Post.queries("All", null, function(posts){
     var ps = [];
     _.map(posts, function(p){
-      ps.push(dbToObject(new Post(), p));
+      ps.push(Base.convertObject(new Post(), p));
     });
     return callback(ps);
   });
@@ -135,7 +129,7 @@ Post.all = function(callback) {
 
 Post.findBy = function(k, v, callback) {
   Post.queries(k, v, function(result) {
-    var post = dbToObject(new Post(), result[0]);
+    var post = Base.convertObject(new Post(), result[0]);
    
     db.findBy('post_options', 'option_key, option_value', 'post_id', post.id, function(options){
       if (options) {

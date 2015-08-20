@@ -118,7 +118,7 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     SURVEY_ID       BIGINT, \
     TITLE           VARCHAR(255), \
     TYPE            VARCHAR(20), \
-    POSITION        INT \
+    CREATED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
   ); \
   CREATE TABLE IF NOT EXISTS survey_questions \
   ( \
@@ -128,13 +128,14 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     QUESTION        TEXT, \
     HINT            VARCHAR(255), \
     ANSWERS         TEXT, \
-    RATINGS         TEXT, \
+    RATING          TEXT, \
     MULTI_ANSWERS   BOOL, \
     REQUIRED        BOOL, \
     LOGIC           VARCHAR(255), \
     POSITION        INT, \
     TYPE            VARCHAR(60), \
-    PARENT_QUESTION BIGINT \
+    PARENT_QUESTION BIGINT, \
+    CREATED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
   ); \
 "
 

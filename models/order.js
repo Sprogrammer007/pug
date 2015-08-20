@@ -1,6 +1,7 @@
 var dbManager = require('../modules/database-manager')
-    , Serializer = require('node-serialize')
-    , _ = require('underscore');
+  , Base = require('./base')
+  , Serializer = require('node-serialize')
+  , _ = require('underscore');
 
 
 // Private functions
@@ -8,15 +9,6 @@ function dollarToCent(dollar) {
   return (dollar * 100)
 }
 
-function dbToObject(o, db) {
-  for (var key in db) {  
-    if (db.hasOwnProperty(key)) {
-      o[key] = db[key];
-    }
-  }
-
-  return o;
-}
 
 function Order () {
   this.update = function() {
@@ -30,7 +22,7 @@ Order.findBy = function(k, v) {
   dbManager.findBy('orders', k, v, function(error, result) {
     order = result[0];
   });
-  order = dbToObject(new Order(), order);
+  order = Base.convertObject(new Order(), order);
   return order;
 }
 
@@ -42,7 +34,7 @@ Order.create = function(params, user_id, customer_id, receipt) {
   params['total'] = dollarToCent(parseInt(params.total));
   params['status'] = 'Payed';
    
-  var Order = dbToObject(new Order(), dbManager.create('Orders', params, null));
+  var Order = Base.convertObject(new Order(), dbManager.create('Orders', params, null));
   return Order;
 }
 

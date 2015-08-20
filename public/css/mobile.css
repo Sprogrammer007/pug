@@ -155,7 +155,7 @@
     margin-right: 3px;
   }
 
-  #single .share-wrapper {
+  .share-wrapper {
     margin: 0 15px;
     width: calc(100% - 30px);
     font-size: 16px;
@@ -296,68 +296,6 @@
 
 
 @media(min-width:768px){
-  #report h1, #contact h1 { 
-    font-weight: 600;
-    line-height: 70px;
-  }
-
-  #contact p.subtitle { 
-    width: 90%;
-  }
-
-  #contact ul ol {
-    width: 90%;
-  }
-  #contact ul {
-    padding: 0;
-  }
-  #contact ul ol p {
-    font-size: 18px;
-    width: 82%;
-  }
-
-
-  .single-header { 
-    margin: 15px 0;
-  }
-  
-  .main-content-wrapper h1 { 
-    font-size: 30px;
-    line-height: 40px;
-  }
-
-  .post-title {
-    display: block;
-    margin-bottom: 20px;
-  }
-
-
-  #single .share-wrapper {
-    margin: 0 15px;
-    width: calc(100% - 30px);
-    font-size: 16px;
-  }
-
-  #single .fixed { 
-    top: auto !important;
-  }
-
-
-  #social .box {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-
-  
-  #footer .footer-logo {
-    text-align: center;
-  }
-
-  footer .footer-legal,
-  #footer .useful-links {
-    font-size: 1em;
-  }
-
 
 
 }

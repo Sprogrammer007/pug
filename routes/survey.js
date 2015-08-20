@@ -3,6 +3,7 @@ var express = require('express')
   , router = express.Router()
   , passport = require('passport')
   , Survey = require('../models/survey')
+  , SurveyPage = require('../models/survey_page')
   , SurveyQuestion = require('../models/survey_question');
 
 router.post('/create', function (req, res, next) {
@@ -23,18 +24,24 @@ router.get('/s/:id/b', function (req, res, next) {
 
 // Question
 
-router.get('/s/:id/g', function (req, res, next) {
+router.get('/s/:id', function (req, res, next) {
   Survey.findBy('id', req.params.id, function(survey) {
-    return res.json(survey);
+    return res.json(survey.toJson());
   });
 });
 
-router.post('/s/:id/question/create', function (req, res, next) {
-  console.log(req.body.question)
-  SurveyQuestion.create(req.body.question, req.params.id, function(question) {
-    return res.json({'success': "1", 'question': JSON.stringify(question)});
+//Create Question
+router.post('/s/:id/q', function (req, res, next) {
+  SurveyQuestion.create(req.body, req.params.id, function(question) {
+    return res.json(question);
   });
+});
 
+//Create Question
+router.post('/s/:id/p', function (req, res, next) {
+  SurveyPage.create(req.body, req.params.id, function(page) {
+    return res.json(page);
+  });
 });
 
 // Single Survey
@@ -42,8 +49,6 @@ router.post('/s/:id/question/create', function (req, res, next) {
 router.get('/:url', function (req, res, next) {
 
 });
-
-
 
 
 module.exports = router;

@@ -1,18 +1,11 @@
 var DBManager = require('../modules/database-manager')
   , db = new DBManager()
+  , Base = require('./base')
   , moment = require('moment')
   , _ = require('underscore');
 
 var table = 'comments';
 
-function dbToObject(o, db) {
-  for (var key in db) {  
-    if (db.hasOwnProperty(key)) {
-      o[key] = db[key];
-    }
-  }
-  return o;
-}
 
 function formatDate(date) {
   var day = moment(date).format('YYYYMMDDHHmmss')
@@ -50,7 +43,7 @@ function Comment() {
 Comment.findBy = function(k, v, callback) {
   db.findBy(table, null, k, v, function(comment) {
     if (comment[0]) {
-      return callback(dbToObject(new Comment(), comment[0]));
+      return callback(Base.convertObject(new Comment(), comment[0]));
     } else {
       return callback(false);
     }
@@ -67,7 +60,7 @@ Comment.create = function(ip, params, user_id, callback) {
   }
   db.create('comments', params, null, function(comment){;
     if (comment) {
-      return callback(dbToObject(new Comment(), comment));
+      return callback(Base.convertObject(new Comment(), comment));
     } else {
       return callback(false);
     }
@@ -78,7 +71,7 @@ Comment.all = function(callback) {
   db.all(table, 'comment_date', 'DESC', function(cs) {
     var a = [];
     _.map(cs, function(c) {
-      a.push(dbToObject(new Comment(), c));
+      a.push(Base.convertObject(new Comment(), c));
     });
     return callback(a);
   });

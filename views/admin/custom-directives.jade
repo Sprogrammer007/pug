@@ -5,14 +5,13 @@ script(type='text/ng-template' id="loader")
       .inner.one       
       .inner.two    
       .inner.three   
-    span Loading {{name}}
+    span(ng-show="name") Loading {{name}}
 
 //custom select
 script(type='text/ng-template' id="customSelect")
   .select
     .btn.btn-default.select-ui
-      span {{placeholder}}
-      input(type='hidden' ng-disabled="{{disable}}" name="{{name}}" readonly) 
+      span {{model}}
       i.fa.fa-caret-down  
     ul.select-menu
-      li(ng-repeat="item in items" ng-click="" data-value="{{item}}").menu-item {{item}}
+      li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item)").menu-item {{item}}

@@ -1,28 +1,27 @@
 var DBManager = require('../modules/database-manager')
   , db = new DBManager()
+  , Base = require('./base')
   , Serializer = require('node-serialize')
-  , bcrypt = require('bcrypt-nodejs')
+  , SurveyQuestion = require('./survey_question')
   , _ = require('underscore');
 
 var table = 'survey_pages'
 
-function dbToObject(o, db) {
-  for (var key in db) {  
-    if (db.hasOwnProperty(key)) {
-      o[key] = db[key];
-    }
-  }
-
-  return o;
-}
 
 function SurveyPage () {
- 
+  this.update = function(){
+
+  }
 }
 
-SurveyPage.create = function(p) {
-  var p = _.defaults(p, {type: "Questionaire", position: "1"});
-  return dbToObject(new SurveyPage(), dbManager.create('survey_pages', p, null));
+SurveyPage.inherits(Base);
+
+SurveyPage.create = function(p, id, callback) {
+  p.survey_id = id;
+  var p = _.defaults(p, {type: "Questionaire"});
+  db.create(table, p, null, function(sp) {
+    return callback(Base.convertObject(new SurveyPage(), sp));
+  });
 };
 
 SurveyPage.findBy = function(k, v, callback) {
@@ -35,13 +34,22 @@ SurveyPage.all = function() {
 
 SurveyPage.findAllBy = function(k,v, callback) {
   db.findBy(table, null, k, v, function(pages) {
-    var a = [];
-    _.map(pages, function(p) {
-      a.push(dbToObject(new SurveyPage(), p));
-    });
-    return callback(a); 
+    var ps = [];
+    if (!_.isEmpty(pages)) {
+      _.each(pages, function(p, i, a) {
+        p = Base.convertObject(new SurveyPage(), p);
+        SurveyQuestion.findAllBy('survey_page_id', p.id, function(qs){
+          p.questions =  qs;
+          ps.push(p)
+          if (ps.length === a.length) {callback(ps)}
+        });
+      });
+    } else {
+      return callback(ps);
+    }
   });
 };
+
 
 SurveyPage.update = function(id, categories) {
 

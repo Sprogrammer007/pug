@@ -1,4 +1,5 @@
 var express = require('express')
+  , inheritance = require('./modules/inheritance')
   , passport = require('passport')
   , flash = require('connect-flash')
   , auth = require('./modules/auth')
@@ -33,7 +34,7 @@ mailer.extend(app, {
 
 // if (process.env.RUN_DB === 'true') {
 // db.init();
-// db.dbMigrate();
+db.dbMigrate();
 // }
 
 app.locals.default_description = "We love beautiful designs too, but beauty alone doesn\'t always deliver result for your business. Designed for Result will help you get clear on the objecti";

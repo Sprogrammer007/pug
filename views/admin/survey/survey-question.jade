@@ -1,0 +1,17 @@
+.question-box
+  .control
+    .icon(title='Delete')
+      i.fa.fa-trash    
+    .icon(title='Duplicate')
+      i.fa.fa-clone
+    .icon(title='Edit')
+      i.fa.fa-pencil
+  .d-question(ng-bind-html="SQCtrl.trustedQ")
+  .d-hint
+    {{q.hint}}
+  .d-answer(ng-if="q.type === 'MC'")
+    ul
+      li(ng-repeat="a in q.answers track by $index")
+        .checkbox
+          input( type='radio')
+          label {{a}}

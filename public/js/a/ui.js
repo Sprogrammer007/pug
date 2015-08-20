@@ -1,6 +1,6 @@
 
 (function($) {
-
+  $('#mainContent').TrackpadScrollEmulator();
 
   function UIEditor() {
 
@@ -18,11 +18,13 @@
         'height': (h - 170)
       });
       $('.body-content').TrackpadScrollEmulator('recalculate');
+      $('#mainContent').TrackpadScrollEmulator('recalculate');
     };
   }
 
   $(document).ready(function() { 
-    
+
+
     var editor = new UIEditor();
     editor.init();
 

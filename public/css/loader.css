@@ -3,6 +3,7 @@
   position: absolute;
   top: calc(50% - 32px);
   left: calc(50% - 32px);
+  z-index: 1000;
 }
 
 .loaded .loader {
@@ -51,6 +52,8 @@
   animation: rotate-three 1s linear infinite;
   border-top: 3px solid #C2C2C2;
 }
+
+
 
 @keyframes rotate-one {
   0% {
