@@ -53,8 +53,6 @@
   border-top: 3px solid #C2C2C2;
 }
 
-
-
 @keyframes rotate-one {
   0% {
     transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);

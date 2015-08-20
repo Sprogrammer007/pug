@@ -304,7 +304,7 @@
         }
       });      
       if(error) return false;
-      form.hide();
+      form.submit();
     });
   
   });

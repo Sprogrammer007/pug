@@ -52,7 +52,6 @@ router.get('/test', function (req, res, next) {
 // SpeedTest
 
 router.post('/speedtest/report', function(req, res, next ){
-  var url = req.body.protocal + req.body.url;
   var result = '',
       score = 0,
       screenshot = ''
@@ -63,7 +62,7 @@ router.post('/speedtest/report', function(req, res, next ){
 
   https.get({
     host: 'www.googleapis.com', 
-    path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(url) + 
+    path: '/pagespeedonline/v2/runPagespeed?url=' + encodeURIComponent(req.body.url) + 
           '&screenshot=true&key='+Insight_API_KEY+'&strategy=desktop'
     }, function(r) {
       r.on('data', function(chunk) {
@@ -92,7 +91,7 @@ router.post('/speedtest/report', function(req, res, next ){
         res.render('report', { 
           title: 'Designed for Result | Speed Test Report', 
           path: req.originalUrl,
-          url: url,
+          url: req.body.url,
           score: score,
           mime_type: mime,
           screenshot: screenshot,
