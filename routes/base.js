@@ -136,7 +136,7 @@ router.get('/robots.txt', function (req, res) {
   res.send("User-agent: *\n\
 Disallow: /lp/*\n\
 Disallow: /test\n\
-Disallow: /admin/*");
+Disallow: /campaign/*");
 });
 
 

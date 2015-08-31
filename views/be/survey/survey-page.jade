@@ -1,0 +1,40 @@
+.btn-verticle-group.survey-buttons(ng-class="{disable:surveyCtrl.togglePC}")
+  button.btn.btn-default
+    i.fa.fa-desktop   
+  button.btn.btn-default
+    i.fa.fa-laptop
+  button.btn.btn-default
+    i.fa.fa-mobile  
+  button.btn.btn-default(title='Sort Questions' data-placement="right" ng-click="surveyCtrl.toggleSort(true)")
+    i.fa.fa-arrows-alt
+    br
+    | Sort
+  button.add-page.btn.btn-default(ng-click="pageCtrl.addPage($event)" title="Add New Page" data-placement="right")
+    i.fa.fa-file-o
+    br
+    | Add Page  
+  button.add-page.btn.btn-default(ng-click="pageCtrl.addPage($event)" title="Publish Your Survey" data-placement="right")
+    i.fa.fa-floppy-o
+    br
+    | Publish
+
+
+.page-list
+  .page.box.box-md.fadeIn.animated(ng-repeat="page in pages | orderBy: '+id'" class="p-{{page.id}}")
+    .wrapper
+      .box-header.clearfix
+        .page-options.pull-right
+          button(ng-click="surveyCtrl.toggleQuestion('Open', page.id)" ng-class="{disable:surveyCtrl.togglePC}").add-question Add Question
+            i.fa.fa-angle-right
+          .remove-wrapper   
+            .remove-page(ng-click="pageCtrl.toggleRemove(page.id)" ng-class="{disable:surveyCtrl.togglePC}")
+              i.fa.fa-trash-o
+            .remove-options-wrapper(ng-class="{active:pageCtrl.openRemove(page.id)}")
+              .remove-arrow
+              .remove-options
+                span.item(ng-click="pageCtrl.removePage(page.id, $index, $event)" data-pid="{{page.id}}") Delete Page and Questions
+                span.item(ng-repeat="p in pages| orderBy: '+id'" ng-if="pageCtrl.notPage(p, page)") Delete & Move Questions To P{{$index+1}}
+            
+      .page-body
+        
+        <question ng-repeat="q in page.questions track by $index | orderBy: '+position'" q='q' togglepc="surveyCtrl.togglePC">

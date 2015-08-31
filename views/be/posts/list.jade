@@ -1,0 +1,23 @@
+extends ../layout
+block css
+
+block content
+  loader(name="Post Manager" ng-class="{loaded:loaded}")
+  post-dash(loaded="loaded")#post
+
+    
+block templates
+  script(type='text/ng-template' id="PostDash")
+    .post-dash(ng-class="{loaded:loaded}")
+      post-list(posts="posts" loaded="loaded")
+      post-edit(posts="posts" loaded="loaded")
+
+  script(type='text/ng-template' id="PostList")
+    include ./_posts-list.jade
+  script(type='text/ng-template' id="PostEdit")
+
+
+block script
+  script(src='/be/js/services/post.js')
+  script(src='/be/js/directives/post.js')
+  script(src='/be/js/controllers/post.js')

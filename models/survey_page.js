@@ -10,8 +10,9 @@ var table = 'survey_pages'
 
 function SurveyPage () {
   this.update = function(){
-
   }
+
+  this.questions = [];
 }
 
 SurveyPage.inherits(Base);
@@ -50,6 +51,11 @@ SurveyPage.findAllBy = function(k,v, callback) {
   });
 };
 
+SurveyPage.destroy = function(id, callback) {
+  db.destroy(table, 'id', id, function(r) {
+    return callback(r);
+  });
+};
 
 SurveyPage.update = function(id, categories) {
 

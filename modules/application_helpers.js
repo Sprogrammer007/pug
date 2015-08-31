@@ -22,8 +22,9 @@ var helper = {
       return false;
     }
   }
-
 };
+
+
 
 
 module.exports = helper;

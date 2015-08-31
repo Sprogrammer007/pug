@@ -56,8 +56,7 @@ function DBManager() {
   };
 
   this.where = function(table, property, values, order, direction, callback) {
-    var whereQuery = _.isString(property) ? property : (property + '=$1')
-    query = 'SELECT * FROM ' + table + ' WHERE ' + whereQuery + ' ORDER BY ' + order + ' ' + direction + ';';
+    query = 'SELECT * FROM ' + table + ' WHERE ' + property + ' ORDER BY ' + order + ' ' + direction + ';';
 
     runQuery(query, values, function(err, results) {
       return callback((err ?  false : results));
@@ -125,7 +124,8 @@ function DBManager() {
       }
     });
 
-    query = "SELECT COUNT(" + item + ") FROM " + table + " WHERE " + c.join(" AND ") + ";";
+    query = "SELECT COUNT(" + item + ") FROM " + table + 
+    (conditions ? " WHERE " + c.join(" AND ") : " ") + ";";
 
     runQuery(query, null, function(err, result) {
 

@@ -3,9 +3,9 @@
     .tag.col-sm-2 Rating Type
     .col-sm-10
       .btn-group
-        input(type='radio' ng-model='q.rating.type' data-toggle='numeric' name='question[rating][type]' id='numeric' value='Numeric')  
+        input(type='radio' ng-model='q.rating.type' data-toggle='numeric' id='numeric' value='Numeric' required)  
         label(for='numeric').btn.btn-default Numeric Scale
-        input(type='radio' ng-model='q.rating.type' data-toggle='custom' name='question[rating][type]' id='custom' value='Custom')    
+        input(type='radio' ng-model='q.rating.type' data-toggle='custom' id='custom' value='Custom' required)     
         label(for='custom').btn.btn-default Custom
   .row.numeric(ng-show="qbCtrl.showRatingType('Numeric')")
     .tag.col-sm-2 Max Rating

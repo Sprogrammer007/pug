@@ -20,18 +20,21 @@ html(ng-app='dfr')
   body
     include ./header.jade
 
-    #globalWrapper
-
-      #mainContent.tse-scrollable
-        .tse-content
-            .appnav 
-                .test
-                  p Add Page
-            block content
+    main-app
+  
+    script(type='text/ng-template' id="MainApp")
+      #globalWrapper
+        #mainBody.tse-scrollable
+            .tse-content
+              main-menu(username="#{user.username}")
+              .main-content
+                block content
+    script(type='text/ng-template' id="MainMenu")
+      include ./mainmenu.jade
 
     include ./custom-directives.jade    
     block templates
-
+      
     //js
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script(src='/js/jquery-ui.min.js')
@@ -41,7 +44,10 @@ html(ng-app='dfr')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.js')
     script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')
     script(src='/be/js/ui.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js')
     script(src='/be/js/app.js')
+    script(src='/be/js/directives/main.js')
+    script(src='/be/js/angular.sort.min.js')
     block script
 
 

@@ -1,10 +1,17 @@
 ;(function() {
-  var app = angular.module('dfr', 
-    [
-      'ngResource', 
-      'dfrSurveyDirectives', 
-      'dfrSurveyControllers'
-    ]).config(['$compileProvider', function ($compileProvider) {
+  "use strict";
+  function prepareRequires() {
+    var requires;
+    var defaults = ['ngResource', 'dfrMainDirectives', 'ui.sortable'];
+    var location = window.location.pathname.split('/')[2];
+    var name = location.charAt(0).toUpperCase() + location.slice(1);
+    requires = defaults.concat(['dfr' + name + 'Directives', 'dfr' + name + 'Controllers'])
+
+   return requires
+  };
+
+  var app = angular.module('dfr', prepareRequires())
+  .config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(false);
   }]);
 
@@ -15,6 +22,12 @@
       for (var i=start; i<total; i++)
         input.push(i);
       return input;
+    };
+  });
+
+  app.filter('isZero', function() {
+    return function(input) {
+      return (parseInt(input) === 0 ? "—" : input);
     };
   });
 
@@ -36,29 +49,39 @@
       templateUrl: 'loader',
       scope: {
         name: "@"
+      },
+      link: function(scope, element) {
       }
     };
   });
 
   app.directive('title', function() {
     return function(scope, element) {
-      element.tooltip({container: 'body'});
+      element.tooltip({container: element.parent()});
       scope.$on('$destroy', function(){
         element.tooltip('destroy');
       });
     };
-  }); 
+  });   
 
-  app.directive('customSelect', function() {
+  app.directive('customSelect', function($timeout) {
     return {
       restrict: 'E',
-      templateUrl: 'customSelect',
+      templateUrl: 'CustomSelect',
       scope: {
         model: '=',
         items: '='
       },
       link: function (scope, element, attrs) {
-        scope.model = scope.items[0];
+        var menu = element.find('.select-menu');
+    
+        $timeout((function() {
+          menu.css({
+            'min-width': menu.width() + 50
+          });
+        }), 1500);
+
+        scope.model = scope.items[0]; 
         scope.isSelected = function(item) {
           return scope.model === item;
         }
@@ -94,5 +117,53 @@
       );
     };
   });
+
+  app.service('Params', function() {
+    return window.parseQuery();
+  });
+
+  Array.prototype.replaceWith = function(item, condition) {
+    this.forEach(function(e, i, a) {
+      if (condition(e)) {
+        a[i] = item;
+      }
+    });
+  };
+
+  Array.prototype.pushWhen = function(item, condition) {
+    this.forEach(function(e, i, a) {
+      if (condition(e)) {
+        a[i].questions.push(item);
+      };
+    });
+  };  
+  
+  Array.prototype.isEmpty = function() {
+    return (this.length === 0)  
+  };
+
+
+  window.parseQuery = function () {
+    // This function is anonymous, is executed immediately and 
+    // the return value is assigned to QueryString!
+    var query_string = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+          // If first entry with this name
+      if (typeof query_string[pair[0]] === "undefined") {
+        query_string[pair[0]] = decodeURIComponent(pair[1]);
+          // If second entry with this name
+      } else if (typeof query_string[pair[0]] === "string") {
+        var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+        query_string[pair[0]] = arr;
+          // If third or later entry with this name
+      } else {
+        query_string[pair[0]].push(decodeURIComponent(pair[1]));
+      }
+    } 
+      return query_string;
+  };
 
 })();

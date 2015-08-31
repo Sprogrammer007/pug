@@ -1,0 +1,65 @@
+.survey-list-wrapper.plr-12(ng-class="{loaded:loaded}")
+  .survey-list.box.box-lg
+    .survey-list-control.plr-12 
+      custom-select(model="massAction"  items="massActions")
+      a.btn.btn-default(href="surveys?act=new")
+        i.fa.fa-plus
+        |  Create Survey
+    table.table.table-list
+      thead
+        tr
+          th.tcl-40 
+            .ccb
+              label
+                input(type="checkbox"
+                  ng-click="slistCtrl.selectAll($event)"
+                  ng-checked="slistCtrl.isSelectedAll()")
+                span.cb
+          th.tcl-40 
+          th(ng-click="orderBy('campaign_name')"
+            ng-class="{sorting:sortItem('campaign_name'), up:sortDirect('+'), down:sortDirect('-')}") Campaign Name
+            i.fa.pull-right
+          th(ng-click="orderBy('status')"
+            ng-class="{sorting:sortItem('status'), up:sortDirect('+'), down:sortDirect('-')}") Status
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('response')"
+            ng-class="{sorting:sortItem('response'), up:sortDirect('+'), down:sortDirect('-')}")  Responses
+            i.fa.pull-right
+          th(ng-click="orderBy('amount_spent')"
+            ng-class="{sorting:sortItem('amount_spent'), up:sortDirect('+'), down:sortDirect('-')}")  Amount Spent
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('page_count')"
+            ng-class="{sorting:sortItem('page_count'), up:sortDirect('+'), down:sortDirect('-')}")  Pages
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('question_count')"
+            ng-class="{sorting:sortItem('question_count'), up:sortDirect('+'), down:sortDirect('-')}")  Questions
+            i.fa.pull-right
+          th.tar Ends
+      tbody
+        tr(ng-repeat="survey in surveys | orderBy: currentOrder")
+          td.tcl-40 
+            .ccb
+              label()
+                input(type="checkbox" 
+                  ng-checked="slistCtrl.isSelected(survey.id)"
+                  ng-click="slistCtrl.updateSelection($event, survey.id)")
+                span.cb
+          td.tcl-40
+            input.toggle-switch(type="checkbox" id="s{{survey.id}}" 
+              ng-click="slistCtrl.toggleStatus($index)"
+              ng-checked="slistCtrl.isPublished(survey.status)"
+              )
+            label(for="s{{survey.id}}")
+          td.sn-1
+            a(href="surveys?act=view&id={{survey.id}}&campaign={{survey.campaign_name}}") {{survey.campaign_name}}
+            a(href="surveys?act=edit&id={{survey.id}}&campaign={{survey.campaign_name}}").sedit-1.pull-right
+              i.fa.fa-pencil
+          td.status(ng-class="{live:slistCtrl.isPublished(survey.status)}")
+            i.fa.fa-circle
+            | {{survey.status}}
+          td.tar {{survey.response | isZero  }}
+          td {{survey.amount_spent | currency : $ : 2}}
+          td.tar {{survey.page_count | isZero  }}
+          td.tar {{survey.question_count | isZero  }}
+          td.tar
+    .survey-total-result

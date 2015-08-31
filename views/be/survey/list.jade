@@ -1,0 +1,25 @@
+extends ../layout
+block css
+
+block content
+  loader(name="Survey Manager" ng-class="{loaded:loaded}")
+  survey-dash(loaded="loaded")#survey
+    
+    
+block templates
+  script(type='text/ng-template' id="SurveyDash")
+    .survey-dash(ng-class="{loaded:loaded}")  
+      survey-chart()
+      survey-list(surveys="surveys" loaded="loaded")
+      survey-edit(surveys="surveys" loaded="loaded")
+  script(type='text/ng-template' id="SurveyList")
+    include ./_surveys_list.jade
+  script(type='text/ng-template' id="SurveyChart")
+    include ./survey-chart.jade
+  script(type='text/ng-template' id="SurveyEdit")
+
+
+block script
+  script(src='/be/js/services/survey.js')
+  script(src='/be/js/directives/survey.js')
+  script(src='/be/js/controllers/survey.js')

@@ -32,6 +32,18 @@ mailer.extend(app, {
   }
 });
 
+
+app.use(function(req, res, next){
+  res.locals.isActive = function(a, b) {
+    var queryIndex = a.indexOf('?')
+    var path = (queryIndex > -1)? a.substring(0, queryIndex) : a;
+    return (path === b) ? 'active' : ''
+  };
+  next();
+})
+
+
+
 // if (process.env.RUN_DB === 'true') {
 // db.init();
 db.dbMigrate();
@@ -96,6 +108,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-module.exports = app;
 module.exports = app;

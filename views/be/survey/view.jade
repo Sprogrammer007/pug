@@ -1,0 +1,46 @@
+extends ../layout
+block css
+
+block content
+  loader(name="Survey Manager" ng-class="{loaded:loaded}")
+  survey-dash(sid="currentID" loaded="loaded")#survey
+
+    
+block templates
+  script(type='text/ng-template' id="SurveyDash")
+    .survey-dash(ng-class="{loaded:loaded}")  
+      survey-results()
+      survey-edit(survey="survey" loaded="loaded")
+  script(type='text/ng-template' id="SurveyResults")
+    include ./survey-results.jade
+  script(type='text/ng-template' id="SurveyEdit")
+    .survey-edit-wrapper.plr-12
+      .survey-edit.box.box-lg
+        .box-header
+          .box-title.pull-left 
+            | Campaign
+            input.toggle-switch(type='checkbox' id="a1")
+            label(for="a1")
+          .edit-buttons.pull-right
+            .btn-group
+              .btn.btn-default
+                i.fa.fa-pencil    
+              .btn.btn-default
+                i.fa.fa-trash
+          .clearfix
+        .box-body
+          .elabel Status:
+          .evar 
+            i.fa.fa-circle
+            | {{survey.status}}          
+          .elabel  Objective:
+          .evar {{survey.objective}}          
+          .elabel  Responses:
+          .evar {{survey.response}}         
+          .elabel  Survey Schedule:
+          .evar {{survey.created_date | date: 'MMM dd, yyyy'}}
+
+block script
+  script(src='/be/js/services/survey.js')
+  script(src='/be/js/directives/survey.js')
+  script(src='/be/js/controllers/survey.js')

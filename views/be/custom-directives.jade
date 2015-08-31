@@ -8,10 +8,14 @@ script(type='text/ng-template' id="loader")
     span(ng-show="name") Loading {{name}}
 
 //custom select
-script(type='text/ng-template' id="customSelect")
+script(type='text/ng-template' id="CustomSelect")
   .select
     .btn.btn-default.select-ui
       span {{model}}
       i.fa.fa-caret-down  
     ul.select-menu
       li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item)").menu-item {{item}}
+
+//line chart
+script(type='text/ng-template' id="LineChart")
+  canvas(width="1032" height="432")

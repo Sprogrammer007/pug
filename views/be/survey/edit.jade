@@ -1,0 +1,76 @@
+extends ../layout
+block css
+
+block content
+
+  survey(sid="#{survey}" loaded="loaded")#survey
+
+block templates
+  script(type='text/ng-template' id="Survey")
+    loader(name="Survey Manager" ng-class="{loaded:loaded}")
+    .survey-builder(ng-class="{loaded:loaded}")
+      survey-page(pages="survey.pages" sid="sid" survey-ctrl="surveyCtrl" )
+    .mini-map.fadeIn(ng-controller="MiniMapController as mmapCtrl" ng-class="{active:surveyCtrl.togglePC}")
+      .mini-page(ng-repeat="p in survey.pages | orderBy: '+id'")
+        |P{{$index + 1}}
+        ul.connectedlist(ui-sortable="mmapCtrl.sortableOptions" ng-model="p.questions")
+          li.mini-question(ng-repeat="q in p.questions track by $index | orderBy: '+position'" )
+            i.handle.fa.fa-sort
+            | Q{{$index + 1}}
+      .btn.btn-default(ng-click="mmapCtrl.cancel()") Cancel
+      .btn.btn-save(ng-click="mmapCtrl.update()" ng-class="{disable:!mmapCtrl.changed}" ) Done
+    .question-builder(ng-class="{active:openQuestion()}")
+      .overlay(ng-click="surveyCtrl.toggleQuestion('Close')")
+      .wrapper
+        header
+          p Add a Question
+        question-form(q="question" survey-ctrl="surveyCtrl" um='updateMode' )
+
+  script(type='text/ng-template' id="surveyARBox")
+    .answer.fadeIn.animated
+      input(type='text' name="{{name}}" value="{{value}}")
+      button.close(type='button' ng-show="removeable" ng-click="removeItem()") &times;
+      i.edit-answer.fa.fa-pencil
+  script(type='text/ng-template' id="surveyPage")
+    include ./survey-page.jade
+  script(type='text/ng-template' id="surveyAnswerFrag")
+    include ./answer-frag.jade    
+  script(type='text/ng-template' id="surveyQuestion")
+    include ./survey-question.jade
+  script(type='text/ng-template' id="questionForm")
+   .tse-scrollable.body-content
+      .tse-content
+        form#qbForm(novalidate name='qbForm')
+          input(type='hidden', ng-model='q.survey_page_id' )
+          .question
+            label.qq Your Question
+            textarea#QuestionEditor.form-control(type='text', ng-model='q.question'  required)
+
+          .require.mb20
+            .ccb
+              label(for="require")
+                input(type='checkbox' ng-model='q.required' id="required")
+                span.cb Question is Required
+          .hint.mb20
+            label A Supporting Hint (Optional)
+            input.form-control(type='text',ng-model='q.hint', rows='1')
+          .answer-types.mb20
+            label.qt(data-toggle="tooltip" data-trigger="manual" title="Select Question Type") Select Question Type
+            div
+              input(ng-repeat-start="atypes in qbCtrl.answerTypes" ng-click='qbCtrl.updateAnswer()' ng-model='q.type' type="radio" id="{{atypes.id}}" value="{{atypes.value}}" required)
+              label(ng-repeat-end="" for="{{atypes.id}}" class="btn btn-default"){{atypes.name}}
+          .answers(ng-include="'surveyAnswerFrag'")
+    footer.submit-question
+      .pull-right
+        .error-box
+          .errors
+        button(ng-click="surveyCtrl.toggleQuestion('Close')").btn.btn-default Close
+        button(ng-class="{disable:isInValid()}" ng-hide="um" ng-click="qbCtrl.save($event, false)").btn.btn-save Add Another
+        button(ng-class="{disable:isInValid()}" ng-hide="um" ng-click="qbCtrl.save($event, true)").btn.btn-save Save
+        button(ng-class="{disable:isInValid()}" ng-show="um" ng-click="qbCtrl.update($event, true)").btn.btn-save Update
+      .clearfix
+
+block script
+  script(src='/be/js/services/survey.js')
+  script(src='/be/js/directives/survey.js')
+  script(src='/be/js/controllers/survey.js')

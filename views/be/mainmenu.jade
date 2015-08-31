@@ -1,0 +1,25 @@
+.main-menu
+
+  .main-menu-wrapper
+    .main-menu-helper
+      ul.menu-list
+        li.menu-item
+          a(href="/campaign/surveys" class=isActive(path, '/campaign/surveys')) Survey
+            span.mia-1
+        li.menu-item
+          a(href="/campaign/posts" class=isActive(path, '/campaign/posts')) Post
+            span.mia-1
+        li.menu-item
+          a() Post Category
+            span.mia-1
+
+  .sub-menu-wrapper
+    .sm-i1(ng-show="hasCampaign")
+      .sm-ss Account: {{username}}
+      .sm-ms
+        strong Campaign:
+        {{campaignName}}
+    .sm-i1(ng-hide="hasCampaign")
+      .sm-ls
+        strong Account:
+        {{username}}

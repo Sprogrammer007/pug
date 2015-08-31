@@ -15,9 +15,11 @@ function User () {
   }
 };
 
+User.inherits(Base);
 User.findBy = function(k, v, callback) {
   db.findBy(table, null, k, v, function(user) {
     if (user[0]) {
+
       return callback(Base.convertObject(new User(), user[0]));
     } else {
       return callback(false);
@@ -25,7 +27,7 @@ User.findBy = function(k, v, callback) {
   });
 };
 
-User.create = function(p, type) {
+User.create = function(p, type, callback) {
   p['role'] = type || 'User';
   p['password'] = bcrypt.hashSync(p['password']);
   db.create(table, p, null, function(user) {

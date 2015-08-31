@@ -9,7 +9,6 @@ var DBManager = require('../modules/database-manager')
 
 var table = 'posts';
 
-
 // post object
 
 function Post() {
@@ -117,18 +116,17 @@ Post.create = function(params, categories, user, callback) {
   });
 }
 
-Post.all = function(callback) {
-  Post.queries("All", null, function(posts){
-    var ps = [];
-    _.map(posts, function(p){
-      ps.push(Base.convertObject(new Post(), p));
+Post.all = function(k, v, callback) {
+  queries(k, v, function(posts){
+    var ps = _.map(posts, function(p){
+      return Base.convertObject(new Post(), p);
     });
     return callback(ps);
   });
-} 
+}; 
 
 Post.findBy = function(k, v, callback) {
-  Post.queries(k, v, function(result) {
+  queries(k, v, function(result) {
     var post = Base.convertObject(new Post(), result[0]);
    
     db.findBy('post_options', 'option_key, option_value', 'post_id', post.id, function(options){
@@ -142,7 +140,7 @@ Post.findBy = function(k, v, callback) {
   });
 }
 
-Post.queries = function(k, v, done) {
+function queries (k, v, done) {
 
   var query = "SELECT a.*," +
     " array_agg(c.category) AS categories" +

@@ -1,0 +1,67 @@
+.post-list-wrapper.plr-12(ng-class="{loaded:loaded}")
+  .post-list.box.box-lg
+    .post-list-control.plr-12 
+      custom-select(model="massAction"  items="massActions")
+      a.btn.btn-default(href="posts?act=new")
+        i.fa.fa-plus
+        |  Create Post
+    table.table.table-list
+      thead
+        tr
+          th.tcl-40 
+            .ccb
+              label
+                input(type="checkbox"
+                  ng-click="plistCtrl.selectAll($event)"
+                  ng-checked="plistCtrl.isSelectedAll()")
+                span.cb
+          th.tcl-40 
+          th(ng-click="orderBy('title')"
+            ng-class="{sorting:sortItem('title'), up:sortDirect('+'), down:sortDirect('-')}") Title
+            i.fa.pull-right
+          th(ng-click="orderBy('status')"
+            ng-class="{sorting:sortItem('status'), up:sortDirect('+'), down:sortDirect('-')}") Status
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('author')"
+            ng-class="{sorting:sortItem('author'), up:sortDirect('+'), down:sortDirect('-')}")  Author
+            i.fa.pull-right
+          th(ng-click="orderBy('comment_count')"
+            ng-class="{sorting:sortItem('comment_count'), up:sortDirect('+'), down:sortDirect('-')}")  Comments
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('posted_date')"
+            ng-class="{sorting:sortItem('posted_date'), up:sortDirect('+'), down:sortDirect('-')}")  Published Date
+            i.fa.pull-right
+          th.tar(ng-click="orderBy('modified_date')"
+            ng-class="{sorting:sortItem('modified_date'), up:sortDirect('+'), down:sortDirect('-')}")  Last Modified
+            i.fa.pull-right
+          th.tar Ends
+      tbody
+        tr(ng-repeat="post in posts | orderBy: currentOrder")
+          td.tcl-40 
+            .ccb
+              label()
+                input(type="checkbox" 
+                  ng-checked="plistCtrl.isSelected(post.id)"
+                  ng-click="plistCtrl.updateSelection($event, post.id)")
+                span.cb
+          td.tcl-40
+            input.toggle-switch(type="checkbox" id="s{{post.id}}" 
+              ng-click="plistCtrl.toggleStatus($index)"
+              ng-checked="plistCtrl.isPublished(post.status)"
+              )
+            label(for="s{{post.id}}")
+          td.sn-1
+            a(href="surveys?act=view&id={{post.id}}&campaign={{post.title}}") {{post.title}}
+            a(href="surveys?act=edit&id={{post.id}}&campaign={{post.title}}").sedit-1.pull-right
+              i.fa.fa-pencil
+          td.status(ng-class="{live:slistCtrl.isPublished(survey.status)}")
+            i.fa.fa-circle
+            | {{post.status}}
+          td.tar {{post.author}}
+          td {{post.comment_count | isZero}}
+          td.tar {{post.posted_date | date: 'MMM dd, yyyy' }}
+          td.tar {{post.modified_date | date: 'MMM dd, yyyy' }}
+          td.tar 
+    .survey-total-result
+
+

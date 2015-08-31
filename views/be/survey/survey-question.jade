@@ -1,0 +1,17 @@
+.question-box.animated.fadeIn
+  .control(ng-class="{disable:surveyCtrl.togglePC}")
+    .icon(title='Delete' ng-click="sqCtrl.removeQ(q.id, $index, $event)" )
+      i.fa.fa-trash 
+    .icon(title='Duplicate' ng-click="sqCtrl.dupQ($event)")
+      i.fa.fa-clone
+    .icon(title='Edit' ng-click="sqCtrl.editQ($event)")
+      i.fa.fa-pencil
+  .d-question(ng-bind-html="trustedQ" )
+  .d-hint
+    {{q.hint}}
+  .d-answer(ng-if="q.type === 'MC'")
+    ul
+      li(ng-repeat="a in q.answers track by $index")
+        .checkbox
+          input( type='radio')
+          label {{a}}

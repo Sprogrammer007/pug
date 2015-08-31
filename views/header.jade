@@ -14,18 +14,18 @@ header
 
         ul.nav.navbar-nav
            
-          li(class= (path === '/') ? 'active' : '')
+          li(class=isActive(path, '/'))
             a(href='/') Home           
-          li(class= (path === '/products') ? 'active' : '')
+          li(class=isActive(path, '/products'))
             a(href='/') Products   
-          li(class= (path === '/tool') ? 'active' : '')
+          li(class=isActive(path, '/tool'))
             a(href='/') Free Tools               
-          li(class= (path === '/blog') ? 'active' : '')
+          li(class=isActive(path, '/blog'))
             a(href='/blog') Blog               
-          li(class= (path === '/getanswers') ? 'active' : '')
+          li(class=isActive(path, '/getanswers'))
             a(href='/getanswers') Get Answers
         ul.nav.navbar-nav.navbar-right
           li
-            a(href='').btn.btn-account Create an Free Account         
+            a(href='/register').btn.btn-account Create an Free Account         
           li
             a(href='/login') Log In
