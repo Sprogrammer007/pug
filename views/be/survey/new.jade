@@ -3,73 +3,75 @@ extends ../layout
 block css
 
 block content
-  .new-survey-wrapper(ng-controller="NewSurveyController as nsCtrl" ng-class="{selected:nsCtrl.selected()}")
-    .box.box-lg
-      .box-header
-        .box-title What is the objective of your Survey?
-      .box-body
-        form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
-          ul.survey-objectives
-            li
-              input(type="radio" id="ob1" ng-model="nsCtrl.survey.objective" value="Avatar Discovery" required)
-              label(for="ob1")
-                | Discover your custom audiance avatar            
-            li
-              input(type="radio" id="ob2" ng-model="nsCtrl.survey.objective" value="Market Analyze" required)
-              label(for="ob2")
-                | Determine market size and competition        
-            li
-              input(type="radio" id="ob3" ng-model="nsCtrl.survey.objective" value="Product Discovery" required)
-              label(for="ob3")
-                | Discover new product or services             
-            li
-              input(type="radio" id="ob4" ng-model="nsCtrl.survey.objective" value="Customer Analyze" required)
-              label(for="ob4")
-                | Analyze and track customer insights             
-            li
-              input(type="radio" id="ob5" ng-model="nsCtrl.survey.objective" value="Customer Satisfaction" required)
-              label(for="ob5")
-                | Evaluate customer satisfaction              
-            li
-              input(type="radio" id="ob6" ng-model="nsCtrl.survey.objective" value="Brand Awareness" required)
-              label(for="ob6")
-                | Evaluate your brand awareness           
-            li
-              input(type="radio" id="ob7" ng-model="nsCtrl.survey.objective" value="Sales Force Effectiveness" required)
-              label(for="ob7")
-                | Evaluate your sales force effectiveness     
-            li
-              input(type="radio" id="ob8" ng-model="nsCtrl.survey.objective" value="Advertisement Effectiveness" required)
-              label(for="ob8")
-                | Evaluate your advertisement effectiveness       
-            li
-              input(type="radio" id="ob9" ng-model="nsCtrl.survey.objective" value="Employee Satisfaction" required)
-              label(for="ob9")
-                | Evaluate employee satisfaction               
-            li
-              input(type="radio" id="ob10" ng-model="nsCtrl.survey.objective" value="Marketing Efforts" required)
-              label(for="ob10")
-                | Gauge your marketing efforts                   
-            li
-              input(type="radio" id="ob11" ng-model="nsCtrl.survey.objective" value="Other" required)
-              label(for="ob11")
-                | Other    
-          .s1x3
-            .survey-name
-              label Enter Survey Name
-              input(ng-model="nsCtrl.survey.campaign_name" required)
-            .survey-type
-              p Choose how you would like your survey to be displayed.
-              .type-group
-                input(type="radio" id="t1" ng-model="nsCtrl.survey.type" value="Standard" required) 
-                label(for="t1").btn.btn-default Standard
-                  span Traditional long form survey with multiple questions and multiple pages.
-              .type-group
-                input(type="radio" id="t2" ng-model="nsCtrl.survey.type" value="Interactive" requireds)
-                label(for="t2").btn.btn-default  Question By Question
-                  span A more interactive survey that guides the user though the survey one question at a time.
-              .survey-submit
-                button(type="submit" ng-class="{disable:surveyForm.$invalid}").btn.btn-save Continue
+  new-survey
+  script(type='text/ng-template' id="NewSurvey")
+    .new-survey-wrapper(ng-class="{selected:nsCtrl.selected()}")
+      .box.box-lg
+        .box-header
+          .box-title {{title}}
+        .box-body
+          form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
+            ul.survey-objectives
+              li(ng-repeat="o in objectives")
+                input(type="radio" id="{{o.id}}" ng-model="survey.objective" value="{{o.value}}" required)
+                label(for="{{o.id}}")
+                  | {{o.name}}           
+            .s1x3
+              .survey-objective
+                a(ng-click="nsCtrl.redoObjective()").back
+                  i.fa.fa-angle-left
+                  |  Back 
+                .objective-icon
+                p {{survey.objective}}
+              .survey-name
+                .form-group
+                  .form-label Survey Name
+                    i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
+                  .form-choice
+                    input(text="text"  ng-model="survey.name" required) 
+                .form-group
+                  .form-label Description
+                    i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
+                  .form-choice
+                    ck-editor(ng-model="survey.description" required)
+                .form-group
+                  .form-label Brand Logo (Optional)
+                    i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
+                  .form-choice
+                    input(text="text" ng-model="survey.logo_url") 
+              .survey-type
+                .form-group
+                  .form-label Display Type
+                    i.fa.fa-info-circle(tool-tip="<p>Choose how you want your survey to be displayed to the users.</p>\
+                      <p>Use standard if you want would like a tradition survey with multiple pages.</p>\
+                      <p>Use 'One question at a time' for an more interactive experience.</p>:top")
+                  .form-choice
+                    label(for="t1").crb
+                      input(type='radio' ng-model='survey.type' id="t1" value="Standard" required)
+                      span.rb Standard    
+                    label(for="t2").crb
+                      input(type='radio' ng-model='survey.type' id="t2" value="Interactive" requireds)
+                      span.rb One question at a time.
+                .form-group
+                  .form-label Schedule
+                    i.fa.fa-info-circle(tool-tip="Choose to have your survey run continuosly or end on a schedule day.:top")
+                  .form-choice
+                    label(for="s1").crb
+                      input(type='radio' ng-model='survey.schedule' id="s1" value="Continuosly" required)
+                      span.rb Run survey continuosly      
+                    label(for="s2").crb
+                      input(type='radio' ng-model='survey.schedule' id="s2" value="Schedule" requireds)
+                      span.rb Set a start and end date
+                .form-group.survey-schedule(ng-show="nsCtrl.hasSchedule()")
+                  .form-label Start
+                  .form-choice
+                    date-picker(ng-model="survey.start_date" ng-required='nsCtrl.hasSchedule()')
+                  br
+                  .form-label End
+                  .form-choice
+                    date-picker(ng-model="survey.end_date"  min-date="survey.start_date" ng-required='nsCtrl.hasSchedule()')
+                .survey-submit
+                  button(type="submit" ng-class="{disable:surveyForm.$invalid}").btn.btn-save Continue
 
 block templates
 

@@ -32,11 +32,10 @@
         input(type='text' ng-keyup="qbCtrl.addItem($event, 'answer')" placeholder="Enter an answer")
         div(ng-click="qbCtrl.addItem($event, 'answer')").add-button Add Answer
   .row(ng-if="qbCtrl.showMultiAnswer()")  
-    .col-sm-offset-2.col-sm-10
-      .ccb
-        label(for="multianswer")
-          input(type='checkbox' ng-model='q.multi_answers' name='question[multi_answers]' id="multianswer")
-          span.cb Allow Multiple Answers
+    .col-sm-offset-2.col-sm-10    
+      label.ccb(for="multianswer")
+        input(type='checkbox' ng-model='q.multi_answers' name='question[multi_answers]' id="multianswer")
+        span.cb Allow Multiple Answers
   .answer-list.arlist
     ar-box(ng-repeat="answer in q.answers track by $index" 
       i="$index"

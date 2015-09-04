@@ -1,8 +1,8 @@
 ;(function () {
   angular.module("dfr")
   .factory("Survey", function SurveyFactory($resource) {
-    return $resource("/campaign/s/:id", {}, {
-      'update': { method: 'PUT', params: {}, isArray: false }
+    return $resource("/campaign/s/:id", {id: '@id'}, {
+      'update': { method: 'PUT', params: {}}
     });
   }); 
 

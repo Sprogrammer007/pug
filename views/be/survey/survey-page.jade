@@ -1,40 +1,52 @@
-.btn-verticle-group.survey-buttons(ng-class="{disable:surveyCtrl.togglePC}")
-  button.btn.btn-default
-    i.fa.fa-desktop   
-  button.btn.btn-default
-    i.fa.fa-laptop
-  button.btn.btn-default
-    i.fa.fa-mobile  
-  button.btn.btn-default(title='Sort Questions' data-placement="right" ng-click="surveyCtrl.toggleSort(true)")
-    i.fa.fa-arrows-alt
-    br
-    | Sort
-  button.add-page.btn.btn-default(ng-click="pageCtrl.addPage($event)" title="Add New Page" data-placement="right")
-    i.fa.fa-file-o
-    br
-    | Add Page  
-  button.add-page.btn.btn-default(ng-click="pageCtrl.addPage($event)" title="Publish Your Survey" data-placement="right")
-    i.fa.fa-floppy-o
-    br
-    | Publish
-
-
-.page-list
-  .page.box.box-md.fadeIn.animated(ng-repeat="page in pages | orderBy: '+id'" class="p-{{page.id}}")
-    .wrapper
-      .box-header.clearfix
-        .page-options.pull-right
-          button(ng-click="surveyCtrl.toggleQuestion('Open', page.id)" ng-class="{disable:surveyCtrl.togglePC}").add-question Add Question
-            i.fa.fa-angle-right
-          .remove-wrapper   
-            .remove-page(ng-click="pageCtrl.toggleRemove(page.id)" ng-class="{disable:surveyCtrl.togglePC}")
-              i.fa.fa-trash-o
-            .remove-options-wrapper(ng-class="{active:pageCtrl.openRemove(page.id)}")
+.box.survey-page
+  .box-header
+    .page-control.clearfix
+      
+      i.fa.fa-desktop   
+    
+      i.fa.fa-laptop
+    
+      i.fa.fa-mobile
+      ul.pull-right(ng-class="{disable:sbCtrl.togglePC}")    
+        li(tool-tip="Sort and move questions around:top" ng-click="sbCtrl.toggleSort(true)")
+          i.fa.fa-arrows-alt
+          | Sort Questions
+        li(tool-tip="Add question to currently active page:top" ng-click="sbCtrl.toggleQuestion('Open', currentActivePage.id)").add-question 
+          i.fa.fa-question-circle
+          | Add Question
+        li.add-page(ng-click="pgCtrl.addPage($event)")
+          i.fa.fa-file-o
+          | Add Page
+        li.remove-page(tool-tip="Remove the current page:top"  ng-click="pgCtrl.toggleRemove()")
+            .remove-button
+              i.fa.fa-trash
+              | Remove Page
+            .remove-options-wrapper(ng-class="{active:pgCtrl.rpanelState}")
               .remove-arrow
               .remove-options
-                span.item(ng-click="pageCtrl.removePage(page.id, $index, $event)" data-pid="{{page.id}}") Delete Page and Questions
-                span.item(ng-repeat="p in pages| orderBy: '+id'" ng-if="pageCtrl.notPage(p, page)") Delete & Move Questions To P{{$index+1}}
-            
-      .page-body
-        
-        <question ng-repeat="q in page.questions track by $index | orderBy: '+position'" q='q' togglepc="surveyCtrl.togglePC">
+                span.item(ng-click="pgCtrl.removePage($event)") Delete Page and Questions
+                span.item(ng-repeat="p in pages| orderBy: '+id'" ng-if="pgCtrl.notPage(p, page)") Delete & Move Questions To P{{$index+1}}
+
+  .page-body.clearfix
+    .page-nav.pull-left
+      .page-nav-item(ng-repeat="page in pages | orderBy: '+id'" 
+        ng-class="{active:pgCtrl.isCurrentPage(page)}"
+        ng-click="pgCtrl.selectPage(page)")
+        i.fa.fa-file
+        | Page {{$index + 1}}
+    .page.pull-left#survey-default-theme(ng-repeat="page in pages" 
+      ng-show="pgCtrl.isCurrentPage(page)" 
+      ng-class="{shrink:sbCtrl.togglePC}")
+      <question ng-repeat="q in page.questions track by $index | orderBy: '+position'" q='q'>
+
+
+    .mini-map(ng-controller="MiniMapController as mmapCtrl" ng-class="{active:sbCtrl.togglePC}")
+      .mini-page(ng-repeat="p in pages | orderBy: '+id'")
+        |P{{$index + 1}}
+        ul.connectedlist(ui-sortable="mmapCtrl.sortableOptions" ng-model="p.questions")
+          li.mini-question(ng-repeat="q in p.questions track by $index | orderBy: '+position'" )
+            i.handle.fa.fa-sort
+            | Q{{$index + 1}}
+      .btn.btn-default(ng-click="mmapCtrl.cancel()") Cancel
+      .btn.btn-save(ng-click="mmapCtrl.update()" ng-class="{disable:!mmapCtrl.changed}" ) Done
+          

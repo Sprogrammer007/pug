@@ -49,9 +49,13 @@ router.post('/s', function(req, res, next) {
 // Get Survey
 
 router.get('/s/:id', function (req, res, next) {
-  Survey.findBy('id', req.params.id, function(survey) {
-    return res.json(survey.toJson());
-  });
+  if (req.user) {
+    Survey.findBy('id', req.params.id, function(survey) {
+      return res.json(survey.toJson());
+    });
+  } else {  
+    return res.status(401).send('Not Logged In'); 
+  }
 });
 
 router.put('/s/:id', function (req, res, next) {
@@ -68,6 +72,7 @@ router.put('/s/:id', function (req, res, next) {
 router.post('/s/:id/q', function (req, res, next) {
   if (req.user) {
     SurveyQuestion.create(req.body, req.params.id, function(question) {
+      Survey.increment(req.params.id, 'question_count');
       return res.json(question); 
     });
   } else {  
@@ -104,17 +109,27 @@ router.delete('/s/q/:id', function(req, res, next) {
 
 //Create Page
 router.post('/s/:id/p', function (req, res, next) {
-  SurveyPage.create(req.body, req.params.id, function(page) {
-    return res.json(page);
-  });
+  if (req.user) {
+    SurveyPage.create(req.body, req.params.id, function(page) {
+      Survey.increment(req.params.id, 'page_count');
+      return res.json(page);
+    });
+  } else {  
+     return res.status(401).send('Not Logged In'); 
+  }
 });
 
 //Delete Page
 
 router.delete('/s/p/:id', function(req, res, next) {
-  SurveyPage.destroy(req.params.id, function(r) {
-    return res.json({'success': r});
-  });
+  if (req.user) {
+    SurveyPage.destroy(req.params.id, function(r) {
+      Survey.decrement(req.params.id, 'page_count');
+      return res.json({'success': r});
+    });
+  } else {  
+    return res.status(401).send('Not Logged In'); 
+  }
 });
 
 

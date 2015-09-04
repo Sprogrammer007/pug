@@ -55,12 +55,92 @@
     };
   });
 
-  app.directive('title', function() {
-    return function(scope, element) {
-      element.tooltip({container: element.parent()});
+  app.directive('toolTip', function() {
+    return function(scope, element, attrs) {
+      var title = attrs.toolTip.split(':')[0];
+      var placement = attrs.toolTip.split(':')[1];
+      element.tooltip({
+        title: title,
+        placement: placement,
+        container: '.main-content',
+        html: true,
+        template: '<div class="tooltip-custom" role="tooltip"><div class="tc-arrow"></div><div class="tooltip-inner"></div></div>'
+      });
       scope.$on('$destroy', function(){
         element.tooltip('destroy');
       });
+    };
+  });     
+
+  app.directive('ckEditor', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'CKEditor',
+      scope: {},
+      require: '?ngModel',
+      link: function(scope, element, attr, ngModel) {
+        var ck = CKEDITOR.replace(element.find('textarea')[0], {
+          toolbar: [{ name: 'basic', items: ['Bold', 'Italic', 'Underline'] }],
+          skin: 'BootstrapCK4,/CKSkins/bootstrapck/',
+          resize_enabled: false,
+          height: 200,
+          removePlugins : 'elementspath'  
+        });
+
+        ngModel.$render = function (value) {
+          ck.setData(ngModel.$modelValue);     
+        };
+
+        ck.on('pasteState', function () {
+          scope.$apply(function () {
+            ngModel.$setViewValue(ck.getData());
+          });
+        });
+      }
+    }
+  });
+
+  app.directive('datePicker', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'DatePicker',
+      scope: {
+        minDate: '='
+      },
+      require: '?ngModel',
+      link: function(scope, element, attr, ngModel) {
+        
+        var dp = element.find('input').datepicker({
+          prevText: '',
+          nextText: '',
+          constrainInput: true,
+          minDate: 0,
+          maxDate: '1y',
+          defaultDate: 0,
+          dateFormat: 'mm/dd/yy',
+          onSelect: function(date, obj) {
+            scope.$apply(function() {
+              ngModel.$setViewValue(date);
+            }, 1000)
+          }
+        });
+
+        ngModel.$render = function (value) {
+          dp.datepicker('setDate', ngModel.$modelValue) 
+        };
+
+        scope.$watch('minDate', function(n, o) {
+          if (n) {
+            var nextDate = new Date(n);
+            nextDate.setDate(nextDate.getDate() + 1);
+            dp.datepicker('option', 'minDate', nextDate);
+          }
+        })
+
+        element.find('i').click(function(e) {
+          dp.datepicker('show');
+        });
+      }
     };
   });   
 
@@ -74,22 +154,49 @@
       },
       link: function (scope, element, attrs) {
         var menu = element.find('.select-menu');
-    
+        var currentItem; 
         $timeout((function() {
           menu.css({
-            'min-width': menu.width() + 50
+            'min-width': menu.width() + 40
           });
         }), 1500);
 
-        scope.model = scope.items[0]; 
         scope.isSelected = function(item) {
+          item = angular.isObject(item) ? item.value : item;
           return scope.model === item;
-        }
+        };
+
 
         scope.select = function(item) {
-          scope.model = item;
+          if (angular.isObject(item)) {
+            scope.model = item.value;
+            scope.currentItem = item.name;
+          } else {
+            scope.model = item;
+            scope.currentItem = item;
+          }
+  
           element.find('.select').toggleClass('active');
-        }
+        };
+
+        scope.itemName = function(item) {
+          return angular.isObject(item) ? item.name : item;
+        };
+
+        scope.itemValue = function(item) {
+          return angular.isObject(item) ? item.value : item;
+        };
+
+        scope.$watch('model', function(n, o) {
+          if (n) {
+            scope.items.forEach(function(e, i) {
+              if (e.value === n) {
+                scope.currentItem = e.name;
+              };
+            });
+          }
+        })
+      
 
         jQuery('body').click(function(e) {
           var c = jQuery(e.target)

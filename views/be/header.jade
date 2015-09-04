@@ -1,32 +1,31 @@
 header#header
 
   nav.navbar
-    .navbar-header
-      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
-        span.sr-only Toggle navigation      
-        span.icon-bar    
-        span.icon-bar 
-        span.icon-bar   
-      a.logo(href="/")
-        img(src="/images/logo_orange.png")
+    a.navbar-brand(href="/")
+      img(src="/images/logo_orange.png")
 
-    #top-nav.collapse.navbar-collapse
-
-      ul.nav.navbar-nav
+    //- .navbar-header
+    //-   button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
+    //-     span.sr-only Toggle navigation      
+    //-     span.icon-bar    
+    //-     span.icon-bar 
+    //-     span.icon-bar   
+ 
+    //- #top-nav.collapse.navbar-collapse
          
-      if (user)  
-        ul.nav.navbar-nav.navbar-right
-          li.user-box
-            .user-icon
+    if (user)  
+      ul.nav.navbar-nav.pull-right
+        li.nav-item.user-box
+          .user-icon
 
-            span.username
-              | #{user.username}
-          li(class=isActive(path, '/'))
-            a(href='/') Home    
-     
-      else
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href='').btn.btn-account Create an Free Account         
-          li
-            a(href='/login') Log In
+          span.username
+            | #{user.username}
+        li.nav-item(class=isActive(path, '/'))
+          a(href='/') Home    
+   
+    else
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href='').btn.btn-account Create an Free Account         
+        li
+          a(href='/login') Log In

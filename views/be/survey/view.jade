@@ -5,7 +5,6 @@ block content
   loader(name="Survey Manager" ng-class="{loaded:loaded}")
   survey-dash(sid="currentID" loaded="loaded")#survey
 
-    
 block templates
   script(type='text/ng-template' id="SurveyDash")
     .survey-dash(ng-class="{loaded:loaded}")  
@@ -14,21 +13,22 @@ block templates
   script(type='text/ng-template' id="SurveyResults")
     include ./survey-results.jade
   script(type='text/ng-template' id="SurveyEdit")
-    .survey-edit-wrapper.plr-12
+    .survey-details-wrapper.view1s(ng-class="{loaded:loaded}")
       .survey-edit.box.box-lg
-        .box-header
+        .box-header.clearfix
           .box-title.pull-left 
-            | Campaign
+            | Survey
             input.toggle-switch(type='checkbox' id="a1")
             label(for="a1")
           .edit-buttons.pull-right
             .btn-group
-              .btn.btn-default
+              a(href="/campaign/surveys?act=edit&id={{survey.id}}&name={{survey.name}}").btn.btn-default
                 i.fa.fa-pencil    
               .btn.btn-default
                 i.fa.fa-trash
-          .clearfix
         .box-body
+          .elabel Survey Name:
+          .evar {{survey.name}}  
           .elabel Status:
           .evar 
             i.fa.fa-circle
@@ -38,7 +38,7 @@ block templates
           .elabel  Responses:
           .evar {{survey.response}}         
           .elabel  Survey Schedule:
-          .evar {{survey.created_date | date: 'MMM dd, yyyy'}}
+          .evar {{surveySchedule()}}
 
 block script
   script(src='/be/js/services/survey.js')

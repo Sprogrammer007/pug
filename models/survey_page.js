@@ -19,7 +19,6 @@ SurveyPage.inherits(Base);
 
 SurveyPage.create = function(p, id, callback) {
   p.survey_id = id;
-  var p = _.defaults(p, {type: "Questionaire"});
   db.create(table, p, null, function(sp) {
     return callback(Base.convertObject(new SurveyPage(), sp));
   });

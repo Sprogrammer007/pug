@@ -1,31 +1,31 @@
 header
   nav.navbar
-    .navbar-header
-      - if (!navOff)
-        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
-          span.sr-only Toggle navigation      
-          span.icon-bar    
-          span.icon-bar 
-          span.icon-bar   
-      a.logo(href="/")
-        img(src="/images/logo.png")
-    - if (!navOff)
-      #top-nav.collapse.navbar-collapse
+    a.navbar-brand(href="/")
+      img(src="/images/logo.png")
+    //- .navbar-header
+    //-   - if (!navOff)
+    //-     button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#top-nav')
+    //-       span.sr-only Toggle navigation      
+    //-       span.icon-bar    
+    //-       span.icon-bar 
+    //-       span.icon-bar   
 
-        ul.nav.navbar-nav
-           
-          li(class=isActive(path, '/'))
-            a(href='/') Home           
-          li(class=isActive(path, '/products'))
-            a(href='/') Products   
-          li(class=isActive(path, '/tool'))
-            a(href='/') Free Tools               
-          li(class=isActive(path, '/blog'))
-            a(href='/blog') Blog               
-          li(class=isActive(path, '/getanswers'))
-            a(href='/getanswers') Get Answers
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href='/register').btn.btn-account Create an Free Account         
-          li
-            a(href='/login') Log In
+    - if (!navOff)
+
+      ul.nav.navbar-nav
+         
+        li.nav-item(class=isActive(path, '/'))
+          a(href='/') Home           
+        li.nav-item(class=isActive(path, '/products'))
+          a(href='/') Products   
+        li.nav-item(class=isActive(path, '/tool'))
+          a(href='/') Free Tools               
+        li.nav-item(class=isActive(path, '/blog'))
+          a(href='/blog') Blog               
+        li.nav-item(class=isActive(path, '/getanswers'))
+          a(href='/getanswers') Get Answers
+      ul.nav.navbar-nav.pull-right
+        li.nav-item
+          a(href='/register').btn.btn-account Create an Free Account         
+        li.nav-item
+          a(href='/login') Log In

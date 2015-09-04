@@ -5,33 +5,97 @@
   });
 
   sc.controller('NewSurveyController', function($scope, Survey){
-    this.survey = new Survey();
+    $scope.objectives = surveyObjectives;
     this.selected = function() {
-      return !angular.isUndefined(this.survey.objective)
+      if (angular.isUndefined($scope.survey.objective)) {
+        return false
+      } 
+      $scope.title = "Give your survey a name and descriptions."
+      return true
+    };
+
+    this.redoObjective = function() {
+      $scope.survey.objective = undefined;
+    };
+
+    this.hasSchedule = function() {
+      return $scope.survey.schedule === 'Schedule'
     };
 
     this.createSurvey = function() {;
       if ($scope.surveyForm.$invalid) {return}
-      this.survey.$save(function(result) {
+      $scope.survey.$save(function(result) {
         if (result.data === 'Not Logged In') {
           window.location.replace(window.location.origin + "/login");
         } else {
-          this.survey = result;
-          window.location.replace(window.location.origin + "/campaign/survey/" + result.id + "/b");
+          $scope.survey = result;
+          window.location.replace(window.location.origin + 
+            "/campaign/surveys?act=edit&id=" + result.id + 
+            "&name=" + result.name);
         }
       });
-    }
+    };
+
   });
 
   sc.controller('SurveyResultsController', function($scope){
   });
 
-  sc.controller('SurveyListController', function($scope, Survey){
+  sc.controller('SurveyEditController', function($scope, $compile, $timeout, Survey){
+    this.objectives = surveyObjectives;
+    
+    this.hasSchedule = function() {
+      if ($scope.survey) {
+        return $scope.survey.schedule === 'Schedule'
+      }
+      return false
+    };
+
+    this.editSurvey = function(event) {
+      if ($scope.editMode) {
+        if ($scope.surveyForm.$valid && $scope.surveyForm.$dirty) {
+          updateSurvey(event)
+        } else {
+          $scope.editMode = false;
+          $scope.editState = ' Edit';  
+        }
+      } else {
+        $scope.editMode = false
+        $scope.editMode = true;
+        $scope.editState = ' Apply';
+      }
+    };
+
+    function updateSurvey(event) {
+      var element = jQuery(event.target);
+      element.append($compile("<loader></loader>")($scope));
+      var dirtySurvey = angular.copy($scope.survey);
+      delete dirtySurvey.pages
+      dirtySurvey.$update(function(r) {
+        $timeout(function() {
+          element.find('loader').remove()
+          $scope.surveyForm.$dirty = false;
+          $scope.editMode = false;
+          $scope.editState = ' Edit';
+        }, 1500);
+      });
+    }
+  });
+
+  sc.controller('SurveyListController', function($scope, $filter, Survey){
     $scope.$watch(function(scope) { return scope.massAction },
       function(n, o) {
         $scope.slistCtrl.massUpdate(n);
       }
     );
+
+    this.surveySchedule = function(s) {
+      var startDate = $filter('date')(s.start_date, 'MMM dd, yyyy');
+      if (s.schedule === 'Continuosly') {
+        return startDate + " -  Ongoing"
+      }
+      return startDate + " - " + $filter('date')(s.end_date, 'MMM dd, yyyy');
+    };
 
     this.massUpdate = function(action) {
       if (!this.isSelectedAll()) {
@@ -90,17 +154,15 @@
   sc.controller('SurveyChartController', function($scope) {
   });
 
-  sc.controller('SurveyController', function($scope, $compile, $timeout, Question, QPosition) {
+  sc.controller('SurveyBuilderController', function($scope, $compile, $timeout, Question, QPosition) {
     this.togglePC = false;
     this.clonedSurvey;
     this.toggleQuestion = function(state, id, q) {
-      if ($scope.togglePC) {return}
+      if (this.togglePC) {return}
       if (state === 'Close') {
-        CKupdate();
         $scope.question = $scope.newQuestion();
       } else {
         if (q) {
-          CKupdate(q.question);
           $scope.question = angular.copy(q);
           $scope.updateMode = true;
         } else {
@@ -132,7 +194,7 @@
       return true;
     }
   
-    this.toggleSort  = function(state) {
+    this.toggleSort = function(state) {
       if (state) {
         this.clonedSurvey = angular.copy($scope.survey)
       }
@@ -145,7 +207,7 @@
       var that = this;
 
       element.html($compile("<loader></loader>")($scope));
-      $timeout((function() {
+      $timeout(function() {
         $scope.question.$save({survey_id: $scope.sid}, function(q, r) {
           var pageID = parseInt(q.survey_page_id);
           $scope.survey.pages.pushWhen(q, function(e) { return e.id === pageID });
@@ -157,7 +219,7 @@
             $scope.question = $scope.newQuestion(pageID);
           }
         });
-      }), 1500);
+      }, 1500);
     };
 
     this.updateQuestion = function(event) {
@@ -165,7 +227,7 @@
       var element = jQuery(event.target);
       var button = element.html();
       element.html($compile("<loader></loader>")($scope));
-      $timeout((function() {
+      $timeout(function() {
         Question.update({id: $scope.question.id}, $scope.question, function(r) {
           var pageID = parseInt($scope.question.survey_page_id);
           $scope.survey.pages.forEach(function(e, i, a) {
@@ -176,64 +238,63 @@
           element.html(button);
           that.toggleQuestion('Close');
         });
-      }), 1500);
+      }, 1500);
     };
   });
 
-  sc.controller('SurveyPageController', function($scope, $sce, $timeout, SurveyPage) {
-    this.currentPage = new SurveyPage();
-    this.removetoggle;
+  sc.controller('SurveyPageController', function($scope, SurveyPage) {
+    this.newPage = new SurveyPage();
+    this.rpanelState;
 
-    this.toggleRemove = function(id) {
-      if ($scope.surveyCtrl.togglePC) {return}
-      if (this.removetoggle === id) {
-        return this.removetoggle = -1;
-      }
-      this.removetoggle = id;
-    };
-
-    this.openRemove = function(id) {
-      if ($scope.surveyCtrl.togglePC) {
-        this.removetoggle = -1;
-      }      
-      return (this.removetoggle === id);
+    this.isCurrentPage = function(page) {
+      return page === $scope.currentActivePage;
     }
 
-    this.addPage = function(event) { 
-      if ($scope.surveyCtrl.togglePC) {return}
-      jQuery(event.target).tooltip('destroy');
-      this.currentPage.$save({survey_id: $scope.sid}, function(p, r) {
-        $scope.pages.push(p);
-      });
-      this.currentPage = new SurveyPage();
+    this.selectPage = function(page) {
+      $scope.currentActivePage = page;
+    }
+
+    this.toggleRemove = function() {
+      if ($scope.sbCtrl.togglePC) {return}
+      if (this.rpanelState) {
+        return this.rpanelState = false;
+      }
+      this.rpanelState = true;
     };
 
-    this.removePage = function(id, i, event) {
-      if ($scope.surveyCtrl.togglePC) {return}
-      var element = $(event.target);
-      this.removetoggle = -1;
-      SurveyPage.remove({id: id}, function(r){
-        if (r.success ) {
-          element.parents('.p-' + element.data('pid'))
-          .removeClass('fadeIn').addClass('fadeOut');
+    this.addPage = function(event) { 
+      if ($scope.sbCtrl.togglePC) {return}
+      jQuery(event.target).tooltip('destroy');
+      this.newPage.$save({survey_id: $scope.sid}, function(p, r) {
+        if (angular.isUndefined($scope.currentActivePage)) {
+          $scope.currentActivePage = p;
+        }
+        $scope.pages.push(p);
+      });
+      this.newPage = new SurveyPage();
+    };
 
-          $timeout((function() {
-            $scope.pages.splice(i, 1);
-            $scope.$apply();
-          }), 1500);
+    this.removePage = function() {
+      if ($scope.sbCtrl.togglePC) {return}
+      var page = $scope.currentActivePage;
+      var i = $scope.pages.indexOf(page);
+      SurveyPage.remove({id: page.id}, function(r){
+        if (r.success ) {
+          $scope.pages.splice(i, 1);
+          $scope.currentActivePage = $scope.pages[0];
         }
       });
     };
 
-    this.notPage = function(p1, p2) {
-      return p1 != p2;
+    this.notPage = function(page) {
+      return page != $scope.currentActivePage;
     };
   });
 
   sc.controller('SurveyQuestionController', function($scope, $sce, Question) {
     $scope.trustedQ = $sce.trustAsHtml($scope.q.question);
     this.removeQ = function(id, i, event) {
-      if ($scope.togglePC) {return}
+      if ($scope.sbCtrl.togglePC) {return}
       Question.remove({id: id}, function(r) {
         if (r.success) {
           jQuery(event.target).parent().tooltip('destroy');
@@ -243,22 +304,35 @@
     };
 
     this.editQ = function(event) {
-      if ($scope.togglePC) {return}
-      $scope.toggleQuestion({state: 'Open', q: $scope.q});
+      $scope.sbCtrl.toggleQuestion('Open', null, $scope.q);
     };
     
     this.dupQ = function(event) {
-      if ($scope.togglePC) {return}
+      if ($scope.sbCtrl.togglePC) {return}
       delete $scope.q.id
       Question.save({survey_id: 1}, $scope.q, function(q) {
         $scope.page.questions.push(q)
       });
-      
+    };
+
+    this.isMultiChoice = function(type) {
+      return ['MC', 'YN'].indexOf(type) > -1
+    };    
+
+    this.isShort = function(type) {
+      return type === 'SA';
+    };
+
+    this.isLong = function(type) {
+      return type === 'LA';
+    };
+
+    this.isDropdown = function(type) {
+      return type === 'DD';
     };
   });
 
   sc.controller('MiniMapController', function($scope) {
-
     this.changed = false;
     var that = this;
     this.sortableOptions = {
@@ -272,12 +346,12 @@
 
     this.update = function() {
       if (this.changed) {
-        this.changed = $scope.surveyCtrl.updatePosition();
+        this.changed = $scope.sbCtrl.updatePosition();
       }
     };
 
     this.cancel = function() {
-      $scope.surveyCtrl.resetSurvey();
+      $scope.sbCtrl.resetSurvey();
     };
   });
 
@@ -299,6 +373,15 @@
         case 'YN':
           $scope.q.answers = ['Yes', 'No'];
           break;
+        case 'AGE':
+          $scope.q.answers = ['12 - 17', '18 - 24', 
+                              '25 - 34', '35 - 44',
+                              '45 - 54', '55 - 64',
+                              '65 - 74', '75+']
+          break;
+        case 'CONTACT':
+          $scope.q.answers = ['Name', 'Email'];
+          break;
         default:
           $scope.q.answers = [];
       }
@@ -309,12 +392,12 @@
     };
 
     this.showNewAnswer = function() {
-      return ['MC', 'DD', 'MRS'].indexOf($scope.q.type) > -1;
+      return ['MC', 'DD', 'MRS', 'CONTACT'].indexOf($scope.q.type) > -1;
     };
 
     this.showMultiAnswer = function() {
       var type = $scope.q.type;
-      return type === 'MC' || type === 'DD';
+      return type === 'MC';
     };
 
     this.showRemoveable = function() {
@@ -348,14 +431,6 @@
     };
   });
 
-  function CKupdate(data){
-    for ( instance in CKEDITOR.instances ){
-      CKEDITOR.instances[instance].updateElement();
-    }
-    data = data || '';
-    CKEDITOR.instances[instance].setData(data);
-  };
-
   var answerTypes = [
     { id: 'at-mc', name: 'Multiple Choice', value: 'MC'}, 
     { id: 'at-sa', name: 'Short Answer', value: 'SA' }, 
@@ -367,6 +442,20 @@
     { id: 'at-age', name: 'Age', value: 'AGE' }, 
     { id: 'at-contact', name: 'Name/Email', value: 'CONTACT' }, 
     { id: 'at-geo', name: 'Geographic', value: 'GEO' }
+  ];  
+
+  var surveyObjectives = [
+    { id: 'ob1', name: 'Discover your custom audiance avatar', value: 'Avatar Discovery'}, 
+    { id: 'ob2', name: 'Determine market size and competition', value: 'Market Analyze' }, 
+    { id: 'ob3', name: 'Discover new product or services', value: 'Product Discovery' }, 
+    { id: 'ob4', name: 'Analyze and track customer insights', value: 'Customer Analyze' }, 
+    { id: 'ob5', name: 'Evaluate customer satisfaction', value: 'Customer Satisfaction' },
+    { id: 'ob6', name: 'Evaluate your brand awareness', value: 'Brand Awareness' }, 
+    { id: 'ob7', name: 'Evaluate your sales force effectiveness', value: 'Sales Effectiveness' }, 
+    { id: 'ob8', name: 'Evaluate your advertisement effectiveness', value: 'Advertisement Effectiveness' }, 
+    { id: 'ob9', name: 'Evaluate employee satisfaction', value: 'Employee Satisfaction' }, 
+    { id: 'ob10', name: 'Gauge your marketing efforts', value: 'Marketing Efforts' },
+    { id: 'ob11', name: 'Other', value: 'Other'}
   ];
 })();
 

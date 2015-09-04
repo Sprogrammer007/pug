@@ -1,17 +1,29 @@
-.question-box.animated.fadeIn
-  .control(ng-class="{disable:surveyCtrl.togglePC}")
+.question-wrapper.animated.fadeIn
+  .control(ng-class="{disable:sbCtrl.togglePC}")
     .icon(title='Delete' ng-click="sqCtrl.removeQ(q.id, $index, $event)" )
       i.fa.fa-trash 
     .icon(title='Duplicate' ng-click="sqCtrl.dupQ($event)")
       i.fa.fa-clone
     .icon(title='Edit' ng-click="sqCtrl.editQ($event)")
       i.fa.fa-pencil
-  .d-question(ng-bind-html="trustedQ" )
-  .d-hint
+  .s-question(ng-bind-html="trustedQ" )
+  .s-hint
     {{q.hint}}
-  .d-answer(ng-if="q.type === 'MC'")
+  .s-answers(ng-if="sqCtrl.isMultiChoice(q.type)")
     ul
       li(ng-repeat="a in q.answers track by $index")
-        .checkbox
-          input( type='radio')
-          label {{a}}
+        .checkbox(ng-if="q.multi_answers")
+          input(type='checkbox' id="q{{q.id}}a{{$index}}")
+          label(for="q{{q.id}}a{{$index}}") {{a}}      
+        .radio(ng-if="!q.multi_answers")
+          input(type='radio' name="q{{q.id}}a" id="q{{q.id}}a{{$index}}")
+          label(for="q{{q.id}}a{{$index}}") {{a}}
+  .s-answer(ng-if="sqCtrl.isShort(q.type)")
+    input(type="text")  
+  .s-answer(ng-if="sqCtrl.isLong(q.type)")
+    textarea(type="text")  
+  .s-answer(ng-if="sqCtrl.isDropdown(q.type)")
+    .select
+      select
+        option(ng-repeat="a in q.answers track by $index")
+          | {{a}}

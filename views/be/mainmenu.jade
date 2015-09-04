@@ -1,5 +1,4 @@
 .main-menu
-
   .main-menu-wrapper
     .main-menu-helper
       ul.menu-list
@@ -12,14 +11,13 @@
         li.menu-item
           a() Post Category
             span.mia-1
-
   .sub-menu-wrapper
-    .sm-i1(ng-show="hasCampaign")
+    .sm-i1(ng-show="hasCampaign()")
       .sm-ss Account: {{username}}
       .sm-ms
         strong Campaign:
         {{campaignName}}
-    .sm-i1(ng-hide="hasCampaign")
+    .sm-i1(ng-hide="hasCampaign()")
       .sm-ls
         strong Account:
         {{username}}

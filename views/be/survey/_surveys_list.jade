@@ -16,8 +16,8 @@
                   ng-checked="slistCtrl.isSelectedAll()")
                 span.cb
           th.tcl-40 
-          th(ng-click="orderBy('campaign_name')"
-            ng-class="{sorting:sortItem('campaign_name'), up:sortDirect('+'), down:sortDirect('-')}") Campaign Name
+          th(ng-click="orderBy('name')"
+            ng-class="{sorting:sortItem('name'), up:sortDirect('+'), down:sortDirect('-')}") Survey Name
             i.fa.pull-right
           th(ng-click="orderBy('status')"
             ng-class="{sorting:sortItem('status'), up:sortDirect('+'), down:sortDirect('-')}") Status
@@ -51,8 +51,8 @@
               )
             label(for="s{{survey.id}}")
           td.sn-1
-            a(href="surveys?act=view&id={{survey.id}}&campaign={{survey.campaign_name}}") {{survey.campaign_name}}
-            a(href="surveys?act=edit&id={{survey.id}}&campaign={{survey.campaign_name}}").sedit-1.pull-right
+            a(href="surveys?act=view&id={{survey.id}}&name={{survey.name}}") {{survey.name}}
+            a(href="surveys?act=edit&id={{survey.id}}&name={{survey.name}}").sedit-1.pull-right
               i.fa.fa-pencil
           td.status(ng-class="{live:slistCtrl.isPublished(survey.status)}")
             i.fa.fa-circle
@@ -61,5 +61,5 @@
           td {{survey.amount_spent | currency : $ : 2}}
           td.tar {{survey.page_count | isZero  }}
           td.tar {{survey.question_count | isZero  }}
-          td.tar
+          td.tar {{slistCtrl.surveySchedule(survey)}}
     .survey-total-result

@@ -39,14 +39,24 @@ SurveyQuestion.findAllBy = function(k, v, callback) {
 };
 
 SurveyQuestion.create = function(p, survey_id, callback) {
+  var p = _.defaults(p, {multi_answers: false, required: false});
   p['survey_id'] = survey_id;
   p['answers'] = Serializer.serialize(p.answers);
   p['rating'] = Serializer.serialize(p.rating);
-
-  db.create(table, p, null, function(q) {
-    q.answers = Serializer.unserialize(q.answers);
-    q.ratings = Serializer.unserialize(q.rating);
-    return callback(Base.convertObject(new SurveyQuestion(), q));
+  
+  var query = "SELECT DISTINCT ON (position)" + 
+    " last_value(position) OVER wnd" + 
+    " FROM survey_questions WHERE survey_page_id=" +  p.survey_page_id + " AND parent_question IS NULL" +
+    " WINDOW wnd AS ( ORDER BY position ASC" +
+    " ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING);"
+  db.rawQuery(query, function(maxP) {
+    var pos =  _.isEmpty(maxP) ? 0 : _.first(maxP).last_value;
+    p['position'] = parseInt(pos) + 1;
+    db.create(table, p, null, function(q) {
+      q.answers = Serializer.unserialize(q.answers);
+      q.ratings = Serializer.unserialize(q.rating);
+      return callback(Base.convertObject(new SurveyQuestion(), q));
+    });
   });
 };
 

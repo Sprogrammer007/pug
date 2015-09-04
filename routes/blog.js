@@ -7,7 +7,7 @@
 // Blog
 
 router.get('/', function (req, res, next) {
-  Post.all(function(posts) {
+  Post.all('All', null, function(posts) {
     return res.render('blog/list', { 
       title: h.titleHelper('Blog'), 
       path: req.originalUrl, 

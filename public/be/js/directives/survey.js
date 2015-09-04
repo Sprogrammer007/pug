@@ -15,23 +15,43 @@
       link: function(scope, element) {     
         if (scope.sid) {
           Survey.get({id: scope.sid }).$promise.then(function(survey) {
-            $timeout((function() {
+            $timeout(function() {
               scope.survey = survey;
               scope.loaded = true;
-            }), 1500);
+            }, 1500);
           });
         } else {
           Survey.query(function(surveys) {
-            $timeout((function() {
+            $timeout(function() {
               scope.surveys = surveys;
               scope.loaded = true;
-            }), 1500);
+            }, 1500);
           });
         }
     
       },
       controller: 'SurveyDashController',
       controllerAs: "sdashCtrl"
+    }
+  });    
+
+  sd.directive('newSurvey', function(Survey, $timeout) {
+    return {
+      restrict: "E",
+      templateUrl: 'NewSurvey',
+      link: function(scope, element) {     
+        scope.survey = new Survey({start_date: new Date()});
+
+        scope.$watch('survey.schedule', function(n, o) {
+          if (n === 'Continuosly' && o === 'Schedule') {
+            scope.survey.start_date = new Date();
+            scope.survey.end_date = null;
+          };
+        });
+
+      },
+      controller: 'NewSurveyController',
+      controllerAs: "nsCtrl"
     }
   });  
 
@@ -96,23 +116,43 @@
     }
   });
 
-  sd.directive('surveyEdit', function(Survey, $timeout) {
+  sd.directive('surveyEdit', function(Survey, $sce, $filter, $timeout) {
     return {
       restrict: "E",
       templateUrl: 'SurveyEdit',
       scope: {
-        survey: '='
+        survey: '=',
+        loaded: '='
       },
       link: function(scope, element) {
-        console.log(scope)
-      }
+        scope.$watch('survey', function(n, o) {
+          if (n) {
+            scope.surveyDescip = $sce.trustAsHtml(n.description);
+          }
+        });
+       
+        scope.editMode = false;
+        scope.editState = ' Edit';
+
+        scope.surveySchedule = function() {
+          if (angular.isUndefined(scope.survey)) { return }
+          var s = scope.survey;
+          var startDate = $filter('date')(s.start_date, 'MMM dd, yyyy');
+          if (s.schedule === 'Continuosly') {
+            return startDate + " -  Ongoing"
+          }
+          return startDate + " - " + $filter('date')(s.end_date, 'MMM dd, yyyy');
+        };
+      },
+      controller: 'SurveyEditController',
+      controllerAs: 'seCtrl'
     }
   });
   
-  sd.directive('survey', function(Survey, Question, $timeout) {
+  sd.directive('surveyBuilder', function(Survey, Question, $timeout) {
     return {
       restrict: "E",
-      templateUrl: 'Survey',
+      templateUrl: 'SurveyBuilder',
       scope: {
         sid: '=',
         loaded: '='
@@ -123,10 +163,10 @@
         scope.updateMode = false;
   
         Survey.get({id: scope.sid }).$promise.then(function(survey) {
-          $timeout((function() {
+          $timeout(function() {
             scope.survey = survey;
             scope.loaded = true;
-          }), 1500);
+          }, 1500);
         });
 
         scope.openQuestion = function() {
@@ -139,8 +179,8 @@
           return new Question(defaults);
         };
       },
-      controller: 'SurveyController',
-      controllerAs: "surveyCtrl"
+      controller: 'SurveyBuilderController',
+      controllerAs: "sbCtrl"
     }
   });
 
@@ -156,18 +196,6 @@
       },
       link: function(scope, element) {
         $('.body-content').TrackpadScrollEmulator();
-
-        var QuestionEditor = CKEDITOR.replace( 'QuestionEditor', {
-          toolbar: [{ name: 'basic', items: ['Bold', 'Italic'] }],
-          skin: 'BootstrapCK4,/CKSkins/bootstrapck/',
-          resize_enabled: false,
-          height: 100,
-          removePlugins : 'elementspath'  
-        });
-
-        QuestionEditor.on('change', function( evt ) {
-          scope.q.question = evt.editor.getData();
-        });
 
         scope.isInValid = function() {
           var emptyA = scope.q.answers.isEmpty();
@@ -192,20 +220,24 @@
       restrict: "E",
       templateUrl: 'surveyPage',
       scope: {
-        pages: '=',
+        survey: '=',
         cq: '=',
         sid: '=',
-        surveyCtrl: '='
+        sbCtrl: '='
       },
       link: function(scope, element) { 
-        scope.$watch('pages', function(n, o) {
-          if (n != undefined && n.length === 0) {
-    
+        element.on('mouseenter', '.remove-options', function(e) {
+          e.stopPropagation();
+        });
+        scope.$watch('survey', function(n, o) {
+          if (n != undefined) {
+            scope.pages = scope.survey.pages
+            scope.currentActivePage = scope.pages[0];
           }
         });
       },
       controller: 'SurveyPageController',
-      controllerAs: 'pageCtrl'
+      controllerAs: 'pgCtrl'
     }
   });   
 

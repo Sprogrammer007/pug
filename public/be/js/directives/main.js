@@ -25,9 +25,9 @@
         username: '@'
       },
       link: function(scope, element) {
-        scope.campaignName = Params.campaign;
+        scope.campaignName = Params.name;
         scope.hasCampaign = function() {
-          if (scope.campaignName) {
+          if (scope) {
             return true
           }
           return false
@@ -48,7 +48,6 @@
       },
       link: function(scope, element) {
         scope.labels = ["January", "February", "March", "April", "May", "June", "July"]
-        console.log(scope)
         var ctx = element.find('canvas').get(0).getContext("2d");
         var data = {
           labels: ["January", "February", "March", "April", "May", "June", "July"],
