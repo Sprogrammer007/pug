@@ -67,7 +67,7 @@
         template: '<div class="tooltip-custom" role="tooltip"><div class="tc-arrow"></div><div class="tooltip-inner"></div></div>'
       });
       scope.$on('$destroy', function(){
-        element.tooltip('destroy');
+        element.tooltip('hide');
       });
     };
   });     
@@ -76,14 +76,16 @@
     return {
       restrict: 'E',
       templateUrl: 'CKEditor',
-      scope: {},
+      scope: {
+        height: '='
+      },
       require: '?ngModel',
       link: function(scope, element, attr, ngModel) {
         var ck = CKEDITOR.replace(element.find('textarea')[0], {
           toolbar: [{ name: 'basic', items: ['Bold', 'Italic', 'Underline'] }],
           skin: 'BootstrapCK4,/CKSkins/bootstrapck/',
           resize_enabled: false,
-          height: 200,
+          height: (scope.height || 200),
           removePlugins : 'elementspath'  
         });
 

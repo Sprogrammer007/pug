@@ -11,12 +11,11 @@ block templates
     .survey-dash(ng-class="{loaded:loaded}")  
       survey-chart()
       survey-list(surveys="surveys" loaded="loaded")
-      survey-edit(surveys="surveys" loaded="loaded")
   script(type='text/ng-template' id="SurveyList")
     include ./_surveys_list.jade
   script(type='text/ng-template' id="SurveyChart")
     include ./survey-chart.jade
-  script(type='text/ng-template' id="SurveyEdit")
+
 
 
 block script

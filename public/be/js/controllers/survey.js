@@ -51,18 +51,55 @@
       return false
     };
 
+    this.isPublished = function(status) {
+      return status === 'Published';
+    };
+
     this.editSurvey = function(event) {
       if ($scope.editMode) {
         if ($scope.surveyForm.$valid && $scope.surveyForm.$dirty) {
           updateSurvey(event)
         } else {
-          $scope.editMode = false;
-          $scope.editState = ' Edit';  
+          $scope.editMode = false; 
         }
       } else {
-        $scope.editMode = false
         $scope.editMode = true;
-        $scope.editState = ' Apply';
+      }
+    };
+
+    this.status = function(status) {
+      return (this.isPublished(status)) ? "Unpublished" : "Published"
+    }
+
+    this.publishClass = function(status) {
+      var btn = (this.isPublished(status)) ? "btn-warn" : "btn-success";
+      var disable = ($scope.editMode) ? 'disable' : '';
+      return btn + ' ' + disable
+    };
+
+    this.toggleStatus = function(status, showcode) {
+      var newStatus = this.status(status);
+      Survey.update({id: $scope.survey.id, status: newStatus}, function(r) {
+        $scope.survey.status = newStatus;
+        if (showcode && newStatus === 'Published') {
+          $scope.noty = false;
+          openPublishModal()
+        } 
+      });
+    };
+
+    this.openEmbed = function() {
+      $scope.noty = true;
+      openPublishModal()
+    }
+
+    function openPublishModal() {
+      var pModal = $('.main-content').find('.publish-wrapper');
+      if (pModal.length > 0) {
+        if (pModal.hasClass('open')) { return };
+        pModal.addClass('open');
+      } else {
+        $('.main-content').append($compile("<publish-modal id='pModal' noty='noty' survey='survey'></publish-modal>")($scope));
       }
     };
 
@@ -76,7 +113,6 @@
           element.find('loader').remove()
           $scope.surveyForm.$dirty = false;
           $scope.editMode = false;
-          $scope.editState = ' Edit';
         }, 1500);
       });
     }

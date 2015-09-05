@@ -9,80 +9,13 @@ block templates
     loader(name="Survey Manager" ng-class="{loaded:loaded}")
     .survey-builder.plr-12(ng-class="{loaded:loaded}")
       survey-page(survey="survey" sid="sid" sb-ctrl="sbCtrl" )
-    survey-edit(loaded="loaded" survey="survey")
-
+    survey-edit(loaded="loaded" survey="survey" page='edit')
     .question-builder(ng-class="{active:openQuestion()}")
       .overlay(ng-click="sbCtrl.toggleQuestion('Close')")
       .qb-wrapper
         header
           p Add a Question
         question-form(q="question" survey-ctrl="sbCtrl" um='updateMode' )
-  script(type='text/ng-template' id="SurveyEdit")
-    .survey-details-wrapper.edit1s(ng-class="{loaded:loaded}")
-      .survey-edit.box.box-lg
-        .box-header.clearfix
-          .box-title.pull-left 
-            | Survey Details
-          .edit-buttons.pull-right
-            .btn.btn-default.btn-edit(ng-click="seCtrl.editSurvey($event)")
-              i.fa.fa-pencil
-              span(ng-bind="editState") Edit
-            .btn.btn-publish(ng-class="{disable:editMode}")
-              i.fa.fa-floppy-o
-              |  Publish
-        .box-body
-          div(ng-if="!editMode")
-            .elabel Survey Name:
-            .evar {{survey.name}}   
-            .elabel Objective:
-            .evar {{survey.objective}}  
-            .elabel Brand Logo:
-            .evar
-              img(ng-if="survey.logo_url" class="survey-logo" ng-src="{{survey.logo_url}}")
-              span(ng-if="!survey.logo_url") None
-            .elabel  Survey Schedule:
-            .evar {{surveySchedule()}}
-            .elabel Description:
-            .evar(ng-bind-html="surveyDescip")
-          form(name="surveyForm")
-            div(ng-if="editMode")
-              .form-group
-                .form-label Survey Name
-                  i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
-                .form-choice
-                  input(text="text"  ng-model="survey.name" required)
-              .form-group
-                .form-label() Survey Objective
-                .form-choice
-                  custom-select(type="text"  model="survey.objective" items="seCtrl.objectives" reqiures=true)
-              .form-group
-                .form-label Description
-                  i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
-                .form-choice
-                  ck-editor(ng-model="survey.description" required)
-              .form-group
-                .form-label Brand Logo (Optional)
-                  i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
-                .form-choice
-                  input(text="text" ng-model="survey.logo_url") 
-              .form-group
-                .form-label Schedule
-                  i.fa.fa-info-circle(tool-tip="Choose to have your survey run continuosly or end on a schedule day.:top")
-                .form-choice(ng-if="editMode")
-                  label(for="s1").crb
-                    input(type='radio' ng-model='survey.schedule' id="s1" value="Continuosly" required)
-                    span.rb Run survey continuosly      
-                  label(for="s2").crb
-                    input(type='radio' ng-model='survey.schedule' id="s2" value="Schedule" requireds)
-                    span.rb Set a start and end date
-              .form-group.survey-schedule(ng-show="seCtrl.hasSchedule()")
-                .form-label Start
-                .form-choice
-                  date-picker(ng-model="survey.start_date" ng-required='seCtrl.hasSchedule()')
-                br
-                .form-label End
-                .form-choice
-                  date-picker(ng-model="survey.end_date"  min-date="survey.start_date" ng-required='nsCtrl.hasSchedule()')
   script(type='text/ng-template' id="surveyARBox")
     .answer.fadeIn.animated
       input(type='text' name="{{name}}" value="{{value}}")

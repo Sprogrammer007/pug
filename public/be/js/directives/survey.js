@@ -119,21 +119,26 @@
   sd.directive('surveyEdit', function(Survey, $sce, $filter, $timeout) {
     return {
       restrict: "E",
-      templateUrl: 'SurveyEdit',
+      templateUrl: 'surveys/editbox',
       scope: {
         survey: '=',
-        loaded: '='
+        loaded: '=',
+        page: '@'
       },
       link: function(scope, element) {
+        scope.noty = false;
         scope.$watch('survey', function(n, o) {
           if (n) {
             scope.surveyDescip = $sce.trustAsHtml(n.description);
+            scope.tyMessage = ($sce.trustAsHtml(n.thank_you || 'None'));
           }
         });
-       
-        scope.editMode = false;
-        scope.editState = ' Edit';
 
+        scope.editMode = false;
+        scope.isEditPage = function() {
+          return scope.page === 'edit'
+        }
+       
         scope.surveySchedule = function() {
           if (angular.isUndefined(scope.survey)) { return }
           var s = scope.survey;
@@ -161,7 +166,8 @@
         scope.question = new Question({ answers: [], rating: { ratings: [] } });
         scope.qPanel = 'Close';
         scope.updateMode = false;
-  
+        scope.noty = false;
+
         Survey.get({id: scope.sid }).$promise.then(function(survey) {
           $timeout(function() {
             scope.survey = survey;
@@ -261,7 +267,6 @@
         q: '=',
         removeable: '='
       },
-
       link: function(scope, element) {
         element.on('click', ".edit-answer, input", function(e) {
           var previous = $(this).parents('.a-list').find('.focus');
@@ -290,6 +295,25 @@
         return
       },
 
+    }
+  });
+
+  sd.directive('publishModal', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'surveys/publishmodal',
+      scope: {
+        survey: '=',
+        noty: '='
+      },
+      link: function(scope, element) {
+        scope.$watch('noty', function(n, o) {
+          console.log(n)
+        });
+        scope.close = function() {
+          element.find('.publish-wrapper').removeClass('open')
+        };
+      }
     }
   });   
 })();

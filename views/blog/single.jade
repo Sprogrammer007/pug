@@ -61,31 +61,32 @@ block content
     aside
       .post-optin-wrapper
         .container
-          .optin-box.optin-content.col-lg-8.col-lg-offset-2
-            - if (options.optins != undefined && options.optins.boptin != '')
-              | !{ptions.optins.boptin} 
-            - else
-              p.optin-title.text-center.text-uppercase
-                | [Interactive PDF] 30 Minute Website Planner
-              .row
-                .col-lg-6.col-sm-6.col-xs-6
-                  
-                  p.optin-description.text-left
-                    i.fa.fa-check(style="color: green;")
-                    |  Plan your entire small Business website in 30 minutes.                
-                  p.optin-description.text-left 
-                    i.fa.fa-check(style="color: green;")
-                    |  Edit it on your computer or print it out for your team.          
-                  p.optin-description.text-left 
-                    i.fa.fa-check(style="color: green;")
-                    |  Use the planner to reduce development time and cost.    
-                  p.optin-description.text-left 
-                    i.fa.fa-check(style="color: green;")
-                    |  Built highly effective Business website with this planner.
-                .col-lg-6.col-sm-6.col-xs-6.optin-image
-                  img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
-              .btn.btn-optin.boptin
-                | Download This Guide
+          .row
+            .optin-box.optin-content.col-lg-8.col-lg-offset-2
+              - if (options.optins != undefined && options.optins.boptin != '')
+                | !{ptions.optins.boptin} 
+              - else
+                p.optin-title.text-center.text-uppercase
+                  | [Interactive PDF] 30 Minute Website Planner
+                .row
+                  .col-lg-6.col-sm-6.col-xs-6
+                    
+                    p.optin-description.text-left
+                      i.fa.fa-check(style="color: green;")
+                      |  Plan your entire small Business website in 30 minutes.                
+                    p.optin-description.text-left 
+                      i.fa.fa-check(style="color: green;")
+                      |  Edit it on your computer or print it out for your team.          
+                    p.optin-description.text-left 
+                      i.fa.fa-check(style="color: green;")
+                      |  Use the planner to reduce development time and cost.    
+                    p.optin-description.text-left 
+                      i.fa.fa-check(style="color: green;")
+                      |  Built highly effective Business website with this planner.
+                  .col-lg-6.col-sm-6.col-xs-6.optin-image
+                    img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
+                .btn.btn-optin.boptin
+                  | Download This Guide
 
     include ./comments
     

@@ -24,6 +24,14 @@ router.get('/surveys', function (req, res, next) {
   }
 });
 
+router.get('/surveys/publishmodal', function(req, res, next) {
+  return res.render('be/survey/_publish_modal')
+});
+
+router.get('/surveys/editbox', function(req, res, next) {
+  return res.render('be/survey/_edit_box')
+});
+
 //Survey Api
 
 router.get('/s', function(req, res, next) {
@@ -51,7 +59,11 @@ router.post('/s', function(req, res, next) {
 router.get('/s/:id', function (req, res, next) {
   if (req.user) {
     Survey.findBy('id', req.params.id, function(survey) {
-      return res.json(survey.toJson());
+      if (parseInt(survey.user_id) === parseInt(req.user.id)) {
+        return res.json(survey.toJson());
+      } else {
+        return res.status(401).send('Not Logged In'); 
+      }
     });
   } else {  
     return res.status(401).send('Not Logged In'); 

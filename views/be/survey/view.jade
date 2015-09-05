@@ -9,36 +9,9 @@ block templates
   script(type='text/ng-template' id="SurveyDash")
     .survey-dash(ng-class="{loaded:loaded}")  
       survey-results()
-      survey-edit(survey="survey" loaded="loaded")
+      survey-edit(survey="survey" loaded="loaded" page="view")
   script(type='text/ng-template' id="SurveyResults")
     include ./survey-results.jade
-  script(type='text/ng-template' id="SurveyEdit")
-    .survey-details-wrapper.view1s(ng-class="{loaded:loaded}")
-      .survey-edit.box.box-lg
-        .box-header.clearfix
-          .box-title.pull-left 
-            | Survey
-            input.toggle-switch(type='checkbox' id="a1")
-            label(for="a1")
-          .edit-buttons.pull-right
-            .btn-group
-              a(href="/campaign/surveys?act=edit&id={{survey.id}}&name={{survey.name}}").btn.btn-default
-                i.fa.fa-pencil    
-              .btn.btn-default
-                i.fa.fa-trash
-        .box-body
-          .elabel Survey Name:
-          .evar {{survey.name}}  
-          .elabel Status:
-          .evar 
-            i.fa.fa-circle
-            | {{survey.status}}          
-          .elabel  Objective:
-          .evar {{survey.objective}}          
-          .elabel  Responses:
-          .evar {{survey.response}}         
-          .elabel  Survey Schedule:
-          .evar {{surveySchedule()}}
 
 block script
   script(src='/be/js/services/survey.js')
