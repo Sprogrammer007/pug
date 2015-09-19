@@ -8,46 +8,68 @@ block templates
   script(type='text/ng-template' id="SurveyBuilder")
     loader(name="Survey Manager" ng-class="{loaded:loaded}")
     .survey-builder.plr-12(ng-class="{loaded:loaded}")
-      survey-page(survey="survey" sid="sid" sb-ctrl="sbCtrl" )
+      survey-page(survey="survey" sb-ctrl="sbCtrl")
     survey-edit(loaded="loaded" survey="survey" page='edit')
     .question-builder(ng-class="{active:openQuestion()}")
       .overlay(ng-click="sbCtrl.toggleQuestion('Close')")
-      .qb-wrapper
-        header
-          p Add a Question
+      .box
+        .box-header
+          p Add Question
         question-form(q="question" survey-ctrl="sbCtrl" um='updateMode' )
   script(type='text/ng-template' id="surveyARBox")
     .answer.fadeIn.animated
-      input(type='text' name="{{name}}" value="{{value}}")
+      input(type='text' ng-model="item.value")
       button.close(type='button' ng-show="removeable" ng-click="removeItem()") &times;
       i.edit-answer.fa.fa-pencil
   script(type='text/ng-template' id="surveyPage")
     include ./survey-page.jade
-  script(type='text/ng-template' id="surveyAnswerFrag")
-    include ./answer-frag.jade    
   script(type='text/ng-template' id="surveyQuestion")
     include ./survey-question.jade
   script(type='text/ng-template' id="questionForm")
-   .tse-scrollable.body-content
+   .tse-scrollable.box-body
       .tse-content
         form#qbForm(novalidate name='qbForm')
-          .question
-            label.qq Your Question
-            ck-editor(ng-model='q.question' required)
-          .require.mb20    
-            label.ccb(for="required")
-              input(type='checkbox' ng-model='q.required' id="required")
-              span.cb Question is Required
-          .hint.mb20
-            label A Supporting Hint (Optional)
-            input.form-control(type='text',ng-model='q.hint', rows='1')
-          .answer-types.mb20
-            label.qt(data-toggle="tooltip" data-trigger="manual" title="Select Question Type") Select Question Type
-            div
-              input(ng-repeat-start="atypes in qbCtrl.answerTypes" ng-click='qbCtrl.updateAnswer()' ng-model='q.type' type="radio" id="{{atypes.id}}" value="{{atypes.value}}" required)
-              label(ng-repeat-end="" for="{{atypes.id}}" class="btn btn-default"){{atypes.name}}
-          .answers(ng-include="'surveyAnswerFrag'")
-    footer.submit-question
+          .form-group.answer-types
+            label.form-label.full
+              |  Select Question Type
+              i.fa.fa-info-circle(tool-tip="Select the type of answer for you question.:top")  
+            .form-choice.full
+              ul
+                li(ng-repeat="a in qbCtrl.answerTypes" ng-click="qbCtrl.updateAnswer(q.type)" )
+                  input(ng-model='q.type' type="radio" id="{{a.id}}" value="{{a.value}}" required)
+                  label(for="{{a.id}}" class="btn btn-default"){{a.name}}
+  
+          .form-group
+            label.form-label.full Your Question
+            .form-choice.full
+              ck-editor(ng-model='q.question' height="120" required)
+            .form-choice.full
+              label.ccb(for="required")
+                input(type='checkbox' ng-model='q.required' id="required")
+                span.cb Question is Required          
+          .form-group
+            label.form-label.full 
+              | Supporting Hint (Optional)
+              i.fa.fa-info-circle(tool-tip="Give a more detail explanation of the question.:top")  
+            .form-choice.full
+              input(type='text',ng-model='q.hint', rows='1')
+
+          .box-section
+            .form-group(ng-if="qbCtrl.showRating()")   
+              .form-label 
+                | Sub Questions
+                i.fa.fa-info-circle(tool-tip="Add an sub question for your matrix question:top")  
+              .form-choice
+                .input-group
+                  input(type='text' ng-keyup="qbCtrl.addItem($event, 'question')" placeholder="Enter an question")
+                  .input-addon.is-button(ng-click="qbCtrl.addItem($event, 'question')") Add Question
+              .question-list
+                ar-box(ng-repeat="subq in q.rating.subqs track by $index" 
+                  items="q.ratings.subqs"
+                  item="subq" 
+                  removeable=true)
+            include ./answer-frag.jade    
+    .submit-question
       .pull-right
         .error-box
           .errors

@@ -1,5 +1,5 @@
 ;(function() {
-  
+  "use strict"
   var sd = angular.module('dfrSurveysDirectives', [])
   
   sd.directive('surveyDash', function(Survey, $timeout) {
@@ -10,9 +10,10 @@
       scope: {
         loaded: '=',
         sid: '=',
-        mainCtrl: '='
+        mainCtrl: '=',
+        currentUser: '='
       },
-      link: function(scope, element) {     
+      link: function(scope, element) {   
         if (scope.sid) {
           Survey.get({id: scope.sid }).$promise.then(function(survey) {
             $timeout(function() {
@@ -28,7 +29,6 @@
             }, 1500);
           });
         }
-    
       },
       controller: 'SurveyDashController',
       controllerAs: "sdashCtrl"
@@ -41,7 +41,10 @@
       templateUrl: 'NewSurvey',
       link: function(scope, element) {     
         scope.survey = new Survey({start_date: new Date()});
-
+        scope.filterDPOptions =  {
+          minDate: 0,
+          maxDate: '1y'
+        }    
         scope.$watch('survey.schedule', function(n, o) {
           if (n === 'Continuosly' && o === 'Schedule') {
             scope.survey.start_date = new Date();
@@ -55,7 +58,7 @@
     }
   });  
 
-  sd.directive('surveyList', function(Survey, $timeout) {
+  sd.directive('surveyList', function() {
     return {
       restrict: "E",
       templateUrl: 'SurveyList',
@@ -68,8 +71,20 @@
         scope.currentOrder = '';
         scope.orderDirection = '';
         scope.massAction = '';
-        scope.massActions = ['All Surveys', 'Delete']
-        
+        scope.massActions = ['All Surveys', 'Archive']
+
+        scope.$watch('surveys', function(n, o) {
+          if (n) {
+            scope.totals = {responses: 0, amount: 0, pages: 0, questions: 0};
+            angular.forEach(n, function(v, k) {
+              scope.totals.responses += v.response  
+              scope.totals.amount +=  v.amount_spent  
+              scope.totals.pages +=  v.page_count
+              scope.totals.questions +=  v.question_count  
+            });
+          }
+        });
+
         scope.orderBy = function(item) {
           var direction = (scope.orderDirection === '+') ? '-' : '+'; 
           scope.orderDirection = direction;
@@ -90,33 +105,84 @@
     }
   });
   
-  sd.directive('surveyChart', function(Survey, $timeout) {
+  sd.directive('surveyChart', function(Response, DateFilter, ChartDefaults) {
     return {
       restrict: "E",
       templateUrl: 'SurveyChart',
       scope: {
+        currentUser: '=',
+        chartType: '='
       },
       link: function(scope, element) {
+        scope.legends = {};
+        scope.chartData = ChartDefaults.merge({
+          type: 'LineChart',
+          data: {
+            cols: [
+              {id: 'X', type: 'datetime'},
+              {id: 'Responses', label: 'Responses', type: 'number'}
+            ]
+          },
+          options: {
+            colors:  ['#F88B4D'],
+            hAxis: {
+              format: 'MMM d',
+              gridlines: {count: 10, color: 'transparent'}
+
+            }
+          }
+        });
+        scope.currentFilters = DateFilter.get();
+        scope.$watchCollection('currentFilters', function(n, o) {
+          Response.counts($.extend({id: 1}, n), function(r) {
+            scope.chartData.data.rows = r.data   
+            scope.legends.total = r.total
+          });
+        })
       },
       controller: 'SurveyChartController',
       controllerAs: 'scCtrl'
     }
   });  
 
-  sd.directive('surveyResults', function(Survey, $timeout) {
+  sd.directive('surveyResults', function(Response, $timeout, ChartDefaults) {
     return {
       restrict: "E",
       templateUrl: 'SurveyResults',
       scope: {
+        survey: '=',
+        loaded: '='
       },
       link: function(scope, element) {
+        scope.currentActiveSubQ = undefined;
+        scope.chartData = ChartDefaults.merge({
+          type: 'PieChart',
+          data: {
+            cols: [
+              {id: 'answer', type: 'string'},
+              {id: 'count', type: 'number'}
+            ]
+          },
+          options: {
+            height: 200,
+            chartArea: { width: '80%' , height: '90%'},
+            pieSliceTextStyle: {fontName: 'Oswald', fontSize: 14}       
+          }
+        });
+        scope.$watch('survey', function(n, o) {
+          if (angular.isUndefined(n)) { return }
+          Response.all({id: n.id}, function(questions) {
+            scope.questions = questions
+            scope.currentActiveQ = scope.questions[0];
+          });
+        });
       },
       controller: 'SurveyResultsController',
       controllerAs: 'srCtrl'
     }
   });
 
-  sd.directive('surveyEdit', function(Survey, $sce, $filter, $timeout) {
+  sd.directive('surveyEdit', function($sce, $filter) {
     return {
       restrict: "E",
       templateUrl: 'surveys/editbox',
@@ -134,10 +200,10 @@
           }
         });
 
+        scope.isPage = function(page) {
+          return page === scope.page
+        };
         scope.editMode = false;
-        scope.isEditPage = function() {
-          return scope.page === 'edit'
-        }
        
         scope.surveySchedule = function() {
           if (angular.isUndefined(scope.survey)) { return }
@@ -180,7 +246,7 @@
         };
 
         scope.newQuestion = function(pageID) {
-          var defaults = {answers: [], rating: { ratings: [] } };
+          var defaults = {answers: []};
           if (pageID) {defaults.survey_page_id = pageID};
           return new Question(defaults);
         };
@@ -201,7 +267,7 @@
         surveyCtrl: '='
       },
       link: function(scope, element) {
-        $('.body-content').TrackpadScrollEmulator();
+        $('.question-builder .box-body').TrackpadScrollEmulator();
 
         scope.isInValid = function() {
           var emptyA = scope.q.answers.isEmpty();
@@ -211,7 +277,8 @@
           };
           if (scope.q.type === 'MRS' && scope.q.rating.type === 'Custom') {
             var emptyR = scope.q.rating.ratings.isEmpty();
-            return (emptyA || emptyR)
+            var emptyQ = scope.q.rating.subqs.isEmpty();
+            return (emptyQ || emptyR)
           };
           return false 
         }
@@ -231,7 +298,7 @@
         sid: '=',
         sbCtrl: '='
       },
-      link: function(scope, element) { 
+      link: function(scope, element) {
         element.on('mouseenter', '.remove-options', function(e) {
           e.stopPropagation();
         });
@@ -251,6 +318,8 @@
     return {
       restrict: "E",
       templateUrl: 'surveyQuestion',
+      link: function(scope, element) {
+      },
       controller: 'SurveyQuestionController',
       controllerAs: 'sqCtrl'
     }
@@ -261,13 +330,12 @@
       restrict: "E",
       templateUrl: 'surveyARBox',
       scope: {
-        name: '@',
-        value: '=',
-        i: '=',
-        q: '=',
+        item: '=',
+        items: '=',
         removeable: '='
       },
       link: function(scope, element) {
+
         element.on('click', ".edit-answer, input", function(e) {
           var previous = $(this).parents('.a-list').find('.focus');
           if (previous) { $(previous).removeClass('focus'); }
@@ -281,18 +349,9 @@
         });   
 
         scope.removeItem = function () {
-          getItems(scope).splice(scope.i, 1);
-        };
-
-        scope.updateItem = function() {
-          getItems(scope)[scope.i] = 1;
-        };
-
-        function getItems(scope, type) {
-          var type = (scope.name.indexOf('answer') > -1) ? 'answer' : 'rating';
-          return((type === 'answer') ? scope.q.answers : scope.q.rating.ratings);
-        };
-        return
+          var i = scope.items.indexOf(scope.item);
+          scope.items.splice(i, 1);
+        };    
       },
 
     }
@@ -307,9 +366,6 @@
         noty: '='
       },
       link: function(scope, element) {
-        scope.$watch('noty', function(n, o) {
-          console.log(n)
-        });
         scope.close = function() {
           element.find('.publish-wrapper').removeClass('open')
         };

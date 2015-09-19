@@ -9,23 +9,25 @@ script(type='text/ng-template' id="loader")
 
 //custom select
 script(type='text/ng-template' id="CustomSelect")
-  .select
+  .select(ng-class="{active:opened}" ng-click="toggle()")
     .btn.btn-default.select-ui
       span {{currentItem || itemName(items[0])}}
       i.fa.fa-caret-down  
     ul.select-menu
-      li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item)").menu-item {{itemName(item)}}
-
-//line chart
-script(type='text/ng-template' id="LineChart")
-  canvas(width="1032" height="432")
+      li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item, $event)").menu-item {{itemName(item)}}
 
 //Date Picker
 script(type='text/ng-template' id="DatePicker")
   .datepicker
-    input(type="text" readonly)
-    i.fa.fa-calendar
+    div(ng-show="!inline")
+      input(readonly)
+      i.fa.fa-calendar
 
 //CKEditor
 script(type='text/ng-template' id="CKEditor")
   textarea
+
+//Context Menu
+script(type='text/ng-template' id="ContextMenu")
+  .context-menu-wrapper(ng-style="setPosition()" ng-class="{opened:opened}")
+    .context-menu.box.has-shadow(ng-transclude)

@@ -1,6 +1,6 @@
-.survey-details-wrapper(ng-class="{edit1s:isEditPage(), view1s:!isEditPage()}")
+.survey-details-wrapper
   .survey-edit.box.box-lg(ng-class="{loaded:loaded}")
-    .box-header.clearfix(ng-if="isEditPage()")
+    .box-header.clearfix(ng-if="isPage('edit')")
       .box-title.pull-left 
         | Survey Details
       .edit-buttons.pull-right
@@ -17,7 +17,7 @@
           i.fa.fa-power-off
           | &nbsp;
           span(ng-bind="seCtrl.status(survey.status)")            
-    .box-header.clearfix(ng-if="!isEditPage()")
+    .box-header.clearfix(ng-if="isPage('view')")
       .box-title.pull-left 
         | Survey
         input.toggle-switch(type='checkbox' id="a1"
@@ -30,7 +30,6 @@
             i.fa.fa-pencil    
           .btn.btn-default
             i.fa.fa-trash
-
 
     .box-body
       .survey-details(ng-if="!editMode")
@@ -56,7 +55,7 @@
         .elabel Gift Url
         .evar {{survey.reward_url || 'None'}}
       form(name="surveyForm")
-        div(ng-if="editMode && isEditPage()")
+        div(ng-if="editMode && isPage('edit')")
           .form-group
             .form-label Survey Name
               i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
@@ -65,7 +64,7 @@
           .form-group
             .form-label Survey Objective
             .form-choice
-              custom-select(type="text"  model="survey.objective" items="seCtrl.objectives" reqiures=true)
+              custom-select(model="survey.objective" items="seCtrl.objectives" reqiures=true)
           .form-group
             .form-label Description
               i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
@@ -99,3 +98,8 @@
               i.fa.fa-info-circle(tool-tip="Write something to thank the use for taking their time to complete your survey.:top")
             .form-choice
               ck-editor(ng-model="survey.thank_you")
+          .form-group
+            .form-label Gift Url
+              i.fa.fa-info-circle(tool-tip="Reward your user with a gift.:top")
+            .form-choice
+              input(type="text" ng-model="survey.reward_url")

@@ -3,13 +3,12 @@ block css
 
 block content
   loader(name="Survey Manager" ng-class="{loaded:loaded}")
-  survey-dash(loaded="loaded")#survey
-    
-    
+  survey-dash(loaded="loaded" current-user="currentUser")#survey
+
 block templates
   script(type='text/ng-template' id="SurveyDash")
     .survey-dash(ng-class="{loaded:loaded}")  
-      survey-chart()
+      survey-chart(current-user="currentUser")
       survey-list(surveys="surveys" loaded="loaded")
   script(type='text/ng-template' id="SurveyList")
     include ./_surveys_list.jade

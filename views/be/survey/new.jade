@@ -6,11 +6,13 @@ block content
   new-survey
   script(type='text/ng-template' id="NewSurvey")
     .new-survey-wrapper(ng-class="{selected:nsCtrl.selected()}")
-      .box.box-lg
-        .box-header
-          .box-title {{title}}
-        .box-body
-          form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
+      form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
+        .step
+          | Step 1: Create Survey
+        .box.box-lg
+          .box-header
+            .box-title Create Your Survey
+          .box-body
             ul.survey-objectives
               li(ng-repeat="o in objectives")
                 input(type="radio" id="{{o.id}}" ng-model="survey.objective" value="{{o.value}}" required)
@@ -28,7 +30,7 @@ block content
                   .form-label Survey Name
                     i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
                   .form-choice
-                    input(text="text"  ng-model="survey.name" required) 
+                    input.form-input(type="text"  ng-model="survey.name" required) 
                 .form-group
                   .form-label Description
                     i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
@@ -38,7 +40,7 @@ block content
                   .form-label Brand Logo (Optional)
                     i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
                   .form-choice
-                    input(text="text" ng-model="survey.logo_url") 
+                    input.form-input(type="text" ng-model="survey.logo_url") 
               .survey-type
                 .form-group
                   .form-label Display Type
@@ -65,14 +67,32 @@ block content
                 .form-group.survey-schedule(ng-show="nsCtrl.hasSchedule()")
                   .form-label Start
                   .form-choice
-                    date-picker(ng-model="survey.start_date" ng-required='nsCtrl.hasSchedule()')
+                    date-picker(ng-model="survey.start_date" 
+                      options="filterDPOptions"
+                      ng-required='nsCtrl.hasSchedule()')
                   br
                   .form-label End
                   .form-choice
-                    date-picker(ng-model="survey.end_date"  min-date="survey.start_date" ng-required='nsCtrl.hasSchedule()')
-                .survey-submit
-                  button(type="submit" ng-class="{disable:surveyForm.$invalid}").btn.btn-save Continue
-
+                    date-picker(ng-model="survey.end_date"  
+                      from-date="survey.start_date" 
+                      options="filterDPOptions"
+                      ng-required='nsCtrl.hasSchedule()')
+        .step.step2
+          | Step 2: Add A Thank You Message
+        .box.box-lg.ty-box 
+          .box-body 
+            .form-group
+              .form-label Thank You Message (Optional)
+                i.fa.fa-info-circle(tool-tip="Write something to thank the use for taking their time to complete your survey.:top")
+              .form-choice
+                ck-editor(ng-model="survey.thank_you")          
+            .form-group
+              .form-label Gift Url (Optional)
+                i.fa.fa-info-circle(tool-tip="Reward your user with a gift.:top")
+              .form-choice
+                input.form-input(type="text" ng-model="survey.reward_url")
+        .survey-submit.clearfix
+          button(type="submit" ng-class="{disable:surveyForm.$invalid}").pull-right.btn.btn-save Create Survey
 block templates
 
 

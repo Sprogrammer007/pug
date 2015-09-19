@@ -1,26 +1,24 @@
 .box.survey-page
-  .box-header
-    .page-control.clearfix
-      
+  .box-header.white
+    .page-control.control-box.clearfix
       i.fa.fa-desktop   
-    
       i.fa.fa-laptop
-    
       i.fa.fa-mobile
+
       ul.pull-right(ng-class="{disable:sbCtrl.togglePC}")    
         li(tool-tip="Sort and move questions around:top" ng-click="sbCtrl.toggleSort(true)")
           i.fa.fa-arrows-alt
-          | Sort Questions
+          |  Sort Questions
         li(tool-tip="Add question to currently active page:top" ng-click="sbCtrl.toggleQuestion('Open', currentActivePage.id)").add-question 
           i.fa.fa-question-circle
-          | Add Question
+          |  Add Question
         li.add-page(ng-click="pgCtrl.addPage($event)")
           i.fa.fa-file-o
-          | Add Page
+          |  Add Page
         li.remove-page(tool-tip="Remove the current page:top"  ng-click="pgCtrl.toggleRemove()")
             .remove-button
               i.fa.fa-trash
-              | Remove Page
+              |  Remove Page
             .remove-options-wrapper(ng-class="{active:pgCtrl.rpanelState}")
               .remove-arrow
               .remove-options
@@ -28,8 +26,19 @@
                 span.item(ng-repeat="p in pages| orderBy: '+id'" ng-if="pgCtrl.notPage(p, page)") Delete & Move Questions To P{{$index+1}}
 
   .page-body.clearfix
-    .page-nav.pull-left
-      .page-nav-item(ng-repeat="page in pages | orderBy: '+id'" 
+    context-menu
+      .menu-item(ng-click="pgCtrl.editQ()") 
+        i.edit-answer.fa.fa-pencil
+        | Edit
+      .menu-item(ng-click="pgCtrl.dupQ()") 
+        i.edit-answer.fa.fa-files-o
+        | Duplicate
+      .menu-item(ng-click="pgCtrl.removeQ()") 
+        i.edit-answer.fa.fa-trash-o
+        | Delete
+      
+    .nav-box.pull-left
+      .nav-box-item(ng-repeat="page in pages | orderBy: '+id'" 
         ng-class="{active:pgCtrl.isCurrentPage(page)}"
         ng-click="pgCtrl.selectPage(page)")
         i.fa.fa-file
@@ -37,7 +46,7 @@
     .page.pull-left#survey-default-theme(ng-repeat="page in pages" 
       ng-show="pgCtrl.isCurrentPage(page)" 
       ng-class="{shrink:sbCtrl.togglePC}")
-      <question ng-repeat="q in page.questions track by $index | orderBy: '+position'" q='q'>
+      <question ng-repeat="q in page.questions track by $index | orderBy: '+position'">
 
 
     .mini-map(ng-controller="MiniMapController as mmapCtrl" ng-class="{active:sbCtrl.togglePC}")

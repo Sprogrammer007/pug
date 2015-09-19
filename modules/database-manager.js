@@ -55,11 +55,13 @@ function DBManager() {
     });
   };
 
-  this.where = function(table, property, values, order, direction, callback) {
-    query = 'SELECT * FROM ' + table + ' WHERE ' + property + ' ORDER BY ' + order + ' ' + direction + ';';
+  this.where = function(table, select, where, values, order, direction, callback) {
+    query = 'SELECT ' + (select || "*") + ' FROM ' + 
+    table + ' WHERE ' + where + ' ORDER BY ' + 
+    order + ' ' + direction + ';';
 
     runQuery(query, values, function(err, results) {
-      return callback((err ?  false : results));
+      return callback(err ?  false : results);
     });
   };
 

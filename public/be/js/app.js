@@ -1,8 +1,9 @@
-;(function() {
+;(function(document, window) {
   "use strict";
+
   function prepareRequires() {
     var requires;
-    var defaults = ['ngResource', 'dfrMainDirectives', 'ui.sortable'];
+    var defaults = ['ngResource', 'dfrMainDirectives', 'ui.sortable', 'googlechart'];
     var location = window.location.pathname.split('/')[2];
     var name = location.charAt(0).toUpperCase() + location.slice(1);
     requires = defaults.concat(['dfr' + name + 'Directives', 'dfr' + name + 'Controllers'])
@@ -14,6 +15,7 @@
   .config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(false);
   }]);
+
 
   app.filter('range', function() {
     return function(input, start, total) {
@@ -107,35 +109,70 @@
       restrict: 'E',
       templateUrl: 'DatePicker',
       scope: {
-        minDate: '='
+        fromDate: '=',
+        inline: '=',
+        toDate: '=',
+        options: '='
       },
       require: '?ngModel',
       link: function(scope, element, attr, ngModel) {
-        
-        var dp = element.find('input').datepicker({
+        var e = scope.inline ? element.find('.datepicker') : element.find('input')
+        var doption = {
           prevText: '',
           nextText: '',
           constrainInput: true,
-          minDate: 0,
-          maxDate: '1y',
-          defaultDate: 0,
           dateFormat: 'mm/dd/yy',
           onSelect: function(date, obj) {
             scope.$apply(function() {
               ngModel.$setViewValue(date);
-            }, 1000)
-          }
-        });
+            }, 1000);
+          },
+          beforeShowDay: function(d, obj) {
+            var fromDate = new Date(scope.fromDate ? scope.fromDate : ngModel.$modelValue)
+            var toDate = new Date(scope.toDate ? scope.toDate : ngModel.$modelValue);
+            if (scope.options['minDate'] === 0 && d >= fromDate && d <= toDate) {
+              return [true, 'ui-range', '']
+            }
 
-        ngModel.$render = function (value) {
-          dp.datepicker('setDate', ngModel.$modelValue) 
+            if (scope.options['maxDate'] === 0 && d >= toDate && d <= fromDate) {
+
+              return [true, 'ui-range', '']
+            }         
+            return [true, '', ''];
+          }
         };
 
-        scope.$watch('minDate', function(n, o) {
-          if (n) {
+        var dp = e.datepicker($.extend(doption, scope.options));
+
+        ngModel.$render = function (value) {
+          dp.datepicker('option', 'minDate', scope.options.minDate);
+          dp.datepicker('option', 'maxDate', scope.options.maxDate);
+          dp.datepicker('setDate', ngModel.$modelValue); 
+        };
+
+        scope.$watch('fromDate', function(n, o) {
+          if (!n) { return }
+          if (scope.options['minDate'] === 0) {
             var nextDate = new Date(n);
             nextDate.setDate(nextDate.getDate() + 1);
             dp.datepicker('option', 'minDate', nextDate);
+            if (nextDate > new Date(ngModel.$modelValue)) {
+              ngModel.$setViewValue(nextDate);
+            }
+          }
+          if (scope.options['maxDate'] === 0) {
+            var prevDate = new Date(n);
+            prevDate.setDate(prevDate.getDate() - 1);
+            dp.datepicker('option', 'maxDate', prevDate);
+            if (prevDate < new Date(ngModel.$modelValue)) {
+              ngModel.$setViewValue(prevDate);
+            }
+          }
+        });
+
+        scope.$watch('toDate', function(n, o) {
+          if (n != o) {
+            dp.datepicker('refresh');
           }
         })
 
@@ -146,15 +183,122 @@
     };
   });   
 
+  app.directive('ngRightClick', function($parse) {
+    return function(scope, element, attrs) {
+      var fn = $parse(attrs.ngRightClick);
+      element.bind('contextmenu', function(event) {
+        scope.$apply(function() {
+          event.preventDefault();
+          fn(scope, {$event:event});
+        });
+      });
+    };
+  });
+
+  app.directive('contextMenu', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'ContextMenu',
+      transclude: true,
+      scope: {
+        'disabled': '='
+      },
+      link: function(scope, element) {
+        scope.open = false;
+        scope.disabled = false;
+        var position;
+        var menu = element.find('.context-menu'); 
+  
+        scope.$on('open.context.menu', function(e, event) {
+          position = getPosition(event);
+          if (scope.disabled) {return}
+          scope.opened = true;
+        });
+
+        scope.setPosition = function() {
+          if (!position) {return}
+          var left;
+          var top;
+          var menuW = menu.offsetWidth + 4;
+          var menuH = menu.offsetHeight + 4;
+          var windowW = window.innerWidth;
+          var windowH = window.innerHeight;
+
+          if ( (windowW - position.x) < menuW ) {
+            left = windowW - menuW + "px";
+          } else {
+            left = position.x + "px";
+          }
+
+          if ( (windowH - position.y) < menuH ) {
+            top = windowH - menuH + "px";
+          } else {
+            top = position.y + "px";
+          }
+          return {top: top, left: left}
+        };
+       
+        function getPosition(e) {
+          var posx = 0;
+          var posy = 0;
+
+          if (!e) var e = window.event;
+          
+          if (e.pageX || e.pageY) {
+            posx = e.pageX;
+            posy = e.pageY;
+          } else if (e.clientX || e.clientY) {
+            posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+
+          return {
+            x: posx,
+            y: posy
+          }
+        };
+
+        function handleKeyUpEvent(event) {
+          if (scope.opened && event.keyCode === 27) {
+            scope.$apply(function() {
+              scope.opened = false;
+            });
+          }
+        }
+
+        function handleClickEvent(event) {
+        
+          if (scope.opened && event.button !== 2 ) {
+            if (event.target === menu.get()[0]) {return}
+            scope.$apply(function() {
+              scope.opened = false;
+            });
+          }
+        }
+
+        $(document).bind('keyup', handleKeyUpEvent);
+        $(document).bind('click', handleClickEvent);
+
+        scope.$on('$destroy', function() {
+          $(document).unbind('keyup', handleKeyUpEvent);
+          $(document).unbind('click', handleClickEvent);
+        });
+      }
+    }
+  });
+
   app.directive('customSelect', function($timeout) {
     return {
       restrict: 'E',
       templateUrl: 'CustomSelect',
       scope: {
         model: '=',
-        items: '='
+        items: '=',
+        selected: '=',
+        change: '&',
       },
       link: function (scope, element, attrs) {
+        scope.opened = false;
         var menu = element.find('.select-menu');
         var currentItem; 
         $timeout((function() {
@@ -168,16 +312,20 @@
           return scope.model === item;
         };
 
-
-        scope.select = function(item) {
-          if (angular.isObject(item)) {
-            scope.model = item.value;
-            scope.currentItem = item.name;
-          } else {
-            scope.model = item;
-            scope.currentItem = item;
+        scope.toggle = function() {
+          if (scope.opened) {
+            return scope.opened = false;
           }
-  
+          scope.opened = true;
+        };
+
+        scope.select = function(item, event) {
+          scope.model = scope.itemValue(item)
+          scope.currentItem = scope.itemName(item)
+
+          if (scope.change) {
+            scope.change({m: scope.currentItem, e: event})
+          }
           element.find('.select').toggleClass('active');
         };
 
@@ -192,44 +340,41 @@
         scope.$watch('model', function(n, o) {
           if (n) {
             scope.items.forEach(function(e, i) {
-              if (e.value === n) {
-                scope.currentItem = e.name;
+              if (scope.itemValue(e) === n) {
+                scope.currentItem = scope.itemName(e);
               };
             });
-          }
-        })
-      
-
-        jQuery('body').click(function(e) {
-          var c = jQuery(e.target)
-          if (c.hasClass('select') || c.parents().hasClass('select')) { return };
-          if (jQuery('.select').hasClass('active')) {
-            jQuery('.select').removeClass('active');
+          } else {
+            scope.currentItem = scope.selected;
           }
         });
 
-        element.on('click', '.select-ui', function() {
-          jQuery(this).parent().toggleClass('active');
-        }); 
-
+        $(document).on('click', function(e) {
+          if (!$(e.target).closest('.select').length) {
+            if (scope.opened) {
+              scope.$apply(function() {
+                scope.opened = false;
+              });
+              return 
+            }
+          }
+        });
       }
     }
   });
+
 
   app.directive("include", function ($http, $templateCache, $compile) {
     return function(scope, element, attributes) {
       var templateUrl = scope.$eval(attributes.include);
       $http.get(templateUrl, {cache: $templateCache}).success(
         function (tplContent) {
-            element.replaceWith($compile(tplContent)(scope));
+          element.replaceWith($compile(tplContent)(scope));
         }
       );
     };
   });
 
-  app.service('Params', function() {
-    return window.parseQuery();
-  });
 
   Array.prototype.replaceWith = function(item, condition) {
     this.forEach(function(e, i, a) {
@@ -252,27 +397,4 @@
   };
 
 
-  window.parseQuery = function () {
-    // This function is anonymous, is executed immediately and 
-    // the return value is assigned to QueryString!
-    var query_string = {};
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-      var pair = vars[i].split("=");
-          // If first entry with this name
-      if (typeof query_string[pair[0]] === "undefined") {
-        query_string[pair[0]] = decodeURIComponent(pair[1]);
-          // If second entry with this name
-      } else if (typeof query_string[pair[0]] === "string") {
-        var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
-        query_string[pair[0]] = arr;
-          // If third or later entry with this name
-      } else {
-        query_string[pair[0]].push(decodeURIComponent(pair[1]));
-      }
-    } 
-      return query_string;
-  };
-
-})();
+})(document, window);

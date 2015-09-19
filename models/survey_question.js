@@ -2,6 +2,7 @@ var DBManager = require('../modules/database-manager')
   , db = new DBManager()
   , Base = require('./base')
   , Serializer = require('node-serialize')
+  , SurveyResponse = require('./survey_response')
   , _ = require('underscore');
 
 var table = 'survey_questions';
@@ -26,7 +27,7 @@ SurveyQuestion.findBy = function(k, v, callback) {
 };
 
 SurveyQuestion.findAllBy = function(k, v, callback) {
-  db.where(table,  k+'=$1', v, 'position', 'ASC', function(qs) {
+  db.where(table, null,  k+'=$1', v, 'position', 'ASC', function(qs) {
     var a = _.map(qs, function(q) {
       q.answers = _.values(Serializer.unserialize(q.answers));
       q.rating = Serializer.unserialize(q.rating);
@@ -35,6 +36,14 @@ SurveyQuestion.findAllBy = function(k, v, callback) {
 
     });
     return (callback) ? callback(a) : a;
+  });
+};
+
+SurveyQuestion.getAllResponse = function(survey_id, callback) {
+  SurveyQuestion.findAllBy('survey_id', survey_id, function(qs){
+    SurveyResponse.getAllResponse(survey_id, qs, function(result) {
+      return callback(result);
+    });
   });
 };
 
@@ -82,5 +91,6 @@ SurveyQuestion.destroy = function(id, callback) {
     return callback(r);
   });
 };
+
 
 module.exports = SurveyQuestion;

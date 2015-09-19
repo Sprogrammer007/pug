@@ -1,29 +1,22 @@
-.question-wrapper.animated.fadeIn
-  .control(ng-class="{disable:sbCtrl.togglePC}")
-    .icon(title='Delete' ng-click="sqCtrl.removeQ(q.id, $index, $event)" )
-      i.fa.fa-trash 
-    .icon(title='Duplicate' ng-click="sqCtrl.dupQ($event)")
-      i.fa.fa-clone
-    .icon(title='Edit' ng-click="sqCtrl.editQ($event)")
-      i.fa.fa-pencil
-  .s-question(ng-bind-html="trustedQ" )
-  .s-hint
+.question-wrapper.animated.fadeIn(ng-right-click="pgCtrl.openMenu($event, q, page)")
+  .question(ng-bind-html="trustedQ")
+  .hint
     {{q.hint}}
-  .s-answers(ng-if="sqCtrl.isMultiChoice(q.type)")
+  .choice(ng-if="sqCtrl.isMultiChoice(q.type)")
     ul
       li(ng-repeat="a in q.answers track by $index")
         .checkbox(ng-if="q.multi_answers")
           input(type='checkbox' id="q{{q.id}}a{{$index}}")
-          label(for="q{{q.id}}a{{$index}}") {{a}}      
+          label(for="q{{q.id}}a{{$index}}") {{a.value}}    
         .radio(ng-if="!q.multi_answers")
           input(type='radio' name="q{{q.id}}a" id="q{{q.id}}a{{$index}}")
-          label(for="q{{q.id}}a{{$index}}") {{a}}
-  .s-answer(ng-if="sqCtrl.isShort(q.type)")
+          label(for="q{{q.id}}a{{$index}}") {{a.value}}
+  .choice(ng-if="sqCtrl.isShort(q.type)")
     input(type="text")  
-  .s-answer(ng-if="sqCtrl.isLong(q.type)")
+  .choice(ng-if="sqCtrl.isLong(q.type)")
     textarea(type="text")  
-  .s-answer(ng-if="sqCtrl.isDropdown(q.type)")
+  .choice(ng-if="sqCtrl.isDropdown(q.type)")
     .select
       select
         option(ng-repeat="a in q.answers track by $index")
-          | {{a}}
+          | {{a.value}}

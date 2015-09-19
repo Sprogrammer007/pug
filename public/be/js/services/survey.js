@@ -1,4 +1,6 @@
 ;(function () {
+  "user strict"
+  
   angular.module("dfr")
   .factory("Survey", function SurveyFactory($resource) {
     return $resource("/campaign/s/:id", {id: '@id'}, {
@@ -28,6 +30,21 @@
         });
       }
     };
+  });  
+
+  angular.module("dfr")
+  .factory("Response", function ResponseFactory($resource) {
+    return $resource("/campaign/r/:id", {}, {
+      all: { 
+        method: 'GET', 
+        url: "/campaign/r/:id/all", 
+        isArray: true
+      },
+      counts: {
+        method: 'GET', 
+        url: "/campaign/r/:id/counts"
+      }
+    });
   });
 
 })();

@@ -23,11 +23,11 @@
         'clip': 'rect(0px ' + w + 'px 109px 0px)'
       });
    
-      $('.body-content').css({
+      $('.question-builder .box-body').css({
         'height': (h - 170)
       });
 
-      $('.body-content').TrackpadScrollEmulator('recalculate');
+      $('.question-builder .box-body').TrackpadScrollEmulator('recalculate');
       $('#mainBody').TrackpadScrollEmulator('recalculate');
     };
   }

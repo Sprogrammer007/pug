@@ -1,4 +1,7 @@
 ;(function() {
+
+  "user strict"
+
   var sc = angular.module('dfrSurveysControllers', []);
 
   sc.controller('SurveyDashController', function($scope){
@@ -10,7 +13,6 @@
       if (angular.isUndefined($scope.survey.objective)) {
         return false
       } 
-      $scope.title = "Give your survey a name and descriptions."
       return true
     };
 
@@ -38,7 +40,63 @@
 
   });
 
-  sc.controller('SurveyResultsController', function($scope){
+  sc.controller('SurveyResultsController', function($scope, $sce, ChartDefaults) {
+    this.safeQuestion = function(q) {
+      return $sce.trustAsHtml(q);
+    }
+
+    this.isCurrentQ = function(q) {
+      return q === $scope.currentActiveQ;
+    };
+
+    this.isCurrentSubQ = function(subq) {
+      return subq === $scope.currentActiveSubQ;
+    };
+
+    this.selectQ = function(q) {
+      if (this.isMRS(q.type)) {
+        $scope.currentActiveSubQ = q.rating.subqs[0];
+      }
+      $scope.currentActiveQ = q;
+    };
+
+    this.isChart = function(type) {
+
+      return $scope.chartData.type === type;
+    };    
+
+    this.changeChartType = function(type) {
+      return $scope.chartData.type = type;
+    };
+
+    this.getChartData = function(q) {
+      $scope.chartData.data.rows = q.data;
+      $scope.chartData.options.colors = ChartDefaults.colors(q.data.length);
+      return $scope.chartData
+    };    
+
+    this.getColor = function(i) {
+      if ($scope.chartData.type === 'BarChart') {
+        return ChartDefaults.color(0);
+      }
+      return ChartDefaults.color(i);
+    };
+
+    this.selectSubQ = function(subq) {
+      $scope.currentActiveSubQ = subq;
+    };
+
+    this.hasResponse = function(q) {
+      return q.responses != undefined;
+    };
+
+    this.isMRS = function(type) {
+      return type === 'MRS'
+    };
+
+    this.isMC = function(type) {
+      return ['MC', 'DD', 'YN'].indexOf(type) > -1;
+    }
   });
 
   sc.controller('SurveyEditController', function($scope, $compile, $timeout, Survey){
@@ -150,15 +208,15 @@
       });
     };
 
-    this.updateSelection = function($event, id) {
+    this.updateSelection = function($event, s) {
       var action = (event.target.checked ? 'add' : 'remove');
-      updateSelected(action, id);
+      updateSelected(action, s);
     };
 
     this.selectAll = function($event) {
       var action = (event.target.checked ? 'add' : 'remove');
-      $scope.surveys.forEach(function(e, i, a) {
-        updateSelected(action, e.id);
+      $scope.surveys.forEach(function(v, k, l) {
+        updateSelected(action, v);
       });
     };
 
@@ -166,20 +224,32 @@
       return $scope.isSelected(s.id) ? 'selected' : '';
     };
 
-    this.isSelected = function(id) {
-      return $scope.selected.indexOf(id) >= 0;
+    this.currentSurvey = function() {
+      if ($scope.selected){
+        var l = $scope.selected.length;
+        if (l === 0 || l > 1) { return }
+        return $scope.selected[0]
+      }
+    }
+
+    this.isSelected = function(s) {
+      return $scope.selected.indexOf(s) >= 0;
     };
 
-    //something extra I couldn't resist adding :)
     this.isSelectedAll = function() {
       if (!$scope.surveys) { return }
       return $scope.selected.length === $scope.surveys.length;
     };
 
-    function updateSelected(action, id) {
-      var index = $scope.selected.indexOf(id);
+    this.isSelectedSingle = function() {
+      if (!$scope.surveys) { return }
+      return $scope.selected.length === 1;
+    };
+
+    function updateSelected(action, s) {
+      var index = $scope.selected.indexOf(s);
       if (action === 'add' && index  === -1) {
-        $scope.selected.push(id);
+        $scope.selected.push(s);
       }
       if (action === 'remove' && index !== -1) {
         $scope.selected.splice(index, 1);
@@ -251,7 +321,6 @@
           if (close) {
             that.toggleQuestion('Close', pageID);
           } else {
-            CKupdate();
             $scope.question = $scope.newQuestion(pageID);
           }
         });
@@ -278,9 +347,43 @@
     };
   });
 
-  sc.controller('SurveyPageController', function($scope, SurveyPage) {
+  sc.controller('SurveyPageController', function($scope, $compile, Question, SurveyPage) {
     this.newPage = new SurveyPage();
     this.rpanelState;
+    this.currentItem;
+
+    this.openMenu = function(e, q, p) {
+      this.currentItem = {q: q, p: p};
+      $scope.$broadcast('open.context.menu', e)
+    };
+
+    this.removeQ = function() {
+      if ($scope.sbCtrl.togglePC) {return}
+      var that = this;
+      var i = this.currentItem.p.questions.indexOf(this.currentItem.q);
+      if ($scope.sbCtrl.togglePC) {return}
+      Question.remove({id: this.currentItem.q.id, 
+        survey_id: $scope.survey.id}, function(r) {
+        if (r.success && i > -1) {
+          that.currentItem.p.questions.splice(i, 1);
+        }
+      });
+    };
+
+    this.editQ = function() {
+      if ($scope.sbCtrl.togglePC) {return}
+      $scope.sbCtrl.toggleQuestion('Open', null, this.currentItem.q);
+    };
+    
+    this.dupQ = function(event) {
+      if ($scope.sbCtrl.togglePC) {return}
+      var that = this;
+      delete this.currentItem.q.id
+      Question.save({survey_id: this.currentItem.q.survey_id}, this.currentItem.q, function(q) {
+        that.currentItem.p.questions.push(q)
+      });
+    };
+
 
     this.isCurrentPage = function(page) {
       return page === $scope.currentActivePage;
@@ -301,7 +404,7 @@
     this.addPage = function(event) { 
       if ($scope.sbCtrl.togglePC) {return}
       jQuery(event.target).tooltip('destroy');
-      this.newPage.$save({survey_id: $scope.sid}, function(p, r) {
+      this.newPage.$save({survey_id: $scope.survey.id}, function(p, r) {
         if (angular.isUndefined($scope.currentActivePage)) {
           $scope.currentActivePage = p;
         }
@@ -314,7 +417,7 @@
       if ($scope.sbCtrl.togglePC) {return}
       var page = $scope.currentActivePage;
       var i = $scope.pages.indexOf(page);
-      SurveyPage.remove({id: page.id}, function(r){
+      SurveyPage.remove({id: page.id, survey_id: $scope.survey.id}, function(r){
         if (r.success ) {
           $scope.pages.splice(i, 1);
           $scope.currentActivePage = $scope.pages[0];
@@ -327,29 +430,8 @@
     };
   });
 
-  sc.controller('SurveyQuestionController', function($scope, $sce, Question) {
+  sc.controller('SurveyQuestionController', function($scope, $compile, $sce, Question) {
     $scope.trustedQ = $sce.trustAsHtml($scope.q.question);
-    this.removeQ = function(id, i, event) {
-      if ($scope.sbCtrl.togglePC) {return}
-      Question.remove({id: id}, function(r) {
-        if (r.success) {
-          jQuery(event.target).parent().tooltip('destroy');
-          $scope.page.questions.splice(i, 1);
-        }
-      });
-    };
-
-    this.editQ = function(event) {
-      $scope.sbCtrl.toggleQuestion('Open', null, $scope.q);
-    };
-    
-    this.dupQ = function(event) {
-      if ($scope.sbCtrl.togglePC) {return}
-      delete $scope.q.id
-      Question.save({survey_id: 1}, $scope.q, function(q) {
-        $scope.page.questions.push(q)
-      });
-    };
 
     this.isMultiChoice = function(type) {
       return ['MC', 'YN'].indexOf(type) > -1
@@ -404,22 +486,38 @@
       $scope.surveyCtrl.updateQuestion(event, close)
     };
 
-    this.updateAnswer = function() {
+    this.updateAnswer = function(type) {
       switch ($scope.q.type) {
         case 'YN':
-          $scope.q.answers = ['Yes', 'No'];
+          $scope.q.answers = [{id:'A01', value: 'Yes'}, {id:'A02', value: 'No'}];
+          $scope.q.rating = undefined;
           break;
         case 'AGE':
-          $scope.q.answers = ['12 - 17', '18 - 24', 
-                              '25 - 34', '35 - 44',
-                              '45 - 54', '55 - 64',
-                              '65 - 74', '75+']
+          $scope.q.answers = [
+            {id:'A01', value: '12 - 17'},
+            {id:'A02', value: '18 - 24'}, 
+            {id:'A03', value: '25 - 34'}, 
+            {id:'A04', value: '35 - 44'}, 
+            {id:'A05', value: '45 - 54'}, 
+            {id:'A06', value: '55 - 64'}, 
+            {id:'A07', value: '65 - 74'}, 
+            {id:'A08', value: '75+'}
+          ]
+          $scope.q.rating = undefined;
+          break;
+        case 'MRS':
+          $scope.q.answers = [];
+          $scope.q.rating = {};
+          $scope.q.rating.ratings = [];
+          $scope.q.rating.subqs = [];
           break;
         case 'CONTACT':
-          $scope.q.answers = ['Name', 'Email'];
+          $scope.q.answers = [{id:'A01', value: 'Name'}, {id:'A02', value: 'Email'}];
+          $scope.q.rating = undefined;
           break;
         default:
           $scope.q.answers = [];
+          $scope.q.rating = undefined;
       }
     };
 
@@ -427,22 +525,22 @@
       return $scope.q.type === 'MRS';
     };
 
-    this.showNewAnswer = function() {
-      return ['MC', 'DD', 'MRS', 'CONTACT'].indexOf($scope.q.type) > -1;
+    this.showAnswer = function() {
+      return ['MC', 'DD', 'CONTACT'].indexOf($scope.q.type) > -1;
     };
 
     this.showMultiAnswer = function() {
-      var type = $scope.q.type;
-      return type === 'MC';
+      return $scope.q.type === 'MC';
     };
 
     this.showRemoveable = function() {
-      var type = $scope.q.type;
-      return type !== 'YN';
+      return $scope.q.type !== 'YN';
     };
 
     this.showRatingType = function(type) {
-      return $scope.q.rating.type === type;
+      if ($scope.q.rating) {
+        return $scope.q.rating.type === type;
+      }
     };
 
     this.addItem = function($event, type) {
@@ -454,15 +552,31 @@
       if ($event.type === 'keyup' && $event.keyCode !== 13) {
         return false;
       }
-      getItems($scope, type).push(input.val());
+
+      getItem($scope, type).push(prepareAnswer(type, input.val()))
       input.val('');
     };
 
-    function getItems (scope, type) {
+    function prepareAnswer(type, val) {
+      var t = type.charAt(0).toUpperCase();
+      var key = t + Math.floor((Math.random() * 1000) + 1);
+      var item = {};
+      item['value'] = val;
+      item['id'] = key;
+      return item;
+    }
+
+    function getItem(scope, type) {
       if (type === 'answer') {
-        return scope.q.answers;
-      } else {
-        return scope.q.rating.ratings;
+        return scope.q.answers
+      }
+
+      if (type === 'rating') {
+        return scope.q.rating.ratings
+      }
+
+      if (type === 'question') {
+        return scope.q.rating.subqs
       }
     };
   });

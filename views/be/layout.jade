@@ -26,7 +26,7 @@ html(ng-app='dfr')
       #globalWrapper
         #mainBody.tse-scrollable
             .tse-content
-              main-menu(username="#{user.username}")
+              main-menu(current-user="currentUser")
               .main-content
                 block content
     script(type='text/ng-template' id="MainMenu")
@@ -41,13 +41,15 @@ html(ng-app='dfr')
     script(src='/js/trackpad-scroll.min.js')
     script(src='/js/tether.min.js')
     script(src='/js/bootstrap.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')  
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.js')
     script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')
     script(src='/be/js/ui.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js')
     script(src='/be/js/app.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.0.11/ng-google-chart.js')
     script(src='/be/js/directives/main.js')
+    script(src='/be/js/services/main.js')
     script(src='/be/js/angular.sort.min.js')
     block script
 

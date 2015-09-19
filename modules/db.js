@@ -119,6 +119,8 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     SCHEDULE       VARCHAR(25), \
     TYPE           VARCHAR(20), \
     STATUS         VARCHAR(60), \
+    PUBLISHED      BOOL, \
+    UPDATED_AFTER_PUBLISHED  BOOL, \
     CREATED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
     START_DATE     TIMESTAMP, \
     END_DATE       TIMESTAMP \
@@ -136,10 +138,11 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     SURVEY_PAGE_ID  BIGINT, \
     QUESTION        TEXT, \
     HINT            VARCHAR(255), \
-    ANSWERS         TEXT, \
-    RATING          TEXT, \
+    ANSWERS         JSON, \
+    RATING          JSON, \
     MULTI_ANSWERS   BOOL, \
     REQUIRED        BOOL, \
+    ALLOW_OTHER     BOOL, \
     LOGIC           VARCHAR(255), \
     POSITION        INT, \
     TYPE            VARCHAR(60), \
@@ -151,8 +154,7 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     ID              SERIAL PRIMARY KEY NOT NULL, \
     SURVEY_ID       BIGINT, \
     USER_ID         BIGINT, \
-    QUESTION_ID     BIGINT, \
-    ANSWERS         TEXT, \
+    ANSWERS         JSON, \
     RESPONSE_IP     VARCHAR(50), \
     RESPONSE_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
   ); \

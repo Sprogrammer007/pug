@@ -1,10 +1,10 @@
 var express = require('express')
   , h = require('../../modules/application_helpers') // Helpers
   , router = express.Router()
-  , passport = require('passport')
   , Survey = require('../../models/survey')
   , SurveyPage = require('../../models/survey_page')
-  , SurveyQuestion = require('../../models/survey_question');
+  , SurveyQuestion = require('../../models/survey_question')
+  , SurveyResponse = require('../../models/survey_response');
 
 // Builder
 
@@ -22,6 +22,17 @@ router.get('/surveys', function (req, res, next) {
     req.flash('error', "please login!");
     return res.redirect('/login');  
   }
+});
+
+router.get('/survey/:id', function (req, res, next) {
+  Survey.findBy('token', req.params.id, function(survey) {
+     return res.render('be/survey/show', {
+      title: h.titleHelper("Survey " + survey.token),
+      path: req.originalUrl,
+      isMobile: h.is_mobile(req),
+      survey: survey
+    });
+  });
 });
 
 router.get('/surveys/publishmodal', function(req, res, next) {
@@ -94,7 +105,7 @@ router.post('/s/:id/q', function (req, res, next) {
 
 //Update Question
 
-router.patch('/s/q/:id', function (req, res, next) {
+router.put('/s/q/:id', function (req, res, next) {
   SurveyQuestion.findBy('id', req.params.id, function(q) {
     q.update(req.body, function(r) {
       return res.json({'success': r});
@@ -113,10 +124,15 @@ router.post('/s/qo', function (req, res, next) {
 
 //Delete Question
 
-router.delete('/s/q/:id', function(req, res, next) {
-  SurveyQuestion.destroy(req.params.id, function(r) {
-    return res.json({'success': r});
-  });
+router.delete('/s/:sid/q/:id', function(req, res, next) {
+  if (req.user) {
+    SurveyQuestion.destroy(req.params.id, function(r) {
+      Survey.decrement(req.params.sid, 'page_count', 1);
+      return res.json({'success': r});
+    });
+  } else {  
+    return res.status(401).send('Not Logged In'); 
+  }
 });
 
 //Create Page
@@ -133,10 +149,10 @@ router.post('/s/:id/p', function (req, res, next) {
 
 //Delete Page
 
-router.delete('/s/p/:id', function(req, res, next) {
+router.delete('/s/:sid/p/:id', function(req, res, next) {
   if (req.user) {
     SurveyPage.destroy(req.params.id, function(r) {
-      Survey.decrement(req.params.id, 'page_count');
+      Survey.decrement(req.params.sid, 'page_count', 1);
       return res.json({'success': r});
     });
   } else {  
@@ -144,6 +160,28 @@ router.delete('/s/p/:id', function(req, res, next) {
   }
 });
 
+//Get Response
 
+router.get('/r/:id/all', function(req, res, next) {
+  if (req.user) {
+    SurveyQuestion.getAllResponse(req.params.id, function(r) {
+      return res.json(r);
+    }) 
+  } else {  
+    return res.status(401).send('Not Logged In'); 
+  }
+});
+
+//Get All Response for User Count
+
+router.get('/r/:id/counts', function(req, res, next) {
+  if (req.user) {
+    SurveyResponse.allCounts(req.params.id, req.query, function(r) {
+      return res.json(r);
+    }); 
+  } else {  
+    return res.status(401).send('Not Logged In'); 
+  }
+});
 
 module.exports = router;

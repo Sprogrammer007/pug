@@ -1,7 +1,6 @@
 /*! jQuery UI - v1.11.4 - 2015-08-21
 * http://jqueryui.com
 * Includes: core.css, draggable.css, datepicker.css, theme.css
-* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS%2CTahoma%2CVerdana%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=gloss_wave&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=highlight_soft&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=glass&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=glass&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=glass&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=diagonals_thick&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=diagonals_thick&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=flat&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px
 * Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
 
 .ui-helper-hidden {
@@ -60,18 +59,26 @@
   cursor: default !important;
 }
 
-.ui-state-disabled  span {
+.ui-state-disabled span {
   color: #E3E3E3;
+}
+
+td.ui-range.ui-state-disabled span {
+  color: #333;
 }
 
 td a.ui-state-active, 
 td.ui-datepicker-today a.ui-state-active {
-  background-color: #F6B77F;
-  color: #333;
+  background-color: #F67C09;
+  color: #FFF;
+}
+
+td.ui-range {
+  background-color: rgba(246, 168, 117, 0.4);
 }
 
 td.ui-datepicker-today a {
-  background-color: #7896D8;
+  background-color: #17D262;
   color: #FFF;
 }
 
@@ -176,11 +183,13 @@ td a.ui-state-hover {
 
 .ui-datepicker td {
     border: 0;
-    padding: 1px;
+    padding: 0;
+    margin: 0;
 }
 .ui-datepicker td span, .ui-datepicker td a {
     display: block;
     padding: .2em;
+    margin: 0;
     text-align: center;
     text-decoration: none;
 }
@@ -264,14 +273,12 @@ td a.ui-state-hover {
 }
 .ui-widget {
     font-family: inherit;
-    font-size: 1.1em;
+    font-size: 0.9em;
 }
-.ui-widget .ui-widget {
-    font-size: 1em;
-}
+
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 .ui-widget-content {
   border: solid 1px #dcdee3;

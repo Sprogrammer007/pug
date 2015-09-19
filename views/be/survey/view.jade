@@ -8,8 +8,8 @@ block content
 block templates
   script(type='text/ng-template' id="SurveyDash")
     .survey-dash(ng-class="{loaded:loaded}")  
-      survey-results()
-      survey-edit(survey="survey" loaded="loaded" page="view")
+      survey-results(survey="survey" loaded="loaded")
+      survey-edit(survey="survey" loaded="loaded" page='view')
   script(type='text/ng-template' id="SurveyResults")
     include ./survey-results.jade
 

@@ -1,45 +1,51 @@
-.answer-wrapper.scale-ratings.clearfix(ng-if="qbCtrl.showRating()")     
-  .row
-    .tag.col-sm-2 Rating Type
-    .col-sm-10
+.box-section.scale-ratings.clearfix(ng-if="qbCtrl.showRating()")     
+  .form-group
+    .form-label
+      | Rating Type
+      i.fa.fa-info-circle(tool-tip="Choose the type of rating for your matrix question.:top") 
+    .form-choice
       .btn-group
         input(type='radio' ng-model='q.rating.type' data-toggle='numeric' id='numeric' value='Numeric' required)  
         label(for='numeric').btn.btn-default Numeric Scale
         input(type='radio' ng-model='q.rating.type' data-toggle='custom' id='custom' value='Custom' required)     
         label(for='custom').btn.btn-default Custom
-  .row.numeric(ng-show="qbCtrl.showRatingType('Numeric')")
-    .tag.col-sm-2 Max Rating
-    .col-sm-10
+  .form-group(ng-show="qbCtrl.showRatingType('Numeric')")
+    .form-label 
+      | Max Rating
+      i.fa.fa-info-circle(tool-tip="All numeric rating ranges from 1 to 10.:top") 
+    .form-choice
       <custom-select model='q.rating.max' items="[] | range:3:10" ></custom-select>
-  .row.custom(ng-show="qbCtrl.showRatingType('Custom')")
-    .tag.col-sm-2 Add Rating
-    .col-sm-10
-      .ib.form-control
+  .form-group(ng-show="qbCtrl.showRatingType('Custom')")
+    .form-label
+      | Add Rating
+      i.fa.fa-info-circle(tool-tip="Add a custom rating. Example 'Not Satisfied, Satisfied, Very Satisfied'.:top")  
+    .form-choice
+      .input-group
         input(type='text' ng-keyup="qbCtrl.addItem($event, 'rating')" placeholder="Enter an rating")
-        div(ng-click="qbCtrl.addItem($event, 'rating')").add-button Add Rating
-  .rating-list.arlist
+        .input-addon.is-button(ng-click="qbCtrl.addItem($event, 'rating')") Add Rating
+  .rating-list
     ar-box(ng-repeat="rating in q.rating.ratings track by $index" 
-      i="$index"
-      q='q'
-      name="question[rating][ratings]" 
-      value="rating" 
-      removeable="true") 
-.answer-wrapper.clearfix
-  .row(ng-if="qbCtrl.showNewAnswer()")   
-    .tag.col-sm-2 Answer
-    .col-sm-10
-      .ib.form-control
+      items='q.rating.ratings'
+      item="rating" 
+      removeable=true) 
+.answer-wrapper.clearfix(ng-if="qbCtrl.showAnswer()")   
+  .form-group
+    .form-label 
+      | Possible Answers
+      i.fa.fa-info-circle(tool-tip="Enter an answer and hit enter or click the add answer button.:top")  
+    .form-choice
+      .input-group
         input(type='text' ng-keyup="qbCtrl.addItem($event, 'answer')" placeholder="Enter an answer")
-        div(ng-click="qbCtrl.addItem($event, 'answer')").add-button Add Answer
-  .row(ng-if="qbCtrl.showMultiAnswer()")  
-    .col-sm-offset-2.col-sm-10    
+        .input-addon.is-button(ng-click="qbCtrl.addItem($event, 'answer')") Add Answer
+    .form-label
+    .form-choice(ng-if="qbCtrl.showMultiAnswer()")     
       label.ccb(for="multianswer")
         input(type='checkbox' ng-model='q.multi_answers' name='question[multi_answers]' id="multianswer")
-        span.cb Allow Multiple Answers
-  .answer-list.arlist
+        span.cb 
+          | Allow Multiple Answers  
+          i.fa.fa-info-circle(tool-tip="Check if the user is allow to select multiple answers for this question.:top")  
+  .answer-list
     ar-box(ng-repeat="answer in q.answers track by $index" 
-      i="$index"
-      q='q'
-      name="question[answer]" 
-      value="answer" 
+      items="q.answers"
+      item="answer" 
       removeable="qbCtrl.showRemoveable()")

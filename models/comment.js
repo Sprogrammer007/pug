@@ -132,7 +132,7 @@ function renderComment(depth, replies, results) {
 
 // Render the comments
 Comment.render = function(k, v, callback) {
-  db.where(table, k + "=" + v + " AND approved='Approved'", null, 'comment_date', 'DESC', function(comments){
+  db.where(table, null, k + "=$1 AND approved=$2", [v, 'Approved'], 'comment_date', 'DESC', function(comments){
     if (_.isEmpty(comments)) {
       return callback(false);
     } else {

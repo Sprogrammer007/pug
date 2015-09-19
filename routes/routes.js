@@ -5,6 +5,7 @@ var express = require('express')
   , order = require('./order')
   , landing = require('./landing')
   , survey = require('./be/survey')
+  , campaign = require('./be/campaign')
   , post = require('./be/post')
   , comment = require('./be/comments')
   , postcat = require('./be/post_category')
@@ -19,6 +20,7 @@ app.use('/blog', blog);
 app.use('/lp', landing);
 
 app.use('/campaign', survey);
+app.use('/campaign', campaign);
 app.use('/campaign', post);
 app.use('/campaign', postcat);
 app.use('/campaign', comment);

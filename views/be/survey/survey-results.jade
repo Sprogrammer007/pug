@@ -1,2 +1,71 @@
 .survey-results-wrapper.plr-12
-  .survey-results.box.box-lg
+  .survey-results.box.box-lg(ng-class="{loaded:loaded}")
+    .box-header.white
+      .control-box.clearfix
+        ul.pull-right()    
+          li.charts-buttons(tool-tip="" ng-class="{active:srCtrl.isChart('BarChart')}"
+            ng-click="srCtrl.changeChartType('BarChart')")
+            i.fa.fa-bar-chart()     
+          li.charts-buttons(tool-tip="" ng-class="{active:srCtrl.isChart('PieChart')}"
+            ng-click="srCtrl.changeChartType('PieChart')")
+            i.fa.fa-pie-chart()
+          li()
+            i.fa.fa-file-o
+            |  Print Results
+
+    .box-body.clearfix
+      .nav-box.left
+        .nav-box-item(ng-repeat="q in questions"
+          ng-class="{active:srCtrl.isCurrentQ(q)}"
+          ng-click="srCtrl.selectQ(q)")
+          i.fa.fa-file.pull-left
+          | Question {{$index + 1}}
+      .results-body.pull-left(ng-repeat="q in questions track by $index" 
+          ng-if="srCtrl.isCurrentQ(q)")
+        .has-response(ng-if="srCtrl.hasResponse(q)")
+          .response-type.mrs(ng-if="srCtrl.isMRS(q.type)")
+            .subqs-nav.nav-box.right
+              .nav-box-item(ng-repeat="subq in q.rating.subqs" 
+                ng-class="{active:srCtrl.isCurrentSubQ(subq)}"
+                ng-click="srCtrl.selectSubQ(subq)")
+                span.arrow-l
+                | Sub Question {{$index + 1}}
+
+            .responses-subqs-body(ng-repeat="subq in q.rating.subqs" ng-if="srCtrl.isCurrentSubQ(subq)")
+              .response-chart-box
+                .graph-wrapper 
+                  .graph-legends.vertical
+                      .legend-item(ng-repeat="item in q.responses.subqs[subq.id].data")
+                        i.fa.fa-circle-o(ng-style="{color: srCtrl.getColor($index)}")
+                        | {{item.c[0].v | limitTo : 10 }} 
+                div(google-chart chart="srCtrl.getChartData(q.responses.subqs[subq.id])")  
+                span.stats-bottom
+                  .stats-item
+                    span.statsL Total Responses: 
+                    span.statsV {{q.responses.total}}
+                  div.stats-item(ng-repeat="r in q.rating.ratings")
+                    span.statsL {{r.value}}: 
+                    span.statsV {{q.responses.subqs[subq.id][r.value]}}
+                 
+       
+          .responses-type.mc(ng-if="srCtrl.isMC(q.type)")
+            .response-question(ng-bind-html="srCtrl.safeQuestion(q.question)")
+            .response-chart-box
+              div(google-chart chart="srCtrl.getChartData(q.responses)") 
+              span.stats-bottom
+                .stats-item
+                  span.statsL Total Responses: 
+                  span.statsV {{q.responses.total}}
+                div.stats-item(ng-repeat="a in q.answers")
+                  span.statsL {{a.value}}: 
+                  span.statsV {{q.responses[a.value]}}
+                  
+            .stats-box.graph-wrapper 
+                .graph-legends
+                    .legend-item(ng-repeat="item in q.responses.data")
+                      i.fa.fa-circle-o(ng-style="{color: srCtrl.getColor($index)}")
+                      | {{item.c[0].v | limitTo : 10 }} 
+       
+        .no-response(ng-if="!srCtrl.hasResponse(q)")
+          .responses-text
+            p There wheren't any responses for this Question.
