@@ -1,0 +1,94 @@
+//loader
+script(type='text/ng-template' id="loader")
+  .loader
+    .inner-wrapper
+      i.fa.fa-pulse.fa-spinner
+    span(ng-show="name") Loading {{name}}
+
+//Delete Confirm
+script(type='text/ng-template' id="CustomSelect")
+  .select(ng-class="{active:opened}" ng-click="toggle()")
+    .btn.btn-default.select-ui
+      span {{currentItem || itemName(items[0])}}
+      i.fa.fa-caret-down  
+    ul.select-menu
+      li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item, $event)").menu-item {{itemName(item)}}
+
+//custom select
+script(type='text/ng-template' id="CustomSelect")
+  .select(ng-class="{active:opened}" ng-click="toggle()")
+    .btn.btn-default.select-ui
+      span {{currentItem || itemName(items[0])}}
+      i.fa.fa-caret-down  
+    ul.select-menu
+      li(ng-repeat="item in items" ng-class="{selected:isSelected(item)}" ng-click="select(item, $event)").menu-item {{itemName(item)}}
+
+//Date Picker
+script(type='text/ng-template' id="DatePicker")
+  .datepicker
+    div(ng-show="!inline")
+      input(readonly)
+      i.fa.fa-calendar
+
+//CKEditor
+script(type='text/ng-template' id="CKEditor")
+  textarea
+
+//Context Menu
+script(type='text/ng-template' id="ContextMenu")
+  .context-menu-wrapper(ng-style="setPosition()" ng-class="{opened:opened, disable:disabled}")
+    .context-menu.box.has-shadow(ng-transclude)
+
+//Payment Form
+script(type='text/ng-template' id="PaymentForm")
+  form#paymentForm(ng-submit="submitPayment()" name="paymentForm" novalidate)  
+    .error-msg(ng-if="paymentError")
+      i.fa.fa-exclamation-triangle 
+      span  {{paymentError}}
+    .row
+      .col-lg-8
+        .form-group
+          .form-label.full
+            | Card Number
+          .form-input.full
+            .input-addon
+              input.cc-num(type='tel' name="ccNum" maxlength="20" required ng-model="cc.number" x-autocompletetype="cc-number" autocompletetype="cc-number" autocorrect="off" spellcheck="off" autocapitalize="off" )  
+              .addon
+                .error
+                  i.fa.fa-exclamation-triangle
+                span.card(ng-class="cc.cardType")
+      .col-lg-4
+        .form-group.multi-input
+          .form-label.full
+            | Expiration
+          .form-input
+            input(type='tel' name="ccMonth" ng-model="cc.exp_month" placeholder='MM'  maxlength="2" required)  
+            .error
+              i.fa.fa-exclamation-triangle 
+          .form-input
+            input(type='tel' name="ccYear" ng-model="cc.exp_year" placeholder='YY' maxlength="2" required)
+            .error
+              i.fa.fa-exclamation-triangle 
+    .row
+      .col-lg-4
+        .form-group
+          .form-label.full
+            | Security Code 
+            i.fa.fa-info-circle(tool-tip=":top")  
+          .form-input.full
+            input.cc-cvc(type='tel' name="ccCVC"  ng-model="cc.cvc" maxlength="4" required)  
+            .error
+              i.fa.fa-exclamation-triangle          
+      .col-lg-4
+        .form-group
+          .form-label.full
+            | Zip/Postal Code
+          .form-input.full
+            input(type='tel' ng-model="cc.address_zip" maxlength="6" required)  
+            .error
+              i.fa.fa-exclamation-triangle
+    .row.security
+      .col-lg-12
+        span
+          i.fa.fa-lock
+          |  Your payment info is stored securely. Learn More

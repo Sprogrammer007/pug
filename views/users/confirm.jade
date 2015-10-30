@@ -1,0 +1,19 @@
+extends ../layout
+block css
+
+block content
+  main#login
+    .box.center-block  
+      - if (error)
+        ul.notify-box.error      
+          li
+            i.fa.fa-exclamation-circle
+            | #{error.message}
+      - else
+        ul.notify-box.success
+          li 
+            i.fa.fa-exclamation-circle
+            | Your email has been successfully confirmed. 
+ 
+          
+block script

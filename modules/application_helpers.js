@@ -4,7 +4,7 @@ var helper = {
   titleHelper: function(title) {
     return title + ' | Designed For Result';
   },
-  is_mobile: function(req) {
+  isMobile: function(req) {
     var ua = req.header('user-agent');
     if( ua.match(/Android/i)
      || ua.match(/webOS/i)
@@ -21,6 +21,12 @@ var helper = {
     } else {
       return false;
     }
+  },
+
+
+  errorMSG: function(msg) {
+    msg = msg || "Something Went Wrong"
+    return {success: false, message: msg}
   }
 };
 

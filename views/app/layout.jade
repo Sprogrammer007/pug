@@ -1,0 +1,88 @@
+doctype html
+html(ng-app='dfr')
+  head
+    meta(charset="UTF-8")
+    meta(name='viewport', content='width=device-width')
+    title= title
+    link(rel='profile', href='http://gmpg.org/xfn/11')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+    //if lt IE 9 <script src="/js/html5.js"></script>
+    meta(property="session-token" content="#{locals.token}")
+    // css
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/animation.css')
+    link(rel='stylesheet', href='/css/jquery-ui.min.css')
+    link(rel='stylesheet', href='/css/trackpad-scroll.css')
+    link(rel='stylesheet', href='/app/css/main.css')
+    block css
+      
+  body
+    main-app(current-user='#{JSON.stringify({id: user.id, username: user.username, status: user.status, register_date: user.register_date})}' invite-token="#{code}")
+
+    script(type='text/ng-template' id="MainApp")
+      #globalWrapper
+        #mainBody.tse-scrollable
+          .tse-content
+            main-menu(current-user="currentUser" )
+
+            .main-content
+              .alert-bar(ng-class="{active:alert.status}")
+                .alert-content(ng-class="alert.status").clearfix
+                  .alert-status.pull-left
+                    i.fa.fa-exclamation-triangle
+                  button.close(ng-click="closeAlert()")
+                    span(aria-hidden="true") &times;
+                    span.sr-only Close
+                  .alert-message
+                      p.typecast.animated(ng-bind-html="alert.message")
+      
+              .refer-emails.modal-box(class=(invite ? "open" : ""))
+                .overlay
+                .box.fadeIn.animated
+                  .box-header.clearfix
+                    .box-title Share the experience
+                    button.close(ng-click="closeReferBox()")
+                      span(aria-hidden="true") &times;
+                      span.sr-only Close
+                  .box-body.clearfix
+                    .speech-icon
+                      img(src="/images/logo-profile.png")
+                    .speech-bubble
+                      .arrow
+                      .inner-content
+                        p.typecast Hey {{currentUser.username}},
+                        p.typecast Remember you can earn free survey responses by
+                        p.typecast sharing with your friends. Simply add their email below.
+                        p.typecast For each successful invite you'll ecieve 100 free responses,
+                        p.typecast and they will recieve 250 responses as well.
+                    .email-input(ng-repeat="n in emailsCount track by $index")
+                      i.fa.fa-at
+                      input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : '' }}" autofocus)
+                    .btn.btn-default.pull-right(ng-click="closeReferBox()") Close
+                    .btn.btn-save.pull-right(ng-class="{disable:emails.length === 0}" ng-click="inviteFriends()") Invite
+              block content
+    script(type='text/ng-template' id="MainMenu")
+      include ./header.jade
+
+    include ./custom-directives.jade    
+    block templates
+      
+    //js
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='/js/jquery-ui.min.js')
+    script(src='/js/trackpad-scroll.min.js')
+    script(src='/js/tether.min.js')
+    script(src='/js/bootstrap.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js')  
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.js')
+    script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')
+    script(src='/app/js/app.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.0.11/ng-google-chart.js')
+    script(src='/app/js/directives/main.js')
+    script(src='/app/js/services/main.js')
+    script(src='/app/js/angular.sort.min.js')
+    block script
+
+

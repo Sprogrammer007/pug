@@ -1,0 +1,48 @@
+.question-wrapper.animated.fadeIn(ng-right-click="pgCtrl.openMenu($event, q, page)")
+  .question(ng-bind-html="trustedQ")
+  .hint {{q.hint}}
+  .choice(ng-if="sqCtrl.isType(q.type, 'MC')")
+    ul
+      li(ng-repeat="c in q.choices track by $index")
+        .checkbox
+          input(type='checkbox' id="q{{q.id}}c{{$index}}")
+          label(for="q{{q.id}}c{{$index}}") {{c.value}}      
+  .choice(ng-if="sqCtrl.isType(q.type, 'SC')")
+    ul
+      li(ng-repeat="c in q.choices track by $index")  
+        .radio
+          input(type='radio' name="q{{q.id}}c" id="q{{q.id}}c{{$index}}")
+          label(for="q{{q.id}}c{{$index}}") {{c.value}}
+  .choice(ng-if="sqCtrl.isType(q.type, 'SA')")
+    input(type="text")  
+  .choice(ng-if="sqCtrl.isType(q.type, 'LA')")
+    textarea(type="text")  
+  .choice(ng-if="sqCtrl.isType(q.type, 'DD')")
+    .select
+      select
+        option(ng-repeat="c in q.choices track by $index")
+          | {{c.value}}  
+  .choice(ng-if="sqCtrl.isType(q.type, 'MRS')")    
+    table.mrs-wrapper
+      thead
+        tr
+          th
+          th(ng-repeat="r in q.choices.ratings") 
+            | {{r.value}}
+        tbody
+          tr(ng-repeat="subq in q.choices.subqs")
+            th {{subq.value}}
+            th(ng-repeat="r in q.choices.ratings") 
+              .radio
+                input(type='radio' name="answers[{{q.id}}][{{subq.id}}]" id="q{{q.id}}sq{{subq.id}}r{{r.id}}")
+                label(for="q{{q.id}}sq{{subq.id}}r{{r.id}}")  
+  .choice(ng-if="sqCtrl.isType(q.type, 'SRS')")    
+    .srs-wrapper
+      .srs-rating-box {{q.choices.lowest}}
+      .srs-rating-box(ng-repeat="r in q.choices.ratings") 
+        | {{r.value}}
+        .rating-item
+          .radio
+            input(type='radio' name="answers[{{q.id}}]" id="q{{q.id}}r{{r.id}}")
+            label(for="q{{q.id}}r{{r.id}}")  
+      .srs-rating-box {{q.choices.highest}}

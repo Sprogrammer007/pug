@@ -5,35 +5,33 @@ var conString = process.env.DATABASE_URL || 'postgres://steve007:@localhost/dev_
 
 var client = new Client();
 
-var queryV1 = "CREATE TABLE IF NOT EXISTS users \
+var queries = {
+  createAdmin: "INSERT INTO users (username, email, password, role, status) \
+  VALUES ('Steve007', 'stevey@bigtalkconsulting.com', '" + bcrypt.hashSync('nning007') + 
+  "', 'Admin', 'Confirmed');",
+
+  createTables: "CREATE TABLE IF NOT EXISTS users \
   ( \
-    ID             SERIAL PRIMARY KEY NOT NULL, \
-    NAME           VARCHAR(100), \
-    EMAIL          VARCHAR(100) NOT NULL, \
-    USERNAME       VARCHAR(60) NOT NULL, \
-    PASSWORD       VARCHAR(64) NOT NULL, \
-    IP             VARCHAR(64), \
-    ROLE           VARCHAR(64), \
-    DISPLAY_NAME   VARCHAR(250), \
-    ACTIVATION_KEY VARCHAR(60), \
-    STATUS         INT, \
-    REGISTER_DATE  TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
-    UNIQUE (EMAIL, USERNAME) \
-  ); \
-  CREATE TABLE IF NOT EXISTS orders \
-  ( \
-    ID             SERIAL PRIMARY KEY NOT NULL, \
-    USER_ID        BIGINT,  \
-    ADDRESS        VARCHAR(255),  \
-    CITY           VARCHAR(60),  \
-    POSTAL         VARCHAR(20),  \
-    STRIPE_CID     VARCHAR(255), \
-    TOKEN          VARCHAR(100), \
-    RECEIPT        VARCHAR(60), \
-    PRODUCT_NAME   VARCHAR(255), \
-    TOTAL          NUMERIC, \
-    STATUS         VARCHAR(60), \
-    ORDERED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP \
+    ID              SERIAL PRIMARY KEY NOT NULL, \
+    EMAIL           VARCHAR(100) NOT NULL CONSTRAINT email_already_used UNIQUE, \
+    USERNAME        VARCHAR(60) NOT NULL CONSTRAINT username_already_used UNIQUE, \
+    PASSWORD        VARCHAR(64), \
+    FACEBOOK_ID     VARCHAR(255), \
+    GOOGLE_ID       VARCHAR(255), \
+    ACCOUNT_TYPE    VARCHAR(25) DEFAULT 'Local', \
+    IP              VARCHAR(64), \
+    ROLE            VARCHAR(64), \
+    ACTIVATION_KEY  VARCHAR(60), \
+    INVITED_BY      BIGINT, \
+    EMAIL_CONFIRMED BOOL DEFAULT FALSE, \
+    PROFILE         JSON DEFAULT '{}', \
+    STATUS          VARCHAR(20), \
+    FAILED_ATTEMPTS INT, \
+    TEMP_PASS_TOKEN VARCHAR(32), \
+    RESET_DATE      TIMESTAMP, \
+    LAST_ACTIVE     TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+    LOCKED_DATE     TIMESTAMP, \
+    REGISTER_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP \
   ); \
   CREATE TABLE IF NOT EXISTS posts \
   ( \
@@ -43,23 +41,16 @@ var queryV1 = "CREATE TABLE IF NOT EXISTS users \
     CONTENT        TEXT, \
     EXCERPT        TEXT, \
     POST_TYPE      VARCHAR(20), \
-    COMMENT_COUNT  BIGINT DEFAULT 0, \
     COMMENT_STATUS VARCHAR(20), \
     POST_MIME_TYPE VARCHAR(100), \
     POST_PASSWORD  VARCHAR(20), \
     TITLE          TEXT, \
     URL            VARCHAR(255), \
     DISPLAY_IMAGE  VARCHAR(255), \
+    OPTIONS        JSON, \
     STATUS         VARCHAR(20), \
     POSTED_DATE    TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
     MODIFIED_DATE  TIMESTAMP \
-  ); \
-  CREATE TABLE IF NOT EXISTS post_options \
-  ( \
-    ID             SERIAL PRIMARY KEY NOT NULL, \
-    POST_ID        BIGINT NOT NULL, \
-    OPTION_KEY     VARCHAR(255), \
-    OPTION_VALUE   TEXT \
   ); \
   CREATE TABLE IF NOT EXISTS post_categories \
   ( \
@@ -71,36 +62,7 @@ var queryV1 = "CREATE TABLE IF NOT EXISTS users \
     POST_ID        INT REFERENCES posts (id) ON UPDATE CASCADE ON DELETE CASCADE, \
     CATEGORY_ID    INT REFERENCES post_categories (id) ON UPDATE CASCADE \
   ); \
-  CREATE TABLE IF NOT EXISTS comments \
-  ( \
-    ID             SERIAL PRIMARY KEY NOT NULL, \
-    POST_ID        BIGINT NOT NULL, \
-    USER_ID        BIGINT, \
-    AUTHOR_NAME    VARCHAR(100) NOT NULL, \
-    AUTHOR_EMAIL   VARCHAR(100) NOT NULL, \
-    AUTHOR_URL     VARCHAR(200), \
-    AUTHOR_IP      VARCHAR(100), \
-    CONTENT        TEXT, \
-    KARMA          INT, \
-    LIKE_COMMENT   INT, \
-    DISLIKE_COMMENT INT, \
-    APPROVED       VARCHAR(20), \
-    COMMENT_AGENT  VARCHAR(255), \
-    COMMENT_TYPE   VARCHAR(20), \
-    COMMENT_PARENT BIGINT, \
-    COMMENT_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
-  ); \
-  CREATE TABLE IF NOT EXISTS comment_metas \
-  ( \
-    ID             SERIAL PRIMARY KEY NOT NULL, \
-    COMMENT_ID     BIGINT NOT NULL, \
-    META_KEY       VARCHAR(255), \
-    META_VALUE     TEXT \
-  ); \
-  INSERT INTO users (username, email, password, display_name, role, status) VALUES ('Steve007', 'stevey@bigtalkconsulting.com', '" + bcrypt.hashSync('nning007') + "', 'Steve', 'Admin', 1); \
-";
-
-var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
+  CREATE TABLE IF NOT EXISTS surveys \
   ( \
     ID             SERIAL PRIMARY KEY NOT NULL, \
     USER_ID        BIGINT, \
@@ -108,11 +70,11 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     TOKEN          VARCHAR(60), \
     DESCRIPTION    TEXT, \
     LOGO_URL       VARCHAR(255), \
-    THANK_YOU      TEXT, \
-    REWARD_URL     VARCHAR(255), \
+    THANK_MSG      TEXT, \
+    THANK_URL      VARCHAR(255), \
     IMPRESSIONS    BIGINT DEFAULT 0, \
     RESPONSE       BIGINT DEFAULT 0, \
-    AMOUNT_SPENT   DECIMAL DEFAULT 0, \
+    MAX_RESPONSES  BIGINT DEFAULT 0, \
     PAGE_COUNT     INT DEFAULT 0, \
     QUESTION_COUNT INT DEFAULT 0, \
     OBJECTIVE      VARCHAR(255), \
@@ -128,8 +90,7 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
   CREATE TABLE IF NOT EXISTS survey_pages \
   ( \
     ID              SERIAL PRIMARY KEY NOT NULL, \
-    SURVEY_ID       BIGINT, \
-    CREATED_DATE    TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
+    SURVEY_ID       BIGINT\
   ); \
   CREATE TABLE IF NOT EXISTS survey_questions \
   ( \
@@ -137,10 +98,8 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     SURVEY_ID       BIGINT, \
     SURVEY_PAGE_ID  BIGINT, \
     QUESTION        TEXT, \
-    HINT            VARCHAR(255), \
-    ANSWERS         JSON, \
-    RATING          JSON, \
-    MULTI_ANSWERS   BOOL, \
+    HINT            TEXT, \
+    CHOICES         JSON, \
     REQUIRED        BOOL, \
     ALLOW_OTHER     BOOL, \
     LOGIC           VARCHAR(255), \
@@ -158,12 +117,46 @@ var migration2 = "CREATE TABLE IF NOT EXISTS surveys \
     RESPONSE_IP     VARCHAR(50), \
     RESPONSE_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP\
   ); \
-"
+  CREATE TABLE IF NOT EXISTS services \
+  ( \
+    ID              SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID         BIGINT, \
+    TYPE            VARCHAR(100), \
+    OPTIONS         JSON, \
+    INVITE_CODE     VARCHAR(25), \
+    FIRST_TIME      BOOL DEFAULT TRUE, \
+    USED_INVITE     BOOL DEFAULT FALSE \
+  ); \
+  CREATE TABLE IF NOT EXISTS billings \
+  ( \
+    ID              SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID         BIGINT, \
+    CUSTOMER_ID     VARCHAR(255),\
+    PRIMARY_CARD_ID VARCHAR(255),\
+    CARD_ZIP        VARCHAR(10),\
+    TOTAL_SPENDING  DECIMAL DEFAULT 0\
+  ); \
+  CREATE TABLE IF NOT EXISTS transactions \
+  ( \
+    ID             SERIAL PRIMARY KEY NOT NULL, \
+    USER_ID        BIGINT,  \
+    CUSTOMER_ID    VARCHAR(255), \
+    CARD_ID        VARCHAR(255), \
+    CHARGE_ID      VARCHAR(255), \
+    INVOICE_ID     VARCHAR(255), \
+    PAYMENT_TYPE   VARCHAR(255), \
+    PRODUCT_NAME   VARCHAR(255), \
+    STATUS         VARCHAR(25), \
+    AMOUNT         DECIMAL, \
+    REFUNDED       BOOL, \
+    AMOUNT_REF     DECIMAL, \
+    ERROR_CODE     VARCHAR(255), \
+    ERROR_MSG      TEXT, \
+    ORDERED_DATE   TIMESTAMP DEFAULT CURRENT_TIMESTAMP \
+  );"
+};
 
 var db = {
-  init: function() {
-    this.runQuery(queryV1);
-  },
   runQuery: function(query) {
     client.connect(conString, function(err) {
       if(err) {
@@ -178,8 +171,8 @@ var db = {
       });
     });
   },
-  dbMigrate: function() {
-    this.runQuery(migration2);
+  Migrate: function(type) {
+    this.runQuery(queries[type]);
   }
 }
 

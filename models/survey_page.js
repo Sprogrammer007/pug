@@ -7,57 +7,48 @@ var DBManager = require('../modules/database-manager')
 
 var table = 'survey_pages'
 
+function SurveyPage () {};
 
-function SurveyPage () {
-  this.update = function(){
-  }
-
-  this.questions = [];
-}
-
-SurveyPage.inherits(Base);
-
-SurveyPage.create = function(p, id, callback) {
+SurveyPage.create = function(p, id, done) {
   p.survey_id = id;
-  db.create(table, p, null, function(sp) {
-    return callback(Base.convertObject(new SurveyPage(), sp));
+  db.create(table, p, null, function(err, sp) {
+    if (err) { return done(err) };
+    sp = _.first(sp);
+    sp.questions = [];
+    return done(false, sp);
   });
 };
 
-SurveyPage.findBy = function(k, v, callback) {
 
-};  
-
-SurveyPage.all = function() {
-
-};
-
-SurveyPage.findAllBy = function(k,v, callback) {
-  db.findBy(table, null, k, v, function(pages) {
+SurveyPage.findAllBy = function(k,v, done) {
+  db.where(table, null, 'survey_id=$1', v, 'id', 'ASC', function(err, pages) {
+    if (err) { return done(err) };
     var ps = [];
     if (!_.isEmpty(pages)) {
       _.each(pages, function(p, i, a) {
-        p = Base.convertObject(new SurveyPage(), p);
-        SurveyQuestion.findAllBy('survey_page_id', p.id, function(qs){
+        SurveyQuestion.findAllBy('survey_page_id', p.id, function(err, qs){
           p.questions =  qs;
           ps.push(p)
-          if (ps.length === a.length) {callback(ps)}
+          if (ps.length === a.length) {done(false, ps)}
         });
       });
     } else {
-      return callback(ps);
+      return done(true);
     }
   });
 };
 
-SurveyPage.destroy = function(id, callback) {
-  db.destroy(table, 'id', id, function(r) {
-    return callback(r);
+SurveyPage.destroy = function(c, v, query, done) {  
+  if (query.newPage) {
+    SurveyQuestion.moveToPage(v, query.newPage, query.maxPos);
+  } else if (query.count > 0 ) {
+    SurveyQuestion.destroy('survey_page_id', v, function(err, r) {});
+  }
+  db.destroy(table, c, v, function(err, r) {
+    if (err) { return done(err) };
+    return done(false);
   });
 };
 
-SurveyPage.update = function(id, categories) {
-
-};
 
 module.exports = SurveyPage;

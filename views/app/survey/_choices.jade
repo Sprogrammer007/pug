@@ -1,0 +1,76 @@
+.box-section(ng-if="qbCtrl.toShow(['MRS'])")   
+  .form-group   
+    .form-label.full 
+      | Sub Questions
+      i.fa.fa-info-circle(tool-tip="Add an sub question for your Multi Scale Raing question:top")  
+    .form-input.full.choices-wrapper
+      textarea
+      .btn.btn-default(ng-click="qbCtrl.clearChoices('subqs')") Clear All
+      .btn.btn-choice(ng-click="qbCtrl.addChoices($event, 'subqs')") Add Question
+    .question-list
+      ar-box(ng-repeat="subq in q.choices.subqs track by $index" 
+        items="q.choices.subqs"
+        item="subq" 
+        removeable='true')
+.box-section.clearfix(ng-if="qbCtrl.toShow(['MRS', 'SRS'])")      
+  .form-group
+    .form-label
+      | Rating Type
+      i.fa.fa-info-circle(tool-tip="Choose the type of rating for your matrix question.:top") 
+    .form-input
+      .btn-group
+        input(type='radio' ng-model='q.choices.type' data-toggle='numeric' id='numeric' value='Numeric' required)  
+        label(for='numeric').btn.btn-default Numeric Scale
+        input(type='radio' ng-model='q.choices.type' data-toggle='custom' id='custom' value='Custom' required)     
+        label(for='custom').btn.btn-default Custom
+  .form-group(ng-show="qbCtrl.showRatingType('Numeric')")
+    .form-label
+      | Max Rating
+      i.fa.fa-info-circle(tool-tip="All numeric rating ranges from 1 to 10.:top") 
+    .form-input
+      <custom-select change="qbCtrl.numericScale(m)" items="[] | range:3:10" ></custom-select>
+  .form-group(ng-show="qbCtrl.showRatingType('Numeric')")
+    .form-label
+      | Label for Lowest Rating
+    .form-input
+      input(type='text' ng-model='q.choices.lowest')
+  .form-group(ng-show="qbCtrl.showRatingType('Numeric')")
+    .form-label
+      | Label for Highest Rating
+    .form-input
+      input(type='text' ng-model='q.choices.highest')
+  .form-group(ng-show="qbCtrl.showRatingType('Custom')")
+    .form-label.full
+      | Add Rating
+      i.fa.fa-info-circle(tool-tip="Add a custom rating. Example 'Not Satisfied, Satisfied, Very Satisfied'.:top")  
+    .form-input.full.choices-wrapper
+      textarea
+      .btn.btn-default(ng-click="qbCtrl.clearChoices('ratings')") Clear All
+      .btn.btn-choice(ng-click="qbCtrl.addChoices($event, 'ratings')") Add Rating
+  .rating-list
+    ar-box(ng-repeat="rating in q.choices.ratings track by $index" 
+      items='q.choices.ratings'
+      item="rating" 
+      removeable='true') 
+.box-section.clearfix(ng-if="qbCtrl.toShow(['SC', 'MC', 'DD'])")  
+  .form-group
+    .form-label.full 
+      | Possible Choices
+      i.fa.fa-info-circle(tool-tip="Enter an choice and hit enter or click the add choice button.:top")  
+      br
+      span Note: You can enter multiple choices at once, each choice must be on a new line.
+    .form-input.full.choices-wrapper
+      textarea
+      .btn.btn-default(ng-click="qbCtrl.clearChoices('choices')") Clear All
+      .btn.btn-choice(ng-click="qbCtrl.addChoices($event, 'choices')") Add Choice
+    .form-input(ng-if="qbCtrl.toShow(['SC', 'MC'])")     
+      label.ccb(for="others")
+        input(type='checkbox' ng-model='q.allow_other' id="others")
+        span.cb   
+          | Allow Other  
+          i.fa.fa-info-circle(tool-tip="Check if you want to allow the user to enter 'Other' answers.:top")  
+  .choices-list 
+    ar-box(ng-repeat="choice in q.choices track by $index" 
+      items="q.choices"
+      item="choice" 
+      removeable="true")

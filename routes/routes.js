@@ -1,28 +1,71 @@
 var express = require('express')
+  , h = require('../modules/application_helpers')
   , baseRoutes = require('./base')
-  , users = require('./users')
+  , user = require('./user')
   , blog = require('./blog')
-  , order = require('./order')
+  , survey = require('./survey')
   , landing = require('./landing')
-  , survey = require('./be/survey')
-  , campaign = require('./be/campaign')
-  , post = require('./be/post')
-  , comment = require('./be/comments')
-  , postcat = require('./be/post_category')
+  , surveyApp = require('./app/survey')
+  , campaign = require('./app/campaign')
+  , post = require('./app/post')
+  , postcat = require('./app/post_category')
+  , surveyAPI = require('./api/survey')
+  , userAPI = require('./api/user')
   , app = express();
 
+var ApiToken = require('../modules/ApiToken');
+
+
+// Preset for all Response
+app.use('/', function(req, res, next) {
+  res.locals.isMobile =  h.isMobile(req);
+  res.locals.path = req.path;
+  app.locals.user = req.user;
+  next()
+});
 
 app.use('/', baseRoutes);
-app.use('/', users);
+app.use('/account', user);
 
-app.use('/order', order);
 app.use('/blog', blog);
-app.use('/lp', landing);
+app.use('/s', survey);
+app.use('/l', landing);
 
-app.use('/campaign', survey);
+// Account Logged In Varify
+app.use('/campaign', ensureAuthenticated);
+
+app.use('/campaign', surveyApp);
 app.use('/campaign', campaign);
 app.use('/campaign', post);
 app.use('/campaign', postcat);
-app.use('/campaign', comment);
+
+
+// API Token Varify
+app.use('/api', function(req, res, next) {
+  var token = req.body.session_token || req.query.session_token || req.headers['session-token'];
+ 
+  if (ApiToken.verify(token))  {
+    if (req.isAuthenticated()) { return next() } 
+    return res.status(403).send({message: "Not Logged In."});
+  } else {
+    return res.status(403).send({ 
+      success: false, 
+      message: 'Failed to authenticate token.' 
+    });
+  }
+});
+app.use('/api', surveyAPI);
+app.use('/api', userAPI);
+
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { 
+    app.locals.token = ApiToken.generate();
+    return next(); 
+  }
+  req.flash('error', "Please login!");
+  res.redirect('/account/login')
+}
+
 
 module.exports = app;

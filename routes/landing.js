@@ -7,9 +7,7 @@ var express = require('express')
   , https = require('https')
   , AWS = require('aws-sdk')
   , s3 = new AWS.S3()
-  , User = require('../models/user')
-  , Order = require('../models/order');
-// var stripe = require("stripe")('sk_test_0H0Rdb9qLzLzHEdMdjPMGtoh');
+  , User = require('../models/user');
 
 
 router.get('/planner', function(req, res, next) {
@@ -35,7 +33,7 @@ router.post('/subscribe', function (req, res, next) {
     },
     email_type: 'html',
     double_optin: false,
-    update_existing: false,
+    update_existing: true,
     replace_interests: true,
     send_welcome: true
   };
@@ -62,9 +60,7 @@ router.post('/subscribe', function (req, res, next) {
 router.get('/tp/v1', function(req, res, next) {
   var price = (req.cookies.tpdiscount === 'seen') ? 40 : 20;
   res.render('funnel/tripwire', { 
-    title: h.titleHelper('Planner Download'), 
-     path: req.originalUrl, 
-     isMobile: h.is_mobile(req),
+    title: h.titleHelper('Planner Download'),
      navOff: true,
      price: price
    });

@@ -1,0 +1,50 @@
+doctype html
+html(ng-app='dfr')
+  head
+    meta(charset="UTF-8")
+    meta(name='viewport', content='width=device-width')
+    title= title
+    link(rel='profile', href='http://gmpg.org/xfn/11')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+    //if lt IE 9 <script src="/js/html5.js"></script>
+
+    // css
+    link(rel='stylesheet', href='/css/survey.theme1.css')
+    block css
+      
+  body
+    #survey-default-theme(pages="survey.pages.length")
+      .survey-wrapper
+        if (error)
+          p.nosurvey #{error}
+        else
+          .survey-info.clearfix
+            p.name #{survey.name}
+            .brand-logo
+
+            p.description !{survey.description}
+            .btn.btn-success.btn-start Start Here
+          form.survey-form
+            .progress
+              .progress-bar
+                span 0%
+            if survey.type === 'Standard'
+              each page, index in survey.pages
+                .page-wrapper(class=(index === 0) ? "active" : "")
+                  each q in page.questions
+                    include _show_question.jade   
+            else        
+              each q, index in survey.pages[0].questions
+                .page-wrapper(class=(index === 0) ? "active" : "")
+                  include _show_question.jade
+            .survey-submit-wrapper.clearfix
+              if (survey.pages.length > 1)
+                .btn.btn-default.disabled.btn-back Back                       
+                .btn.btn-default.btn-next Next  
+              button(type='submit').btn.btn-success.btn-submit(class=(survey.pages.length > 1) ? "hidden" : "") Submit My Answers                     
+          .survey-
+         
+          
+    footer
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='/js/survey.min.js')

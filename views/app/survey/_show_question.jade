@@ -1,0 +1,61 @@
+
+.question-wrapper.required
+  .question !{q.question}
+  .hint #{q.hint}
+  .choices
+    if (['MC'].indexOf(q.type) > -1) 
+      ul
+        each c, i in q.choices
+          li
+            .checkbox
+              input(type='checkbox' name='answers[Q#{q.id}]' id="q#{q.id}c#{c.id}")
+              label(for="q#{q.id}c#{c.id}") #{c.value}
+    if (['SC'].indexOf(q.type) > -1) 
+      ul
+        each c, i in q.choices
+          li
+            .radio
+              input(type='radio' name='answers[Q#{q.id}]' id="q#{q.id}c#{c.id}" value="#{c.id}")
+              label(for="q#{q.id}c#{c.id}") #{c.value}
+    if (q.type === 'DD')
+      .select
+        select
+          option(value="" disabled selected style='display:none;') Select One
+          each c, i in q.choices
+            option(value="#{c.id}") #{c.value}
+    if (q.type === 'SA')
+      input(type='text' name='answers[Q#{q.id}]')
+    if (q.type === 'LA')
+      textarea(type='text'  name='answers[Q#{q.id}]')
+    if (q.type === 'CONTACT')
+      each c, i in q.choices
+        .input-group
+          .form-label #{c.value}
+          .form-input
+            input(type='text'  name='answers[Q#{q.id}]')
+    if (q.type === 'MRS')
+      table.mrs-wrapper
+        thead
+          tr
+            th
+              each r, i in q.choices.ratings
+                th #{r.value}
+        tbody
+          each subq, i in q.choices.subqs
+            tr.subq
+              th #{subq.value}
+              each r, i in q.choices.ratings
+                th 
+                  .radio
+                    input(type='radio' name='answers[Q#{q.id}][#{subq.id}]' id="q#{q.id}sq#{subq.id}r#{r.id}" value="#{r.id}")
+                    label(for="q#{q.id}sq#{subq.id}r#{r.id}")
+    if (q.type === 'SRS')
+      .srs-wrapper
+        .srs-rating-box #{q.choices.lowest}
+        each r, i in q.choices.ratings
+          .srs-rating-box #{r.value}
+            .rating-item
+              .radio
+                input(type='radio' name='answers[Q#{q.id}]' id="q#{q.id}r#{r.id}" value="#{r.id}")
+                label(for="q#{q.id}r#{r.id}")
+        .srs-rating-box #{q.choices.highest}

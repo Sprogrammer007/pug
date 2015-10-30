@@ -1,0 +1,81 @@
+.main-menu
+  .main-menu-wrapper
+    .main-menu-helper
+      .menu-logo
+        a.logo(href="/")
+          img(src="/images/logo_orange.png")
+      ul.menu-list
+        li.menu-item
+          a(href="/campaign/surveys" class=isActive(path, '/campaign/surveys')) Survey
+            span.mia-1
+        if (user.isAdmin())
+          li.menu-item
+            a(href="/campaign/posts" class=isActive(path, '/campaign/posts')) Post
+              span.mia-1
+        li.menu-item
+          a(href="") Billing
+            span.mia-1
+      .menu-right
+        .menu-item.user-box
+          .user-icon(style=(user.profile.avatar) ? 'background-image: url("#{user.profile.avatar}")' : "")
+          span.username
+            | #{user.username}
+        .menu-item
+          i.fa.fa-bell
+        .menu-item.logout
+          a(href='/account/logout') 
+            i.fa.fa-power-off
+            | Logout    
+  .sub-menu-wrapper.clearfix
+    .sm-i1(ng-show="hasCampaign()")
+      .sm-ss Account: {{currentUser.username}}
+      .sm-ms
+        strong Campaign: {{campaignName}}
+    .sm-i1(ng-hide="hasCampaign()")
+      .sm-ls
+        strong Account: {{currentUser.username}}
+    if (filter)
+      .filter-box
+        .btn-dropdown(ng-click="openFilter($event)")
+          .btn.btn-default 
+            span {{filter.currentFilter}}
+            i.fa.fa-caret-down
+
+.filter-dropdown.box.has-shadow(ng-class="{active:filter.show}")
+  .preset-box
+    .row
+      .col-lg-3(ng-repeat="n in filter.filterNames")
+        a(ng-click="selectFilter(n)") {{n.name}}
+  .filter-body.clearfix 
+    .filter-datepicker.filter-from.pull-left
+      .myc
+        custom-select.smonth(change="selectMY(m, e, 'month')" 
+          model="filter.cfMonth" 
+          items="filter.monthNames")
+        custom-select.syear(change="selectMY(m, e, 'year')" 
+          model="filter.cfYear" 
+          items="filter.years")
+      date-picker(ng-model="filter.startDate" 
+        to-date="filter.endDate"
+        options="filterDPOptions" 
+        inline="true")
+    .filter-spliter
+      | to
+    .filter-datepicker.filter-to.pull-right
+      .myc
+        custom-select.smonth(change="selectMY(m, e, 'month')"
+          model="filter.ctMonth"  
+          items="filter.monthNames")
+        custom-select.syear(change="selectMY(m, e, 'year')" 
+          model="filter.ctYear" 
+          items="filter.years")
+      date-picker(ng-model="filter.endDate" 
+        from-date="filter.startDate"
+        options="filterDPOptions" 
+        inline="true")
+  .filter-footer.clearfix
+    .pull-left
+      | {{createDate(filter.endDate) | date: 'MMMM d, yyyy'}} - {{createDate(filter.startDate) | date: 'MMMM d, yyyy'}}
+    .pull-right
+      .btn.btn-default(ng-click="closeFilter($event)") Cancel
+      .btn.btn-success(ng-click="closeFilter($event, true)") Ok

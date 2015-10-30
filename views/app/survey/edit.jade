@@ -1,0 +1,83 @@
+extends ../layout
+block css
+
+block content
+  survey-dash(current-user="currentUser" sid="currentID" loaded="loaded")#survey
+
+ 
+  script(type='text/ng-template' id="SurveyDash")
+    loader(name="Survey Manager" ng-class="{loaded:loaded}")
+    .survey-builder.plr-12(ng-class="{loaded:loaded}")
+      survey-page(survey="survey" sd-ctrl="sdCtrl")
+    survey-edit(loaded="loaded" survey="survey" page='edit')
+    .question-builder(ng-class="{active:openQuestion()}")
+      .overlay(ng-click="sdCtrl.toggleQuestion('Close')")
+      .box
+        .box-header
+          p Add Question
+        question-form(q="question" sd-ctrl="sdCtrl" um='updateMode' )
+  script(type='text/ng-template' id="surveyARBox")
+    .choice.fadeIn.animated
+      input(type='text' ng-model="item.value")
+      button.close(type='button' ng-show="removeable" ng-click="removeItem()") &times;
+      i.edit-choice.fa.fa-pencil
+  script(type='text/ng-template' id="surveyPage")
+    include ./_edit_page.jade
+  script(type='text/ng-template' id="surveyQuestion")
+    include ./_edit_question.jade
+  script(type='text/ng-template' id="questionForm")
+   .tse-scrollable.box-body
+      .tse-content
+        form#qbForm(novalidate name='qbForm')
+          .form-group.choice-types
+            label.form-label.full
+              |  Question Type
+              i.fa.fa-info-circle(tool-tip="Select the type of answer for you question.:top")  
+            .form-input.full
+              ul
+                li(ng-repeat="c in qbCtrl.choiceTypes" ng-click="qbCtrl.selectType()" )
+                  input(type="radio" ng-model="q.type" id="{{c.id}}" value="{{c.value}}")
+                  label(for="{{c.id}}" class="btn btn-default") {{c.name}} 
+          .form-group.choice-types
+            label.form-label.full
+              |  Preset Questions
+              i.fa.fa-info-circle(tool-tip="Here are some preset question for you to use.:top")  
+            .form-input.full
+              ul
+                li(ng-repeat="c in qbCtrl.presets" ng-click="qbCtrl.usePreset(c.id, c.value)" )
+                  input(type="radio" ng-checked="qbCtrl.isChecked(c.id)")
+                  label(class="btn btn-default") {{c.name}}
+          .form-group
+            label.form-label.full Your Question
+            .form-input.full
+              ck-editor(ng-model='q.question' height="100" required)
+            .form-input.full
+              label.ccb(for="required")
+                input(type='checkbox' ng-model='q.required' id="required")
+                span.cb Question is Required          
+          .form-group
+            label.form-label.full 
+              | Supporting Hint (Optional)
+              i.fa.fa-info-circle(tool-tip="Give a more detail explanation of the question.:top")  
+            .form-input.full
+              textarea(type='text',ng-model='q.hint', rows='1')
+            include ./_choices.jade    
+    .submit-question
+      .pull-right.clearfix
+        .error-box
+          .errors
+        button(ng-click="sdCtrl.toggleQuestion('Close')").btn.btn-default Close
+        button(ng-class="{disable:isInValid()}" ng-hide="um" ng-click="qbCtrl.save($event, false)").btn.btn-save 
+          | Add Another
+          i.fa.fa-cog.fa-spin.btn-loader   
+        button(ng-class="{disable:isInValid()}" ng-hide="um" ng-click="qbCtrl.save($event, true)").btn.btn-save
+          | Save
+          i.fa.fa-cog.fa-spin.btn-loader   
+        button(ng-class="{disable:isInValid()}" ng-show="um" ng-click="qbCtrl.update($event, true)").btn.btn-save
+          | Update
+          i.fa.fa-cog.fa-spin.btn-loader   
+
+block script
+  script(src='/app/js/services/survey.js')
+  script(src='/app/js/directives/survey.js')
+  script(src='/app/js/controllers/survey.js')

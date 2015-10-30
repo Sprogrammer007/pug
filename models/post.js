@@ -1,7 +1,6 @@
 var DBManager = require('../modules/database-manager')
   , db = new DBManager()
   , Base = require('./base')
-  , Comment = require('./comment')
   , PostCategoryRelation = require('./post_category_relation')
   , moment = require('moment')
   , Serializer = require('node-serialize')
@@ -33,33 +32,10 @@ function Post() {
 
   this.options = {};
 
-  this.getComments = function(callback) {
-    if (!this.id) { return callback(false); }
-    Comment.render('post_id', this.id, function(comments) {
-      return callback(comments);
-    });
-  };
-
   this.postDate = function(f) {
     if (this.posted_date) {
       return moment(this.posted_date).format(f);
     }
-  };
-
-  this.addComment = function(ip, params, user_id, callback) {
-    Comment.create(ip, params, user_id, function(comment){
-      return callback(comment);
-    });
-  };
-
-  this.updateCommentCount = function() {
-    var that = this;
-    db.count('comments', 'approved', {'post_id' : that.id, 'approved' : 'Approved'}, function(count){
-      db.update(table, {"comment_count" : count}, that.id);
-      that.comment_count = count;
-      return that;
-    });
-
   };
 
   this.createOptions = function(options) {

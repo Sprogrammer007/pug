@@ -1,0 +1,10 @@
+.survey-chart-wrapper.plr-12(ng-class="{loaded:loaded}")
+  .box.box-lg
+    .survey-chart-title
+      | Total Responses For All Surveys {{filter}}
+    .survey-chart
+      div(google-chart chart="chartData")
+    .survey-stats.stats-box
+      .evar {{legends.total}}
+      .elabel Total Responses {{filter}}
+      

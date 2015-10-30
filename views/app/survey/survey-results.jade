@@ -1,0 +1,104 @@
+.survey-results-wrapper.plr-12
+  .survey-results.box.box-lg(ng-class="{loaded:loaded}")
+    .box-header.white
+      .control-box.clearfix
+        ul.pull-right()    
+          li(tool-tip="" ng-class="srCtrl.isActive(null, ['SA', 'LA'])"
+            ng-click="srCtrl.analyzeText()")
+            i.fa.fa-flask
+            |  Analyze Answers                 
+          li.charts-button(tool-tip="View Results as Bar Chart" ng-class="srCtrl.isActive('BarChart')"
+            ng-click="srCtrl.changeChartType('BarChart')")
+            i.fa.fa-bar-chart     
+          li.charts-button(tool-tip="View Results as Pie Chart" ng-class="srCtrl.isActive('PieChart')"
+            ng-click="srCtrl.changeChartType('PieChart')")
+            i.fa.fa-pie-chart
+          li
+            i.fa.fa-print
+            |  Print
+
+    .box-body.clearfix
+      .nav-box.left
+        .nav-box-item(ng-repeat="q in questions"
+          ng-class="{active:srCtrl.isCurrentQ(q)}"
+          ng-click="srCtrl.selectQ(q)")
+          i.fa.fa-file.pull-left
+          | Question {{$index + 1}}
+      .results-body.pull-left(ng-repeat="q in questions track by $index" 
+        ng-if="srCtrl.isCurrentQ(q)")
+        .has-response(ng-show="srCtrl.hasResponse(q)")
+          .responses-type
+            .response-question
+              span.ltheq Q:
+              span.theq(ng-bind-html="srCtrl.safeQuestion(q.question)")
+  
+            div(ng-if="srCtrl.isType(q.type, ['MRS'])")
+              .subqs-nav.nav-box.right
+                .nav-box-item(ng-repeat="subq in q.choices.subqs" 
+                  ng-class="{active:srCtrl.isCurrentSubQ(subq)}"
+                  ng-click="srCtrl.selectSubQ(subq)")
+                  span.arrow-l
+                  | Sub Question {{$index + 1}}
+
+              .responses-subqs-body(ng-repeat="subq in q.choices.subqs" ng-if="srCtrl.isCurrentSubQ(subq)")
+                .response-chart-box
+                  .graph-wrapper 
+                    .graph-legends.vertical
+                        .legend-item(ng-repeat="item in q.responses.subqs[subq.id].data")
+                          i.fa.fa-circle-o(ng-style="{color: srCtrl.getColor($index)}")
+                          | {{item.c[0].v | limitTo : 10 }} 
+                  div(google-chart chart="srCtrl.getChartData(q.responses.subqs[subq.id])")  
+                  span.stats-bottom
+                    .stats-item.total
+                      span.statsL Total Responses: 
+                      span.statsV {{q.responses.total}}
+                    div.stats-item(ng-repeat="r in q.choices.ratings")
+                      span.statsL {{r.value}}: 
+                      span.statsV {{q.responses.subqs[subq.id][r.value]}}
+                 
+            div(ng-if="srCtrl.isType(q.type, ['SC' , 'MC', 'DD', 'SRS'])")
+              .response-chart-box
+                div(google-chart chart="srCtrl.getChartData(q.responses)") 
+                span.stats-bottom
+                  .stats-item.total
+                    span.statsL Total Responses: 
+                    span.statsV {{q.responses.total}}
+                  div.stats-item(ng-repeat="c in srCtrl.getChoices(q)")
+                    span.statsL {{c.value}}: 
+                    span.statsV {{q.responses[c.value]}}
+                    
+              .stats-box.graph-wrapper 
+                .graph-legends
+                    .legend-item(ng-repeat="item in q.responses.data")
+                      i.fa.fa-circle-o(ng-style="{color: srCtrl.getColor($index)}")
+                      | {{item.c[0].v | limitTo : 10 }} 
+                
+            div(ng-if="srCtrl.isType(q.type, ['SA', 'LA'])")
+              .word-frequency-wrapper
+                .word-frequency(ng-if="q.wordFrequency")
+                  span.title Word Frequency
+                  .min-loader(ng-class="{loaded:q.showWordBox}")
+                    i.fa.fa-refresh.fa-spin
+                    |  Analyzing Answers 
+                  .word-box-wrapper(ng-class="{loaded:q.showWordBox}")
+                    .word-box(ng-repeat="word in q.wordFrequency")
+                      span.text {{word.text}}: 
+                      span.frequency {{word.frequency}}
+                .text-responses
+                  span.title Individual Responses
+                  .word-search-wrapper
+                    input(type='text' ng-model="q.wordSearch" placeholder="Search Answers")  
+                  .tse-scrollable(ng-scrollable)
+                    .tse-content         
+                      ul
+                        li(ng-repeat="a in srCtrl.textAnswers(q) track by $index")
+                          | {{a}}
+                        li(ng-hide="srCtrl.textAnswers(q).length") No Matching Answers Found
+                span.stats-bottom
+                  .stats-item.total
+                    span.statsL Total Responses: 
+                    span.statsV {{q.responses.total}}
+
+        .no-response(ng-if="!srCtrl.hasResponse(q)")
+          .text-box
+            p There wheren't any responses for this Question.

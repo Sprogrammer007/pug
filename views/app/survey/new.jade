@@ -1,0 +1,102 @@
+
+extends ../layout
+block css
+
+block content
+  new-survey
+  script(type='text/ng-template' id="NewSurvey")
+    .new-survey-wrapper(ng-class="{selected:nsCtrl.selected()}")
+      form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
+        .step
+          | Step 1: Create Survey
+        .box.box-lg
+          .box-body
+            ul.survey-objectives
+              li(ng-repeat="o in objectives")
+                input(type="radio" id="{{o.id}}" ng-model="survey.objective" value="{{o.value}}" required)
+                label(for="{{o.id}}")
+                  | {{o.name}}           
+            .s1x3
+              .survey-objective
+                a(ng-click="nsCtrl.redoObjective()").back
+                  i.fa.fa-angle-left
+                  |  Back 
+                .objective-icon
+                p {{survey.objective}}
+              .survey-name
+                .form-group
+                  .form-label Survey Name
+                    i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
+                  .form-input
+                    input(type="text"  ng-model="survey.name" required) 
+                .form-group
+                  .form-label Description
+                    i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
+                  .form-input
+                    ck-editor(ng-model="survey.description" required)
+                .form-group
+                  .form-label Brand Logo (Optional)
+                    i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
+                  .form-input
+                    input(type="text" ng-model="survey.logo_url") 
+              .survey-type
+                .form-group
+                  .form-label Display Type
+                    i.fa.fa-info-circle(tool-tip="<p>Choose how you want your survey to be displayed to the users.</p>\
+                      <p>Use standard if you want would like a tradition survey with multiple pages.</p>\
+                      <p>Use 'One question at a time' for a more interactive experience.</p>:top")
+                  .form-input
+                    label(for="t1").crb
+                      input(type='radio' ng-model='survey.type' id="t1" value="Standard" required)
+                      span.rb Standard    
+                    label(for="t2").crb
+                      input(type='radio' ng-model='survey.type' id="t2" value="Interactive" requireds)
+                      span.rb One question at a time.
+                .form-group
+                  .form-label Schedule
+                    i.fa.fa-info-circle(tool-tip="Choose to have your survey run continuosly or end on a schedule day.:top")
+                  .form-input
+                    label(for="s1").crb
+                      input(type='radio' ng-model='survey.schedule' id="s1" value="Continuosly" required)
+                      span.rb Run survey continuosly      
+                    label(for="s2").crb
+                      input(type='radio' ng-model='survey.schedule' id="s2" value="Schedule" requireds)
+                      span.rb Set a start and end date
+                .form-group.survey-schedule(ng-show="nsCtrl.hasSchedule()")
+                  .form-label Start
+                  .form-input
+                    date-picker(ng-model="survey.start_date" 
+                      options="filterDPOptions"
+                      ng-required='nsCtrl.hasSchedule()')
+                  br
+                  .form-label End
+                  .form-input
+                    date-picker(ng-model="survey.end_date"  
+                      from-date="survey.start_date" 
+                      options="filterDPOptions"
+                      ng-required='nsCtrl.hasSchedule()')
+        .step.step2
+          | Step 2: Add A Thank You Message
+        .box.box-lg.ty-box 
+          .box-body 
+            .form-group
+              .form-label Thank You Page Url (Optional)
+                i.fa.fa-info-circle(tool-tip="The url of the page you would like to display after the user has successfully completed the survey.:top")
+              .form-input
+                input.form-input(type="text" ng-model="survey.thank_url")
+            .form-group
+              .form-label Thank You Message
+                i.fa.fa-info-circle(tool-tip="A message to display after the user has completed your survey. If a thank you page url is provided a redirect will happen instead of this message being showned.:top")
+              .form-input
+                ck-editor(ng-model="survey.thank_msg" required)          
+  
+        .survey-submit.clearfix
+          button(type="submit" ng-class="{disable:surveyForm.$invalid}").pull-right.btn.btn-save Create Survey
+block templates
+
+
+block script
+  script(src='/app/js/angular.sort.min.js')
+  script(src='/app/js/services/survey.js')
+  script(src='/app/js/directives/survey.js')
+  script(src='/app/js/controllers/survey.js')

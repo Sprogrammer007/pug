@@ -3,27 +3,45 @@ block css
 
 block content
     main#login
-      h1 Sign In
+      .box.center-block  
+        ul.notify-box.error
+          - if (errors)
+            each error in errors
+              li
+                i.fa.fa-exclamation-circle
+                | #{error}        
+        ul.notify-box.success  
+          - if (success)
+            each s in success
+              li
+                i.fa.fa-exclamation-circle
+                | #{s}
+        .social-login
+          a(href="/account/auth/facebook").btn-social-login.btn-facebook
+            i.fa.fa-facebook
+            | Log in with Facebook
+          a(href="/account/auth/google").btn-social-login.btn-google
+            i.fa.fa-google-plus
+            | Log in with Google
+        .sign-or
+          span or
+          hr
+        .local-login.m-t    
+          form(action='/account/login', method='post' novalidation)
+            - if (k)
+              input(type="hidden" name="k" value="#{k}")
+            .form-group.m-b
+              input(type='text' placeholder="Email Address" name='email' autocorrect="off" autocapitalize="off" autofocus='autofocus')
+            .form-group.m-b
+              input(type='password' placeholder="Password" name='password' )
+              .forgot-password
+                i.fa.fa-question-circle
+                a(href="/account/reset/password")  Forgot my Password
+            .form-group
+              button(type="submit").btn.btn-primary.btn-login Log In
+        hr 
+        .login-footer     
+          p Don't have an account? 
+            a(href="register") Create an Account
 
-      - if (message != '')      
-        .error-box
-          i.fa.fa-exclamation-circle
-          p= message
-      .login-form      
-        form(action='/login', method='post' novalidation)
-          .form-group
-            label Username
-            input(type='text', name='username' autocorrect="off" autocapitalize="off" autofocus='autofocus')
-          .form-group
-            label Password
-            input(type='password', name='password' )
-            .forgot-password
-              i.fa.fa-question-circle
-              a(href="#") Forgot my Password
-          .form-group
-            button(type="submit").btn-login Sign In
-      .create-account
-        p Don't have an account? 
-          a(href="#") Create an Account
-     
 block script

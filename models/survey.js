@@ -8,39 +8,58 @@ var DBManager = require('../modules/database-manager')
 var table = 'surveys';
 
 function Survey () {
+  this.isPublished = function() {
+    return this.status === 'Published';
+  };
+
   this.pages = [];
 };
 
-Survey.inherits(Base);
 
-Survey.findBy = function(k, v, callback) {
-  db.findBy(table, null, k, v, function(survey) {
-    var s = Base.convertObject(new Survey(), survey[0]);   
-    SurveyPage.findAllBy('survey_id', s.id, function(pages) {
-      s.pages = pages
-      return callback(s);
-    });
+Survey.findBy = function(k, v, done, convert, raw) {
+  db.findBy(table, null, k, v, function(err, survey) {
+    if (err || _.isEmpty(survey)) { return done(true)  };
+    survey = (convert) ? Base.convertObject(new Survey(), _.first(survey)) : _.first(survey); 
+    if (!raw) {
+      SurveyPage.findAllBy('survey_id', survey.id, function(err, pages) {
+        survey.pages = pages
+        return done(false, survey);
+      });
+    } else {
+      return done(false, survey);
+    } 
   });
 };
 
-Survey.create = function(p, uid, callback) {
+Survey.create = function(p, uid, done) {
   p['user_id'] = uid;
-  p['token'] = generateToken(p);
   p['status'] = 'Incomplete';
-  db.create(table, p, null, function(s) {
-    s = Base.convertObject(new Survey(), s);
-    SurveyPage.create({}, s.id, function(pages) {
-      s.pages.push(pages.toJson());
-      Survey.increment(s.id, 'page_count');
-      return callback(s);
+  p['token'] = Base.generateToken(8);
+  p['page_count'] = 1;
+  db.create(table, p, null, function(err, s) {
+    s = _.first(s)
+    if (err) { return done(err) };
+    SurveyPage.create({}, s.id, function(err, page) {
+      s.pages = [];
+      s.pages.push(page);
+      return done(false, s);
     });
-
   });
 };
 
-Survey.all = function(userid, callback) {
-  db.findBy(table, null, 'user_id', userid, function(surveys) {
-    return callback(Serializer.unserialize(surveys));  
+Survey.update = function(p, id, done) {
+  if (p.status === 'Archived') { return done(true) };
+  db.update(table, p, id, function(err, s) {
+    if (err) { return done(err) };
+    return done(false, true);
+  });
+};
+
+Survey.all = function(userid, done) {
+  db.where(table, null, 'user_id=$1 AND status!=$2', 
+    [userid, 'Archived'], "id", 'ASC', function(err, surveys) {
+    if (err) { return done(err) };
+    return done(false, surveys);  
   });
 };
 
@@ -49,30 +68,61 @@ Survey.increment = function(id, col, count) {
   var query = "UPDATE surveys SET " + col + "=" + col + " + " + count +
   " WHERE id=" + id + ";";
 
-  db.rawQuery(query, function(r) {
-    return r;
-  });
+  return db.rawQuery(query);
 };
 
 Survey.decrement = function(id, col, count) {
   var query = "UPDATE surveys SET " + col + "=" + col + " - " + count +
   " WHERE id = " + id + " AND " + col + " >= " + count + ";";
+  return db.rawQuery(query);
+};
 
-  db.rawQuery(query, function(r) {
-    return r;
+
+Survey.toggleStatus = function(id, p, done) {
+
+  var newStatus = p.new_status
+    , errors = [];
+
+  if (newStatus === 'Published') {
+
+    if (_.isEmpty(p.survey.pages)) { 
+      errors.push('No Pages Found For Survey.'); 
+    } else {
+      _.each(p.survey.pages, function(page, pi, a) {
+        if(_.isEmpty(page.questions)) {
+          errors.push('Page #' + (pi+1) + ' has no questions.');
+        } else {
+
+          _.each(page.questions, function(q, i, a) {
+            if (_.contains(['MC', 'SC', 'DD'], q.type)) {
+              if (_.isEmpty(q.choices)) {
+                errors.push('Question #' + (q.position + 1) + ' on Page #' + (pi+1) + ' requires choices.');
+              }
+            };
+
+            if (_.contains(['MRS', 'SRS'], q.type)) {
+              if (_.isEmpty(q.choices.ratings)) {
+                errors.push('Question #' + (q.position + 1) + ' on Page #' + (pi+1) + ' requires ratings.');
+              }
+              if (_.isEmpty(q.choices.subqs) && q.type === 'MRS') {
+                errors.push('Question #' + (q.position + 1) + ' on Page #' + (pi+1) + ' requires sub questions.');
+              }
+            }
+          });
+        }
+
+      });
+    }
+  };
+  if (!_.isEmpty(errors)) {
+    return done({success: false, message: errors}) 
+  };
+
+  db.update(table, {status: newStatus}, id, function(err, s) {
+    if (err) { return done(err) };
+    return done(false, _.first(s)); 
   });
 };
 
-Survey.update = function(id, p, callback) {
-  db.update(table, p, id, function(s) {
-    return callback(Base.convertObject(new Survey(), s[0]));
-  });
-};
-
-function generateToken(p) {
-  var n = p['name'].replace(/ /g,'');
-  var l = (n.length > 6) ? 6 : n;
-  return n.substring(0, l).toUpperCase() + _.now() ;
-}
 
 module.exports = Survey;

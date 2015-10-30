@@ -2,24 +2,34 @@ header
   nav.navbar
     a.navbar-brand(href="/")
       img(src="/images/logo.png")
-    - if (!navOff)
-      button.navbar-toggler.hidden-sm-up(type="button" data-toggle="collapse" data-target="#navMenu")
-        | &#9776;
-    - if (!navOff)
-      .collapse.navbar-toggleable-sm#navMenu
-        ul.nav.navbar-nav
-          li.nav-item(class=isActive(path, '/'))
-            a(href='/') Home           
-          li.nav-item(class=isActive(path, '/products'))
-            a(href='/') Products   
-          li.nav-item(class=isActive(path, '/tool'))
-            a(href='/') Free Tools               
-          li.nav-item(class=isActive(path, '/blog'))
-            a(href='/blog') Blog               
-          li.nav-item(class=isActive(path, '/getanswers'))
-            a(href='/getanswers') Get Answers
-        ul.nav.navbar-nav.pull-right
+    button.navbar-toggler.hidden-sm-up(type="button" data-toggle="collapse" data-target="#navMenu")
+      | &#9776;
+    .collapse.navbar-toggleable-sm#navMenu
+      ul.nav.navbar-nav.pull-left         
+        li.nav-item(class=isActive(path, '/tool'))
+          a(href='/') Pricing               
+        li.nav-item(class=isActive(path, '/blog'))
+          a(href='/blog') Blog               
+        li.nav-item(class=isActive(path, '/getanswers'))
+          a(href='/getanswers') Support
+      ul.nav.navbar-nav.pull-right.nav-right
+        - if (user)
+          li.nav-item.user-box
+            .user-icon(style=(user.profile.avatar) ? 'background-image: url("#{user.profile.avatar.url}")' : "")
+            span.username
+              | #{user.username}
           li.nav-item
-            a(href='/register').btn.btn-account Create an Free Account         
+            a(href="/campaign/surveys")
+              i.fa.fa-tachometer
+              |  Dashboard
+          li.nav-item.notification
+            i.fa.fa-bell
+          li.nav-item.logout
+            a(href='/account/logout') 
+              i.fa.fa-power-off
+              | Logout    
+        - else 
           li.nav-item
-            a(href='/login') Log In
+            a(href='/account/register').btn.btn-account Create an Free Account         
+          li.nav-item
+            a(href='/account/login') Log In

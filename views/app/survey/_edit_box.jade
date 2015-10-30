@@ -1,0 +1,113 @@
+.survey-details-wrapper.edit-wrapper
+  .survey-edit.box.box-lg(ng-class="{loaded:loaded}")
+    .box-header.clearfix(ng-if="isPage('edit')")
+      .box-title.pull-left 
+        | Survey Details
+      .edit-buttons.pull-right
+        .btn.btn-default.btn-edit(ng-click="seCtrl.editSurvey($event)")
+          i.fa.fa-pencil
+          | &nbsp;
+          span(ng-bind="editMode ? 'Apply' : 'Edit'")
+          i.fa.fa-cog.fa-spin.btn-loader        
+        .btn.btn-default.btn-edit(ng-if="seCtrl.isPublished(survey.status)" 
+          ng-click="seCtrl.openEmbed()")
+          i.fa.fa-code
+          |  Embed Code               
+        .btn.btn-edit(ng-class="seCtrl.publishClass(survey.status)"
+          ng-click="seCtrl.publish(true)")
+          i.fa.fa-power-off
+          | &nbsp;
+          span(ng-bind="seCtrl.status(survey.status)")            
+    .box-header.clearfix(ng-if="isPage('view')")
+      .box-title.pull-left 
+        input.toggle-switch(type='checkbox' ng-checked="seCtrl.isPublished(survey.status)")
+        label(ng-click="seCtrl.toggleStatus()")
+      .edit-buttons.pull-right
+        .btn-group
+          a.btn.btn-default(href="/campaign/surveys?act=edit&id={{survey.id}}&name={{survey.name}}")
+            i.fa.fa-pencil    
+          a.btn.btn-default(ng-if="seCtrl.isPublished(survey.status)"
+            ng-click="seCtrl.openEmbed()")
+            i.fa.fa-code        
+          a.btn.btn-default(ng-click="seCtrl.deleteSurvey()")
+            i.fa.fa-trash
+
+    .box-body
+      .survey-details(ng-if="!editMode")
+        .elabel Survey Name:
+        .evar {{survey.name}}
+          span.survey-publish-error 
+            i.fa.fa-exclamation
+            | Unable to publish, please edit your survey.   
+        .elabel Objective:
+        .evar {{survey.objective}}  
+        .elabel Status:
+        .evar.survey-status(ng-class="{live:seCtrl.isPublished(survey.status)}")
+          i.fa.fa-circle
+          | {{survey.status}} 
+        .elabel Brand Logo:
+        .evar
+          img(ng-if="survey.logo_url" class="survey-logo" ng-src="{{survey.logo_url}}")
+          span(ng-if="!survey.logo_url") None
+        .elabel  Survey Schedule:
+        .evar {{surveySchedule()}}
+        .elabel Description:
+        .evar(ng-bind-html="surveyDescip")
+      .ty-details(ng-if="!editMode")
+        .elabel Thank You Page Url
+        .evar {{survey.thank_url || 'None'}}
+        .elabel  Thank You Message:
+        .evar(ng-bind-html="tyMessage")
+      form(name="surveyForm")
+        div(ng-if="editMode && isPage('edit')")
+          .form-group
+            .form-label Survey Name
+              i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
+            .form-input
+              input(text="text"  ng-model="survey.name" required)
+          .form-group
+            .form-label Survey Objective
+            .form-input
+              custom-select(model="survey.objective" items="seCtrl.objectives" reqiures=true)
+          .form-group
+            .form-label Description
+              i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
+            .form-input
+              ck-editor(ng-model="survey.description" required)
+          .form-group
+            .form-label Brand Logo (Optional)
+              i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
+            .form-input
+              input(text="text" ng-model="survey.logo_url") 
+          .form-group
+            .form-label Schedule
+              i.fa.fa-info-circle(tool-tip="Choose to have your survey run continuosly or end on a schedule day.:top")
+            .form-input(ng-if="editMode")
+              label(for="s1").crb
+                input(type='radio' ng-model='survey.schedule' id="s1" value="Continuosly" required)
+                span.rb Run survey continuosly      
+              label(for="s2").crb
+                input(type='radio' ng-model='survey.schedule' id="s2" value="Schedule" required)
+                span.rb Set a start and end date
+          .form-group.survey-schedule(ng-show="seCtrl.hasSchedule()")
+            .form-label Start
+            .form-input
+              date-picker(ng-model="survey.start_date" 
+                options="filterDPOptions"
+                ng-required='seCtrl.hasSchedule()')
+            br
+            .form-label End
+            .form-input
+              date-picker(ng-model="survey.end_date"  
+                options="filterDPOptions" 
+                ng-required='nsCtrl.hasSchedule()')
+          .form-group
+            .form-label Thank You Page Url
+              i.fa.fa-info-circle(tool-tip="The url of the page you would like to display after the user has successfully completed the survey.:top")
+            .form-input
+              input(type="text" ng-model="survey.thank_url")
+          .form-group
+            .form-label Thank You Message
+              i.fa.fa-info-circle(tool-tip="A message to display after the user has completed your survey. If a thank you page url is provided a redirect will happen instead of this message being showned.:top")
+            .form-input
+              ck-editor(ng-model="survey.thank_msg" required)

@@ -1,0 +1,53 @@
+extends ../layout
+block css
+
+block content
+  main#login
+    .box.center-block  
+      ul.notify-box.error
+        - if (errors)
+          each error in errors
+            li
+              i.fa.fa-exclamation-circle
+              | #{error}
+      .local-login.m-t    
+        - if (token)
+          form#validate(action='/account/reset/password' method='post' novalidation) 
+            input(type='hidden' name="token" value="#{token}")
+            .form-group.password.m-b
+              input.require-field.password(type='password' placeholder="Enter new password" name='password' autocorrect="off" autocapitalize="off" autofocus='autofocus')                      
+              .error
+                i.fa.fa-warning
+              .password-validator
+                .arrow
+                .content
+                  span.uppercase              
+                    i.fa.fa-exclamation-triangle
+                    |  must contain at least one uppercase letter.
+                  span.lowercase
+                    i.fa.fa-exclamation-triangle
+                    |  must contain at least one lowercase letter.
+                  span.number
+                    i.fa.fa-exclamation-triangle 
+                    |  must contain at least one number.
+                  span.length
+                    i.fa.fa-exclamation-triangle 
+                    |  must be atleast 6 characters.
+            .form-group.m-b
+              input.require-field.confirm(type='password' placeholder="Enter the password again" name='confirm_password' autocorrect="off" autocapitalize="off"  autofocus='autofocus')            
+              .error
+                i.fa.fa-warning
+            .form-group
+              button(type="submit").btn.btn-primary.btn-login Reset
+        - else
+          form#validate(action='/account/generate/token' method='post' data-async="true" novalidation)
+            span(style="font-size: 12px; margin-bottom: 10px; line-height:16px; display: block;") Enter the email address associated with the account you wish to reset the password for.
+            .form-group.m-b
+              input.require-field.email(type='text' placeholder="Email Address" name='email' autocorrect="off" autocapitalize="off" autofocus='autofocus')            
+              .error
+                i.fa.fa-warning
+            .form-group
+              button(type="submit").btn.btn-primary.btn-login Reset
+    .success-msg.pass-reset
+      | We've found your account, future instruction on resetting your password has been sent to your email address.
+block script

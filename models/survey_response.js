@@ -7,55 +7,29 @@ var DBManager = require('../modules/database-manager')
 
 var table = 'survey_responses';
 
-function SurveyResponse () {
+function SurveyResponse () {};
 
-};
-
-SurveyResponse.inherits(Base);
-
-SurveyResponse.findBy = function(k, v, callback) {
-  db.findBy(table, 'answers', k, v, function(q) {
-    return callback(Base.convertObject(new SurveyResponse(), q[0]));
+SurveyResponse.findBy = function(k, v, done) {
+  db.findBy(table, 'answers', k, v, function(err, r) {
+    if (err) { return done(err) };
+    return done(false, _.first(r));
   });
 };
 
-SurveyResponse.allCounts = function(user_id, query, callback) {
+SurveyResponse.allCounts = function(user_id, query, done) {
   var startDate = moment(new Date(query['startDate']))
     , endDate = moment(new Date(query['endDate']));
-  var where = 'user_id=$1 AND response_date<=$2 AND response_date>=$3';
+  var where = 'user_id=$1 AND response_date::DATE<=$2 AND response_date::DATE>=$3';
   var values = [user_id, 
     startDate.format('YYYY-MM-DD'),  
     endDate.format('YYYY-MM-DD')];
-  db.where(table, 'response_date', where, values, 'response_date', 'DESC', function(res) {
+
+  db.where(table, 'response_date', where, values, 'response_date', 'DESC', function(err, res) {
+    if (err) { return done(err) };
     res = _.chain(res).pluck('response_date');
+
     var data = prepareCountData(startDate, endDate, res);
-    return  callback(data);
-  });
-};
-
-SurveyResponse.getAllResponse = function(survey_id, qs, callback) {
-  db.findBy(table, 'answers', 'survey_id', survey_id, function(res) {
-    res = _.chain(res).pluck('answers');
-       
-    qs.forEach(function(q, i, l){
-      var qrs = res.pluck(q.id).compact();
-      if (qrs.isEmpty().value()) {
-        q.responses =  undefined;
-      } else {
-        q.responses = prepareResponse(q.type, q, qrs);
-      }
-    });
-    return  callback(qs)
-  });
-};
-
-SurveyResponse.create = function(p, survey_id, callback) {
-
-};
-
-SurveyResponse.destroy = function(id, callback) {
-  db.destroy(table, 'id', id, function(r) {
-    return callback(r);
+    return  done(false, data);
   });
 };
 
@@ -63,7 +37,8 @@ function responseCount(res, day) {
   return res.filter(function(date) { 
     return moment(date).isSame(day, 'day') 
   }).size().value();
-}
+};
+
 function prepareCountData(startDate, endDate, res) {
   var numDates = startDate.diff(endDate, 'days');
   var totalDays = numDates;
@@ -75,29 +50,67 @@ function prepareCountData(startDate, endDate, res) {
     data.push({c: [{v: "Date(" + day.toArray().slice(0, 3).join(", ") + ")"}, {v: count}]});
   }
   return {total: res.size().value(), series: series, data: data}
-}
+};
+
+SurveyResponse.getAllResponse = function(survey_id, qs, done) {
+  db.findBy(table, 'answers', 'survey_id', survey_id, function(err, res) {
+    if (err) { return done(err) };
+    res = _.chain(res).pluck('answers');
+       
+    qs.forEach(function(q, i, l){
+      var qrs = res.pluck("Q" + q.id).compact();
+      if (qrs.isEmpty().value()) {
+        q.responses =  undefined;
+      } else {
+        q.responses = prepareResponse(q.type, q, qrs);
+      }
+    });
+    return done(false, qs)
+  });
+};
+
+SurveyResponse.create = function(survey, p, done) {
+  p['survey_id'] = survey.id;
+  p['user_id'] = survey.user_id;
+  db.create(table, p, null, function(err, r) {
+    if (err) { return done(err) };
+    return done(false, {thank_url: survey.thank_url, thank_msg: survey.thank_msg});
+  });
+};
+
+SurveyResponse.destroy = function(id, done) {
+  db.destroy(table, 'id', id, function(err, r) {
+    if (err) { return done(err) };
+    return done(false);
+  });
+};
+
+
 
 function prepareResponse(type, q, responses) {
   var z = {total: responses.size().value()};
-  var answers = q.answers;
-  if (['MC', 'YN', 'DD'].indexOf(type) > -1) {
-    prepareData(responses, answers, z, z.total);
+  var choices = q.choices;
+  if (['MC', 'SC', 'DD', 'SRS'].indexOf(type) > -1) {
+    if (type === 'SRS') {
+      choices = choices.ratings;
+    }
+    prepareData(responses, choices, z, z.total);
   };
 
-  if (['SA', 'LA', 'NA'].indexOf(type) > -1) { 
+  if (['SA', 'LA'].indexOf(type) > -1) { 
     z.data = responses.value()
   }
 
   if (type === 'CONTACT') {
-    _.each(answers, function(a, i, l) {
+    _.each(choices, function(a, i, l) {
       z.data = {};
       z.data[a] = responses.pluck(a).value();
     });
   }
 
   if (type === 'MRS') {
-    var subqs = q.rating.subqs;
-    var ratings = q.rating.ratings;
+    var subqs = q.choices.subqs;
+    var ratings = q.choices.ratings;
     z.subqs = {};
     _.each(subqs, function(subq, i, l) { 
       var subqres = responses.pluck(subq.id);
@@ -108,20 +121,20 @@ function prepareResponse(type, q, responses) {
   return z
 };
 
-function prepareData(responses, answers, object, total) {
-  if (_.isObject(answers)) {
-    answers = _.toArray(answers);
+function prepareData(responses, choices, object, total) {
+  if (_.isObject(choices)) {
+    choices = _.toArray(choices);
   }
   object.data = [];
   var counts = responses.countBy(function(v, k, i) {
-    for (i = 0; i < answers.length; i++) {
-      if (answers[i].id === v) {return answers[i].id}
+    for (i = 0; i < choices.length; i++) {
+      if (choices[i].id === v) {return choices[i].id}
     }
   });
   counts = counts.value();
-  _.each(answers, function(a, i, l) {
-    object[a.value.toString()] = (counts[a.id] || 0);
-    object.data.push({c: [{v: a.value}, {v:  (calcPercentage(counts[a.id], total) || 0)}]});
+  _.each(choices, function(c, i, l) {
+    object[c.value.toString()] = (counts[c.id] || 0);
+    object.data.push({c: [{v: c.value}, {v:  (calcPercentage(counts[c.id], total) || 0)}]});
   });
   return object;
 }
@@ -129,5 +142,7 @@ function prepareData(responses, answers, object, total) {
 function calcPercentage(num, total) {
   return Math.round((num/total) * 100);
 }
+
+
 
 module.exports = SurveyResponse;
