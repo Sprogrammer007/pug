@@ -39,12 +39,6 @@ app.use(function(req, res, next){
   next();
 })
 
-
-
-// if (process.env.RUN_DB === 'true') {
-db.Migrate('createAdmin');
-// }
-
 app.locals.default_description = "We design tools to make your marketing fun.";
 app.locals.deafult_og_image = "https://s3.amazonaws.com/designforresult/og_images/default_og.png";
 
