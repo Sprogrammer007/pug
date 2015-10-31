@@ -14,8 +14,8 @@ var express = require('express')
   //route files
   , routes = require('./routes/routes')
   , app = express()
-  , fs = require('fs')
-  , db = require('./modules/db');
+  , fs = require('fs');
+  
 // setup mailer
 mailer.extend(app, {
   from: 'no-reply@gmail.com',
