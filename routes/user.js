@@ -151,7 +151,7 @@ router.get('/confirmation', function(req, res) {
 router.get('/auth/facebook', function(req, res, next) {
   pass.authenticate('facebook', 
     { 
-      state: req.query.code
+      state: req.query.key
     }
   )(req, res, next);
 });
@@ -169,7 +169,7 @@ router.get('/auth/google', function(req, res, next) {
   pass.authenticate('google',  
     { 
       scope: 'https://www.googleapis.com/auth/plus.profile.emails.read',
-      state: req.query.code
+      state: req.query.key
     }
   )(req, res, next);
 
