@@ -51,7 +51,7 @@ passport.use(new LocalStrategy({
 passport.use(new FacebookStrategy({
     clientID: 1017381721660352,
     clientSecret: 'de60e205b5c23f65e0b1e2d2e43ca749',
-    callbackURL: "/account/auth/facebook/callback",
+    callbackURL: "http://www.pugsquad.com/account/auth/facebook/callback",
     scope: ['public_profile', 'email'],
     profileFields: ['id', 'displayName', 'email', 'photos']
   },
@@ -76,7 +76,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
     clientID: '999771109142-83di2tag0cegd42s36iu220g796gt510.apps.googleusercontent.com',
     clientSecret: 'mhAp9WN04LqAJ7ojogPAsm24',
-    callbackURL: 'http://127.0.0.1:3000/account/auth/google/callback'
+    callbackURL: 'http://www.pugsquad.com/account/auth/google/callback'
   },
   function(token, tokenSecret, profile, done) {
     process.nextTick(function () {
