@@ -2,7 +2,7 @@
 
 var helper = {
   titleHelper: function(title) {
-    return title + ' | Designed For Result';
+    return title + ' | Pug Squad';
   },
   isMobile: function(req) {
     var ua = req.header('user-agent');

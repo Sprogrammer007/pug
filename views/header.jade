@@ -7,11 +7,11 @@ header
     .collapse.navbar-toggleable-sm#navMenu
       ul.nav.navbar-nav.pull-left         
         li.nav-item(class=isActive(path, '/tool'))
-          a(href='/') Pricing               
+          a(href='/pricing') Pricing               
         li.nav-item(class=isActive(path, '/blog'))
           a(href='/blog') Blog               
-        li.nav-item(class=isActive(path, '/getanswers'))
-          a(href='/getanswers') Support
+        li.nav-item(class=isActive(path, '/help'))
+          a(href='/help') Help
       ul.nav.navbar-nav.pull-right.nav-right
         - if (user)
           li.nav-item.user-box

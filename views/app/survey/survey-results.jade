@@ -24,8 +24,8 @@
           ng-click="srCtrl.selectQ(q)")
           i.fa.fa-file.pull-left
           | Question {{$index + 1}}
-      .results-body.pull-left(ng-repeat="q in questions track by $index" 
-        ng-if="srCtrl.isCurrentQ(q)")
+
+      .results-body.pull-left(ng-if="questions && srCtrl.isCurrentQ(q)" ng-repeat="q in questions track by $index" )
         .has-response(ng-show="srCtrl.hasResponse(q)")
           .responses-type
             .response-question
@@ -101,4 +101,8 @@
 
         .no-response(ng-if="!srCtrl.hasResponse(q)")
           .text-box
-            p There wheren't any responses for this Question.
+            p There wheren't any responses for this question.
+      .results-body.pull-left(ng-if="!questions")
+        .no-response
+          .text-box
+            p There wheren't any responses for this survey.

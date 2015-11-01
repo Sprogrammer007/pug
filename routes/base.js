@@ -12,9 +12,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/getanswers', function (req, res, next) {
-  res.render('contact', { 
-    title: h.titleHelper('Get Answers')
+router.get('/help', function (req, res, next) {
+  res.render('help', { 
+    title: h.titleHelper('Help')
   });
 });
 

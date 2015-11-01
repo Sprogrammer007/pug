@@ -5,8 +5,8 @@ html
     script(src="//cdn.optimizely.com/js/1916590817.js")
     meta(charset="UTF-8")
     meta(name='viewport', content='width=device-width')
-    meta(name='description', content='Designed For Result builds tools to make marketing efficient and easy. Start your free trail today!')
-    link(rel='canonical' href="https://designedforresult.com#{path}")
+    meta(name='description', content='Pug Squad, Solving your marketing problems one pug at a time.')
+    link(rel='canonical' href="https://pugsquad.com#{path}")
     link(rel='profile', href='http://gmpg.org/xfn/11')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
     //if lt IE 9 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -20,7 +20,7 @@ html
      
    
     // Open Graph
-    meta(property='og:url', content='https://www.designedforresult.com#{path}')      
+    meta(property='og:url', content='https://www.pugsquad.com#{path}')      
     meta(property='og:image', content='#{(post != undefined) ? (( post.options.ogs.og_image != "") ? post.options.ogs.og_image : post.display_image) : locals.deafult_og_image }')      
     meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
     meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
@@ -29,43 +29,23 @@ html
 
 
     - if (locals.settings.env != 'development')
-
-      - if (path.substring(0, 6) === '/lp/tp' )
-        script.
-          (function() {
-            var _fbq = window._fbq || (window._fbq = []);
-            if (!_fbq.loaded) {
-            var fbds = document.createElement('script');
-            fbds.async = true;
-            fbds.src = '//connect.facebook.net/en_US/fbds.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(fbds, s);
-            _fbq.loaded = true;
-            }
-            })();
-            window._fbq = window._fbq || [];
-            window._fbq.push(['track', '6026857587376', {'value':'0.00','currency':'CAD'}]);
-        noscript
-          img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?ev=6026857587376&cd[value]=0.00&cd[currency]=CAD&noscript=1')
-
-      - else 
-        script.
-          (function() {
-            var _fbq = window._fbq || (window._fbq = []);
-            if (!_fbq.loaded) {
-            var fbds = document.createElement('script');
-            fbds.async = true;
-            fbds.src = '//connect.facebook.net/en_US/fbds.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(fbds, s);
-            _fbq.loaded = true;
-            }
-            _fbq.push(['addPixelId', '467069506789584']);
-            })();
-            window._fbq = window._fbq || [];
-            window._fbq.push(['track', 'PixelInitialized', {}]);
-        noscript
-          img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?id=467069506789584&ev=PixelInitialized')
+      script.
+        (function() {
+          var _fbq = window._fbq || (window._fbq = []);
+          if (!_fbq.loaded) {
+          var fbds = document.createElement('script');
+          fbds.async = true;
+          fbds.src = '//connect.facebook.net/en_US/fbds.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(fbds, s);
+          _fbq.loaded = true;
+          }
+          _fbq.push(['addPixelId', '467069506789584']);
+          })();
+          window._fbq = window._fbq || [];
+          window._fbq.push(['track', 'PixelInitialized', {}]);
+      noscript
+        img(height='1', width='1', alt='', style='display:none', src='https://www.facebook.com/tr?id=467069506789584&ev=PixelInitialized')
   body
     - if (locals.settings.env != 'development')
       // Google Tag Manager
