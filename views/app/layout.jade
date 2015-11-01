@@ -36,7 +36,7 @@ html(ng-app='dfr')
                   .alert-message
                       p.typecast.animated(ng-bind-html="alert.message")
       
-              .refer-emails.modal-box(class=(invite ? "open" : ""))
+              .refer-box.modal-box(class=(invite ? "open" : ""))
                 .overlay
                 .box.fadeIn.animated
                   .box-header.clearfix
@@ -46,7 +46,7 @@ html(ng-app='dfr')
                       span.sr-only Close
                   .box-body.clearfix
                     .speech-icon
-                      img(src="/images/logo-profile.png")
+                      img(src="/images/pug_speach.png")
                     .speech-bubble
                       .arrow
                       .inner-content

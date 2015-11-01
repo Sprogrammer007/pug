@@ -3,6 +3,17 @@ extends ../layout
 block css
 
 block content
+  - if (user.services['Survey'].first_time)
+    .welcome-box
+      .speech-icon
+        img(src="/images/pug_speach.png")
+      .speech-bubble
+        .arrow
+        .inner-content
+          p.typecast Welcome #{user.username},
+          p.typecast To get started let's create a survey first. Select the purpose for
+          p.typecast your survey below. 
+            i.fa.fa-hand-o-down
   new-survey
   script(type='text/ng-template' id="NewSurvey")
     .new-survey-wrapper(ng-class="{selected:nsCtrl.selected()}")

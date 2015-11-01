@@ -2,7 +2,6 @@ doctype html
 html  
   head
     title= title
-    script(src="//cdn.optimizely.com/js/1916590817.js")
     meta(charset="UTF-8")
     meta(name='viewport', content='width=device-width')
     meta(name='description', content='Pug Squad, Solving your marketing problems one pug at a time.')
@@ -25,7 +24,7 @@ html
     meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
     meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
     meta(property='og:type', content='#{(post != undefined) ? "article" : "website" }')
-    meta(property='og:site_name', content='Designed For Result')
+    meta(property='og:site_name', content='Pug Squad')
 
 
     - if (locals.settings.env != 'development')

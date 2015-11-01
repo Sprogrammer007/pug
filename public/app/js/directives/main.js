@@ -70,7 +70,12 @@
           });
         }
 
-        $('.refer-emails .typecast').each(function(i, e) {
+        $('.welcome-box .typecast').each(typeAnimate);
+
+        $('.refer-box .typecast').each(typeAnimate);
+
+        function typeAnimate(i, e) {
+
           if (i === 0) { 
             $(this).css({
               display: 'block',
@@ -86,7 +91,7 @@
               animation: 'type 2s steps(' + $(this).text().length + ', end)'
             });
           });
-        });
+        }
 
         element.on('click', '.resend-email', function(e) {
           var that = this;
