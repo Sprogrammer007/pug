@@ -4,10 +4,6 @@
   
   $(document).ready(function() {
 
-    $('.social-login').on('click', function(e) {
-      e.preventDefault();
-      window.open($(this).attr('href'), "_blank", "top=0, left=500,width=800, height=600")
-    });
     $('[data-toggle="tooltip"]').tooltip();
     // Optin
 
