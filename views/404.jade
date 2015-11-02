@@ -11,9 +11,14 @@ head
   // css
   link(rel='stylesheet', href='/css/ie.css')
   link(rel='stylesheet', href='/css/ie7.css')
-  link(rel='stylesheet', href='/css/error.css')
+  link(rel='stylesheet', href='/css/main.css')
 
   //js
   body
+    header
+      nav.navbar
+        a.navbar-brand(href="/")
+          img(src="/images/logo.png")
     #page-404
-      
+      p The page you're looking for was not found here. 
+        a(href="/")Click here to go home.
