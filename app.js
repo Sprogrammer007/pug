@@ -18,13 +18,13 @@ var express = require('express')
   
 // setup mailer
 mailer.extend(app, {
-  from: 'no-reply@gmail.com',
+  from: 'noreply@pugsquad.com',
   host: 'smtp.gmail.com', // hostname
   secureConnection: true, // use SSL
   port: 465, // port for secure SMTP
   transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
   auth: {
-    user: 'steve00006@gmail.com',
+    user: 'stevey@bigtalkconsulting.com',
     pass: 'guybrush'
   }
 });

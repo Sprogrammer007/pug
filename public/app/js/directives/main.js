@@ -31,7 +31,7 @@
         });
 
         if (scope.currentUser.status === 'Active') {
-          setAlert('notify', 'Please verify your email. <a class="resend-email">Resend confirmation</a>')
+          setAlert('notify', 'To publish your surveys, please verify your email. <a class="resend-email">Resend confirmation</a>')
         };
 
         

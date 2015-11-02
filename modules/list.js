@@ -22,7 +22,7 @@ List.subscribe = function(email, username, done) {
   options.email = {email: email};
   options.merge_vars = {EMAIL: email, UNAME: username, REGISTER: ((username) ? 'Yes' : 'No')  };
   mc.lists.subscribe(options, function(data) {
-    console.log('User subscribed successfully! Look for the confirmation email.');
+    console.log('User subscribed successfully!');
     return (done ? done(false, true) : true);
   },
   function(error) {

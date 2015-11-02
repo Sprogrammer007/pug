@@ -12,6 +12,12 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/pricing', function (req, res, next) {
+  res.render('price', { 
+    title: h.titleHelper('Pricing')
+  });
+});
+
 router.get('/help', function (req, res, next) {
   res.render('help', { 
     title: h.titleHelper('Help')

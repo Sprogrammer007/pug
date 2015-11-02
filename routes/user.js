@@ -33,7 +33,14 @@ router.post('/register', function (req, res, next) {
       if (err) { return console.log (err) };
     });
     List.subscribe(user.email, user.username);
-    res.redirect('/campaign/' + req.body.service + 's?code=' + req.params.code);
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      if (req.body.code) {
+        return  res.redirect('/campaign/surveys?code=' + req.body.code);
+      } 
+      return res.redirect('/campaign/surveys');
+    });
+   
   });
 });
 
@@ -151,6 +158,7 @@ router.get('/confirmation', function(req, res) {
 router.get('/auth/facebook', function(req, res, next) {
   pass.authenticate('facebook', 
     { 
+      auth_type: 'reauthenticate',
       state: req.query.key
     }
   )(req, res, next);
