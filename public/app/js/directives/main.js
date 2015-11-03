@@ -56,7 +56,7 @@
               console.log(r)
             });
           }
-          $('.refer-emails').removeClass('open');
+          $('.refer-box').removeClass('open');
         }
 
         scope.inviteFriends = function() {
@@ -64,8 +64,8 @@
           User.batchSubscribe({emails: scope.emails}, function(r) {
             if (r.success) {
               scope.emails = {};
-              $('.refer-emails .inner-content').html('<p>Thanks, a friendly invitation has been sent to your friends.</p>')
-              $('.refer-emails').removeClass('open');
+              $('.refer-box .inner-content').html('<p>Thanks, a friendly invitation has been sent to your friends.</p>')
+              $('.refer-box').removeClass('open');
             }
           });
         }

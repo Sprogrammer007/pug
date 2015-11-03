@@ -50,11 +50,11 @@ html(ng-app='dfr')
                     .speech-bubble
                       .arrow
                       .inner-content
-                        p.typecast Hey {{currentUser.username}},
-                        p.typecast Remember you can earn free survey responses by
-                        p.typecast sharing with your friends. Simply add their email below.
-                        p.typecast For each successful invite you'll ecieve 100 free responses,
-                        p.typecast and they will recieve 250 responses as well.
+                        p.typecast {{currentUser.username}}!!
+                        p.typecast Get more free survey responses by sharing
+                        p.typecast with your friends. Simply add their email below.
+                        p.typecast For each successful invite you'll recieve 100 free 
+                        p.typecast responses, and they will recieve 250 responses as well.
                     .email-input(ng-repeat="n in emailsCount track by $index")
                       i.fa.fa-at
                       input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : '' }}" autofocus)
