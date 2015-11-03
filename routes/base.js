@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/pricing', function (req, res, next) {
-  res.render('price', { 
+  res.render('pricing', { 
     title: h.titleHelper('Pricing')
   });
 });
