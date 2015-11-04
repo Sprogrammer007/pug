@@ -102,20 +102,46 @@
 
   sc.controller('NewSurveyController', function($scope, Survey){
     $scope.objectives = surveyObjectives;
-    this.selected = function() {
-      if (angular.isUndefined($scope.survey.objective)) {
-        return false
-      } 
-      
-      return true
+
+    this.nextStep = function() {
+      if (this.isLastStep()) {return} 
+      $scope.currentStep++;
     };
 
-    this.redoObjective = function() {
-      $scope.survey.objective = undefined;
+    this.prevStep = function() {
+      if (this.isFirstStep()) {return} 
+      $scope.currentStep--;
     };
+
+    this.isStep = function(step) {
+      return $scope.currentStep === step;
+    };
+
+    this.isFirstStep = function() {
+      return $scope.currentStep === 1;
+    };
+
+    this.isLastStep = function() {
+      return $scope.currentStep === 5;
+    };
+
+    this.progressStepStatus = function(step) {
+      if ($scope.currentStep === step) {
+        return "active";
+      } 
+
+      if ($scope.currentStep > step) {
+
+        if (hasError(step)) {
+          return "has-errors";
+        } else {
+          return "completed";
+        }
+      }
+    }
 
     this.hasSchedule = function() {
-      return $scope.survey.schedule === 'Schedule'
+      return $scope.survey.schedule === 'Schedule';
     };
 
     this.createSurvey = function() {;
@@ -129,6 +155,30 @@
       });
     };
 
+    function hasError(step) {
+      switch(step) {
+        case 1:
+          return angular.isUndefined($scope.survey.objective)
+          break;        
+        case 2:
+          return angular.isUndefined($scope.survey.name) || angular.isUndefined($scope.survey.description) 
+          break;
+        case 3:
+          var v = (angular.isUndefined($scope.survey.type) ||  angular.isUndefined($scope.survey.schedule))
+          if ($scope.survey.schedule === 'Schedule') {
+            return ( v || angular.isUndefined($scope.survey.end_date));
+          } else {
+            return v;
+          }
+          break;        
+        case 4:
+          return angular.isUndefined($scope.survey.thank_msg)
+          break;
+        default:
+          return false;
+      }
+     
+    }
   });
 
   sc.controller('SurveyResultsController', function($scope, 

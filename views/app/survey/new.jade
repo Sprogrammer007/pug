@@ -11,30 +11,34 @@ block content
         .arrow
         .inner-content
           p.typecast Welcome #{user.username},
-          p.typecast To get started let's create a survey first. Select the purpose for
+          p.typecast To get started let's create a survey first. Select the objective for
           p.typecast your survey below. 
             i.fa.fa-hand-o-down
   new-survey
   script(type='text/ng-template' id="NewSurvey")
-    .new-survey-wrapper(ng-class="{selected:nsCtrl.selected()}")
-      form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)
-        .step
-          | Step 1: Create Survey
-        .box.box-lg
-          .box-body
-            ul.survey-objectives
-              li(ng-repeat="o in objectives")
-                input(type="radio" id="{{o.id}}" ng-model="survey.objective" value="{{o.value}}" required)
-                label(for="{{o.id}}")
-                  | {{o.name}}           
-            .s1x3
-              .survey-objective
-                a(ng-click="nsCtrl.redoObjective()").back
-                  i.fa.fa-angle-left
-                  |  Back 
-                .objective-icon
-                p {{survey.objective}}
-              .survey-name
+    .new-survey-wrapper
+      .row
+        .col-md-9
+          form(ng-submit="nsCtrl.createSurvey()" name="surveyForm" novalidate)      
+            .nav.clearfix
+              a(ng-click="nsCtrl.prevStep()" ng-class="{disable:nsCtrl.isFirstStep()}").back
+                i.fa.fa-angle-left
+                |  Back               
+              a(ng-click="nsCtrl.nextStep()" ng-class="{disable:nsCtrl.isLastStep()}").next
+                |  Next 
+                i.fa.fa-angle-right
+            .steps
+              .step.one(ng-class="{active:nsCtrl.isStep(1)}")
+                ul.survey-objectives
+                  li(ng-repeat="o in objectives")
+                    input(type="radio" id="{{o.id}}" ng-model="survey.objective" value="{{o.value}}" required)
+                    label(for="{{o.id}}")
+                      | {{o.name}}           
+              .step.two(ng-class="{active:nsCtrl.isStep(2)}")
+                .survey-objective
+                  .objective-icon
+                  p {{survey.objective}}
+               
                 .form-group
                   .form-label Survey Name
                     i.fa.fa-info-circle(tool-tip="Enter a name for your survey. This name will be displayed on top of your survey.:top")
@@ -45,14 +49,10 @@ block content
                     i.fa.fa-info-circle(tool-tip="Tell the user what the survey is for. And what they will recieve for completing the survey.:top")
                   .form-input
                     ck-editor(ng-model="survey.description" required)
+          
+              .step.three(ng-class="{active:nsCtrl.isStep(3)}")
                 .form-group
-                  .form-label Brand Logo (Optional)
-                    i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
-                  .form-input
-                    input(type="text" ng-model="survey.logo_url") 
-              .survey-type
-                .form-group
-                  .form-label Display Type
+                  .form-label Progress Style
                     i.fa.fa-info-circle(tool-tip="<p>Choose how you want your survey to be displayed to the users.</p>\
                       <p>Use standard if you want would like a tradition survey with multiple pages.</p>\
                       <p>Use 'One question at a time' for a more interactive experience.</p>:top")
@@ -86,23 +86,68 @@ block content
                       from-date="survey.start_date" 
                       options="filterDPOptions"
                       ng-required='nsCtrl.hasSchedule()')
-        .step.step2
-          | Step 2: Add A Thank You Message
-        .box.box-lg.ty-box 
-          .box-body 
-            .form-group
-              .form-label Thank You Page Url (Optional)
-                i.fa.fa-info-circle(tool-tip="The url of the page you would like to display after the user has successfully completed the survey.:top")
-              .form-input
-                input.form-input(type="text" ng-model="survey.thank_url")
-            .form-group
-              .form-label Thank You Message
-                i.fa.fa-info-circle(tool-tip="A message to display after the user has completed your survey. If a thank you page url is provided a redirect will happen instead of this message being showned.:top")
-              .form-input
-                ck-editor(ng-model="survey.thank_msg" required)          
-  
-        .survey-submit.clearfix
-          button(type="submit" ng-class="{disable:surveyForm.$invalid}").pull-right.btn.btn-save Create Survey
+
+              .step.four(ng-class="{active:nsCtrl.isStep(4)}")
+                .form-group
+                  .form-label Thank You Message
+                    i.fa.fa-info-circle(tool-tip="A message to display after the user has completed your survey. If a thank you page url is provided a redirect will happen instead of this message being showned.:top")
+                  .form-input
+                    ck-editor(ng-model="survey.thank_msg" required)          
+              .step.five(ng-class="{active:nsCtrl.isStep(5)}")
+                .form-group
+                  .form-label Brand Logo (Optional)
+                    i.fa.fa-info-circle(tool-tip="Copy and paste a link to your brand logo here. (This is optional) :top")
+                  .form-input
+                    input(type="text" ng-model="survey.logo_url")
+                .form-group
+                  .form-label Thank You Page Url (Optional)
+                    i.fa.fa-info-circle(tool-tip="The url of the page you would like to display after the user has successfully completed the survey.:top")
+                  .form-input
+                    input.form-input(type="text" ng-model="survey.thank_url") 
+     
+                .survey-submit.clearfix
+                  button(type="submit" ng-class="{disable:surveyForm.$invalid}").btn.btn-save Create Survey
+        .col-md-3
+          .new-survey-progress
+            .progress-step(ng-class="nsCtrl.progressStepStatus(1)")
+              .step-icon.fa
+              span.step-title Objective            
+            .progress-step(ng-class="nsCtrl.progressStepStatus(2)")
+              .step-icon.fa
+              span.step-title Name & Description
+              .required-list
+                span(ng-model="survey.name" required) 
+                  i.fa
+                  | Name            
+                span(ng-model="survey.description" required) 
+                  i.fa 
+                  | Description           
+            .progress-step(ng-class="nsCtrl.progressStepStatus(3)")
+              .step-icon.fa
+              span.step-title Progress & Schedule   
+              .required-list
+                span(ng-model="survey.type" required) 
+                  i.fa
+                  | Progress Style            
+                span(ng-model="survey.schedule" required) 
+                  i.fa 
+                  | Schedule          
+                span(ng-if="nsCtrl.hasSchedule()" ng-model="survey.end_date" required) 
+                  i.fa 
+                  | End Time                     
+            .progress-step(ng-class="nsCtrl.progressStepStatus(4)")
+              .step-icon.fa
+              span.step-title Thank You Page               
+            .progress-step(ng-class="nsCtrl.progressStepStatus(5)")
+              .step-icon.fa
+              span.step-title Optionals           
+            .progress-step(ng-class="nsCtrl.progressStepStatus(6)")
+              .step-icon.fa
+              span.step-title Create Survey
+              .required-list
+                span(ng-if="surveyForm.$invalid")
+                  i.fa.fa-times
+                  | Missing required informations
 block templates
 
 

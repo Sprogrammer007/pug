@@ -74,7 +74,7 @@
         });
       }
 
-      return arr.sort(function(a,b){
+      arr.sort(function(a,b){
         return (a.frequency > b.frequency) ? -1 : ((a.frequency < b.frequency) ? 1 : 0);
       });
       return arr;

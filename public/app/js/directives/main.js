@@ -353,7 +353,10 @@
       require: '?ngModel',
       link: function(scope, element, attr, ngModel) {
         var ck = CKEDITOR.replace(element.find('textarea')[0], {
-          toolbar: [{ name: 'basic', items: ['Bold', 'Italic', 'Underline'] }],
+          toolbar: [
+            { name: 'basic', items: ['Bold', 'Italic', 'NumberedList', 'BulletedList', 'Image'] },
+            { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'Undo', 'Redo']}
+          ],
           skin: 'BootstrapCK4,/CKSkins/bootstrapck/',
           resize_enabled: false,
           height: (scope.height || 200),

@@ -58,7 +58,7 @@ html(ng-app='dfr')
                     .email-input(ng-repeat="n in emailsCount track by $index")
                       i.fa.fa-at
                       input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : '' }}" autofocus)
-                    .btn.btn-default.pull-right(ng-click="closeReferBox()") Close
+                    .btn.btn-default.pull-right(ng-click="closeReferBox()") No Thanks
                     .btn.btn-save.pull-right(ng-class="{disable:emails.length === 0}" ng-click="inviteFriends()") Invite
               block content
     script(type='text/ng-template' id="MainMenu")

@@ -49,6 +49,7 @@
       restrict: "E",
       templateUrl: 'NewSurvey',
       link: function(scope, element) {     
+        scope.currentStep = 1;
         scope.survey = new Survey({start_date: new Date()});
         scope.filterDPOptions =  {
           minDate: 0,
