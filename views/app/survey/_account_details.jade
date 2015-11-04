@@ -24,19 +24,27 @@
         .btn.btn-success(ng-click="openModal('Purchase Responses')") Purchase Responses         
         .btn.btn-default(ng-click="openModal('Coupon Code')") Use Code         
       .invite-code.tab(ng-show="isCurrentTab('Invite')")
-        .elabel You Invite Code:
+        .elabel Don't leave your friends behind:
           span 
-            i.fa.fa-info-circle(tool-tip="Simply tell them to use this 'Code' with their new account and they will recieve an additional 250 Responses For Free.\
-               For every invite code that is used you'll also recieve 100 free responses for your survey.:top")
-            |  Share this invite code with your friends to earn free Responses. 
-            a(tool-tip="Simply tell them to use this 'Code' with their new account and they will recieve an additional 250 Responses For Free.\
-               For every invite code that is used you'll also recieve 100 free responses for your survey.:left")
-              | Learn More
-        .evar.the-code {{service.invite_code}}   
-        .elabel Accepted Invites:
+            i.fa.fa-info-circle
+            |  Share this code with your friends to earn free responses. 
+            a() Learn More
+        .evar.refer-code {{service.ref_code}}
+          span.url https://www.pugsquad.com/register?ref={{service.ref_code}} 
+        .elabel Friends Joined:
         .evar {{service.options.accepted_invites || 0}}
-        .btn.btn-default(ng-click="openInvite()") Invite Friends
-        .btn.btn-default(ng-click="openModal('Invite Url')") Generate Invites Url
+        .elabel Share your link the social way:
+        .evar.refer-share
+          a.ref_share_link(href="https://www.facebook.com/sharer/sharer.php?u=")
+            i.fa.fa-facebook    
+          a.ref_share_link(href="https://twitter.com/share?url=")
+            i.fa.fa-twitter        
+          a.ref_share_link(href="https://plus.google.com/share?url=")
+            i.fa.fa-google-plus        
+          a.ref_share_link(href="https://www.linkedin.com/shareArticle?mini=true&url=")
+            i.fa.fa-linkedin        
+          a(ng-click="openInvite()") 
+            i.fa.fa-at
       .payment_method.tab(ng-show="isCurrentTab('Billing')")     
         .elabel Payment Method:
         .evar {{service.options.payment_method}}      
@@ -84,9 +92,6 @@
           button.btn.btn-save.pull-right(style="margin-right: 0;" ng-click="applyCoupon(coupon, $event)") 
             i.fa.fa-refresh.fa-pulse
             |  Apply
-      div(ng-if="isModal('Invite Url')")
-        code.the-code  
-          | https://www.designedforresult.com/register?invite_code={{service.invite_code}}   
     .box-footer.clearfix(ng-if="isModal('Purchase Responses')")
       .pull-right
         .btn.btn-default(ng-click="closeModal()") Close

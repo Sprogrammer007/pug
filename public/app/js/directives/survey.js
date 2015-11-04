@@ -177,7 +177,7 @@
         };
 
         scope.openInvite = function() {
-          $('.refer-emails').addClass('open')
+          $('.refer-box').addClass('open')
         };
 
         scope.openModal = function(modal) {
@@ -198,6 +198,12 @@
             }
           });
         };
+
+        element.on('click', '.ref_share_link', function(e) {
+          e.preventDefault();
+          var refUrl = "https://www.pugsquad.com/register?ref=" + scope.service.ref_code;
+          window.open($(this).attr('href') + refUrl, "_blank", "top=0, left=500,width=600, height=400")
+        });
       }
     }
   })
