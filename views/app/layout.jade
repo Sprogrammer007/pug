@@ -57,7 +57,7 @@ html(ng-app='dfr')
                         p.typecast responses, and they will recieve 250 responses as well.
                     .email-input(ng-repeat="n in emailsCount track by $index")
                       i.fa.fa-at
-                      input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : '' }}" autofocus)
+                      input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : 'Enter an email' }}" autofocus)
                     .btn.btn-default.pull-right(ng-click="closeReferBox()") No Thanks
                     .btn.btn-save.pull-right(ng-class="{disable:emails.length === 0}" ng-click="inviteFriends()") Invite
               block content

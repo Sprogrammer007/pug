@@ -428,13 +428,13 @@
       });
     };
 
-    this.updateSelection = function($event, s) {
-      var action = (event.target.checked ? 'add' : 'remove');
+    this.updateSelection = function(e, s) {
+      var action = (e.target.checked ? 'add' : 'remove');
       updateSelected(action, s);
     };
 
-    this.selectAll = function($event) {
-      var action = (event.target.checked ? 'add' : 'remove');
+    this.selectAll = function(e) {
+      var action = (e.target.checked ? 'add' : 'remove');
       $scope.surveys.forEach(function(v, k, l) {
         updateSelected(action, v);
       });
