@@ -33,7 +33,7 @@ router.post('/user/coupon', function(req, res, next) {
 
     Service.incrementResponse(user.services[type], 250, 0, false, function(err, s) {
       if (err) { return res.json(h.errorMSG('Unable to apply coupon please try again.')) }; 
-      Service.incrementResponse(service, 100, 0, true);
+      Service.incrementResponse(service, 50, 0, true);
       return res.json({success: true, service: s});
     });
   });

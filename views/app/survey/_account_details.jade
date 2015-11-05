@@ -26,9 +26,9 @@
       .invite-code.tab(ng-show="isCurrentTab('Invite')")
         .elabel Don't leave your friends behind:
           span 
-            i.fa.fa-info-circle
+            i.fa.fa-info-circle(ng-click="openRefer()")
             |  Share this code with your friends to earn free responses. 
-            a() View Details
+            a(ng-click="openRefer()") View Details
         .evar.refer-code {{service.ref_code}}
           span.url https://www.pugsquad.com/register?ref={{service.ref_code}} 
         .elabel Friends Joined:
@@ -52,8 +52,11 @@
         .evar {{service.options.total_spending || 0 | currency : $}}
 
 
-.refer-box.modal-box.open
-  .refer-wrapper
+.refer-box.modal-box(ng-class="{open:referStatus}")
+  .refer-wrapper.zoomIn.animated
+    button.close(ng-click="closeRefer()")
+      span(aria-hidden="true") &times;
+      span.sr-only Close
     .refer-info
       span.subhead Don't Leave Your Friend Behind                    
       h1 Invite Friend &
@@ -91,7 +94,7 @@
             p.friends Friends Joined
             p.rewards Responses Earned
           li.product(ng-repeat="reward in rewardLevels" 
-            ng-class="{selected:isRewardLevel(reward.level)}")
+            ng-class="{selected:isRewardLevel(reward.count)}")
             .circle {{reward.count}}
             .sep
             p {{reward.reward}} Bonus Responses          

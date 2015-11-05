@@ -124,6 +124,7 @@
       },
       link: function(scope, element) {
         scope.modalStatus = false;
+        scope.referStatus = false;
         scope.currentTab = 'Invite';
         scope.currentModal = 'Purchase Responses';
         scope.packages = [
@@ -136,10 +137,10 @@
         ];
 
         scope.rewardLevels = [
-          {count: 5, reward: '500', level: 'level-one'},
-          {count: 10, reward: '1,000', level: 'level-two'},
-          {count: 25, reward: '2,500', level: 'level-three'},
-          {count: 50, reward: '5,000', level: 'level-four'}
+          {count: 5, reward: '500'},
+          {count: 10, reward: '1,000'},
+          {count: 25, reward: '2,500'},
+          {count: 50, reward: '5,000'}
         ];
 
         scope.currentPackage = scope.packages[2];
@@ -150,8 +151,8 @@
           }
         });
 
-        scope.isRewardLevel = function(level) {
-          return scope.currentLevel() === level 
+        scope.isRewardLevel = function(count) {
+          return count < scope.service.options.accepted_invites;
         };
 
         scope.currentLevel = function() {
@@ -225,6 +226,14 @@
 
         scope.closeModal = function() {
           scope.modalStatus = false;
+        };        
+
+        scope.openRefer = function() {
+          scope.referStatus = (scope.referStatus) ? false : true;
+        };
+
+        scope.closeRefer = function() {
+          scope.referStatus = false;
         };
 
         scope.successPayment = function(res, cc) {
