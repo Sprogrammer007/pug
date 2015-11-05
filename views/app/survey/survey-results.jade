@@ -102,7 +102,7 @@
         .no-response(ng-if="!srCtrl.hasResponse(q)")
           .text-box
             p There wheren't any responses for this question.
-      .results-body.pull-left(ng-if="!questions")
+      .results-body.pull-left(ng-if="!questions.length")
         .no-response
           .text-box
-            p There wheren't any responses for this survey.
+            p Uh oh! No responses were found... 

@@ -36,30 +36,8 @@ html(ng-app='dfr')
                   .alert-message
                       p.typecast.animated(ng-bind-html="alert.message")
       
-              .refer-box.modal-box(class=(invite ? "open" : ""))
-                .overlay
-                .box.fadeIn.animated
-                  .box-header.clearfix
-                    .box-title Share the experience
-                    button.close(ng-click="closeReferBox()")
-                      span(aria-hidden="true") &times;
-                      span.sr-only Close
-                  .box-body.clearfix
-                    .speech-icon
-                      img(src="/images/pug_speach.png")
-                    .speech-bubble
-                      .arrow
-                      .inner-content
-                        p.typecast {{currentUser.username}}!!
-                        p.typecast Get more free survey responses by sharing
-                        p.typecast with your friends. Simply add their email below.
-                        p.typecast For each successful invite you'll recieve 100 free 
-                        p.typecast responses, and they will recieve 250 responses as well.
-                    .email-input(ng-repeat="n in emailsCount track by $index")
-                      i.fa.fa-at
-                      input(type="text" ng-model="emails[$index]" placeholder="{{$index > 0 ? 'Add Another' : 'Enter an email' }}" autofocus)
-                    .btn.btn-default.pull-right(ng-click="closeReferBox()") No Thanks
-                    .btn.btn-save.pull-right(ng-class="{disable:emails.length === 0}" ng-click="inviteFriends()") Invite
+
+                
               block content
     script(type='text/ng-template' id="MainMenu")
       include ./header.jade

@@ -28,7 +28,7 @@
           span 
             i.fa.fa-info-circle
             |  Share this code with your friends to earn free responses. 
-            a() Learn More
+            a() View Details
         .evar.refer-code {{service.ref_code}}
           span.url https://www.pugsquad.com/register?ref={{service.ref_code}} 
         .elabel Friends Joined:
@@ -51,6 +51,61 @@
         .elabel Total Spending:
         .evar {{service.options.total_spending || 0 | currency : $}}
 
+
+.refer-box.modal-box.open
+  .refer-wrapper
+    .refer-info
+      span.subhead Don't Leave Your Friend Behind                    
+      h1 Invite Friend &
+        br
+        | Earn Free Responses
+      span.how-it-works Here is how it works...
+      .details
+        span Share your unique referal link via email, facebook,
+          | twitter, linkedin, or Google plus and earn 50 free responses for 
+          | each friend that signs up plus bonus for every milestone reached.
+
+        .icon
+          i.fa.fa-plus
+        span Each friend that do signs up using your referal link will also earn 250 free responses(worth $10) as well and we all win.
+      .refer-link
+        | https://www.pugsquad.com/register?ref={{service.ref_code}}
+      .refer-share
+        a.ref_share_link(href="https://www.facebook.com/sharer/sharer.php?u=")
+          i.fa.fa-facebook    
+        a.ref_share_link(href="https://twitter.com/share?url=")
+          i.fa.fa-twitter     
+        a.ref_share_link(href="https://plus.google.com/share?url=")
+          i.fa.fa-google-plus    
+        a.ref_share_link(href="https://www.linkedin.com/shareArticle?mini=true&url=")
+          i.fa.fa-linkedin   
+        a(ng-click="openInvite()") 
+          i.fa.fa-at
+
+    .refer-progress
+      .progress-box
+        span.callout MileStone Rewards
+
+        ul.products.clearfix
+          li.title
+            p.friends Friends Joined
+            p.rewards Responses Earned
+          li.product(ng-repeat="reward in rewardLevels" 
+            ng-class="{selected:isRewardLevel(reward.level)}")
+            .circle {{reward.count}}
+            .sep
+            p {{reward.reward}} Bonus Responses          
+      
+        .progress(ng-class="currentLevel()")
+          .mover
+            .bar.clearfix
+        p.progress-text(ng-if="!hasFriends()")
+          span No 
+          | friend have joined... Yet!
+        p.progress-text(ng-if="hasFriends()")
+          span {{service.options.accepted_invites}} 
+          | friends saved!
+        p.check Keep checking
 .account-modal.modal-box(ng-class="{open:modalStatus}")
   .box.zoomIn.animated
     .box-header

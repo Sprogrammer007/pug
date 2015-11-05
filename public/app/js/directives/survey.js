@@ -133,21 +133,59 @@
           {name: "10k Responses", responses: 10000, price: 120},
           {name: "25k Responses", responses: 25000, price: 240},
           {name: "50k Responses", responses: 50000, price: 400}
-        ]
+        ];
+
+        scope.rewardLevels = [
+          {count: 5, reward: '500', level: 'level-one'},
+          {count: 10, reward: '1,000', level: 'level-two'},
+          {count: 25, reward: '2,500', level: 'level-three'},
+          {count: 50, reward: '5,000', level: 'level-four'}
+        ];
+
         scope.currentPackage = scope.packages[2];
+        
         scope.$watchCollection('currentUser', function(n, o) {
           if (n.services) {
             scope.service = n.services.Survey;
           }
         });
 
+        scope.isRewardLevel = function(level) {
+          return scope.currentLevel() === level 
+        };
+
+        scope.currentLevel = function() {
+          var invites = scope.service.options.accepted_invites;
+          if (invites >= 5 && invites < 10) {
+            return 'level-one';
+          }          
+
+          if (invites >= 10 && invites < 25) {
+            return 'level-two';
+          }          
+
+          if (invites >= 25 && invites < 50) {
+            return 'level-three';
+          }          
+
+          if (invites > 50) {
+            return 'level-four';
+          }
+
+        }
+
+        scope.hasFriends = function() {
+          return scope.service.options.accepted_invites > 0;
+        };
+
         scope.switchPackage = function(pac) {
           scope.currentPackage = pac;
-        }
+        };
 
         scope.isCurrentPackage = function(pac) {
           return pac === scope.currentPackage;
         };
+
         scope.isCurrentTab = function(tab) {
           return scope.currentTab === tab;
         };
@@ -170,7 +208,7 @@
               $(e.target).prop('disabled', false)
             }, 1500);  
           });
-        }
+        };
 
         scope.changeTab = function(tab) {
           scope.currentTab = tab;
@@ -247,7 +285,7 @@
             scope.chartData.data.rows = r.data   
             scope.legends.total = r.total
           });
-        })
+        });
       }
     }
   });  
