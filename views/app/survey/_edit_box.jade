@@ -33,6 +33,12 @@
             i.fa.fa-trash
 
     .box-body
+      .publish-errors(ng-if="surveyErrors")
+        p Please fix these errors first!
+        span(ng-repeat="error in surveyErrors") 
+          i.fa.fa-times
+          {{error}}
+      
       .survey-details(ng-if="!editMode")
         .elabel Survey Name:
         .evar {{survey.name}}

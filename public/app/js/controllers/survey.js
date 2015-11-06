@@ -338,10 +338,13 @@
       Survey.updateStatus({id: s.id}, {survey: s, new_status: newStatus}, function(r) {
         if (r.success) {
           s.status = newStatus;
+          if (newStatus === 'Published') {
+            openPublishModal()
+          }
         } else {
          $scope.surveyErrors = r.message;
         }
-        openPublishModal()
+
       });
     };
 
@@ -355,7 +358,7 @@
         if (pModal.hasClass('open')) { return };
         pModal.addClass('open');
       } else {
-        $('.main-content').append($compile("<publish-modal id='pModal' errors='surveyErrors' survey='survey'></publish-modal>")($scope));
+        $('.main-content').append($compile("<publish-modal id='pModal' survey='survey'></publish-modal>")($scope));
       }
     };
 

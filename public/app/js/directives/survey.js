@@ -519,11 +519,9 @@
       restrict: 'E',
       templateUrl: 'surveys/publishmodal',
       scope: {
-        survey: '=',
-        errors: '='
+        survey: '='
       },
       link: function(scope, element) {
-        console.log(scope)
         scope.close = function() {
           element.find('.publish-wrapper').removeClass('open')
         };

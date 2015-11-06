@@ -3,16 +3,12 @@
   .box.fadeIn.animated
     .box-header
       .box-title
-        span(ng-if="errors") Please fix the following errors first!
-        span(ng-if="!errors") Survey Successfully Published
+        | Survey Successfully Published
       button.close(ng-click="close()")
         span(aria-hidden="true") &times;
         span.sr-only Close
     .box-body
-      .publish-errors(ng-if="errors")
-        span(ng-repeat="error in errors") 
-          i.fa.fa-exclamation-triangle
-          {{error}}
+      
       div(ng-if="!errors")
         .form-group
           .form-label.full
@@ -22,15 +18,15 @@
             |  Copy the code below and paste it between the <body> and </body> tags in your website code. 
             | The survey will be populated on your the page you paste the code in.
           .form-choice.full
-            textarea(readyonly).iframe-code      
-              | <iframe src="https://www.pugsquad.com/s/{{survey.token}}"></iframe>
+            textarea(readonly).iframe-code
+              <iframe width="100%" height="100%" frameborder="0" style="height: 100vh; width: 100vw; border: none" src="https://www.pugsquad.com/s/{{survey.token}}"></iframe>
         .form-group
           .form-label.full
             | Unique Survey Url
           .form-description 
             i.fa.fa-exclamation-triangle
-            |  Alternatively, if you do not operate a website or you do not know how to embed the survey on to your website. 
-            | Simply use the Unique Survey Url below
+            |  Alternatively, if you do not operate a website or you do not know how to embed the 
+            | survey on our website. Simply use the Unique Survey Url below
           .form-choice.full
-            input(type="text" readyonly value="https://www.pugsquad.com/s/{{survey.token}}")
+            input(type="text" readonly value="https://www.pugsquad.com/s/{{survey.token}}")
 
