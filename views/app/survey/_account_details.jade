@@ -21,8 +21,14 @@
         .evar {{service.options.lifetime_reponses || 0}}           
         .elabel Free Responses Earned:
         .evar {{service.options.free_responses || 0}}
-        .btn.btn-success(ng-click="openModal('Purchase Responses')") Purchase Responses         
-        .btn.btn-default(ng-click="openModal('Coupon Code')") Use Code         
+        .btn.btn-success(ng-click="openModal('Purchase Responses')") Purchase Responses    
+        .form-group
+          .form-input
+            input(type='text' ng-model="coupon" placeholder="Enter Referal Code")
+            .error-coupon {{couponError}}
+          button.btn.btn-save.pull-right(style="margin-right: 0;" ng-click="applyCoupon(coupon, $event)") 
+            i.fa.fa-refresh.fa-pulse
+            |  Apply           
       .invite-code.tab(ng-show="isCurrentTab('Invite')")
         .elabel Don't leave your friends behind:
           span 
@@ -112,12 +118,12 @@
 .account-modal.modal-box(ng-class="{open:modalStatus}")
   .box.zoomIn.animated
     .box-header
-      .box-title {{currentModal}}
+      .box-title "Purchase Responses"
       button.close(ng-click="closeModal()")
         span(aria-hidden="true") &times;
         span.sr-only Close
     .box-body
-      div(ng-if="isModal('Purchase Responses')")
+      div
         .response-packages
           .form-group
             .form-label Packages
@@ -139,18 +145,7 @@
                 span Price Per Response:
                 span {{(currentPackage.price/currentPackage.responses) | currency:$:3}}
         payment_form(success="successPayment")
-      div(ng-if="isModal('Coupon Code')").clearfix
-        .form-group
-          .form-label.full Enter Code
-          .form-input.full
-            input(type='text' ng-model="coupon")
-            .error-coupon {{couponError}}
-            
-        .form-group
-          button.btn.btn-save.pull-right(style="margin-right: 0;" ng-click="applyCoupon(coupon, $event)") 
-            i.fa.fa-refresh.fa-pulse
-            |  Apply
-    .box-footer.clearfix(ng-if="isModal('Purchase Responses')")
+    .box-footer.clearfix
       .pull-right
         .btn.btn-default(ng-click="closeModal()") Close
         button.btn.btn-save(type="submit" form="paymentForm") Continue

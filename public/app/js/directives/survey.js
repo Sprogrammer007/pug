@@ -126,7 +126,6 @@
         scope.modalStatus = false;
         scope.referStatus = false;
         scope.currentTab = 'Invite';
-        scope.currentModal = 'Purchase Responses';
         scope.packages = [
           {name: "500 Responses", responses: 500,   price: 15},
           {name: "1k Responses",  responses: 1000,  price: 25},
@@ -152,10 +151,12 @@
         });
 
         scope.isRewardLevel = function(count) {
+          if (!scope.service) { return }
           return count < scope.service.options.accepted_invites;
         };
 
         scope.currentLevel = function() {
+          if (!scope.service) { return }
           var invites = scope.service.options.accepted_invites;
           if (invites >= 5 && invites < 10) {
             return 'level-one';
@@ -176,6 +177,7 @@
         }
 
         scope.hasFriends = function() {
+          if (!scope.service) { return }
           return scope.service.options.accepted_invites > 0;
         };
 
@@ -191,9 +193,6 @@
           return scope.currentTab === tab;
         };
 
-        scope.isModal = function(modal) {
-          return modal === scope.currentModal;
-        };
 
         scope.applyCoupon = function(coupon, e) {
           if (!coupon) { return }
@@ -217,7 +216,7 @@
 
 
         scope.openModal = function(modal) {
-          scope.currentModal = modal;
+          swal("Here's a message!")
           scope.modalStatus = (scope.modalStatus) ? false : true;
         };
 
