@@ -17,10 +17,10 @@ Service.findAllBy = function(k, v, done) {
 };
 
 Service.findByCode = function(code, service, done) {
-  var where = "invite_code=$1 AND user_id=$2 AND type=$3";
+  var where = "refer_code=$1 AND user_id=$2 AND type=$3";
   var v = [code, code.substring(8), service];
 
-  db.where(table, 'id, type, invite_code, options', where, v, 'id', 'ASC', function(err, service) {
+  db.where(table, 'id, type, refer_code, options', where, v, 'id', 'ASC', function(err, service) {
     if (err || _.isEmpty(service)) { return done(err ? err : true) };
     return done(err, _.first(service));
   });
@@ -51,7 +51,7 @@ Service.createSurvey = function(user_id, done) {
   }
 
   var token = Base.generateToken(4).concat(user_id).toUpperCase();
-  Service.create({user_id: user_id, type:'Survey', options: options, invite_code: token}, function(err, service) {
+  Service.create({user_id: user_id, type:'Survey', options: options, refer_code: token}, function(err, service) {
     done(err, service);
   });
 };
@@ -89,7 +89,7 @@ Service.verifyCoupon = function(service, code, done) {
     error = 'Another Invite Code has already been used.';
   };
 
-  if (service.invite_code === code ) {
+  if (service.refer_code === code ) {
     error = 'You cannot use your own code.';
   };
 

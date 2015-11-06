@@ -215,9 +215,6 @@
           scope.currentTab = tab;
         };
 
-        scope.openInvite = function() {
-          $('.refer-box').addClass('open')
-        };
 
         scope.openModal = function(modal) {
           scope.currentModal = modal;

@@ -23,6 +23,7 @@
             | The survey will be populated on your the page you paste the code in.
           .form-choice.full
             textarea(readyonly).iframe-code      
+              | <iframe src="https://www.pugsquad.com/s/{{survey.token}}"></iframe>
         .form-group
           .form-label.full
             | Unique Survey Url
@@ -31,5 +32,5 @@
             |  Alternatively, if you do not operate a website or you do not know how to embed the survey on to your website. 
             | Simply use the Unique Survey Url below
           .form-choice.full
-            input(type="text" readyonly value="https://www.designedforresult.com/s/{{survey.token}}")
+            input(type="text" readyonly value="https://www.pugsquad.com/s/{{survey.token}}")
 

@@ -39,17 +39,6 @@ router.post('/user/coupon', function(req, res, next) {
   });
 });
 
-router.post('/user/batch/subscribe', function(req, res, next) {
-  var service = req.user.services['Survey'];
-  List.batchSubscribe(req.body.emails, service.invite_code, function(err, success) {
-    if (err) { return res.json(h.errorMSG()) }; 
-    if (service.first_time) {
-      req.user.updateService({first_time: false }, service.id);
-    }
-    return res.json({success: true});
-  });
-});
-
 router.post('/user/update/service/:id', function(req, res, next) {
   req.user.updateService(req.body, req.params.id);
   return res.json({success: true});

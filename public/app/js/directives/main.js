@@ -57,22 +57,9 @@
             });
           }
           $('.refer-box').removeClass('open');
-        }
-
-        scope.inviteFriends = function() {
-          if (scope.emails.length === 0) { return };
-          User.batchSubscribe({emails: scope.emails}, function(r) {
-            if (r.success) {
-              scope.emails = {};
-              $('.refer-box .inner-content').html('<p>Thanks, a friendly invitation has been sent to your friends.</p>')
-              $('.refer-box').removeClass('open');
-            }
-          });
-        }
+        };
 
         $('.welcome-box .typecast').each(typeAnimate);
-
-        $('.refer-box .typecast').each(typeAnimate);
 
         function typeAnimate(i, e) {
 

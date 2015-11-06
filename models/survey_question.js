@@ -46,7 +46,7 @@ SurveyQuestion.moveToPage = function(oldPage, newPage, pos, done) {
 };
 
 SurveyQuestion.create = function(p, survey_id, done) {
-  var p = _.defaults(p, {multi_choices: false, required: false, allow_other: false});
+  var p = _.defaults(p, {required: false, allow_other: false});
   p.survey_id = survey_id;
   p.choices = Serializer.serialize(p.choices);
 
