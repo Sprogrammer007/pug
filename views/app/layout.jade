@@ -18,6 +18,7 @@ html(ng-app='pug')
     block css
       
   body
+    .corner-ribbon.top-left.sticky.shadow Closed Beta
     main-app(current-user='#{JSON.stringify({id: user.id, username: user.username, status: user.status, register_date: user.register_date})}' invite-token="#{code}")
 
     script(type='text/ng-template' id="MainApp")
