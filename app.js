@@ -30,6 +30,7 @@ mailer.extend(app, {
 });
 
 
+
 app.use(function(req, res, next){
   res.locals.isActive = function(a, b) {
     var queryIndex = a.indexOf('?')

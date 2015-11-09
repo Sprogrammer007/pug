@@ -1,7 +1,7 @@
 ;(function () {
   "user strict"
   
-  angular.module("dfr")
+  angular.module("pug")
   .factory("Survey", function SurveyFactory($resource) {
     return $resource("/api/s/:id", {id: '@id'}, {
       'update': { method: 'PUT', params: {}},
@@ -12,19 +12,19 @@
     });
   }); 
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("SurveyPage", function SurveyPageFactory($resource) {
     return $resource("/api/s/:survey_id/p/:id", {}, {});
   });
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("Question", function QuestionFactory($resource) {
     return $resource("/api/s/:survey_id/q/:id", {}, {
       'update': { method: 'PUT' }
     });
   });
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("QPosition", function QPositionFactory($http) {
     return { 
       update: function(data) {
@@ -35,7 +35,7 @@
     };
   });  
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("Response", function ResponseFactory($resource) {
     return $resource("/api/r/:id", {}, {
       all: { 
@@ -50,7 +50,7 @@
     });
   });
 
-  angular.module("dfr")
+  angular.module("pug")
   .service('TextAnalyze', function() {
     function analyzer(text) {
       var sWords = text.toLowerCase().trim().replace(/[,;.]/g,'').split(/[\s\/]+/g).sort();          

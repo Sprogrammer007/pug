@@ -42,13 +42,16 @@ html
     include ./footer.jade
     //javascript
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='//cdn.socket.io/socket.io-1.3.7.js')
     script(src='/js/jquery-ui.min.js')
     script(src='/js/tether.min.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/sharrre.min.js')
     script(src='/js/main.helper.min.js')
+    if (user)
+      script(type='text/javascript').
+        var Conn = io('http://localhost:3000');
     script(src='/js/main.js')
-
     block script
     script(type='text/javascript', src='https://js.stripe.com/v2/')
     script(type='text/javascript').

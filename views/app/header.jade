@@ -37,48 +37,44 @@
     .sm-i1(ng-hide="hasCampaign()")
       .sm-ls
         strong Account: {{currentUser.username}}
-    if (filter)
-      .filter-box
-        .btn-dropdown(ng-click="openFilter($event)")
-          .btn.btn-default 
-            span {{filter.currentFilter}}
-            i.fa.fa-caret-down
+    .shop-btn.pull-right(ng-click="openShop()")
+      .btn.btn-default
+        i.fa.fa-cart-plus
+        span Buy Reponses
 
-.filter-dropdown.box.has-shadow(ng-class="{active:filter.show}")
-  .preset-box
-    .row
-      .col-lg-3(ng-repeat="n in filter.filterNames")
-        a(ng-click="selectFilter(n)") {{n.name}}
-  .filter-body.clearfix 
-    .filter-datepicker.filter-from.pull-left
-      .myc
-        custom-select.smonth(change="selectMY(m, e, 'month')" 
-          model="filter.cfMonth" 
-          items="filter.monthNames")
-        custom-select.syear(change="selectMY(m, e, 'year')" 
-          model="filter.cfYear" 
-          items="filter.years")
-      date-picker(ng-model="filter.startDate" 
-        to-date="filter.endDate"
-        options="filterDPOptions" 
-        inline="true")
-    .filter-spliter
-      | to
-    .filter-datepicker.filter-to.pull-right
-      .myc
-        custom-select.smonth(change="selectMY(m, e, 'month')"
-          model="filter.ctMonth"  
-          items="filter.monthNames")
-        custom-select.syear(change="selectMY(m, e, 'year')" 
-          model="filter.ctYear" 
-          items="filter.years")
-      date-picker(ng-model="filter.endDate" 
-        from-date="filter.startDate"
-        options="filterDPOptions" 
-        inline="true")
-  .filter-footer.clearfix
-    .pull-left
-      | {{createDate(filter.endDate) | date: 'MMMM d, yyyy'}} - {{createDate(filter.startDate) | date: 'MMMM d, yyyy'}}
-    .pull-right
-      .btn.btn-default(ng-click="closeFilter($event)") Cancel
-      .btn.btn-success(ng-click="closeFilter($event, true)") Ok
+.shop.modal-box(ng-class="{open:shopStatus}")
+  .box.zoomIn.animated
+    .box-header
+      .box-title "Purchase Responses"
+      button.close(ng-click="closeShop()")
+        span(aria-hidden="true") &times;
+        span.sr-only Close
+    .box-body
+      div
+        .response-packages
+          .form-group
+            .form-label Packages
+            .form-label Package Details
+          .package-wrapper
+            .package-list
+              .package(ng-repeat="package in packages" 
+                ng-class="{active:isCurrentPackage(package)}"
+                ng-click="switchPackage(package)")
+                | {{package.responses | currency:'':0}}
+            .package-details
+              div
+                span Responses:
+                span {{currentPackage.responses | currency:'':0}}
+              div
+                span Price:
+                span {{currentPackage.price | currency:$}}
+              div
+                span Price Per Response:
+                span {{(currentPackage.price/currentPackage.responses) | currency:$:3}}
+        payment_form(success="successPayment")
+    .box-footer.clearfix
+      .pull-right
+        .btn.btn-default(ng-click="closeShop()") Close
+        button.btn.btn-save(type="submit" form="paymentForm") Continue
+
+ 

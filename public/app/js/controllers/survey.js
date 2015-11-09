@@ -2,7 +2,7 @@
 
   "user strict"
 
-  var sc = angular.module('dfrSurveysControllers', []);
+  var sc = angular.module('pugSurveysControllers', []);
 
   sc.controller('SurveyDashController', function($scope, $compile, $timeout, Question, QPosition) {
     this.togglePC = false;

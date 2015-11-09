@@ -1,7 +1,7 @@
 ;(function () {
   "user strict"
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("User", function UserFactory($resource) {
     return $resource("/api/user/:id", {id: '@id'}, {
       'update': { method: 'PUT', params: {}},
@@ -32,7 +32,7 @@
     });
   }); 
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("DateFilter", function DateFilterFactory() {
     var filters = {
       startDate: undefined,
@@ -52,7 +52,7 @@
   });
 
 
-  angular.module("dfr")
+  angular.module("pug")
   .factory("ChartDefaults", function ChartDefaultsFactory() {
     var chartDefault = {
       type:  "LineChart",
@@ -60,7 +60,7 @@
       data: {},
       options: {
         width: '100%',
-        height: 180,
+        height: 200,
         legend: 'none',
         pointSize: 5,
         colors: ['#F88B4D'],
@@ -118,7 +118,7 @@
   });   
 
 
-  angular.module("dfr").service('Params', function() {
+  angular.module("pug").service('Params', function() {
 
     window.parseQuery = function () {
       // This function is anonymous, is executed immediately and 

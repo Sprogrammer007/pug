@@ -9,10 +9,7 @@
           span.arrow        
         .btn-detail(ng-click="changeTab('Invite')" ng-class="{active:isCurrentTab('Invite')}")
           i.fa.fa-code      
-          span.arrow      
-        .btn-detail(ng-click="changeTab('Billing')" ng-class="{active:isCurrentTab('Billing')}")
-          i.fa.fa-money
-          span.arrow    
+          span.arrow       
     .box-body.clearfix
       .account-responses.tab(ng-show="isCurrentTab('Response')")
         .elabel Available Responses:
@@ -20,23 +17,22 @@
         .elabel Lifetime Responses:
         .evar {{service.options.lifetime_reponses || 0}}           
         .elabel Free Responses Earned:
-        .evar {{service.options.free_responses || 0}}
-        .btn.btn-success(ng-click="openModal('Purchase Responses')") Purchase Responses    
-        .form-group
-          .form-input
-            input(type='text' ng-model="coupon" placeholder="Enter Referal Code")
-            .error-coupon {{couponError}}
-          button.btn.btn-save.pull-right(style="margin-right: 0;" ng-click="applyCoupon(coupon, $event)") 
+        .evar {{service.options.free_responses || 0}}   
+        .refer-input         
+          input(type='text' ng-model="coupon" placeholder="Enter Coupon")
+          button.btn.btn-default(style="margin-right: 0;" ng-click="applyCoupon(coupon, $event)") 
             i.fa.fa-refresh.fa-pulse
             |  Apply           
+          .error-coupon {{couponError}}
+         
       .invite-code.tab(ng-show="isCurrentTab('Invite')")
         .elabel Don't leave your friends behind:
           span 
             i.fa.fa-info-circle(ng-click="openRefer()")
-            |  Share this code with your friends to earn free responses. 
+            |  Share this link with your friends to earn free responses. 
             a(ng-click="openRefer()") View Details
-        .evar.refer-code {{service.ref_code}}
-          span.url https://www.pugsquad.com/register?ref={{service.ref_code}} 
+        .evar.refer-code 
+          | https://www.pugsquad.com/register?ref={{service.ref_code}} 
         .elabel Friends Joined:
         .evar {{service.options.accepted_invites || 0}}
         .elabel Share your link the social way:
@@ -51,12 +47,6 @@
             i.fa.fa-linkedin        
           a(href="mailto:?subject=Try%20Pug%20Squad%20Free&body=Hey,%20%0A%0AYou%20can%20run%20free%20surveys%20using%20Pug%20Squad%20for%20your%20next%20marketing,%20or%20research%20project.%20%0AUse%20this%20link%20and%20get%20additional%20free%20survey%20responses%20credits.%20%0A%0Ahttps%3A//www.pugsquad.com/register?ref={{service.ref_code}}" ) 
             i.fa.fa-at
-      .payment_method.tab(ng-show="isCurrentTab('Billing')")     
-        .elabel Payment Method:
-        .evar {{service.options.payment_method}}      
-        .elabel Total Spending:
-        .evar {{service.options.total_spending || 0 | currency : $}}
-
 
 .refer-box.modal-box(ng-class="{open:referStatus}")
   .refer-wrapper.zoomIn.animated
@@ -115,39 +105,3 @@
           span {{service.options.accepted_invites}} 
           | friends saved!
         p.check Keep checking
-.account-modal.modal-box(ng-class="{open:modalStatus}")
-  .box.zoomIn.animated
-    .box-header
-      .box-title "Purchase Responses"
-      button.close(ng-click="closeModal()")
-        span(aria-hidden="true") &times;
-        span.sr-only Close
-    .box-body
-      div
-        .response-packages
-          .form-group
-            .form-label Packages
-            .form-label Package Details
-          .package-wrapper
-            .package-list
-              .package(ng-repeat="package in packages" 
-                ng-class="{active:isCurrentPackage(package)}"
-                ng-click="switchPackage(package)")
-                | {{package.responses | currency:'':0}}
-            .package-details
-              div
-                span Responses:
-                span {{currentPackage.responses | currency:'':0}}
-              div
-                span Price:
-                span {{currentPackage.price | currency:$}}
-              div
-                span Price Per Response:
-                span {{(currentPackage.price/currentPackage.responses) | currency:$:3}}
-        payment_form(success="successPayment")
-    .box-footer.clearfix
-      .pull-right
-        .btn.btn-default(ng-click="closeModal()") Close
-        button.btn.btn-save(type="submit" form="paymentForm") Continue
-
- 

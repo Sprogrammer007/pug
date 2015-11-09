@@ -7,7 +7,12 @@ var express = require('express')
 
 // All Surveys
 router.get('/user/services', function(req, res, next) {
-  return res.json(req.user.services); 
+  var user = req.user;
+   Service.findAllBy('user_id', user.id, function (err, services) {
+    if (err) { return res.json(h.errorMSG()) }
+    user.services = services;
+    return res.json(services); 
+  });
 });
 
 // Make Payment

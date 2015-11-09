@@ -1,6 +1,6 @@
 ;(function() { 
   "use strict";
-  var sc = angular.module('dfrPostsControllers', []);
+  var sc = angular.module('pugPostsControllers', []);
 
   sc.controller('PostDashController', function($scope){
   });

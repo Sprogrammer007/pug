@@ -1,10 +1,54 @@
 .survey-chart-wrapper.plr-12(ng-class="{loaded:loaded}")
   .box.box-lg
-    .survey-chart-title
-      | Total Responses For All Surveys {{filter}}
+    .box-header.white.clearfix
+      .box-title.pull-left
+        | Total Responses For All Surveys
+      .filter-box
+        .filter-btn(ng-click="openFilter($event)")
+          span.current-filter {{filter.currentFilter}}
+          i.fa.fa-caret-down
+
+        .filter-dropdown.box.has-shadow(ng-class="{active:filter.show}")
+          .preset-box
+            .row
+              .col-lg-3(ng-repeat="n in filter.filterNames")
+                a(ng-click="selectFilter(n)") {{n.name}}
+          .filter-body.clearfix 
+            .filter-datepicker.filter-from.pull-left
+              .myc
+                custom-select.smonth(change="selectMY(m, e, 'month')" 
+                  model="filter.cfMonth" 
+                  items="filter.monthNames")
+                custom-select.syear(change="selectMY(m, e, 'year')" 
+                  model="filter.cfYear" 
+                  items="filter.years")
+              date-picker(ng-model="filter.startDate" 
+                to-date="filter.endDate"
+                options="filterDPOptions" 
+                inline="true")
+            .filter-spliter
+              | to
+            .filter-datepicker.filter-to.pull-right
+              .myc
+                custom-select.smonth(change="selectMY(m, e, 'month')"
+                  model="filter.ctMonth"  
+                  items="filter.monthNames")
+                custom-select.syear(change="selectMY(m, e, 'year')" 
+                  model="filter.ctYear" 
+                  items="filter.years")
+              date-picker(ng-model="filter.endDate" 
+                from-date="filter.startDate"
+                options="filterDPOptions" 
+                inline="true")
+          .filter-footer.clearfix
+            .pull-left
+              | {{createDate(filter.endDate) | date: 'MMMM d, yyyy'}} - {{createDate(filter.startDate) | date: 'MMMM d, yyyy'}}
+            .pull-right
+              .btn.btn-default(ng-click="closeFilter(false)") Cancel
+              .btn.btn-success(ng-click="closeFilter(true)") Ok
     .survey-chart
       div(google-chart chart="chartData")
     .survey-stats.stats-box
       .evar {{legends.total}}
-      .elabel Total Responses {{filter}}
+      .elabel Total Responses
       

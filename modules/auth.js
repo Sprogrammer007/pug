@@ -17,6 +17,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
+  console.log('user')
   if (CurrentUser && moment(CurrentUser.last_active).add(1, 'hour').isAfter(moment(), 'hour')) {
     if (!CurrentUser.touched() && CurrentUser.id === id) { 
       return done(null, CurrentUser) 

@@ -1,7 +1,7 @@
 ;(function() {
   'use strict';
 
-  var md = angular.module('dfrMainDirectives', [])
+  var md = angular.module('pugMainDirectives', [])
   
   md.directive('mainApp', function(Params, User, $http) {
     return {
@@ -19,6 +19,11 @@
         User.services().$promise.then(function(services) {
           scope.currentUser.services = services;
         });
+
+        if (scope.currentUser) {
+          var socket = io('http://localhost:3000');
+          socket.emit('login', scope.currentUser);
+        };
 
         scope.alert = {};
         scope.emails = [];
@@ -196,119 +201,53 @@
         currentUser: '='
       },
       link: function(scope, element) {
-        DateFilter.set(getDate(0), getDate(7));
-        scope.filter = filterObj();
         scope.campaignName = Params.name;
-        scope.copyOfFilter;
-        scope.filterDPOptions =  {
-          changeYear: true,
-          changeMonth: true,
-          minDate: '-4y',
-          maxDate: 0
+        scope.shopStatus = false;
+
+        scope.packages = [
+          {name: "500 Responses", responses: 500,   price: 15},
+          {name: "1k Responses",  responses: 1000,  price: 25},
+          {name: "5k Responses",  responses: 5000,  price: 80, popular: true},
+          {name: "10k Responses", responses: 10000, price: 120},
+          {name: "25k Responses", responses: 25000, price: 240},
+          {name: "50k Responses", responses: 50000, price: 400}
+        ];
+
+        scope.currentPackage = scope.packages[2];
+        
+        scope.switchPackage = function(pac) {
+          scope.currentPackage = pac;
         };
+
+
+        scope.isCurrentPackage = function(pac) {
+          return pac === scope.currentPackage;
+        };
+
+        scope.successPayment = function(res, cc) {
+          User.pay({service: 'Survey', 
+            stripe: {token: res.id, zip: cc.address_zip},
+            pkg: scope.currentPackage}, function(service) {
+            if (service) {
+              scope.service = service;
+            }
+          });
+        };
+
+        scope.openShop = function() {
+          scope.shopStatus = (scope.shopStatus) ? false : true;
+        };
+
+        scope.closeShop = function() {
+          scope.shopStatus = false;
+        };       
+
         scope.hasCampaign = function() {
           if (scope.campaignName) {
             return true
           }
           return false
         };
-
-        scope.selectFilter = function(f) {
-          switch(f.value) {
-            case 'This Month':
-              scope.filter.startDate = moment().format('MM/DD/YYYY');
-              scope.filter.endDate = moment().startOf('month').format('MM/DD/YYYY');
-              DateFilter.set(scope.filter.startDate, scope.filter.endDate)
-              break;            
-            case 'Last Month':
-              var lastMonth = moment().subtract(1, 'month');
-              scope.filter.startDate = lastMonth.endOf('month').format('MM/DD/YYYY');
-              scope.filter.endDate = lastMonth.startOf('month').format('MM/DD/YYYY');
-              DateFilter.set(scope.filter.startDate, scope.filter.endDate)
-              break;           
-            case 'Lifetime':
-              scope.filter.startDate = moment().format('MM/DD/YYYY');
-              scope.filter.endDate =  moment(scope.currentUser.register_date).format('MM/DD/YYYY');
-              DateFilter.set(scope.filter.startDate, scope.filter.endDate)
-    
-              break;
-            default:
-              scope.filter.startDate = moment().format('MM/DD/YYYY');
-              scope.filter.endDate = getDate(f.value);
-              DateFilter.set(scope.filter.startDate, scope.filter.endDate)
-          }
-          scope.filter.currentFilter = f.name;
-          scope.filter.show = false;
-        }
-
-        scope.createDate = function(date) {
-          return new Date(date);
-        };
-
-        scope.selectMY = function(v, e, type, input) {
-          var value = (type === 'month') ? scope.filter.monthNames.indexOf(v) : v
-          input = input || $(e.target).parents('.filter-datepicker');
-          if (optionExists(input.find('.ui-datepicker-' + type), value)){
-            input.find('.ui-datepicker-' + type).val(value).trigger('change');
-          }
-        }
-
-        scope.openFilter = function(e) {
-          var fb = element.find('.filter-box');
-          var menu = element.find('.filter-dropdown');
-          menu.css({
-            top: fb.position().top + fb.height() + 10,
-            left: fb.position().left + fb.width() - menu.width() - 5,
-          });
-          if (scope.filter.show) {
-            scope.filter = scope.copyOfFilter;
-            return scope.filter.show = false;
-          }
-          scope.copyOfFilter = angular.copy(scope.filter);
-          scope.filter.show = true;
-        };
-
-        scope.closeFilter = function(e, ok) {
-          if (scope.filter.show && !ok) {
-            scope.filter = scope.copyOfFilter;
-            return scope.filter.show = false;
-          }
-
-          if (ok) {
-            scope.filter.currentFilter = moment(new Date(scope.filter.endDate)).format('MMM D, YYYY') 
-            + " - " + moment(new Date(scope.filter.startDate)).format('MMM D, YYYY')
-            DateFilter.set(scope.filter.startDate, scope.filter.endDate)
-          }
-
-          scope.filter.show = false;
-        };
-
-        scope.$watchCollection('filter', function(n, o) {
-          if (n) {
-            var fromDay = moment().month(n.cfMonth).year(n.cfYear);
-            var toDay = moment().month(n.ctMonth).year(n.ctYear);
-            if (fromDay.isBefore(toDay, 'month')) {
-              var filterTo = $('.filter-to');
-              n.ctMonth = fromDay.format('MMMM');
-              n.ctYear = fromDay.year();
-              scope.selectMY(n.ctMonth, null, 'month', filterTo);
-              scope.selectMY(n.ctYear, null, 'year', filterTo);
-            };
-          }
-        });
-
-        $(document).on('click', function(e) {
-          if (!$(e.target).closest('.filter-dropdown').length
-            && !$(e.target).closest('.filter-box').length) {
-            if (scope.filter.show) {
-              scope.$apply(function() {
-                scope.filter.show = false;
-                scope.filter = scope.copyOfFilter;
-              });
-              return 
-            }
-          }
-        });
       }
     }
   });  
@@ -621,47 +560,4 @@
     }
   });
 
-  function optionExists(select, val) {
-    return select.find("option[value='" + val + "']").length !== 0;
-  };
-
-  function getDate(num) {
-    return moment().subtract(num, 'd').format('MM/DD/YYYY')
-  };
-
-  function filterObj() {
-
-    function getYears() {
-      var y = [];
-      var d = moment();
-      for (var i = 0; i < 4; i++) {
-        y.push(d.subtract((i === 0) ? i : 1, 'y').year())
-      };
-      return y
-    };
-    
-    return {
-      show: false,
-      currentFilter: "Last 7 Days",
-      startDate: getDate(0),
-      endDate: getDate(7),
-      cfMonth: moment().format("MMMM"),
-      cfYear: moment().year(),      
-      ctMonth: moment().format("MMMM"),
-      ctYear: moment().year(),      
-      years: getYears(),
-      monthNames: ["January", "February", "March", "April", 
-      "May", "June", "July", "August",
-      "September", "October", "November", "December"],
-      filterNames: [
-        {value: 1, name: "Yesterday"}, 
-        {value: 7, name: "Last 7 Days"}, 
-        {value: 14, name: "Last 14 Days"}, 
-        {value: 30, name: "Last 30 Days"}, 
-        {value: "This Month", name: "This Month"}, 
-        {value: "Last Month", name: "Last Month"}, 
-        {value: "Lifetime", name: "Lifetime"} 
-      ]
-    }
-  };
 })();

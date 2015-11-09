@@ -1,6 +1,6 @@
 ;(function() {
   "use strict";
-  var sd = angular.module('dfrPostsDirectives', [])
+  var sd = angular.module('pugPostsDirectives', [])
     
   sd.directive('postDash', function(Post, $timeout) {
     return {

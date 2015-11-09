@@ -17,15 +17,15 @@
 
   function prepareRequires() {
     var requires;
-    var defaults = ['ngResource', 'ngSanitize', 'dfrMainDirectives', 'ui.sortable', 'googlechart'];
+    var defaults = ['ngResource', 'ngSanitize', 'pugMainDirectives', 'ui.sortable', 'googlechart'];
     var location = window.location.pathname.split('/')[2];
     var name = location.charAt(0).toUpperCase() + location.slice(1);
-    requires = defaults.concat(['dfr' + name + 'Directives', 'dfr' + name + 'Controllers'])
+    requires = defaults.concat(['pug' + name + 'Directives', 'pug' + name + 'Controllers'])
 
    return requires
   };
 
-  var app = angular.module('dfr', prepareRequires())
+  var app = angular.module('pug', prepareRequires())
   .config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(false);
   }]);
