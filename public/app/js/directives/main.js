@@ -157,7 +157,7 @@
           if (scope.paymentForm.$invalid) {return}
           Stripe.card.createToken(scope.cc, function(status, response) {
             if (response.error) {
-              console.log(response.error);
+              console.error(response.error);
               scope.ccError = response.error;
             } else {
               if (scope.success) {

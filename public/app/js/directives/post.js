@@ -15,21 +15,20 @@
       link: function(scope, element) {     
         if (scope.pid) {
           Post.get({id: scope.pid }).$promise.then(function(post) {
-            $timeout((function() {
-              scope.post = post;
-              scope.loaded = true;
-            }), 1500);
+            lostPost('post', post);
           });
         } else {
-
           Post.query(function(posts) {
-            $timeout((function() {
-              scope.posts = posts;
-              scope.loaded = true;
-            }), 1500);
+            lostPost('posts', posts);
           });
+        };
+
+        function lostPost (type, obj) {
+          $timeout(function() {
+            scope[type] = obj;
+            scope.loaded = true;
+          }, 1500);
         }
-    
       },
       controller: 'PostDashController',
       controllerAs: "pdashCtrl"

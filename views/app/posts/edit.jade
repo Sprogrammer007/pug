@@ -1,64 +1,66 @@
 extends ../layout
+block css
 
 block content
-  #newpost
+  
+  post-dash(current-user="currentUser" pid="currentID" loaded="loaded")#post
 
-    form(action='/admin/post/update/#{post.id}' method='post')
-      .form-group
-        label Title
-        input.form-control(type='text', name='post[title]' value="#{post.title}")      
-      .form-group
-        label Categories
-        .categories
-          - each category in categories
-           label.hcb(for="checkbox-" + category.id)
-             - if (post.categories.indexOf(category.category) > -1)
-                input(type="checkbox" name="post[categories]" id="checkbox-" + category.id value=category.id checked)
-              - else
-                input(type="checkbox" name="post[categories]" id="checkbox-" + category.id value=category.id) 
-              span.cb
-              | #{category.category}
-      .form-group
-        label Content
-        textarea#CKEditor.form-control(name='post[content]' rows="10")
-          | #{post.content}
-      .form-group
-        label Excerpt
-        textarea.form-control(name='post[excerpt]' rows="4" )
-          | #{post.excerpt}
-      .form-group
-        label Publish Date
-        input.publish-date.form-control(type="text" name='post[posted_date]' value="#{post.postDate('YYYY-MM-DD')}")
-      .form-group
-        label Display Image
-        input.form-control(type='text', name='post[display_image]' value="#{post.display_image}")
-      - if (post.options.ogs)
-        .form-group
-      
-          label OG Image
-          input.form-control(type='text', name='post[option][ogs][og_image]' value="#{post.options.ogs.og_image}")      
-      .form-group
-        label URL
-        input.form-control(type='text', name='post[url]' value="#{post.url}")
-      .form-group    
-        label Status
-        select.form-control(name="status")
-          - each v in ['Live', 'Draft']
-            option(value="#{v}" selected=post.status === v) #{v}
-      - if (post.options.optins)
-        .form-group
-          label Bottom Optin
-          textarea.form-control(name='post[option][optins][boptin]' rows="4")
-              | #{post.options.optins.boptin}
-        .form-group
-          label Popup Optin
-          textarea.form-control(name='post[option][optins][poptin]' rows="4")
-              | #{post.options.optins.poptin}
-        .form-group    
-          label Popup On or Off
-          select.form-control(name="post[option][optins][popon]")
-             - each v in ['On', 'Off']
-              option(value="#{v}" selected=post.options.optins.popon === v) #{v}
-      .form-group
-        input.form-control(type='submit', value='Update Post' style="margin-left: 50%; width: 50%; background-color: #555; color: #FFF;")
+    
+block templates
 
+  script(type='text/ng-template' id="PostDash")
+    loader(name="Post Manager" ng-class="{loaded:loaded}")
+    .post-dash(ng-class="{loaded:loaded}")
+      .edit-post-wrapper.plr-12
+        .post-content
+          .box.full
+            .box-header
+              button.btn.btn-default() Publish Post
+            .box-body
+              .form-group
+                .form-label.full Title
+                .form-input.full
+                  input(ng-model="post.title" required) 
+              .form-group
+                .form-label.full Content
+                .form-input.full
+                  ck-editor(ng-model='post.content' height="500" required)
+              .form-group
+                .form-label.full Excerpt
+                .form-input.full
+                  textarea(ng-model="post.excerpt")
+        .post-status
+          .box.full
+            .box-header
+              .box-title Post Details
+            .box-body
+              .form-group.display-image
+                img(src="{{post.display_image}}")
+                .form-input.full
+                  input(ng-model="post.display_image")
+              .form-group
+                .form-label.full Author
+                .form-input.full
+                  input(ng-model="post.author")
+              .form-group
+                .form-label.full Status
+                .form-input.full
+                  select(ng-model="post.status" required)
+                    option Unpublished
+                    option Live
+              .form-group
+                .form-label.full URL
+                .form-input.full
+                  input(ng-model="post.url")              
+              .form-group
+                .form-label.full Publish Date
+                .form-input.full
+                  input(ng-model="post.posted_date")
+          .box.full
+            .box-body
+
+
+block script
+  script(src='/app/js/services/post.js')
+  script(src='/app/js/directives/post.js')
+  script(src='/app/js/controllers/post.js')

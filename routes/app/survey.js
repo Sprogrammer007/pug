@@ -1,6 +1,7 @@
 var express = require('express')
   , h = require('../../modules/application_helpers') // Helpers
   , router = express.Router()
+  , Service = require('../../models/service')
   , Survey = require('../../models/survey')
   , SurveyResponse = require('../../models/survey_response');
 
@@ -8,23 +9,19 @@ var express = require('express')
 
 router.get('/surveys', function (req, res, next) {
   var service = req.user.services['Survey'];
-
   var template = (req.query.act || 'list');
-  var invite = false;
 
-  if (service.first_time && req.query.act !== 'edit') {
-    template = 'new'
-  } 
-
-  if (service.first_time && req.query.act === 'edit') {
-    invite = true;
+  if (service.first_time) {
+    if (req.query.act === 'edit') {
+      Service.update({first_time: false}, service.id);
+    } else {
+      template = 'new';
+    } 
   }
-  var filter = (template === 'list') ? true : false
+
   return res.render('app/survey/' +  template, {
     title: h.titleHelper("Campaign Manager"),
-    filter : filter,
-    code: req.query.code,
-    invite: invite
+    code: req.query.code
   });
 });
 

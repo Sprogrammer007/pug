@@ -30,7 +30,7 @@ router.post('/register', function (req, res, next) {
       subject: "Confirm Your Email",
       otherProperty: {user: user}
     }, function(err) {
-      if (err) { return console.log (err) };
+      if (err) { return console.error (err) };
     });
     List.subscribe(user.email, user.username);
     req.logIn(user, function(err) {

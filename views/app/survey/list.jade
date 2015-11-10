@@ -19,10 +19,6 @@ block templates
     include ./_list_chart.jade
 
 block script
-  script(src='/js/jquery.payment.js')
-  script(type='text/javascript', src='https://js.stripe.com/v2/')
-  script(type='text/javascript').
-    Stripe.setPublishableKey('pk_test_3lWlnlExQG86j4fD6PYNG9a0');
   script(src='/app/js/services/survey.js')
   script(src='/app/js/directives/survey.js')
   script(src='/app/js/controllers/survey.js')

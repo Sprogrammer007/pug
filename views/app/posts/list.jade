@@ -2,12 +2,12 @@ extends ../layout
 block css
 
 block content
-  loader(name="Post Manager" ng-class="{loaded:loaded}")
-  post-dash(loaded="loaded")#post
+  post-dash(current-user="currentUser" loaded="loaded")#post
 
     
 block templates
   script(type='text/ng-template' id="PostDash")
+    loader(name="Post Manager" ng-class="{loaded:loaded}")
     .post-dash(ng-class="{loaded:loaded}")
       post-list(posts="posts" loaded="loaded")
       post-edit(posts="posts" loaded="loaded")
@@ -18,6 +18,6 @@ block templates
 
 
 block script
-  script(src='/be/js/services/post.js')
-  script(src='/be/js/directives/post.js')
-  script(src='/be/js/controllers/post.js')
+  script(src='/app/js/services/post.js')
+  script(src='/app/js/directives/post.js')
+  script(src='/app/js/controllers/post.js')

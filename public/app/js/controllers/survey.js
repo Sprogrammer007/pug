@@ -224,6 +224,7 @@
     };
 
     this.getChartData = function(q) {
+      if (!q) {return};
       $scope.chartData.data.rows = q.data;
       $scope.chartData.options.colors = ChartDefaults.colors(q.data.length);
       return $scope.chartData

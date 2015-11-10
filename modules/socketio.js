@@ -12,9 +12,8 @@ Socket.listen = function(app){
   io = socket.listen(app)
 
   io.on('connection', function(socket){
-    console.log("connected")    
+    console.warn("new user connected")    
     socket.on('login', function(user){
-      console.log(user)
       userSockets[user.id] = socket.id;
     })    
     socket.on('logout', function(socket){

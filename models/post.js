@@ -93,26 +93,23 @@ Post.create = function(params, categories, user, callback) {
 }
 
 Post.all = function(k, v, callback) {
-  queries(k, v, function(posts){
-    var ps = _.map(posts, function(p){
+  queries(k, v, function(err, posts){
+
+    if (err) { return done(err) };
+    var ps = _.each(posts, function(p){
       return Base.convertObject(new Post(), p);
     });
-    return callback(ps);
+    return callback(false, ps);
   });
 }; 
 
-Post.findBy = function(k, v, callback) {
-  queries(k, v, function(result) {
-    var post = Base.convertObject(new Post(), result[0]);
-   
-    db.findBy('post_options', 'option_key, option_value', 'post_id', post.id, function(options){
-      if (options) {
-        options.forEach(function(e, i ,a) {
-          post.options[e['option_key']] = Serializer.unserialize(e['option_value']);
-        });
-      }
-      return callback(post);
-    });
+Post.findBy = function(k, v, callback, convert) {
+  queries(k, v, function(err, post) {
+    if (err) { return done(err) };
+    if (convert) {
+      post = Base.convertObject(new Post(), _.first(post));
+    } 
+    return callback(false, post);
   });
 }
 
@@ -127,8 +124,8 @@ function queries (k, v, done) {
     ((k === 'All') ? " " : (" AND a." + k + "='" + v + "'" )) + 
     " GROUP BY a.id" +
     " ORDER BY posted_date DESC;"
-  return db.rawQuery(query, function(result) {
-    return done(result);
+  return db.rawQuery(query, function(err, result) {
+    return done(err, result);
   });  
 }
 

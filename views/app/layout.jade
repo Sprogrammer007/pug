@@ -66,7 +66,10 @@ html(ng-app='pug')
     script(src='/app/js/services/main.js')
     script(src='/app/js/angular.sort.min.js')
 
-    script.
+    script(src='/js/jquery.payment.js')
+    script(type='text/javascript', src='https://js.stripe.com/v2/')
+    script(type='text/javascript').
+        Stripe.setPublishableKey('pk_test_3lWlnlExQG86j4fD6PYNG9a0');
         
     block script
 

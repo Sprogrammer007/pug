@@ -1,5 +1,5 @@
 .survey-list-wrapper.plr-12(ng-class="{loaded:loaded}")
-  .survey-list.box.box-lg
+  .survey-list.box.full
     .survey-list-control(ng-class="{active:slistCtrl.isSelectedSingle()}")
       .single-edits.plr-12 
         a(href="surveys?act=edit&id={{slistCtrl.currentSurvey().id}}&name={{slistCtrl.currentSurvey().name}}").btn.btn-default

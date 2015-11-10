@@ -11,6 +11,7 @@ var express = require('express')
   , postcat = require('./app/post_category')
   , surveyAPI = require('./api/survey')
   , userAPI = require('./api/user')
+  , postAPI = require('./api/post')
   , app = express();
 
 var ApiToken = require('../modules/ApiToken');
@@ -56,6 +57,7 @@ app.use('/api', function(req, res, next) {
 });
 app.use('/api', surveyAPI);
 app.use('/api', userAPI);
+app.use('/api', postAPI);
 
 
 function ensureAuthenticated(req, res, next) {

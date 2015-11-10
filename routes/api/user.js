@@ -57,7 +57,7 @@ router.get('/user/confirm/resend', function(req, res, next) {
       subject: "Confirm Your Email",
       otherProperty: {user: user}
     }, function(err) {
-      if (err) { return console.log (err) };
+      if (err) { return console.error (err) };
     }); 
     return res.json({success: true});
   });
