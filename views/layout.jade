@@ -16,14 +16,18 @@ html
     link(rel='stylesheet', href='/css/main.css')
     link(rel='stylesheet', href='/css/mobile.css')
     block css
+
+
      
     // Open Graph
-    meta(property='og:url', content='https://www.pugsquad.com#{path}')      
-    meta(property='og:image', content='#{(post != undefined) ? (( post.options.ogs.og_image != "") ? post.options.ogs.og_image : post.display_image) : locals.deafult_og_image }')      
-    meta(property='og:title', content='#{(post != undefined) ? post.title : title }')    
-    meta(property='og:description', content='#{(post != undefined) ? post.excerpt : locals.default_description}')      
-    meta(property='og:type', content='#{(post != undefined) ? "article" : "website" }')
+    meta(property='og:url', content='https://www.pugsquad.com#{path}')     
     meta(property='og:site_name', content='Pug Squad')
+    block og
+      meta(property='og:image', content='#{locals.deafult_og_image }')      
+      meta(property='og:title', content='#{title}')    
+      meta(property='og:description', content='#{locals.default_description}')      
+      meta(property='og:type', content='#{"website"}')
+
 
 
     - if (locals.settings.env != 'development')
@@ -47,8 +51,8 @@ html
     script(src='/js/jquery-ui.min.js')
     script(src='/js/tether.min.js')
     script(src='/js/bootstrap.min.js')
-    script(src='/js/sharrre.min.js')
     script(src='/js/main.helper.min.js')
+    script(src='/js/sharrre.min.js')
     if (user)
       script(type='text/javascript').
         var Conn = io('http://localhost:3000');

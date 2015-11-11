@@ -5,20 +5,31 @@
   sc.controller('PostDashController', function($scope){
   });
 
-  sc.controller('NewPostController', function($scope, Survey){
-    this.post = new Post();
-
-    this.createSurvey = function() {;
-      if ($scope.postForm.$invalid) {return}
-      this.post.$save(function(result) {
-        if (result.data === 'Not Logged In') {
-          window.location.replace(window.location.origin + "/login");
-        } else {
-          this.post = result;
-          // window.location.replace(window.location.origin + "/campaign/survey/" + result.id + "/b");
-        }
-      });
+  sc.controller('PostEditController', function($scope, Post){
+   
+    this.publish = function() {;
+      console.log("testes")
+      // if ($scope.postForm.$invalid) {return}
+      if ($scope.post.id) {
+        $scope.post.update(function(post) {
+          
+        });   
+      } else {
+        Post.save({post: $scope.post, categories: $scope.selectedCategories},function(post) {
+          
+        });   
+      }
     }
+
+    this.toggleSelection = function(id) {
+      var i = $scope.selectedCategories.indexOf(id);
+
+      if (i > -1) {
+        $scope.selectedCategories.splice(idx, 1);
+      } else {
+        $scope.selectedCategories.push(id);
+      }
+    };
   });
 
   sc.controller('PostListController', function($scope, Post){

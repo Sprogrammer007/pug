@@ -7,7 +7,7 @@
 // Blog
 
 router.get('/', function (req, res, next) {
-  Post.all('All', null, function(posts) {
+  Post.all('All', null, function(err, posts) {
     return res.render('blog/list', { 
       title: h.titleHelper('Blog'),
       posts: posts
@@ -18,25 +18,14 @@ router.get('/', function (req, res, next) {
 // Single Post
 
 router.get('/:url', function (req, res, next) {
-  Post.findBy('url', req.params.url, function(post){
-    if (post) {
-      return res.render('blog/single', { 
-        title: h.titleHelper(post.title),
-        post: post,
-        options: post.options
-      });
-    } else {
-      res.redirect('/404');
-    }
-  });
-});
-
-// Comment Submit
-
-router.post('/comment', function (req, res, next) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  Post.findBy('url', req.params.url, function(post){
-  });
+  Post.findBy('url', req.params.url, function(err, post){
+    if (err) { return  res.redirect('/404'); }
+    return res.render('blog/single', { 
+      title: h.titleHelper(post.title),
+      post: post
+    });
+  
+  }, true);
 });
 
 

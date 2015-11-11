@@ -6,13 +6,8 @@ footer#footer
       - else
         include ./shared/footer-desktop.jade
         
-#poptin.modal.fade(data-pon="#{(post) ? post.options.optins.popon : '' }")
+#poptin.modal.fade()
   .modal-dialog
     .modal-content
       button.close(type='button', data-dismiss='modal', aria-label='Close')
       .modal-body
-
-        - if (post && post.options.optins.popon != 'On')
-          | !{post.options.optins.poptin} 
-        - else
-  

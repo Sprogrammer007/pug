@@ -1,95 +1,71 @@
 extends ../layout
 block css
-  link(rel='stylesheet', herf='cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css')  
+
+block og
+  - if (post.options.og_image)
+    meta(property='og:image', content='#{post.options.og_image}')  
+  meta(property='og:title', content='#{post.title}')    
+  meta(property='og:description', content='#{post.excerpt}')      
+  meta(property='og:type', content='#{"article"}')
 
 block content
-  #single
-    .container
-      .single-header
-        -if (post)
-          .post-dispaly-image
-            .feature-offer
-            img.post-di(src="#{post.display_image}")
-        .follows
-          ul
-            li.fb
-              a(href="https://www.facebook.com/designedforresult")
-            li.tw
-              a(href="https://twitter.com/dfr_007")
-            li.lk
-              a(href="https://www.linkedin.com/company/designed-for-results")
-            li.gp
-              a(href="https://plus.google.com/u/0/b/116414978174330915452/+Designedforresultdfr/posts")
-      -if (post)
+  #fb-root
+  script.
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1017381721660352";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
-        #social.share-wrapper()
-          #twitter.twitter(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-          #facebook.facebook(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-          #googleplus.googleplus(data-url='designedforresult.com/blog/#{post.url}', data-text='')
-            a.box(href="#")
-              .social-icon.fa.fa-google-plus
-              span.count 0
-          #linkedin.linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-      main
-        .main-content-wrapper.container800
-          - if (post)
-            .post-title
-              h1 #{post.title}
-              .post-meta
-                .pull-left
-                  .post-category
-                    | #{post.categories.join(" | ")}
-                .pull-right
-                  span By: 
-                    span.author #{post.author} 
-                    | on  
-                  span.date
-                    | #{post.postDate('MMMM Do, YYYY')}
-              .clearfix
-            .post-content
-              | !{post.content}
-              #post-footer-share
-                span.shareit If you Like it, Share it... Thanks
-                #twitter.twitter(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-                #facebook.facebook(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
-                #googleplus.googleplus(data-url='designedforresult.com/blog/#{post.url}', data-text='')
-                  a.box(href="#")
-                    .social-icon.fa.fa-google-plus
-                    span.count 0
-                #linkedin.linkedin(data-url='https://designedforresult.com/blog/#{post.url}', data-text='')
+  #post
 
-    aside
-      .post-optin-wrapper
-        .container
-          .row
-            .optin-box.optin-content.col-lg-8.col-lg-offset-2
-              - if (options.optins != undefined && options.optins.boptin != '')
-                | !{ptions.optins.boptin} 
-              - else
-                p.optin-title.text-center.text-uppercase
-                  | [Interactive PDF] 30 Minute Website Planner
-                .row
-                  .col-lg-6.col-sm-6.col-xs-6
-                    
-                    p.optin-description.text-left
-                      i.fa.fa-check(style="color: green;")
-                      |  Plan your entire small Business website in 30 minutes.                
-                    p.optin-description.text-left 
-                      i.fa.fa-check(style="color: green;")
-                      |  Edit it on your computer or print it out for your team.          
-                    p.optin-description.text-left 
-                      i.fa.fa-check(style="color: green;")
-                      |  Use the planner to reduce development time and cost.    
-                    p.optin-description.text-left 
-                      i.fa.fa-check(style="color: green;")
-                      |  Built highly effective Business website with this planner.
-                  .col-lg-6.col-sm-6.col-xs-6.optin-image
-                    img(src="https://s3.amazonaws.com/designforresult/post-default-images/30minutewebsiteplanner.jpg" alt="30 Minute Interactive website planner")
-                .btn.btn-optin.boptin
-                  | Download This Guide
+    section.post-banner
+      -if (post.display_image)
+        .post-banner-bg(style="background-image: url('#{post.display_image}');")
+      - else
+        .post-banner-bg
 
-    include ./comments
+    #social.flow-share
+      .twitter(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
+      .facebook(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
+      .googleplus(data-url='pugsquad.com/blog/#{post.url}', data-text='')
+        a.box(href="#")
+          .social-icon.fa.fa-google-plus
+          span.count 0
+      .linkedin(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
+    main.main-content-wrapper
+      .row 
+        .col-md-6.col-md-offset-3
+          .follow-pug
+            span Follow Pug Squad:
+            .fb-like(data-href='https://www.facebook.com/pugsquad/', data-layout='button', data-action='like', data-show-faces='true', data-share='false')
+
+          .post-meta    
+            .author-avatar.clearfix
+              img(src="https://secure.gravatar.com/avatar/ff162301fb35a74fdb53c914b43c3060?s=60&d=mm&r=g")   
+            .pull-right
+              .author #{post.author}   
+              .date #{post.postDate('MMMM D, YYYY')}      
+              .category
+                | #{post.categories.join(" & ")}             
+          .post-title
+            h1 #{post.title}
+
+          .post-content
+            | !{post.content}
+
+     
+
+    //- aside
+    //-   .post-optin-wrapper
+    //-     .container
+    //-       .row
+    //-         .optin-box.optin-content.col-lg-8.col-lg-offset-2
+    //-           | teetetsetest
+           
+
+    //- include ./comments
     
 block script
-  script(src='//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js')
-  script(src='//cdn.ckeditor.com/4.5.1/standard/ckeditor.js')

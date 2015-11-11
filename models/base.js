@@ -10,12 +10,7 @@ function Base() {
 };
 
 Base.convertObject = function(o, db) {
-  for (var key in db) {
-    if (db.hasOwnProperty(key)) {
-      o[key] = db[key];
-    }
-  }
-  return o;
+  return _.defaults(db, o) 
 };
 
 Base.generateToken = function(bytes) {

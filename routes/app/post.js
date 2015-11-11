@@ -7,7 +7,9 @@ var express = require('express')
 // Index Posts
 router.get('/posts', function (req, res, next) {
   var template = (req.query.act || 'list');
-
+  if (req.query.act === 'new') {
+    template = 'edit';
+  }
   return res.render('app/posts/' +  template, {
     title: h.titleHelper("Campaign Manager")
   });

@@ -11,7 +11,7 @@ var table = 'posts';
 // post object
 
 function Post() {
-
+  this.options = {};
   this.update = function(params) {
     options = params.option;
     delete params.option;
@@ -30,23 +30,15 @@ function Post() {
     });
   };
 
-  this.options = {};
-
   this.postDate = function(f) {
     if (this.posted_date) {
       return moment(this.posted_date).format(f);
     }
   };
 
-  this.createOptions = function(options) {
-    var fields = ['post_id', 'option_key', 'option_value'];
-    db.createMulti('post_options', fields , options, this.id);
-  };
-
   this.destroy = function() {
     db.destroy(table, 'id', this.id, function(success) {
       if (success) {
-        db.destroy('post_options', 'post_id', this.id);
         db.destroy('post_categories', 'post_id', this.id);
         return true
       } else {
@@ -54,64 +46,52 @@ function Post() {
       }
     });
   };
-
-  // Private post method
-  function updatePostOptions(values, id) {     
-    var values =  _.map(values, function(v, k) {
-      if (values.hasOwnProperty(k) && values[k] != '') {
-         v = (values[k].constructor == Object) ? Serializer.serialize(values[k]) : values[k];
-         return ('(' + id + ", '" + k + "', '" + v + "')");
-      }
-    });
-
-    var query = "UPDATE post_options AS t SET" +
-    " option_value = c.value FROM" +
-    " (VALUES " + values.join(", ") + " )" +
-    " AS c(id, key, value)" + 
-    " WHERE c.id=t.post_id AND c.key=t.option_key;"
-    return db.rawQuery(query);  
-  };
 }
-
-Post.inherits(Base);
 
 // Class methods
 
-Post.create = function(params, categories, user, callback) {
-  params['url'] = params.title.trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-').toLowerCase();
-  params['post_type'] = 'Post';
-  params['Author'] = user.username;
-  params['user_id'] = user.id;
-  db.create('posts', params, null, function(post) {
-    var p = Base.convertObject(new Post(), post);
+Post.create = function(p, categories, user, done) {
+  delete p.categories;
+  p['url'] = createPostUrl(p.title)
+  p['post_type'] = 'Post';
+  p['Author'] = user.username;
+  p['user_id'] = user.id;
+  db.create('posts', p, null, function(err, post) {
 
+    if (err) { return done(err) };
+    post = _.first(post);
     if (categories && !_.isEmpty(categories)) {
-      PostCategoryRelation.createAll(categories, p.id);
+      PostCategoryRelation.createAll(categories, post.id);
     }
-    return callback(p);
+    return done(false, post);
   });
 }
 
-Post.all = function(k, v, callback) {
+Post.all = function(k, v, done) {
   queries(k, v, function(err, posts){
 
     if (err) { return done(err) };
-    var ps = _.each(posts, function(p){
-      return Base.convertObject(new Post(), p);
+    posts.forEach( function(p){
+      Base.convertObject(new Post(), p);
     });
-    return callback(false, ps);
+    return done(false, posts);
   });
 }; 
 
-Post.findBy = function(k, v, callback, convert) {
+Post.findBy = function(k, v, done, convert) {
   queries(k, v, function(err, post) {
     if (err) { return done(err) };
+    post = _.first(post);
     if (convert) {
-      post = Base.convertObject(new Post(), _.first(post));
+      post = Base.convertObject(new Post(), post);
     } 
-    return callback(false, post);
+    return done(false, post);
   });
 }
+
+function createPostUrl(title) {
+  return  title.trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-').toLowerCase();
+};
 
 function queries (k, v, done) {
 

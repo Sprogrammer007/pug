@@ -3,7 +3,7 @@ block css
 
 block content
   
-  post-dash(current-user="currentUser" pid="currentID" loaded="loaded")#post
+  post-dash(current-user="currentUser" loaded="loaded")#post
 
     
 block templates
@@ -12,54 +12,73 @@ block templates
     loader(name="Post Manager" ng-class="{loaded:loaded}")
     .post-dash(ng-class="{loaded:loaded}")
       .edit-post-wrapper.plr-12
-        .post-content
-          .box.full
-            .box-header
-              button.btn.btn-default() Publish Post
-            .box-body
-              .form-group
-                .form-label.full Title
-                .form-input.full
-                  input(ng-model="post.title" required) 
-              .form-group
-                .form-label.full Content
-                .form-input.full
-                  ck-editor(ng-model='post.content' height="500" required)
-              .form-group
-                .form-label.full Excerpt
-                .form-input.full
-                  textarea(ng-model="post.excerpt")
-        .post-status
-          .box.full
-            .box-header
-              .box-title Post Details
-            .box-body
-              .form-group.display-image
-                img(src="{{post.display_image}}")
-                .form-input.full
-                  input(ng-model="post.display_image")
-              .form-group
-                .form-label.full Author
-                .form-input.full
-                  input(ng-model="post.author")
-              .form-group
-                .form-label.full Status
-                .form-input.full
-                  select(ng-model="post.status" required)
-                    option Unpublished
-                    option Live
-              .form-group
-                .form-label.full URL
-                .form-input.full
-                  input(ng-model="post.url")              
-              .form-group
-                .form-label.full Publish Date
-                .form-input.full
-                  input(ng-model="post.posted_date")
-          .box.full
-            .box-body
-
-
+        post-edit(post="post", categories="categories")
+  script(type='text/ng-template' id="PostEdit")
+    .post-content
+      .box.full
+        .box-header.clearfix
+          .btn-publish(ng-click="peCtrl.publish()") Publish
+        .box-body
+          .form-group
+            .form-label.full Title
+            .form-input.full
+              input(ng-model="post.title" required) 
+          .form-group
+            .form-label.full Content
+            .form-input.full
+              ck-editor(ng-model='post.content' height="500" required)
+          .form-group
+            .form-label.full Excerpt
+            .form-input.full
+              textarea(ng-model="post.excerpt")
+    .post-status
+      .box.full
+        .box-header
+          .box-title Post Details
+        .box-body
+          .form-group.display-image
+            img(src="{{post.display_image}}")
+            .form-input.full
+              input(ng-model="post.display_image")
+          .form-group
+            .form-label.full Author
+            .form-input.full
+              input(ng-model="post.author")
+          .form-group
+            .form-label.full Categories
+            .form-input.full
+              ul.categories-list
+                li(ng-repeat="c in categories")
+                  input(type="checkbox" 
+                    id="{{c.id}}"
+                    value="{{c.category}}"
+                    ng-checked="post.categories.indexOf(c.category) > -1"
+                    ng-click="peCtrl.toggleSelection(c.id)"
+                  )
+                  label(for="{{c.id}}" class="btn btn-default") {{c.category}} 
+          .form-group
+            .form-label.full Status
+            .form-input.full
+              select(ng-model="post.status" required)
+                option Unpublished
+                option Live
+          .form-group
+            .form-label.full URL
+            .form-input.full
+              input(ng-model="post.url")              
+          .form-group
+            .form-label.full Publish Date
+            .form-input.full
+              input(ng-model="post.posted_date")
+      .box.full
+        .box-header
+          .box-title
+            | SEO and Open Graph
+        .box-body
+          .form-group
+            .form-label.full OG Image
+            .form-input.full
+              input(ng-model="post.options.og_image")          
 block script
   script(src='/app/js/services/post.js')
   script(src='/app/js/directives/post.js')

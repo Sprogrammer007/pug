@@ -2,14 +2,13 @@
   "use strict"
   var sd = angular.module('pugSurveysDirectives', [])
   
-  sd.directive('surveyDash', function(Survey,  Question, $timeout) {
+  sd.directive('surveyDash', function(Survey, Params, Question, $timeout) {
     return {
       restrict: "E",
       templateUrl: 'SurveyDash',
       transclude: true,
       scope: {
         loaded: '=',
-        sid: '=',
         mainCtrl: '=',
         currentUser: '='
       },
@@ -22,8 +21,8 @@
           return scope.qPanel === 'Open';
         };
         
-        if (scope.sid) {
-          Survey.get({id: scope.sid }).$promise.then(function(survey) {
+        if (Params.id) {
+          Survey.get({id: Params.id}).$promise.then(function(survey) {
             loadSurvey('survey', survey);
           });
         } else {
@@ -493,7 +492,6 @@
       templateUrl: 'questionForm',
       scope: {
         q: '=',
-        sid: '=',
         um: '=',
         sdCtrl: '='
       },
@@ -563,7 +561,6 @@
       scope: {
         survey: '=',
         cq: '=',
-        sid: '=',
         sdCtrl: '='
       },
       link: function(scope, element) {

@@ -3,7 +3,7 @@
 
   var md = angular.module('pugMainDirectives', [])
   
-  md.directive('mainApp', function(Params, User, $http) {
+  md.directive('mainApp', function(User, $http) {
     return {
       restrict: "E",
       transclude: true,
@@ -15,7 +15,6 @@
       link: function(scope, element) {
         $http.defaults.headers.common['session-token']= $('meta[property="session-token"]').attr('content');
         scope.loaded = false;
-        scope.currentID = Params.id;
         User.services().$promise.then(function(services) {
           scope.currentUser.services = services;
         });

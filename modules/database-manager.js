@@ -88,8 +88,7 @@ function DBManager() {
   this.createMulti = function(table, columns, values, id, done) {
     var values =  _.map(values, function(v, k) {
       if (values.hasOwnProperty(k) && values[k] != '') {
-         v = (values[k].constructor == Object) ? Serializer.serialize(values[k]) : values[k];
-         return ('(' + id + ", '" + k + "', '" + v + "')");
+        return ('(' + id + ", '"  + v + "')");
       }
     });
 

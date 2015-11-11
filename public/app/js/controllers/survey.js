@@ -64,7 +64,7 @@
       var that = this;
       element.addClass('loading');
       $timeout(function() {
-        $scope.question.$save({survey_id: $scope.sid}, function(q, r) {
+        $scope.question.$save({survey_id: $scope.survey.id}, function(q, r) {
           var pageID = parseInt(q.survey_page_id);
           element.removeClass('loading');
           $scope.survey.pages.forEach(function(e, i, a) {

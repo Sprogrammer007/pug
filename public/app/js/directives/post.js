@@ -2,7 +2,7 @@
   "use strict";
   var sd = angular.module('pugPostsDirectives', [])
     
-  sd.directive('postDash', function(Post, $timeout) {
+  sd.directive('postDash', function(Post, Params, $timeout) {
     return {
       restrict: "E",
       templateUrl: 'PostDash',
@@ -12,18 +12,27 @@
         pid: '=',
         mainCtrl: '='
       },
-      link: function(scope, element) {     
-        if (scope.pid) {
-          Post.get({id: scope.pid }).$promise.then(function(post) {
-            lostPost('post', post);
+      link: function(scope, element) { 
+        scope.categories = [];    
+        if (Params.act) {
+          Post.getCategories({}, function(categories) {
+            scope.categories = categories;
+            if (Params.id) {
+              Post.get({id: Params.id }).$promise.then(function(post) {
+                loadPost('post', post);
+              });
+            } else {
+              loadPost('post', new Post({categories: [], options: {}}));
+            }
           });
+
         } else {
           Post.query(function(posts) {
-            lostPost('posts', posts);
+            loadPost('posts', posts);
           });
         };
 
-        function lostPost (type, obj) {
+        function loadPost (type, obj) {
           $timeout(function() {
             scope[type] = obj;
             scope.loaded = true;
@@ -33,15 +42,31 @@
       controller: 'PostDashController',
       controllerAs: "pdashCtrl"
     }
-  });  
+  });
+
+  sd.directive('postEdit', function(Post) {
+    return {
+      restrict: "E",
+      templateUrl: 'PostEdit',
+      scope: {
+        post: '=',
+        categories: '='
+      },
+      link: function(scope, element) {
+        scope.selectedCategories = [];
+
+      },
+      controller: 'PostEditController',
+      controllerAs: "peCtrl"
+    }
+  });
 
   sd.directive('postList', function(Post, $timeout) {
     return {
       restrict: "E",
       templateUrl: 'PostList',
       scope: {
-        posts: '=',
-        loaded: '='
+        posts: '='
       },
       link: function(scope, element) {
         scope.selected = [];

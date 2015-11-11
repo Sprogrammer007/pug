@@ -1,34 +1,33 @@
 header
   nav.navbar
-    a.navbar-brand(href="/")
-      img(src="/images/logo.png")
-    button.navbar-toggler.hidden-sm-up(type="button" data-toggle="collapse" data-target="#navMenu")
-      | &#9776;
-    .collapse.navbar-toggleable-sm#navMenu
-      ul.nav.navbar-nav.pull-left         
-        li.nav-item(class=isActive(path, '/tool'))
-          a(href='/pricing') Pricing               
-        li.nav-item(class=isActive(path, '/blog'))
-          a(href='/blog') Blog               
-        li.nav-item(class=isActive(path, '/help'))
-          a(href='/help') Help
-      ul.nav.navbar-nav.pull-right.nav-right
-        - if (user)
-          li.nav-item.user-box
-            .user-icon(style=(user.profile.avatar) ? 'background-image: url("#{user.profile.avatar.url}")' : "")
-            span.username
-              | #{user.username}
-          li.nav-item
-            a(href="/campaign/surveys")
-              |  Dashboard
-          li.nav-item.notification
-            i.fa.fa-bell
-          li.nav-item.logout
-            a(href='/account/logout') 
-              i.fa.fa-power-off
-              | Logout    
-        - else 
-          li.nav-item
-            a(href='/account/register').btn.btn-account Create an Free Account         
-          li.nav-item
-            a(href='/account/login') Log In
+    .container
+      a.navbar-brand(href="/")
+        img(src="/images/logo.png")
+      button.navbar-toggler.hidden-sm-up(type="button" data-toggle="collapse" data-target="#navMenu")
+        | &#9776;
+      .collapse.navbar-toggleable-sm#navMenu
+        ul.nav.navbar-nav.pull-left         
+          li.nav-item(class=isActive(path, '/tool'))
+            a(href='/pricing') Pricing               
+          li.nav-item(class=isActive(path, '/blog'))
+            a(href='/blog') Blog               
+        ul.nav.navbar-nav.pull-right.nav-right
+          - if (user)
+            li.nav-item.user-box
+              .user-icon(style=(user.profile.avatar) ? 'background-image: url("#{user.profile.avatar.url}")' : "")
+              span.username
+                | #{user.username}
+            li.nav-item
+              a(href="/campaign/surveys")
+                |  Dashboard
+            li.nav-item.notification
+              i.fa.fa-bell
+            li.nav-item.logout
+              a(href='/account/logout') 
+                i.fa.fa-power-off
+                | Logout    
+          - else 
+            li.nav-item
+              a(href='/account/register').btn.btn-account Create an Free Account         
+            li.nav-item
+              a(href='/account/login') Log In
