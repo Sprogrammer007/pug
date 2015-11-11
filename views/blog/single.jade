@@ -20,52 +20,68 @@ block content
     }(document, 'script', 'facebook-jssdk'));
 
   #post
-
     section.post-banner
-      -if (post.display_image)
-        .post-banner-bg(style="background-image: url('#{post.display_image}');")
-      - else
-        .post-banner-bg
+      .post-banner-bg(style="#{post.display_image ? 'background-image: url(' + post.display_image + ')' : ''};")
 
     #social.flow-share
       .twitter(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
       .facebook(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
       .googleplus(data-url='pugsquad.com/blog/#{post.url}', data-text='')
-        a.box(href="#")
+        a.box
           .social-icon.fa.fa-google-plus
           span.count 0
       .linkedin(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
-    main.main-content-wrapper
+    main.main-content-wrapper.clearfix
       .row 
         .col-md-6.col-md-offset-3
           .follow-pug
-            span Follow Pug Squad:
-            .fb-like(data-href='https://www.facebook.com/pugsquad/', data-layout='button', data-action='like', data-show-faces='true', data-share='false')
+            span.text Like Pug Squad:
+            span.button
+              .fb-like(data-href='https://www.facebook.com/pugsquad/', data-layout='button', data-action='like', data-show-faces='true', data-share='false')
+            span.button
+              script(src='//platform.linkedin.com/in.js', type='text/javascript')
+                lang: en_US
+              script(type='IN/FollowCompany', data-id='10293021').
+            span.button
+              a.twitter-follow-button(href='https://twitter.com/pugsquad007', data-show-count='false' style="verticle-align: bottom;") Follow @pugsquad
+              script.
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
-          .post-meta    
+          section.post-meta    
             .author-avatar.clearfix
-              img(src="https://secure.gravatar.com/avatar/ff162301fb35a74fdb53c914b43c3060?s=60&d=mm&r=g")   
+              img(src="https://s3.amazonaws.com/elasticbeanstalk-us-east-1-908221110946/assets/statics/pugsquadicon.jpg")   
             .pull-right
               .author #{post.author}   
               .date #{post.postDate('MMMM D, YYYY')}      
               .category
-                | #{post.categories.join(" & ")}             
-          .post-title
+                | #{post.categories.join(" & ")}
+              .leave-comment
+                a(href="#disqus_thread").btn What do you think?
+          section.post-title
             h1 #{post.title}
 
-          .post-content
+          section.post-content
             | !{post.content}
+  #belowPost  
+    aside.below-post-wrapper
+      .row 
+        .col-md-8.col-md-offset-2
+          section.post-comments
+            #disqus_thread
+              script.
+                var disqus_config = function () {
+                  this.page.url = 'https://pugsquad.com/blog/#{post.url}'; 
+                  this.page.identifier = '#{post.id}'; 
+                };
 
-     
+                (function() {  
+                  var d = document, s = d.createElement('script');
+                  s.src = '//pugsquad.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+                })();
+              noscript
+                | Please enable JavaScript to view the 
+                a(href='https://disqus.com/?ref_noscript', rel='nofollow') comments powered by Disqus. 
 
-    //- aside
-    //-   .post-optin-wrapper
-    //-     .container
-    //-       .row
-    //-         .optin-box.optin-content.col-lg-8.col-lg-offset-2
-    //-           | teetetsetest
-           
-
-    //- include ./comments
-    
 block script
