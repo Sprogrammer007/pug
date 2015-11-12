@@ -22,15 +22,7 @@ block content
   #post
     section.post-banner
       .post-banner-bg(style="#{post.display_image ? 'background-image: url(' + post.display_image + ')' : ''};")
-
-    #social.flow-share
-      .twitter(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
-      .facebook(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
-      .googleplus(data-url='pugsquad.com/blog/#{post.url}', data-text='')
-        a.box
-          .social-icon.fa.fa-google-plus
-          span.count 0
-      .linkedin(data-url='https://pugsquad.com/blog/#{post.url}', data-text='')
+        
     main.main-content-wrapper.clearfix
       .row 
         .col-md-6.col-md-offset-3

@@ -17,9 +17,6 @@ header
               .user-icon(style=(user.profile.avatar) ? 'background-image: url("#{user.profile.avatar.url}")' : "")
               span.username
                 | #{user.username}
-            li.nav-item
-              a(href="/campaign/surveys")
-                |  Dashboard
             li.nav-item.notification
               i.fa.fa-bell
             li.nav-item.logout
