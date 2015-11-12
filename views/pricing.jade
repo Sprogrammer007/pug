@@ -3,138 +3,109 @@ extends ./layout
 block content
   section.banner
     .banner-bg()
-      h1 Pug Squad Blog
-      p.subtitle We share some of the best of tips, tricks, secrets, ideas, data, and other fun stuff on marketing.
-  .row
-    .col-lg-8.center-box.clearfix
-      .paid-plans-wrapper
-        .paid-plans.top
-          article.plan
-            header.plan-header.light-green-bg
-              span.uppercase.plan-name Personal
-              h3
-                sup $
-                | 8
-              span.plan-per-month per month
-              .plan-explain
-                span.text Billed annually, or $10 month-to-month
-            .features
-              ul
-                li.plan-views
-                  b 25,000 views
-                  .plan-explain
-                    span.text
-                      | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
-                li
-                  b 1 blog
-                li Unlimited transfer and storage
-                li Automatic updates and backups
-                li Upload any theme or app
-                li Worldwide CDN &amp; security protection
-              p
-                b In Development &amp; Coming Soon
-              ul
-                li 3rd party apps
-                li Post analytics
-          article.plan.big
-            header.plan-header.med-green-bg
-              span.uppercase.plan-name Advanced
-              h3
-                sup $
-                | 24
-              span.plan-per-month per month
-              .plan-explain
-                span.text Billed annually, or $30 month-to-month
-            .features
-              ul
-                li.plan-views
-                  b 100,000 views
-                  .plan-explain
-                    span.text
-                      | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
-                li
-                  b 3 blogs
-                li Unlimited transfer and storage
-                li Automatic updates and backups
-                li Upload any theme or app
-                li Worldwide CDN &amp; security protection
-              p
-                b In Development &amp; Coming Soon
-              ul
-                li 3rd party apps
-                li Post analytics
-                li Full SSL Support
-                li Developer tools
-          article.plan
-            header.plan-header.light-green-bg
-              span.uppercase.plan-name Team
-              h3
-                sup $
-                | 80
-              span.plan-per-month per month
-              .plan-explain
-                span.text Billed annually, or $100 month-to-month
-            .features
-              ul
-                li.plan-views
-                  b 350,000 views
-                  .plan-explain
-                    span.text
-                      | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
-                li
-                  b 10 blogs
-                li Unlimited transfer and storage
-                li Automatic updates and backups
-                li Upload any theme or app
-                li Worldwide CDN &amp; security protection
-                li Priority support
-              p
-                b In Development &amp; Coming Soon
-              ul
-                li 3rd party apps
-                li Post analytics
-                li Full SSL Support
-                li Developer tools
-                li Turbo performance
-          article.plan
-            header.plan-header.wash-green-bg
-              span.uppercase.plan-name Business
-              h3
-                sup $
-                | 200
-              span.plan-per-month per month
-              .plan-explain
-                span.text Billed annually, or $250 month-to-month
-            .features
-              ul
-                li.plan-views
-                  b 1,000,000 views
-                  .plan-explain
-                    span.text
-                      | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
-                li
-                  b Unlimited blogs
-                li Unlimited transfer and storage
-                li Automatic updates and backups
-                li Upload any theme or app
-                li Worldwide CDN &amp; security protection
-                li Priority support
-                li Dedicated environment
-                li Free migration
-              p
-                b In Development &amp; Coming Soon
+      .banner-text
+        h1 Pug Squad Pricing
+        p.subtitle
+  #pricing
+    .row
+      .col-md-6.col-md-offset-3.clearfix
+        .paid-plans-wrapper
+          .paid-plans.top
+            article.plan
+              header.plan-header.light-blue-bg
+                span.uppercase.plan-name Baby Pug
+                h3
+                  sup Free
+                .plan-explain
+                  span.text Forever Free, 500 responses Then pay as you go.
+              .features
+                ul
+                  li.plan-views
+                    b 500 responses
+                  li
+                    b 1 blog
+                  li Unlimited transfer and storage
+                  li Automatic updates and backups
+                  li Upload any theme or app
+                  li Worldwide CDN &amp; security protection
+               
+            article.plan.big
+              header.plan-header.med-blue-bg
+                span.uppercase.plan-name Dax Pug
+                h3
+                  sup $
+                  | 80
+                span.plan-per-month per 3 month
+                .plan-explain
+                  span.text Billed every 3 month
+              .features
+                ul
+                  li.plan-views
+                    b Unlimited Responses
+                    .plan-explain
+                      span.text
+                        | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
+                  li
+                    b 3 blogs
+                  li Unlimited transfer and storage
+                  li Automatic updates and backups
+                  li Upload any theme or app
+                  li Worldwide CDN &amp; security protection
+          
+            article.plan
+              header.plan-header.light-blue-bg
+                span.uppercase.plan-name Bubby Pug
+                h3
+                  sup $
+                  | 120
+                span.plan-per-month per 6 month
+                .plan-explain
+                  span.text Billed every 6 month
+              .features
+                ul
+                  li.plan-views
+                    b Unlimited Respones
+                    .plan-explain
+                      span.text
+                        | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
+                  li Unlimited transfer and storage
+                  li Automatic updates and backups
+                  li Upload any theme or app
+                  li Worldwide CDN &amp; security protection
+                  li Priority support
+              
+            article.plan
+              header.plan-header.light-blue-bg
+                span.uppercase.plan-name Fatty Pug
+                h3
+                  sup $
+                  | 230
+                span.plan-per-month per 1 year
+                .plan-explain
+                  span.text Billed anually
+              .features
+                ul
+                  li.plan-views
+                    b 1,000,000 views
+                    .plan-explain
+                      span.text
+                        | A view is one page-load by a human. This is a soft limit, we will never shut off your site if you go over it.
+                  li
+                    b Unlimited blogs
+                  li Unlimited transfer and storage
+                  li Automatic updates and backups
+                  li Upload any theme or app
+                  li Worldwide CDN &amp; security protection
+                  li Priority support
+                  li Dedicated environment
+                  li Free migration
+             
+          .plan-in-dev
+            p
+              b In Development &amp; Coming soon
+          .paid-plans.bottom
+            article.plan
               ul
                 li 3rd party apps
                 li Post analytics
-                li Full SSL Support
-                li Developer tools
-                li Turbo performance
-        .plan-in-dev
-          p
-            b In Development &amp; Coming soon
-        .paid-plans.bottom
-          article.plan
-            ul
-              li 3rd party apps
-              li Post analytics
 
