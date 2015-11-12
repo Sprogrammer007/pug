@@ -17,8 +17,6 @@ html
     link(rel='stylesheet', href='/css/mobile.css')
     block css
 
-
-     
     // Open Graph
     meta(property='og:url', content='https://www.pugsquad.com#{path}')     
     meta(property='og:site_name', content='Pug Squad')
@@ -44,8 +42,10 @@ html
   body
     .corner-ribbon.top-left.sticky.shadow Closed Beta
     include ./header.jade
+
     block content
     include ./footer.jade
+
     //javascript
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script(src='//cdn.socket.io/socket.io-1.3.7.js')
